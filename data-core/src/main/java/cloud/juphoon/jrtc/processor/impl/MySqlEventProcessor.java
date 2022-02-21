@@ -19,6 +19,9 @@ public class MySqlEventProcessor extends AbstractEventProcessor {
     }
 
     public static class Config {
+        private String username;
+
+        private String password;
 
     }
 }

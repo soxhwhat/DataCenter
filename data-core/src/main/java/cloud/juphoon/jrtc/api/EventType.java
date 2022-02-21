@@ -33,4 +33,8 @@ public class EventType {
     public int hashCode() {
         return Objects.hash(type, number);
     }
+
+    public enum TYPE {
+
+    }
 }

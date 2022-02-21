@@ -102,6 +102,17 @@ public abstract class AbstractEventProcessor implements IEventProcessor {
                 // TODO 处理失败, redo等
                 // 重做
                 ec.redo(handler.getClass().getName());
+                // mq redo
+                queueService.redo(ec);
+
+
+            } else {
+                //
+                if (redo) {
+                    queueService.redoOk(ec);
+                }
+
+                //
             }
         });
         return true;
