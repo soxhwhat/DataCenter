@@ -1,5 +1,12 @@
 package cloud.juphoon.jrtc.service;
 
+import cloud.juphoon.jrtc.handler.test.*;
+import cloud.juphoon.jrtc.mq.EventQueueConfig;
+import cloud.juphoon.jrtc.processor.EventProcessorBuilder;
+import cloud.juphoon.jrtc.processor.impl.HttpEventProcessor;
+import cloud.juphoon.jrtc.processor.impl.KafkaEventProcessor;
+import cloud.juphoon.jrtc.processor.impl.MongoEventProcessor;
+import cloud.juphoon.jrtc.processor.impl.MySqlEventProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
- * @author  ajian.zheng@juphoon.com
- * @date    2/15/22 6:01 PM
- * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
+ * @author ajian.zheng@juphoon.com
+ * @date 2/15/22 6:01 PM
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Configuration
 public class DataServiceConfiguration {
@@ -19,34 +26,33 @@ public class DataServiceConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public DataService config() {
-        //TODO
-//        return DataServiceBuilder.processors()
-//                .process(mysqlProcessConfig)
-//                    .mq(mqConfig)
-//                    .handler(new Ahandler())
-//                    .handler(new Bhandler())
-//                    .handler(new Chandler())
-//                    .handler(new Dhandler())
-//                    .end()
-//                .process(mysql2ProcessConfig)
-//                    .handler(new Whandler())
-//                    .end()
-//                .process(oracleProcessConfig)
-//                    .mq(mqConfig)
-//                    .handler(new Ehandler())
-//                    .handler(new Fhandler())
-//                    .end()
-//                .process(kafkaProcessConfig)
-//                    .mq(mqConfig)
-//                    .handler(new Ghandler())
-//                    .end()
-//                .process(httpProcessConfig)
-//                    .mq(mqConfig)
-//                    .handler(new Hhandler())
-//                    .handler(new Ihandler())
-//                    .handler(new Jhandler())
-//                    .end()
-//                .build();
-        return null;
+        //TODO 示例
+
+        EventQueueConfig kafkaEventQueueConfig = new EventQueueConfig();
+        EventQueueConfig httpEventQueueConfig = new EventQueueConfig();
+        EventQueueConfig mongoEventQueueConfig = new EventQueueConfig();
+
+        return DataServiceBuilder.processors()
+                // TODO processor 默认配置如何实现
+                .processor(EventProcessorBuilder.newProcessor(new MySqlEventProcessor())
+                        .handler(new Ahandler())
+                        .handler(new Bhandler())
+                        .handler(new Chandler())
+                        .build())
+                .processor(EventProcessorBuilder.newProcessor(new MongoEventProcessor())
+                        .mq(mongoEventQueueConfig)
+                        .handler(new Dhandler())
+                        .handler(new Ehandler())
+                        .build())
+                .processor(EventProcessorBuilder.newProcessor(new KafkaEventProcessor())
+                        .mq(kafkaEventQueueConfig)
+                        .handler(new Fhandler())
+                        .handler(new Ghandler())
+                        .build())
+                .processor(EventProcessorBuilder.newProcessor(new HttpEventProcessor())
+                        .mq(httpEventQueueConfig)
+                        .handler(new Xhandler())
+                        .build())
+                .build();
     }
 }
