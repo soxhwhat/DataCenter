@@ -1,7 +1,9 @@
 package cloud.juphoon.jrtc.sqlite.service;
 
 import cloud.juphoon.jrtc.sqlite.entity.Account;
-import cloud.juphoon.jrtc.sqlite.mapper.AccountMapper;
+import cloud.juphoon.jrtc.sqlite.mapper.BaseAccountMapper;
+import cloud.juphoon.jrtc.sqlite.mapper.MyBatisAccountMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,10 +17,11 @@ import java.util.List;
  * @Description:
  */
 @Service
+@Slf4j
 public class SqlService {
 
     @Autowired
-    private AccountMapper accountMapper;
+    private BaseAccountMapper accountMapper;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void insert(Account account){
@@ -27,6 +30,7 @@ public class SqlService {
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void insertBatch(List<Account> accounts){
+
         accountMapper.insertBatch(accounts);
     }
 }

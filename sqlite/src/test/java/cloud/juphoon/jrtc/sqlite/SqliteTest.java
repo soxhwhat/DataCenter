@@ -1,7 +1,7 @@
 package cloud.juphoon.jrtc.sqlite;
 
 import cloud.juphoon.jrtc.sqlite.entity.Account;
-import cloud.juphoon.jrtc.sqlite.mapper.AccountMapper;
+import cloud.juphoon.jrtc.sqlite.mapper.BaseAccountMapper;
 import cloud.juphoon.jrtc.sqlite.task.InsertTask;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.SneakyThrows;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 public class SqliteTest {
 
     @Autowired
-    private AccountMapper accountMapper;
+    private BaseAccountMapper accountMapper;
 
     @Test
     public void init(){
@@ -35,12 +35,12 @@ public class SqliteTest {
     }
     @Test
     public void selectCount(){
-        Integer integer = accountMapper.selectCount(new QueryWrapper<>());
+        Integer integer = accountMapper.selectCount();
         log.info(integer.toString());
     }
     @Test
     public void cleanUp(){
-        accountMapper.delete(new QueryWrapper<>());
+        accountMapper.deleteAll();
     }
 
     @Test

@@ -6,8 +6,8 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    username: kiwi
 #    password: juphoon419708
-    url: jdbc:sqlite:a.db?synchronous=off  #设置写同步
-#    url: jdbc:sqlite:a.db
+#    url: jdbc:sqlite:a.db?synchronous=off  #设置写同步
+    url: jdbc:sqlite:a.db
     driver-class-name: org.sqlite.JDBC
     username:
     password:

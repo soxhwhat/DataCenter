@@ -1,5 +1,6 @@
 package cloud.juphoon.jrtc.sqlite.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import lombok.Data;
 @TableName("t_account")
 public class Account {
 
+    @TableId
     private Integer id;
     private Integer account;
 }

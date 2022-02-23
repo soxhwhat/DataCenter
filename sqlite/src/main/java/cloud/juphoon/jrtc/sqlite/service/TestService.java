@@ -1,6 +1,7 @@
 package cloud.juphoon.jrtc.sqlite.service;
 
-import cloud.juphoon.jrtc.sqlite.mapper.AccountMapper;
+import cloud.juphoon.jrtc.sqlite.mapper.BaseAccountMapper;
+import cloud.juphoon.jrtc.sqlite.mapper.MyBatisAccountMapper;
 import cloud.juphoon.jrtc.sqlite.task.InsertBatchTask;
 import cloud.juphoon.jrtc.sqlite.task.InsertTask;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -28,7 +29,7 @@ public class TestService {
     SqlService sqlService;
 
     @Autowired
-    AccountMapper accountMapper;
+    BaseAccountMapper accountMapper;
 
     ExecutorService executorService = Executors.newFixedThreadPool(1);
 
@@ -98,19 +99,15 @@ public class TestService {
 
     @Transactional(readOnly = true)
     public void deleteByAccount(String account) {
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("account",account);
         long startTimeStamp = System.currentTimeMillis();
-        accountMapper.delete(qw);
+        accountMapper.deleteByAccount(account);
         long endTimeStamp = System.currentTimeMillis();
         log.error("startTime:{},endTime:{},druation:{}",startTimeStamp,endTimeStamp,endTimeStamp-startTimeStamp);
     }
 
     public void deleteById(String id) {
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("id",id);
         long startTimeStamp = System.currentTimeMillis();
-        accountMapper.delete(qw);
+        accountMapper.deleteById(id);
         long endTimeStamp = System.currentTimeMillis();
         log.error("startTime:{},endTime:{},druation:{}",startTimeStamp,endTimeStamp,endTimeStamp-startTimeStamp);
     }
