@@ -21,7 +21,7 @@ import java.util.List;
 public class SqlService {
 
     @Autowired
-    private BaseAccountMapper accountMapper;
+    private MyBatisAccountMapper accountMapper;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void insert(Account account){

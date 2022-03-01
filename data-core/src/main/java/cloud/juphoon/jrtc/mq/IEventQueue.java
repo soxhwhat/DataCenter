@@ -2,6 +2,9 @@ package cloud.juphoon.jrtc.mq;
 
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.IConfig;
+import cloud.juphoon.jrtc.handler.IEventHandler;
+
+import java.util.List;
 
 /**
  * @Author: Zhiwei.zhai
@@ -13,7 +16,7 @@ public interface IEventQueue {
     /**
      * 初始化线程池
      */
-    int init(IConfig config);
+    void init(EventQueueConfig config,AbstractEventQueueService queueService);
 
     /**
      * 出队

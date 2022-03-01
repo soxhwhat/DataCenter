@@ -29,7 +29,7 @@ public class TestService {
     SqlService sqlService;
 
     @Autowired
-    BaseAccountMapper accountMapper;
+    MyBatisAccountMapper accountMapper;
 
     ExecutorService executorService = Executors.newFixedThreadPool(1);
 

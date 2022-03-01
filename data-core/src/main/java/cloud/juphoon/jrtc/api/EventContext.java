@@ -2,6 +2,7 @@ package cloud.juphoon.jrtc.api;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@ToString
 public class EventContext {
     /**
      * 消息体
@@ -48,10 +50,4 @@ public class EventContext {
         beginTimestamp = System.currentTimeMillis();
     }
 
-    public void redo(String clz) {
-        if (null == redoClzList) {
-            redoClzList = new LinkedList<>();
-        }
-        redoClzList.add(clz);
-    }
 }

@@ -7,9 +7,11 @@ import cloud.juphoon.jrtc.processor.impl.HttpEventProcessor;
 import cloud.juphoon.jrtc.processor.impl.KafkaEventProcessor;
 import cloud.juphoon.jrtc.processor.impl.MongoEventProcessor;
 import cloud.juphoon.jrtc.processor.impl.MySqlEventProcessor;
+import cloud.juphoon.jrtc.utils.SpringBeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -25,6 +27,7 @@ public class DataServiceConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    @DependsOn("SpringBeanUtils")
     public DataService config() {
         //TODO 示例
 
@@ -34,6 +37,11 @@ public class DataServiceConfiguration {
 
         return DataServiceBuilder.processors()
                 // TODO processor 默认配置如何实现
+                .processor(EventProcessorBuilder.newProcessor(new MySqlEventProcessor())
+                        .handler(new Ahandler())
+                        .handler(new Bhandler())
+                        .handler(new Chandler())
+                        .build())
                 .processor(EventProcessorBuilder.newProcessor(new MySqlEventProcessor())
                         .handler(new Ahandler())
                         .handler(new Bhandler())

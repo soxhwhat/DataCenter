@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.juphoon.jrtc.mapper.ILogMapper">
+
+    <insert id="initEventTable">
+        create table t_event
+        (
+            id   INTEGER,
+            account INTEGER
+        );
+    </insert>
+    <insert id="initHandleDataTable">
+        create table t_handle_redo
+        (
+            id   INTEGER,
+            account INTEGER
+        );
+    </insert>
+    <insert id="insertEvent">
+
+    </insert>
+    <insert id="removeEvent">
+
+    </insert>
+    <insert id="insertHandleData">
+
+    </insert>
+    <insert id="removeHandleData">
+
+    </insert>
+
+
+</mapper>

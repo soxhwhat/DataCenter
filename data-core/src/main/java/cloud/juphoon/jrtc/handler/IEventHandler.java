@@ -16,4 +16,6 @@ public interface IEventHandler extends ICare {
      * @param ec
      */
     boolean handle(EventContext ec);
+
+    boolean isRedo();
 }

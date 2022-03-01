@@ -1,5 +1,7 @@
 package cloud.juphoon.jrtc.api;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 /**
@@ -8,7 +10,9 @@ import java.util.Objects;
  * @Date: 2022/2/10 18:17
  * @Description:
  */
+@Data
 public class EventType {
+    public static final EventType LOGIN = new EventType(0,0);
     private Integer type;
 
     private Integer number;
@@ -21,8 +25,8 @@ public class EventType {
     // TODO 修正
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EventType)) return false;
+        if (this == o) {return true;}
+        if (!(o instanceof EventType)){ return false;}
         EventType eventType = (EventType) o;
         return Objects.equals(type, eventType.type) &&
                 Objects.equals(number, eventType.number);

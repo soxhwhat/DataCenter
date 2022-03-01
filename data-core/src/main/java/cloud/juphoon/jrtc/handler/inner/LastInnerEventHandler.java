@@ -3,6 +3,7 @@ package cloud.juphoon.jrtc.handler.inner;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.handler.AbstractCareAllEventHandler;
 import cloud.juphoon.jrtc.mq.IEventQueueService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,16 +16,25 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2/18/22 5:06 PM
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
+@Slf4j
 public class LastInnerEventHandler extends AbstractCareAllEventHandler {
-    @Autowired
+
     private IEventQueueService queueService;
+
+    public LastInnerEventHandler(IEventQueueService queueService){
+        this.queueService = queueService;
+    }
 
     @Override
     public boolean handle(EventContext ec) {
         // TODO
-
+        log.error("LastInnerEventHandler正在执行中,ec:{}", ec);
         queueService.processOk(ec);
-
         return true;
+    }
+
+    @Override
+    public boolean isRedo() {
+        return false;
     }
 }

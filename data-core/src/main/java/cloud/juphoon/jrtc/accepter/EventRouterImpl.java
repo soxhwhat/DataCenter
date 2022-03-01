@@ -25,7 +25,7 @@ public class EventRouterImpl implements IEventRouter {
      *
      * 把消息发送到各个process中 一条消息通过多个process
      * 若抛异常，则表示该消息消费异常，需要将错误返回给事件生产方
-     * @param event
+     * @param eventx
      */
     @Override
     public void router(EventContext event) throws Exception {

@@ -19,15 +19,15 @@ public interface IEventQueueService {
      * @return
      * @throws Exception
      */
-    void submit(EventContext ec) throws Exception;
+    void submit(EventContext ec);
 
     /// TODO
     /// 线程池消费事件   回调到 process 开启消费流程
     /// processor.handle(ec);
 
-    void redo(EventContext ec) throws Exception;
+    void redo(EventContext ec);
 
-    void processOk();
+    void processOk(EventContext ec);
 
-    void redoOk();
+    void redoOk(EventContext ec);
 }

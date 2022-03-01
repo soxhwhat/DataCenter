@@ -6,6 +6,7 @@ import cloud.juphoon.jrtc.handler.AbstractCareAllEventHandler;
 import cloud.juphoon.jrtc.handler.AbstractEventHandler;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,14 +21,22 @@ import java.util.List;
  */
 @Slf4j
 public class Whandler extends AbstractEventHandler {
+
+    List<EventType> types = Arrays.asList(EventType.LOGIN);
+
     @Override
     public List<EventType> careEvents() {
-        return {EventType.LOGIN, EventType.LOGIN, EventType.LOGIN};
+        return types;
     }
 
     @Override
     public boolean handle(EventContext ec) {
         log.info("handle");
         return true;
+    }
+
+    @Override
+    public boolean isRedo() {
+        return false;
     }
 }

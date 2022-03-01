@@ -15,6 +15,11 @@ import java.util.List;
 public abstract class AbstractCareAllEventHandler extends AbstractEventHandler {
 
     @Override
+    public boolean isAllCare() {
+        return true;
+    }
+
+    @Override
     public List<EventType> careEvents() {
         return null;
     }
@@ -23,4 +28,6 @@ public abstract class AbstractCareAllEventHandler extends AbstractEventHandler {
     public boolean care(Event event) {
         return true;
     }
+
+
 }

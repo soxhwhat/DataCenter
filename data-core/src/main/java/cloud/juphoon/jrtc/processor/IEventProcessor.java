@@ -9,7 +9,7 @@ import cloud.juphoon.jrtc.handler.IEventHandler;
  * @Date: 2022/2/9 9:44
  * @Description:
  */
-public interface IEventProcessor extends IEventHandler {
+public interface IEventProcessor {
 
 
     /**
@@ -18,5 +18,5 @@ public interface IEventProcessor extends IEventHandler {
      * @param ec
      * @throws Exception
      */
-    void process(EventContext ec) throws Exception;
+    void process(EventContext ec) ;
 }

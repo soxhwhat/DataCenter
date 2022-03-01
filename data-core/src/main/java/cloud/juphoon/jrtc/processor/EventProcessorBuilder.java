@@ -3,10 +3,8 @@ package cloud.juphoon.jrtc.processor;
 import cloud.juphoon.jrtc.handler.IEventHandler;
 import cloud.juphoon.jrtc.handler.inner.FirstInnerEventHandler;
 import cloud.juphoon.jrtc.handler.inner.LastInnerEventHandler;
-import cloud.juphoon.jrtc.mq.AbstractEventQueueService;
 import cloud.juphoon.jrtc.mq.EventQueueConfig;
 import cloud.juphoon.jrtc.mq.EventQueueService;
-import cloud.juphoon.jrtc.mq.IEventQueueService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +44,7 @@ public class EventProcessorBuilder {
          * @return
          */
         public Builder mq(EventQueueConfig config) {
-            this.eventQueueService = new EventQueueService(config);
+            this.eventQueueService = new EventQueueService(config,processor);
             return this;
         }
 
@@ -64,14 +62,13 @@ public class EventProcessorBuilder {
         public IEventProcessor build() {
             // TODO
             if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService();
+                this.eventQueueService = new EventQueueService(this.processor);
             }
-            this.eventQueueService.setProcessor(this.processor);
 
             this.processor.setQueueService(this.eventQueueService);
             this.processor.addEventHandler(new FirstInnerEventHandler());
             this.processor.addEventHandlers(handlers);
-            this.processor.addEventHandler(new LastInnerEventHandler());
+            this.processor.addEventHandler(new LastInnerEventHandler(eventQueueService));
 
             return processor;
         }

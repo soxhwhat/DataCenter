@@ -3,6 +3,7 @@ package cloud.juphoon.jrtc.service;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.IService;
 import cloud.juphoon.jrtc.processor.IEventProcessor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date: 2022/2/16 17:59
  * @Description:
  */
+@ToString
 public class DataService implements IService {
 
     private List<IEventProcessor> processors;
@@ -30,7 +32,7 @@ public class DataService implements IService {
      * @param ec
      * @throws Exception
      */
-    public void commit(EventContext ec) throws Exception {
+    public void commit(EventContext ec) {
         for (IEventProcessor processor : processors) {
             processor.process(ec);
         }

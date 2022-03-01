@@ -1,6 +1,8 @@
 package cloud.juphoon.jrtc.mq;
 
 import cloud.juphoon.jrtc.api.EventContext;
+import cloud.juphoon.jrtc.mapper.ILogMapper;
+import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
 import cloud.juphoon.jrtc.processor.IEventProcessor;
 
 /**
@@ -8,34 +10,23 @@ import cloud.juphoon.jrtc.processor.IEventProcessor;
  * @Date: 2022/2/16 19:23
  * @Description:
  */
-public class AbstractEventQueueService implements IEventQueueService {
-    private IEventQueue eventQueue;
+public abstract class AbstractEventQueueService implements IEventQueueService {
 
-    private IEventProcessor processor;
+    protected AbstractEventProcessor processor;
 
     /**
      * 设置处理器
      *
      * @param processor
      */
-    public void setProcessor(IEventProcessor processor) {
+    public void setProcessor(AbstractEventProcessor processor) {
         this.processor = processor;
     }
-
     /**
-     * 提交事件
-     *
-     * @param ec
-     * @return
-     * @throws Exception
+     * 获取处理器
      */
-    @Override
-    public void submit(EventContext ec) throws Exception {
-        // TODO
-        // 1. 数据落地
-        // 2. 有界内存队列
-        // 3. 驱动线程池消费队列
-
+    public AbstractEventProcessor getProcessor() {
+        return processor;
     }
 
     /// TODO

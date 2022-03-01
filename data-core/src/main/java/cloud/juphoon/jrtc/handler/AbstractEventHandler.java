@@ -14,19 +14,8 @@ import java.util.Set;
  */
 public abstract class AbstractEventHandler implements IEventHandler, ICare {
 
-    private Set<EventType> careEvents;
-
     @Override
-    public boolean care(Event event) {
-        assert careEvents != null : "关注事件列表必须为非空";
-
-        return careEvents.contains(event.getEventType());
+    public boolean isRedo() {
+        return false;
     }
-
-    /**
-     * 关注事件列表
-     *
-     * @return
-     */
-    public abstract List<EventType> careEvents();
 }
