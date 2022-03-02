@@ -32,6 +32,7 @@ public class DisruptorEventHandle implements WorkHandler<EventContext> {
                 eventHandlers.forEach(handler -> {
                     if (eventHandler.care(eventContext.getEvent())) {
                         log.info("执行handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
+                        //TODO 记录handle处理成功失败  处理时间  actor
                         if (!handler.handle(eventContext)) {
                             // TODO 处理失败, redo等
                             log.info("处理失败handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);

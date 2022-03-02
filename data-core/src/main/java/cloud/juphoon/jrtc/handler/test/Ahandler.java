@@ -1,8 +1,13 @@
 package cloud.juphoon.jrtc.handler.test;
 
+import cloud.juphoon.jrtc.api.Account;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.handler.AbstractCareAllEventHandler;
+import cloud.juphoon.jrtc.mapper.AccountMapper;
+import cloud.juphoon.jrtc.mapper.ILogMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -15,9 +20,19 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Ahandler extends AbstractCareAllEventHandler {
+
+    @Autowired
+    private AccountMapper accountMapper;
+
     @Override
     public boolean handle(EventContext ec) {
-        log.info("handle");
+        try {
+            Integer count = accountMapper.selectCount(new QueryWrapper<>());
+            log.info("Ahandler,count:{}" , count);
+        } catch (Exception e) {
+            log.error("Ahandler,error:{}",e);
+            e.printStackTrace();
+        }
         return true;
     }
 }

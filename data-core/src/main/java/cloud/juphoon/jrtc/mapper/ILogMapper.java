@@ -2,6 +2,7 @@ package cloud.juphoon.jrtc.mapper;
 
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.handler.IEventHandler;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @data 2022-02-24
  */
 @Mapper
+@DS("log")
 public interface ILogMapper {
 
     /**

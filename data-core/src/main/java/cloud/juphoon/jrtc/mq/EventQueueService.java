@@ -37,7 +37,7 @@ public class EventQueueService extends AbstractEventQueueService {
     public EventQueueService(EventQueueConfig config,AbstractEventProcessor processor) {
         // todo 后期添加动态加载logMapper  支持不同的mq支持不同的log数据源
         this.processor = processor;
-        this.logMapper = SpringBeanUtils.getBean(ILogMapper.class);
+//        this.logMapper = SpringBeanUtils.getBean(ILogMapper.class);
         DisruptorEventQueue queue = new DisruptorEventQueue();
         queue.init(config , this);
         this.eventQueue = queue;

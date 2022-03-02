@@ -4,6 +4,7 @@ import cloud.juphoon.jrtc.DataCenterApplication;
 import cloud.juphoon.jrtc.api.Event;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.service.DataService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class MqTest {
         log.info(dataService.toString());
     }
 
+    @SneakyThrows
     @Test
     public void commit() {
         EventContext eventContext = new EventContext();
@@ -34,6 +36,7 @@ public class MqTest {
         event.setType(1);
         eventContext.setEvent(event);
         dataService.commit(eventContext);
+        Thread.sleep(10000);
     }
 
 }
