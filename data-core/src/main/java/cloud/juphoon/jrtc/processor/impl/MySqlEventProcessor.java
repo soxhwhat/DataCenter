@@ -1,6 +1,9 @@
 package cloud.juphoon.jrtc.processor.impl;
 
+import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
+
+import java.util.List;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -16,6 +19,11 @@ public class MySqlEventProcessor extends AbstractEventProcessor {
     }
 
     public MySqlEventProcessor(Config config) {
+    }
+
+    @Override
+    public List<EventType> careEvents() {
+        return null;
     }
 
     public static class Config {

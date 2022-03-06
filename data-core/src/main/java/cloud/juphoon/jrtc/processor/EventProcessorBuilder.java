@@ -1,6 +1,6 @@
 package cloud.juphoon.jrtc.processor;
 
-import cloud.juphoon.jrtc.handler.IEventHandler;
+import cloud.juphoon.jrtc.handler.AbstractEventHandler;
 import cloud.juphoon.jrtc.handler.inner.FirstInnerEventHandler;
 import cloud.juphoon.jrtc.handler.inner.LastInnerEventHandler;
 import cloud.juphoon.jrtc.mq.EventQueueConfig;
@@ -35,7 +35,7 @@ public class EventProcessorBuilder {
 
         private EventQueueService eventQueueService;
 
-        private List<IEventHandler> handlers = new ArrayList<>();
+        private List<AbstractEventHandler> handlers = new ArrayList<>();
 
         /**
          * 构造消息队列
@@ -54,7 +54,8 @@ public class EventProcessorBuilder {
          * @param handler
          * @return
          */
-        public Builder handler(IEventHandler handler) {
+        public Builder handler(AbstractEventHandler handler) {
+            handler.processor = this.processor;
             handlers.add(handler);
             return this;
         }

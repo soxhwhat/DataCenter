@@ -1,5 +1,6 @@
 package cloud.juphoon.jrtc.handler.test;
 
+import cloud.juphoon.jrtc.api.Event;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.handler.AbstractCareAllEventHandler;
@@ -22,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class Whandler extends AbstractEventHandler {
 
-    List<EventType> types = Arrays.asList(EventType.LOGIN);
+    List<EventType> types = Arrays.asList(EventType.TICKET_EVENT);
 
     @Override
     public List<EventType> careEvents() {
@@ -33,6 +34,11 @@ public class Whandler extends AbstractEventHandler {
     public boolean handle(EventContext ec) {
         log.info("handle");
         return true;
+    }
+
+    @Override
+    public boolean care(Event event) {
+        return false;
     }
 
     @Override

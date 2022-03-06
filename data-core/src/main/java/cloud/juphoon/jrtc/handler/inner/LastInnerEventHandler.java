@@ -28,7 +28,7 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
     @Override
     public boolean handle(EventContext ec) {
         // TODO
-        log.error("LastInnerEventHandler正在执行中,ec:{}", ec);
+        log.info("LastInnerEventHandler正在执行中,ec:{}", ec);
         queueService.processOk(ec);
         return true;
     }

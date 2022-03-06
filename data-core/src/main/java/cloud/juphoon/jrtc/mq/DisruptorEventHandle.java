@@ -29,25 +29,23 @@ public class DisruptorEventHandle implements WorkHandler<EventContext> {
         List<IEventHandler> eventHandlers = processor.getEventHandlers();
         for (IEventHandler eventHandler : eventHandlers) {
             try {
-                eventHandlers.forEach(handler -> {
-                    if (eventHandler.care(eventContext.getEvent())) {
-                        log.info("执行handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
-                        //TODO 记录handle处理成功失败  处理时间  actor
-                        if (!handler.handle(eventContext)) {
-                            // TODO 处理失败, redo等
-                            log.info("处理失败handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
-                            if (handler.isRedo()) {
-                                log.info("进入重做队列handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
-                                queueService.redo(eventContext);
-                            }
-                        } else {
-                            log.info("处理成功handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
-                            if (eventContext.getRetryCount() > 0) {
-                                queueService.redoOk(eventContext);
-                            }
+                if (eventHandler.care(eventContext.getEvent())) {
+                    log.info("执行handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
+                    //TODO 记录handle处理成功失败  处理时间  actor
+                    if (!eventHandler.handle(eventContext)) {
+                        // TODO 处理失败, redo等
+                        log.info("处理失败handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
+                        if (eventHandler.isRedo()) {
+                            log.info("进入重做队列handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
+                            queueService.redo(eventContext);
+                        }
+                    } else {
+                        log.info("处理成功handle:{}中, ec :{}", eventHandler.getClass().getName(), eventContext);
+                        if (eventContext.getRetryCount() > 0) {
+                            queueService.redoOk(eventContext);
                         }
                     }
-                });
+                }
             } catch (Exception e) {
                 log.error("{}", e);
                 log.error("EventContext:{} , eventHandler: {}执行失败", eventContext, eventHandler);

@@ -14,10 +14,6 @@ import java.util.List;
  */
 public abstract class AbstractCareAllEventHandler extends AbstractEventHandler {
 
-    @Override
-    public boolean isAllCare() {
-        return true;
-    }
 
     @Override
     public List<EventType> careEvents() {

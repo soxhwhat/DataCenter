@@ -4,6 +4,8 @@ import cloud.juphoon.jrtc.api.Event;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.api.ICare;
+import cloud.juphoon.jrtc.handler.AbstractCareAllEventHandler;
+import cloud.juphoon.jrtc.handler.AbstractEventHandler;
 import cloud.juphoon.jrtc.handler.IEventHandler;
 import cloud.juphoon.jrtc.handler.inner.FirstInnerEventHandler;
 import cloud.juphoon.jrtc.handler.inner.LastInnerEventHandler;
@@ -15,10 +17,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author: Zhiwei.zhai
@@ -42,6 +41,11 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     private boolean isAllCare = false;
 
+    Set<EventType> careEvents = new TreeSet<EventType>((o1, o2) ->
+            o1.getNumber().intValue() == o2.getNumber().intValue()
+                    && o1.getType().intValue() == o2.getType().intValue() ? 0 : -1
+    );
+
     /**
      * 设置队列服务
      *
@@ -49,6 +53,11 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     public void setQueueService(IEventQueueService queueService) {
         this.queueService = queueService;
+    }
+
+    @Override
+    public List<EventType> careEvents() {
+        return new ArrayList<>(careEvents);
     }
 
     /**
@@ -60,11 +69,11 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
         assert null != handler : "handler 为空";
         this.eventHandlers.add(handler);
         if (handler.careEvents() != null) {
-            this.addAllCare(handler.careEvents());
+            careEvents.addAll(handler.careEvents());
         }
         //非inner的handle才会影响isAllCare
         if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
-            isAllCare |= handler.isAllCare();
+            isAllCare |= handler instanceof AbstractCareAllEventHandler;
         }
     }
 
@@ -73,16 +82,16 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      *
      * @param handlers
      */
-    public void addEventHandlers(List<IEventHandler> handlers) {
+    public void addEventHandlers(List<AbstractEventHandler> handlers) {
         assert null != handlers : "handlers 为空";
         this.eventHandlers.addAll(handlers);
         for (IEventHandler handler : handlers) {
             if (handler.careEvents() != null) {
-                this.addAllCare(handler.careEvents());
+                careEvents.addAll(handler.careEvents());
             }
             //非inner的handle才会影响isAllCare
             if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
-                isAllCare |= handler.isAllCare();
+                isAllCare |= handler instanceof AbstractCareAllEventHandler;
             }
         }
     }

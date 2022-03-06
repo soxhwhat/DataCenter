@@ -1,6 +1,5 @@
 package cloud.juphoon.jrtc.service;
 
-import cloud.juphoon.jrtc.handler.IEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,14 +14,16 @@ import java.lang.reflect.Field;
  */
 @Component
 @Slf4j
-public class DataHandleBuilder {
+public class DataSpringObjBuilder {
 
     @Autowired
     ApplicationContext applicationContext;
 
-    public <T extends IEventHandler> T newHandle(Class<T> clz) throws Exception {
+    public <T> T newObj(Class<?> clz, T clzObj) throws Exception {
         try {
-            T eventHandler = clz.newInstance();
+            if (clzObj == null) {
+                clzObj = (T) clz.newInstance();
+            }
             Field[] fields = clz.getDeclaredFields();
             for (Field field : fields) {
                 Autowired annotation = field.getAnnotation(Autowired.class);
@@ -32,11 +33,11 @@ public class DataHandleBuilder {
                         throw new ClassNotFoundException("bean未在spring中找到");
                     }
                     field.setAccessible(true);
-                    field.set(eventHandler,bean);
+                    field.set(clzObj,bean);
                     field.setAccessible(false);
                 }
             }
-            return eventHandler;
+            return clzObj;
         } catch (ClassNotFoundException ce){
             log.error(ce.getMessage());
             throw ce;
@@ -44,5 +45,17 @@ public class DataHandleBuilder {
             log.error("buildHandle失败:{}", clz.getName());
             throw e;
         }
+    }
+
+    public <T> T newObj(T clzObj) throws Exception {
+        if (clzObj != null) {
+            return (T) newObj(clzObj.getClass(),clzObj);
+        } else {
+            throw new IllegalArgumentException("clzObj为空");
+        }
+    }
+
+    public <T> T newObj(Class<?> clz) throws Exception {
+        return newObj(clz,null);
     }
 }

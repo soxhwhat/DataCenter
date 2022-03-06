@@ -1,6 +1,9 @@
 package cloud.juphoon.jrtc.processor.impl;
 
+import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
+
+import java.util.List;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -13,6 +16,11 @@ import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
  */
 public class MongoEventProcessor extends AbstractEventProcessor {
     public MongoEventProcessor() {
+    }
+
+    @Override
+    public List<EventType> careEvents() {
+        return null;
     }
 
     public MongoEventProcessor(Config config) {

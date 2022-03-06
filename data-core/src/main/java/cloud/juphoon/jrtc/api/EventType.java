@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 @Data
 public class EventType {
-    public static final EventType LOGIN = new EventType(0,0);
+    public static final EventType TICKET_EVENT = new EventType(0,0);
     private Integer type;
 
     private Integer number;

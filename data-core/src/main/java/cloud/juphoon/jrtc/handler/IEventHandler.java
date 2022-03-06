@@ -2,6 +2,8 @@ package cloud.juphoon.jrtc.handler;
 
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.ICare;
+import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
+import cloud.juphoon.jrtc.processor.IEventProcessor;
 
 /**
  * @Author: Zhiwei.zhai

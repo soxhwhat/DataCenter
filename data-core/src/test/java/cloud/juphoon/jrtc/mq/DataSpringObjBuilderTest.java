@@ -2,7 +2,7 @@ package cloud.juphoon.jrtc.mq;
 
 import cloud.juphoon.jrtc.DataCenterApplication;
 import cloud.juphoon.jrtc.handler.test.Ahandler;
-import cloud.juphoon.jrtc.service.DataHandleBuilder;
+import cloud.juphoon.jrtc.service.DataSpringObjBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,15 +13,15 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @Description:
  */
 @SpringBootTest(classes = DataCenterApplication.class)
-public class DataHandleBuilderTest {
+public class DataSpringObjBuilderTest {
 
     @Autowired
-    DataHandleBuilder dataHandleBuilder;
+    DataSpringObjBuilder dataSpringObjBuilder;
 
     @Test
     public void buildTest(){
         try {
-            Ahandler ahandler = dataHandleBuilder.newHandle(Ahandler.class);
+            Ahandler ahandler = dataSpringObjBuilder.newObj(Ahandler.class);
             System.out.println(ahandler);
         } catch (Exception e) {
             e.printStackTrace();
