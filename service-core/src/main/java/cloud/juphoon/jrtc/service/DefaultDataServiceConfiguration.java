@@ -2,19 +2,12 @@ package cloud.juphoon.jrtc.service;
 
 import cloud.juphoon.jrtc.handle.kafka.EventKafkaHandler;
 import cloud.juphoon.jrtc.handle.mongo.EventMongoHandler;
-import cloud.juphoon.jrtc.handler.test.*;
-import cloud.juphoon.jrtc.mq.EventQueueConfig;
-import cloud.juphoon.jrtc.process.KafkaProcessor;
-import cloud.juphoon.jrtc.process.MongoProcessor;
 import cloud.juphoon.jrtc.processor.EventProcessorBuilder;
-import cloud.juphoon.jrtc.processor.impl.HttpEventProcessor;
-import cloud.juphoon.jrtc.processor.impl.KafkaEventProcessor;
-import cloud.juphoon.jrtc.processor.impl.MongoEventProcessor;
-import cloud.juphoon.jrtc.processor.impl.MySqlEventProcessor;
+import cloud.juphoon.jrtc.processor.KafkaProcessor;
+import cloud.juphoon.jrtc.processor.MongoProcessor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +34,7 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private DataSpringObjBuilder dataSpringObjBuilder;
 
-    public Map<String , Map> event = new HashMap();
+    public Map<String, Map> event = new HashMap();
 
     @Bean
     @DependsOn("SpringBeanUtils")

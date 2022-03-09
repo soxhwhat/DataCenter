@@ -27,18 +27,18 @@ public class DataSpringObjBuilder {
             Field[] fields = clz.getDeclaredFields();
             for (Field field : fields) {
                 Autowired annotation = field.getAnnotation(Autowired.class);
-                if (annotation != null){
+                if (annotation != null) {
                     Object bean = applicationContext.getBean(field.getType());
                     if (bean == null) {
                         throw new ClassNotFoundException("bean未在spring中找到");
                     }
                     field.setAccessible(true);
-                    field.set(clzObj,bean);
+                    field.set(clzObj, bean);
                     field.setAccessible(false);
                 }
             }
             return clzObj;
-        } catch (ClassNotFoundException ce){
+        } catch (ClassNotFoundException ce) {
             log.error(ce.getMessage());
             throw ce;
         } catch (Exception e) {
@@ -49,13 +49,13 @@ public class DataSpringObjBuilder {
 
     public <T> T newObj(T clzObj) throws Exception {
         if (clzObj != null) {
-            return (T) newObj(clzObj.getClass(),clzObj);
+            return (T) newObj(clzObj.getClass(), clzObj);
         } else {
             throw new IllegalArgumentException("clzObj为空");
         }
     }
 
     public <T> T newObj(Class<?> clz) throws Exception {
-        return newObj(clz,null);
+        return newObj(clz, null);
     }
 }

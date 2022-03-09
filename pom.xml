@@ -22,6 +22,7 @@
 
     <modules>
         <module>data-core</module>
+        <module>service-core</module>
         <module>dist</module>
     </modules>
 

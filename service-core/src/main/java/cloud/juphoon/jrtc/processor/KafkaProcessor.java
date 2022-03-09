@@ -1,6 +1,5 @@
-package cloud.juphoon.jrtc.process;
+package cloud.juphoon.jrtc.processor;
 
-import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,14 +18,17 @@ public class KafkaProcessor extends AbstractEventProcessor {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    public KafkaProcessor(){}
+    public KafkaProcessor() {
+    }
 
-    public KafkaProcessor(KafkaProcessor.Config config){ this.config = config; }
+    public KafkaProcessor(KafkaProcessor.Config config) {
+        this.config = config;
+    }
 
     private KafkaProcessor.Config config;
 
     public static class Config {
-        public Map<Integer,String> collectionMap = new HashMap<>();
+        public Map<Integer, String> collectionMap = new HashMap<>();
     }
 
 }

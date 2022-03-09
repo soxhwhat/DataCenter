@@ -68,13 +68,16 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     public void addEventHandler(IEventHandler handler) {
         assert null != handler : "handler 为空";
         this.eventHandlers.add(handler);
+        if (!isAllCare) {
+            //非inner的handle才会影响isAllCare
+            if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
+                isAllCare |= handler instanceof AbstractCareAllEventHandler;
+            }
+        }
         if (handler.careEvents() != null) {
             careEvents.addAll(handler.careEvents());
         }
-        //非inner的handle才会影响isAllCare
-        if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
-            isAllCare |= handler instanceof AbstractCareAllEventHandler;
-        }
+
     }
 
     /**
@@ -84,15 +87,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     public void addEventHandlers(List<AbstractEventHandler> handlers) {
         assert null != handlers : "handlers 为空";
-        this.eventHandlers.addAll(handlers);
         for (IEventHandler handler : handlers) {
-            if (handler.careEvents() != null) {
-                careEvents.addAll(handler.careEvents());
-            }
-            //非inner的handle才会影响isAllCare
-            if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
-                isAllCare |= handler instanceof AbstractCareAllEventHandler;
-            }
+            addEventHandler(handler);
         }
     }
 

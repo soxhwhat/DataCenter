@@ -23,11 +23,9 @@ import java.util.List;
 @Slf4j
 public class Whandler extends AbstractEventHandler {
 
-    List<EventType> types = Arrays.asList(EventType.TICKET_EVENT);
-
     @Override
     public List<EventType> careEvents() {
-        return types;
+        return null;
     }
 
     @Override

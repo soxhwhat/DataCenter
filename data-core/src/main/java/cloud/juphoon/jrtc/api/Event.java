@@ -26,7 +26,7 @@ public class Event {
 
     private Integer number;
 
-    private Map<String, String> params;
+    private Map<String, Object> params;
 
 
     public EventType getEventType() {

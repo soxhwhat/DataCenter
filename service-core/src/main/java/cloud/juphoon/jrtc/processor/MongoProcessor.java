@@ -1,6 +1,5 @@
-package cloud.juphoon.jrtc.process;
+package cloud.juphoon.jrtc.processor;
 
-import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

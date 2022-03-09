@@ -27,7 +27,7 @@ public class Test {
         Event event = new Event();
         event.setType(0);
         event.setNumber(0);
-        Map<String ,String> map = new HashMap();
+        Map<String ,Object> map = new HashMap();
         map.put("beginTimeStamp","2021-05-06 10:20:30");
         map.put("beginTimeStamp","2021-05-06 10:30:30");
         event.setParams(map);

@@ -2,11 +2,8 @@ package cloud.juphoon.jrtc.handle.mongo;
 
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
-import cloud.juphoon.jrtc.handler.AbstractEventHandler;
-import cloud.juphoon.jrtc.process.MongoProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.List;
  * @Description:
  */
 @Slf4j
-public class EventMongoHandler extends AbstractEventHandler {
+public class EventMongoHandler extends AbstractMongoHandler {
 
     @Override
     public List<EventType> careEvents() {
@@ -26,12 +23,8 @@ public class EventMongoHandler extends AbstractEventHandler {
 
     @Override
     public boolean handle(EventContext ec) {
-        MongoProcessor mongoProcessor = (MongoProcessor) processor;
-        MongoTemplate mongoTemplate = mongoProcessor.getMongoTemplate();
-        MongoProcessor.Config config = mongoProcessor.getConfig();
-        String collectionName = config.collectionMap.get(ec.getEvent().getType());
         try {
-            mongoTemplate.insert(ec.getEvent(), collectionName);
+            getMongoTemplate().insert(ec.getEvent(), getCollectionName(ec));
         } catch (DataAccessException e) {
             return false;
         } catch (Exception e) {
@@ -39,7 +32,7 @@ public class EventMongoHandler extends AbstractEventHandler {
             return true;
         }
         log.info("执行MongoHandle结束");
-            return true;
+        return true;
     }
 
 
