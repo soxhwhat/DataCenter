@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdCallinfoStatExtTerminalPartMapper">
+  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+    <!--@mbg.generated-->
+    <!--@Table jrtc_acd_callinfo_stat_ext_terminal_part-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_moditified" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="domain_id" jdbcType="INTEGER" property="domainId" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="stat_time" jdbcType="TIMESTAMP" property="statTime" />
+    <result column="stat_type" jdbcType="TINYINT" property="statType" />
+    <result column="skill" jdbcType="VARCHAR" property="skill" />
+    <result column="cnt" jdbcType="INTEGER" property="cnt" />
+    <result column="terminal" jdbcType="TINYINT" property="terminal" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_created, gmt_moditified, domain_id, app_id, stat_time, stat_type, skill, 
+    cnt, terminal
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from jrtc_acd_callinfo_stat_ext_terminal_part
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from jrtc_acd_callinfo_stat_ext_terminal_part
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_callinfo_stat_ext_terminal_part (gmt_created, gmt_moditified, domain_id, 
+      app_id, stat_time, stat_type, 
+      skill, cnt, terminal
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=TIMESTAMP}, #{statType,jdbcType=TINYINT}, 
+      #{skill,jdbcType=VARCHAR}, #{cnt,jdbcType=INTEGER}, #{terminal,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_callinfo_stat_ext_terminal_part
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified,
+      </if>
+      <if test="domainId != null">
+        domain_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="statTime != null">
+        stat_time,
+      </if>
+      <if test="statType != null">
+        stat_type,
+      </if>
+      <if test="skill != null">
+        skill,
+      </if>
+      <if test="cnt != null">
+        cnt,
+      </if>
+      <if test="terminal != null">
+        terminal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statType != null">
+        #{statType,jdbcType=TINYINT},
+      </if>
+      <if test="skill != null">
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="cnt != null">
+        #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="terminal != null">
+        #{terminal,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_callinfo_stat_ext_terminal_part
+    <set>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        stat_time = #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statType != null">
+        stat_type = #{statType,jdbcType=TINYINT},
+      </if>
+      <if test="skill != null">
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="cnt != null">
+        cnt = #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="terminal != null">
+        terminal = #{terminal,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_callinfo_stat_ext_terminal_part
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      stat_time = #{statTime,jdbcType=TIMESTAMP},
+      stat_type = #{statType,jdbcType=TINYINT},
+      skill = #{skill,jdbcType=VARCHAR},
+      cnt = #{cnt,jdbcType=INTEGER},
+      terminal = #{terminal,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

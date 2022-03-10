@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdCallinfoStatDailyMapper">
+  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo">
+    <!--@mbg.generated-->
+    <!--@Table JRTC_ACD_CALLINFO_STAT_DAILY-->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="GMT_CREATED" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="GMT_MODITIFIED" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="DOMAIN_ID" jdbcType="DECIMAL" property="domainId" />
+    <result column="APP_ID" jdbcType="DECIMAL" property="appId" />
+    <result column="STAT_TIME" jdbcType="DECIMAL" property="statTime" />
+    <result column="SKILL" jdbcType="VARCHAR" property="skill" />
+    <result column="EVENT_TYPE" jdbcType="DECIMAL" property="eventType" />
+    <result column="EVENT_NUM" jdbcType="DECIMAL" property="eventNum" />
+    <result column="END_TYPE" jdbcType="DECIMAL" property="endType" />
+    <result column="DURATION" jdbcType="DECIMAL" property="duration" />
+    <result column="CNT" jdbcType="DECIMAL" property="cnt" />
+    <result column="UNIQUE_HASH_CODE" jdbcType="DECIMAL" property="uniqueHashCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ID, GMT_CREATED, GMT_MODITIFIED, DOMAIN_ID, APP_ID, STAT_TIME, SKILL, EVENT_TYPE, 
+    EVENT_NUM, END_TYPE, DURATION, CNT, UNIQUE_HASH_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from JRTC_ACD_CALLINFO_STAT_DAILY
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from JRTC_ACD_CALLINFO_STAT_DAILY
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo">
+    <!--@mbg.generated-->
+    insert into JRTC_ACD_CALLINFO_STAT_DAILY (ID, GMT_CREATED, GMT_MODITIFIED, 
+      DOMAIN_ID, APP_ID, STAT_TIME, 
+      SKILL, EVENT_TYPE, EVENT_NUM, 
+      END_TYPE, DURATION, CNT, 
+      UNIQUE_HASH_CODE)
+    values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, 
+      #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL}, 
+      #{skill,jdbcType=VARCHAR}, #{eventType,jdbcType=DECIMAL}, #{eventNum,jdbcType=DECIMAL}, 
+      #{endType,jdbcType=DECIMAL}, #{duration,jdbcType=DECIMAL}, #{cnt,jdbcType=DECIMAL}, 
+      #{uniqueHashCode,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo">
+    <!--@mbg.generated-->
+    insert into JRTC_ACD_CALLINFO_STAT_DAILY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="gmtCreated != null">
+        GMT_CREATED,
+      </if>
+      <if test="gmtModitified != null">
+        GMT_MODITIFIED,
+      </if>
+      <if test="domainId != null">
+        DOMAIN_ID,
+      </if>
+      <if test="appId != null">
+        APP_ID,
+      </if>
+      <if test="statTime != null">
+        STAT_TIME,
+      </if>
+      <if test="skill != null">
+        SKILL,
+      </if>
+      <if test="eventType != null">
+        EVENT_TYPE,
+      </if>
+      <if test="eventNum != null">
+        EVENT_NUM,
+      </if>
+      <if test="endType != null">
+        END_TYPE,
+      </if>
+      <if test="duration != null">
+        DURATION,
+      </if>
+      <if test="cnt != null">
+        CNT,
+      </if>
+      <if test="uniqueHashCode != null">
+        UNIQUE_HASH_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=DECIMAL},
+      </if>
+      <if test="statTime != null">
+        #{statTime,jdbcType=DECIMAL},
+      </if>
+      <if test="skill != null">
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=DECIMAL},
+      </if>
+      <if test="eventNum != null">
+        #{eventNum,jdbcType=DECIMAL},
+      </if>
+      <if test="endType != null">
+        #{endType,jdbcType=DECIMAL},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=DECIMAL},
+      </if>
+      <if test="cnt != null">
+        #{cnt,jdbcType=DECIMAL},
+      </if>
+      <if test="uniqueHashCode != null">
+        #{uniqueHashCode,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo">
+    <!--@mbg.generated-->
+    update JRTC_ACD_CALLINFO_STAT_DAILY
+    <set>
+      <if test="gmtCreated != null">
+        GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        GMT_MODITIFIED = #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      </if>
+      <if test="appId != null">
+        APP_ID = #{appId,jdbcType=DECIMAL},
+      </if>
+      <if test="statTime != null">
+        STAT_TIME = #{statTime,jdbcType=DECIMAL},
+      </if>
+      <if test="skill != null">
+        SKILL = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
+      </if>
+      <if test="eventNum != null">
+        EVENT_NUM = #{eventNum,jdbcType=DECIMAL},
+      </if>
+      <if test="endType != null">
+        END_TYPE = #{endType,jdbcType=DECIMAL},
+      </if>
+      <if test="duration != null">
+        DURATION = #{duration,jdbcType=DECIMAL},
+      </if>
+      <if test="cnt != null">
+        CNT = #{cnt,jdbcType=DECIMAL},
+      </if>
+      <if test="uniqueHashCode != null">
+        UNIQUE_HASH_CODE = #{uniqueHashCode,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo">
+    <!--@mbg.generated-->
+    update JRTC_ACD_CALLINFO_STAT_DAILY
+    set GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
+      GMT_MODITIFIED = #{gmtModitified,jdbcType=TIMESTAMP},
+      DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
+      APP_ID = #{appId,jdbcType=DECIMAL},
+      STAT_TIME = #{statTime,jdbcType=DECIMAL},
+      SKILL = #{skill,jdbcType=VARCHAR},
+      EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
+      EVENT_NUM = #{eventNum,jdbcType=DECIMAL},
+      END_TYPE = #{endType,jdbcType=DECIMAL},
+      DURATION = #{duration,jdbcType=DECIMAL},
+      CNT = #{cnt,jdbcType=DECIMAL},
+      UNIQUE_HASH_CODE = #{uniqueHashCode,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -2,6 +2,7 @@ package cloud.juphoon.jrtc.processor.impl;
 
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
  * @author  ajian.zheng@juphoon.com
  * @date    2/18/22 10:39 AM
  * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
- */ 
+ */
+@Component
 public class MySqlEventProcessor extends AbstractEventProcessor {
     public MySqlEventProcessor() {
     }

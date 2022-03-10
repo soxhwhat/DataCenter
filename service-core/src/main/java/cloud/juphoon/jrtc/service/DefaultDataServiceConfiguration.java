@@ -1,7 +1,10 @@
 package cloud.juphoon.jrtc.service;
 
+import cloud.juphoon.jrtc.JrtcConstant;
 import cloud.juphoon.jrtc.handle.kafka.EventKafkaHandler;
 import cloud.juphoon.jrtc.handle.mongo.EventMongoHandler;
+import cloud.juphoon.jrtc.handler.AbstractEventHandler;
+import cloud.juphoon.jrtc.processor.AbstractEventProcessor;
 import cloud.juphoon.jrtc.processor.EventProcessorBuilder;
 import cloud.juphoon.jrtc.processor.KafkaProcessor;
 import cloud.juphoon.jrtc.processor.MongoProcessor;
@@ -38,7 +41,8 @@ public class DefaultDataServiceConfiguration {
 
     @Bean
     @DependsOn("SpringBeanUtils")
-    public DataService config() throws Exception {
+    public DataService config(Map<String, AbstractEventProcessor> processorMap,
+                              Map<String, AbstractEventHandler> handlerMap) throws Exception {
         //TODO 示例
         MongoProcessor.Config mongoConfig = new MongoProcessor.Config();
         mongoConfig.collectionMap = event.get("mongo");
@@ -53,6 +57,10 @@ public class DefaultDataServiceConfiguration {
                         .build())
                 .processor(EventProcessorBuilder.newProcessor(dataSpringObjBuilder.newObj(KafkaProcessor.class, new KafkaProcessor(kafkaConfig)))
                         .handler(new EventKafkaHandler())
+                        .build())
+                .processor(EventProcessorBuilder.newProcessor(processorMap.get("mySqlEventProcessor"))
+                        .handler(handlerMap.get(JrtcConstant.CALLINFO_STAT_DAILY))
+//                        .handler(handlerMap.get(JrtcConstant.CALLINFO_STAT_PART))
                         .build())
                 .build();
     }

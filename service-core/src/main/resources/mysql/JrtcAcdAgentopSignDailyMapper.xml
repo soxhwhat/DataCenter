@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdAgentopSignDailyMapper">
+  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+    <!--@mbg.generated-->
+    <!--@Table jrtc_acd_agentop_sign_daily-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_moditified" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="domain_id" jdbcType="INTEGER" property="domainId" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="stat_time" jdbcType="TIMESTAMP" property="statTime" />
+    <result column="agent_id" jdbcType="VARCHAR" property="agentId" />
+    <result column="shift" jdbcType="VARCHAR" property="shift" />
+    <result column="team" jdbcType="VARCHAR" property="team" />
+    <result column="first_login" jdbcType="BIGINT" property="firstLogin" />
+    <result column="last_logout" jdbcType="BIGINT" property="lastLogout" />
+    <result column="first_sign_in" jdbcType="BIGINT" property="firstSignIn" />
+    <result column="last_sign_out" jdbcType="BIGINT" property="lastSignOut" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_created, gmt_moditified, domain_id, app_id, stat_time, agent_id, shift, team, 
+    first_login, last_logout, first_sign_in, last_sign_out
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from jrtc_acd_agentop_sign_daily
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from jrtc_acd_agentop_sign_daily
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_agentop_sign_daily (gmt_created, gmt_moditified, domain_id, 
+      app_id, stat_time, agent_id, 
+      shift, team, first_login, 
+      last_logout, first_sign_in, last_sign_out
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=TIMESTAMP}, #{agentId,jdbcType=VARCHAR}, 
+      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{firstLogin,jdbcType=BIGINT}, 
+      #{lastLogout,jdbcType=BIGINT}, #{firstSignIn,jdbcType=BIGINT}, #{lastSignOut,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_agentop_sign_daily
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified,
+      </if>
+      <if test="domainId != null">
+        domain_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="statTime != null">
+        stat_time,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="shift != null">
+        shift,
+      </if>
+      <if test="team != null">
+        team,
+      </if>
+      <if test="firstLogin != null">
+        first_login,
+      </if>
+      <if test="lastLogout != null">
+        last_logout,
+      </if>
+      <if test="firstSignIn != null">
+        first_sign_in,
+      </if>
+      <if test="lastSignOut != null">
+        last_sign_out,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="team != null">
+        #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLogin != null">
+        #{firstLogin,jdbcType=BIGINT},
+      </if>
+      <if test="lastLogout != null">
+        #{lastLogout,jdbcType=BIGINT},
+      </if>
+      <if test="firstSignIn != null">
+        #{firstSignIn,jdbcType=BIGINT},
+      </if>
+      <if test="lastSignOut != null">
+        #{lastSignOut,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_agentop_sign_daily
+    <set>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        stat_time = #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentId != null">
+        agent_id = #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="team != null">
+        team = #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLogin != null">
+        first_login = #{firstLogin,jdbcType=BIGINT},
+      </if>
+      <if test="lastLogout != null">
+        last_logout = #{lastLogout,jdbcType=BIGINT},
+      </if>
+      <if test="firstSignIn != null">
+        first_sign_in = #{firstSignIn,jdbcType=BIGINT},
+      </if>
+      <if test="lastSignOut != null">
+        last_sign_out = #{lastSignOut,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_agentop_sign_daily
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      stat_time = #{statTime,jdbcType=TIMESTAMP},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      shift = #{shift,jdbcType=VARCHAR},
+      team = #{team,jdbcType=VARCHAR},
+      first_login = #{firstLogin,jdbcType=BIGINT},
+      last_logout = #{lastLogout,jdbcType=BIGINT},
+      first_sign_in = #{firstSignIn,jdbcType=BIGINT},
+      last_sign_out = #{lastSignOut,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdAgentopStatDailyMapper">
+  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopStatDailyPo">
+    <!--@mbg.generated-->
+    <!--@Table jrtc_acd_agentop_stat_daily-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+    <result column="gmt_moditified" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="domain_id" jdbcType="INTEGER" property="domainId" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="stat_time" jdbcType="TIMESTAMP" property="statTime" />
+    <result column="agent_id" jdbcType="VARCHAR" property="agentId" />
+    <result column="shift" jdbcType="VARCHAR" property="shift" />
+    <result column="team" jdbcType="VARCHAR" property="team" />
+    <result column="skill" jdbcType="VARCHAR" property="skill" />
+    <result column="event_type" jdbcType="SMALLINT" property="eventType" />
+    <result column="event_num" jdbcType="SMALLINT" property="eventNum" />
+    <result column="end_type" jdbcType="SMALLINT" property="endType" />
+    <result column="duration" jdbcType="BIGINT" property="duration" />
+    <result column="cnt" jdbcType="INTEGER" property="cnt" />
+    <result column="ext_status" jdbcType="SMALLINT" property="extStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_created, gmt_moditified, domain_id, app_id, stat_time, agent_id, shift, team, 
+    skill, event_type, event_num, end_type, duration, cnt, ext_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from jrtc_acd_agentop_stat_daily
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from jrtc_acd_agentop_stat_daily
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopStatDailyPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_agentop_stat_daily (gmt_created, gmt_moditified, domain_id, 
+      app_id, stat_time, agent_id, 
+      shift, team, skill, 
+      event_type, event_num, end_type, 
+      duration, cnt, ext_status
+      )
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=TIMESTAMP}, #{agentId,jdbcType=VARCHAR}, 
+      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR}, 
+      #{eventType,jdbcType=SMALLINT}, #{eventNum,jdbcType=SMALLINT}, #{endType,jdbcType=SMALLINT}, 
+      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopStatDailyPo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into jrtc_acd_agentop_stat_daily
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified,
+      </if>
+      <if test="domainId != null">
+        domain_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="statTime != null">
+        stat_time,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="shift != null">
+        shift,
+      </if>
+      <if test="team != null">
+        team,
+      </if>
+      <if test="skill != null">
+        skill,
+      </if>
+      <if test="eventType != null">
+        event_type,
+      </if>
+      <if test="eventNum != null">
+        event_num,
+      </if>
+      <if test="endType != null">
+        end_type,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="cnt != null">
+        cnt,
+      </if>
+      <if test="extStatus != null">
+        ext_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="team != null">
+        #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null">
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=SMALLINT},
+      </if>
+      <if test="eventNum != null">
+        #{eventNum,jdbcType=SMALLINT},
+      </if>
+      <if test="endType != null">
+        #{endType,jdbcType=SMALLINT},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=BIGINT},
+      </if>
+      <if test="cnt != null">
+        #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="extStatus != null">
+        #{extStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopStatDailyPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_agentop_stat_daily
+    <set>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModitified != null">
+        gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null">
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="statTime != null">
+        stat_time = #{statTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentId != null">
+        agent_id = #{agentId,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="team != null">
+        team = #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null">
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        event_type = #{eventType,jdbcType=SMALLINT},
+      </if>
+      <if test="eventNum != null">
+        event_num = #{eventNum,jdbcType=SMALLINT},
+      </if>
+      <if test="endType != null">
+        end_type = #{endType,jdbcType=SMALLINT},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=BIGINT},
+      </if>
+      <if test="cnt != null">
+        cnt = #{cnt,jdbcType=INTEGER},
+      </if>
+      <if test="extStatus != null">
+        ext_status = #{extStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopStatDailyPo">
+    <!--@mbg.generated-->
+    update jrtc_acd_agentop_stat_daily
+    set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      stat_time = #{statTime,jdbcType=TIMESTAMP},
+      agent_id = #{agentId,jdbcType=VARCHAR},
+      shift = #{shift,jdbcType=VARCHAR},
+      team = #{team,jdbcType=VARCHAR},
+      skill = #{skill,jdbcType=VARCHAR},
+      event_type = #{eventType,jdbcType=SMALLINT},
+      event_num = #{eventNum,jdbcType=SMALLINT},
+      end_type = #{endType,jdbcType=SMALLINT},
+      duration = #{duration,jdbcType=BIGINT},
+      cnt = #{cnt,jdbcType=INTEGER},
+      ext_status = #{extStatus,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

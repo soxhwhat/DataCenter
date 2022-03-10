@@ -13,6 +13,64 @@ import java.util.Objects;
 @Data
 public class EventType {
     public static final EventType TICKET_EVENT = new EventType(0,0);
+
+    //***************************************************************************************************
+    //********************************** 客服事件-排队机 ************************************************
+    //***************************************************************************************************
+    /**
+     * 排队
+     */
+    public static final EventType TICKER_STATUS_WAIT = new EventType(10,0);
+    /**
+     * 振铃
+     */
+    public static final EventType TICKER_STATUS_RING = new EventType(10,1);
+    /**
+     * 通话
+     */
+    public static final EventType TICKER_STATUS_TALK = new EventType(10,2);
+    /**
+     * 溢出
+     */
+    public static final EventType TICKER_STATUS_OVERFLOW = new EventType(10,3);
+    /**
+     * 转接
+     */
+    public static final EventType TICKER_STATUS_TRANSFER = new EventType(10,4);
+    /**
+     * 邀请坐席
+     */
+    public static final EventType TICKER_STATUS_INVITE_AGENT = new EventType(10,5);
+
+    //***************************************************************************************************
+    //********************************** 客服事件-坐席 ************************************************
+    //***************************************************************************************************
+    /**
+     * 坐席示忙
+     */
+    public static final EventType STAFF_STATUS_BUSY = new EventType(10,10);
+    /**
+     * 坐席示闲
+     */
+    public static final EventType STAFF_STATUS_FREE = new EventType(10,11);
+    /**
+     * 坐席保持
+     */
+    public static final EventType STAFF_STATUS_KEEP = new EventType(10,12);
+    /**
+     * 坐席登录
+     */
+    public static final EventType STAFF_STATUS_LOGIN = new EventType(10,13);
+
+    //***************************************************************************************************
+    //********************************** 客服话单事件 ***************************************************
+    //***************************************************************************************************
+    /**
+     * 话单（整个话单真正结束时）
+     */
+    public static final EventType TICKER_COMPLETE = new EventType(11,1);
+
+
     private Integer type;
 
     private Integer number;

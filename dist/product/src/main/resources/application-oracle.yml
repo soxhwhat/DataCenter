@@ -33,15 +33,19 @@ spring:
           driver-class-name: org.sqlite.JDBC
           username:
           password:
-        mysql:
-          url: jdbc:mysql://192.168.4.74:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: kiwi
+        oracle:
+          url: jdbc:oracle:thin:@//192.168.4.171:1521/ORCLCDB
+          driver-class-name: oracle.jdbc.OracleDriver
+          username: C##HBR
           password: juphoon419708
-      primary: mysql
+      primary: oracle
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+mybatis-plus:
+  mapper-locations: classpath*:oracle/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
 iron:
   event:
     mongo:
