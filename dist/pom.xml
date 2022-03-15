@@ -13,7 +13,7 @@
 
     <modules>
         <module>product</module>
-        <module>b01</module>
+<!--        <module>b01</module>-->
     </modules>
 
     <dependencies>

@@ -61,3 +61,6 @@ iron:
       0: ticket_event
     kafka:
       0: ticket_event
+notice:
+  config:
+    uri: http://127.0.0.1:8081

@@ -23,10 +23,6 @@ public class MySqlEventProcessor extends AbstractEventProcessor {
     public MySqlEventProcessor(Config config) {
     }
 
-    @Override
-    public List<EventType> careEvents() {
-        return null;
-    }
 
     public static class Config {
         private String username;

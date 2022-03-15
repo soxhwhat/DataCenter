@@ -14,6 +14,36 @@ import java.util.Objects;
 public class EventType {
     public static final EventType TICKET_EVENT = new EventType(0,0);
 
+    /**
+     * 验证码
+     */
+    public static final EventType VERIFY_CODE = new EventType(1, 1);
+
+    /**
+     * 验证加入房间
+     */
+    public static final EventType VERIFY_JOIN = new EventType(1, 2);
+
+    /**
+     * 房间加入/离开事件
+     */
+    public static final EventType ROOM_NOTICE = new EventType(1, 3);
+
+    /**
+     * 拍照事件
+     */
+    public static final EventType SNAPSHOT_NOTICE = new EventType(1, 4);
+
+    /**
+     * 登出事件
+     */
+    public static final EventType LOGOUT_EVENT = new EventType(98, 98);
+
+    /**
+     * 登录事件
+     */
+    public static final EventType LOGIN_EVENT = new EventType(99, 99);
+
     //***************************************************************************************************
     //********************************** 客服事件-排队机 ************************************************
     //***************************************************************************************************

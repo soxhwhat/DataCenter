@@ -41,10 +41,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     private boolean isAllCare = false;
 
-    Set<EventType> careEvents = new TreeSet<EventType>((o1, o2) ->
-            o1.getNumber().intValue() == o2.getNumber().intValue()
-                    && o1.getType().intValue() == o2.getType().intValue() ? 0 : -1
-    );
+    List<EventType> careEvents = new ArrayList<>();
 
     /**
      * 设置队列服务
@@ -57,7 +54,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     @Override
     public List<EventType> careEvents() {
-        return new ArrayList<>(careEvents);
+        return careEvents;
     }
 
     /**

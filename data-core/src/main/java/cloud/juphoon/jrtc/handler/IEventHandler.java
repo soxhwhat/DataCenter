@@ -17,7 +17,7 @@ public interface IEventHandler extends ICare {
      * 实际运行代码
      * @param ec
      */
-    boolean handle(EventContext ec);
+    boolean handle(EventContext ec) throws Exception;
 
     boolean isRedo();
 }

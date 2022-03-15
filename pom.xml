@@ -37,6 +37,12 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.juphoon.iron.component</groupId>-->
+<!--            <artifactId>iron-utils</artifactId>-->
+<!--            <version>2.0.1</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

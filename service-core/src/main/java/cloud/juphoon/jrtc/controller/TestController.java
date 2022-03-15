@@ -4,7 +4,10 @@ import cloud.juphoon.jrtc.api.Event;
 import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo;
 import cloud.juphoon.jrtc.service.DataService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +25,8 @@ import java.util.Map;
  * @Description:
  */
 @RestController
+@Slf4j
+@ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
 public class TestController {
 
     @Autowired
@@ -60,5 +65,27 @@ public class TestController {
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);
         dataService.commit(eventContext);
+    }
+
+    /**
+     * ver_code 用户登录回调测试接口
+     */
+    @PostMapping("userlogin_notify")
+    public Map noticeLogin(String name) {
+        log.info("回调======》 str:{}", name);
+        HashMap<String, Object> objectObjectHashMap = new HashMap<>();
+        objectObjectHashMap.put("name", name);
+        return objectObjectHashMap;
+    }
+
+    /**
+     * ver_code 事件回调测试接口
+     */
+    @PostMapping("userlogin_request")
+    public Map userlogin_request(String name) throws InterruptedException {
+        log.info("回调======》 str:{}", name);
+        HashMap<String, Object> objectObjectHashMap = new HashMap<>();
+        objectObjectHashMap.put("name", name);
+        return objectObjectHashMap;
     }
 }

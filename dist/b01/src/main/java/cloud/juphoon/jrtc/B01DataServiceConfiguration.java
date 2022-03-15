@@ -2,7 +2,6 @@ package cloud.juphoon.jrtc;
 
 import cloud.juphoon.jrtc.handle.Xhandler;
 import cloud.juphoon.jrtc.handle.Yhandler;
-import cloud.juphoon.jrtc.service.DataService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

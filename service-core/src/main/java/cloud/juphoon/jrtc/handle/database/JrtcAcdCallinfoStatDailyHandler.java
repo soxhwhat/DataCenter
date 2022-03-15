@@ -1,6 +1,5 @@
 package cloud.juphoon.jrtc.handle.database;
 
-import cloud.juphoon.jrtc.JrtcConstant;
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatDailyPo;
 import cloud.juphoon.jrtc.entity.po.JrtcAcdCommonPo;
@@ -13,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static cloud.juphoon.jrtc.constant.JrtcDataCenterConstant.CALLINFO_STAT_DAILY;
+
 /**
  * <p>jrtc_acd_callinfo_stat_daily表的handler类</p>
  * <p>描述请遵循 javadoc 规范</p>
@@ -23,7 +24,7 @@ import java.util.Map;
  * @since 2022/3/10 11:49
  */
 @Slf4j
-@Component(JrtcConstant.CALLINFO_STAT_DAILY)
+@Component(CALLINFO_STAT_DAILY)
 public class JrtcAcdCallinfoStatDailyHandler extends AbstractDatabaseHandler {
 
     @Autowired

@@ -11,7 +11,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-#        max.block.ms: 2000
+        #        max.block.ms: 2000
         sasl.mechanism: PLAIN
         security.protocol: SASL_PLAINTEXT
         sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username=kafka password=kafkapswd;
@@ -47,8 +47,13 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
 iron:
+  debug:
+    enabled: false
   event:
     mongo:
       0: ticket_event
     kafka:
       0: ticket_event
+notice:
+  config:
+    uri: http://127.0.0.1:8081

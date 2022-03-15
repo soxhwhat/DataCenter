@@ -4,6 +4,7 @@ import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Slf4j
+@Component
 public class EventMongoHandler extends AbstractMongoHandler {
 
     @Override

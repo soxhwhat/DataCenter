@@ -3,6 +3,7 @@ package cloud.juphoon.jrtc.processor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @Description:
  */
 @Getter
+@Component
 public class KafkaProcessor extends AbstractEventProcessor {
 
     @Autowired
