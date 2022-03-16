@@ -4,9 +4,9 @@ import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.config.HttpRequestParam;
 import cloud.juphoon.jrtc.processor.NoticeHttpProcessor;
+import cloud.juphoon.jrtc.util.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,11 +43,11 @@ public class NoticeHandler extends DefaultNoticeEventHandler {
 
 
     @Override
-    public HttpRequestParam<Map<String, Object>, RestTemplate> preHandle(EventContext t) throws Exception {
+    public HttpRequestParam<Map<String, Object>, HttpClientUtil> preHandle(EventContext t) throws Exception {
         EventType eventType = t.getEvent().getEventType();
-        HttpRequestParam<Map<String, Object>, RestTemplate> httpRequestParam = new HttpRequestParam<Map<String, Object>, RestTemplate>();
+        HttpRequestParam<Map<String, Object>, HttpClientUtil> httpRequestParam = new HttpRequestParam<Map<String, Object>, HttpClientUtil>();
         //设置父类需要的template 以及 uri
-        httpRequestParam.setTemplate(noticeHttpProcessor.getTemplate());
+        httpRequestParam.setTemplate(noticeHttpProcessor.getTemplate(noticeHttpProcessor.getConfig()));
         httpRequestParam.setHost(noticeHttpProcessor.getConfig().getUri());
         //这里理论上不需要二度care，DisruptorEventHandle处有care
         //这里if 很多很难看，如果想新增，可以考虑新增handler。

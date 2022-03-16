@@ -68,7 +68,7 @@
         </encoder>
     </appender>
 
-    <springProfile name="default,dev,test">
+    <springProfile name="mysql,oracle,default,dev,test">
         <root level="INFO">
             <appender-ref ref="cube"/>
             <appender-ref ref="stdout"/>
@@ -88,110 +88,7 @@
     </logger>
 
 
-        <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/record_file_info.log</file>
 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/record_file_info.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%d{"yyyy-MM-dd HH:mm:ss.SSS"} %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <logger name="fileInfoLog" level="INFO" additivity="false">
-        <appender-ref ref="fileInfoLog"/>
-    </logger>
-<!-- adRecord日志 appender ： 按照每天生成日志文件 -->
-    <appender name="UploadRecordDbServiceImplErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <append>true</append>
-        <!-- 过滤器，只记录 error 级别的日志 -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>error</level>
-        </filter>
-        <!-- 日志名称 -->
-        <file>${LOG_HOME}/uploadLog/upload_record_file_error.log</file>
-        <!-- 每天生成一个日志文件，保存30天的日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/uploadLog/upload_record_file_error.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{"yyyy-MM-dd HH:mm:ss.SSS"} %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <!-- uploadRecord日志 appender ： 按照每天生成日志文件 -->
-    <appender name="UploadRecordDbServiceImplLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/uploadLog/upload_record_file_info.log</file>
-        <append>true</append>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <!-- 如果命中就禁止这条日志 -->
-            <onMatch>DENY</onMatch>
-            <!-- 如果没有命中就使用这条规则 -->
-            <onMismatch>ACCEPT</onMismatch>
-        </filter>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/uploadLog/upload_record_file_info.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%d{"yyyy-MM-dd HH:mm:ss.SSS"} %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <logger name="UploadRecordDbServiceImpl" level="info">
-        <appender-ref ref="UploadRecordDbServiceImplLog"/>
-        <appender-ref ref="UploadRecordDbServiceImplErrorLog"/>
-    </logger>
-
-    <logger name="UploadRecordRpcServiceImpl">
-        <appender-ref ref="UploadRecordDbServiceImplLog"/>
-        <appender-ref ref="UploadRecordDbServiceImplErrorLog"/>
-    </logger>
-
-    <appender name="kafkaSendErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <append>true</append>
-        <!-- 过滤器，只记录 error 级别的日志 -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>error</level>
-        </filter>
-        <!-- 日志名称 -->
-        <file>${LOG_HOME}/uploadLog/kafka_send_error.log</file>
-        <!-- 每天生成一个日志文件，保存30天的日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/uploadLog/kafka_send_error.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
-
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{"yyyy-MM-dd HH:mm:ss.SSS"} %msg%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <logger name="kafkaSendErrorLogger">
-        <appender-ref ref="kafkaSendErrorAppender"/>
-    </logger>
 
 
 

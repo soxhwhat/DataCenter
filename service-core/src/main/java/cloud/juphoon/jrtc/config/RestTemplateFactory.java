@@ -1,12 +1,5 @@
-package cloud.juphoon.jrtc.config;/**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
- *
- * @author ke.wang@juphoon.com
- * @date 2022/3/3 17:52
- * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
- */
+package cloud.juphoon.jrtc.config;
+
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -33,37 +26,30 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.DefaultResponseErrorHandler;
-import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.*;
 
 /**
  * <p>RestTemplate出生地 具体连接池配置参考HttpClientPoolConfig类</p>
- * <p>描述请遵循 javadoc 规范</p>
+ * <p>暂时没啥用了，但是一些参数还是可以参考</p>
  * <p>TODO</p>
  *
  * @author ke.wang@juphoon.com
@@ -74,6 +60,7 @@ import java.util.*;
 @ConditionalOnClass(value = {RestTemplate.class, CloseableHttpClient.class})
 @Data
 @Slf4j
+@Deprecated
 public class RestTemplateFactory implements InitializingBean, ApplicationContextAware {
 
 
@@ -114,6 +101,7 @@ public class RestTemplateFactory implements InitializingBean, ApplicationContext
      * noticeTemplate
      */
     @Bean(name = "noticeTemplate")
+    @Deprecated
     @ConditionalOnMissingBean
     public RestTemplate noticeTemplate(ClientHttpRequestFactory factory) {
         log.info("noticeTemplate");

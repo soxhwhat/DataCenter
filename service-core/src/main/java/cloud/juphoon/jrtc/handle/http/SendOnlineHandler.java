@@ -4,9 +4,9 @@ import cloud.juphoon.jrtc.api.EventContext;
 import cloud.juphoon.jrtc.api.EventType;
 import cloud.juphoon.jrtc.config.HttpRequestParam;
 import cloud.juphoon.jrtc.processor.NoticeHttpProcessor;
+import cloud.juphoon.jrtc.util.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,9 +41,9 @@ public class SendOnlineHandler extends DefaultNoticeEventHandler {
     }
 
     @Override
-    public HttpRequestParam<Map<String, Object>, RestTemplate> preHandle(EventContext t) {
-        HttpRequestParam<Map<String, Object>, RestTemplate> httpRequestParam = new HttpRequestParam<Map<String, Object>, RestTemplate>();
-        httpRequestParam.setTemplate(noticeHttpProcessor.getTemplate());
+    public HttpRequestParam<Map<String, Object>, HttpClientUtil> preHandle(EventContext t) {
+        HttpRequestParam<Map<String, Object>, HttpClientUtil> httpRequestParam = new HttpRequestParam<Map<String, Object>, HttpClientUtil>();
+        httpRequestParam.setTemplate(noticeHttpProcessor.getTemplate(noticeHttpProcessor.getConfig()));
         httpRequestParam.setHost(noticeHttpProcessor.getConfig().getUri());
         HashMap<String, Object> params = new HashMap<>();
 

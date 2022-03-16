@@ -4,11 +4,12 @@ import cloud.juphoon.jrtc.config.HttpClientPoolConfig;
 import cloud.juphoon.jrtc.util.HttpClientUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>暂时还没什么用 </p>
+ * <p>测试多例httpClient </p>
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
@@ -18,22 +19,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class NoticeHttpProcessor extends AbstractEventProcessor implements IConfigurableProcessor<HttpClientUtil, NoticeHttpProcessor.NoticeConfig> {
+@ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
+public class TestHttpProcessor extends AbstractEventProcessor implements IConfigurableProcessor<HttpClientUtil, TestHttpProcessor.NoticeConfig2> {
 
 
     private volatile HttpClientUtil httpClientUtil = null;
 
-    NoticeConfig noticeConfig;
+    NoticeConfig2 noticeConfig;
 
 
-    public NoticeHttpProcessor(NoticeConfig noticeConfig) {
+    public TestHttpProcessor(NoticeConfig2 noticeConfig) {
         this.noticeConfig = noticeConfig;
-        log.info("NoticeHttpProcessor");
+        log.info("TestHttpProcessor");
     }
 
 
     @Override
-    public HttpClientUtil getTemplate(NoticeConfig httpClientPoolConfig) {
+    public HttpClientUtil getTemplate(NoticeConfig2 noticeConfig) {
         if (httpClientUtil == null) {
             synchronized (this) {
                 if (httpClientUtil == null) {
@@ -45,19 +47,17 @@ public class NoticeHttpProcessor extends AbstractEventProcessor implements IConf
     }
 
     @Override
-    public NoticeConfig getConfig() {
+    public NoticeConfig2 getConfig() {
         return noticeConfig;
     }
 
 
-    /**
-     * httpClient 连接池参数等信息在这里配置。
-     */
-    @ConfigurationProperties("notice.config")
+    @ConfigurationProperties("notice2.config")
     @Data
     @Component
-    public static class NoticeConfig extends HttpClientPoolConfig {
+    public static class NoticeConfig2 extends HttpClientPoolConfig {
         private String uri = "http://127.0.0.1:8080"; //uri 或者 域名，负载均衡 nginx应该可以替代。
+
     }
 
 }

@@ -29,3 +29,10 @@ iron:
 notice:
   config:
     uri: http://127.0.0.1:8089
+    max-connect-per-route: 2
+    max-total-connect: 2
+notice2:
+  config:
+    uri: http://127.0.0.1:8089
+    max-connect-per-route: 3
+    max-total-connect: 3

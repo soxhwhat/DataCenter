@@ -13,7 +13,7 @@ public interface IConfigurableProcessor<T,C> {
      * 获取template对象 例如mongoTemplate,restTemplate,xxMapper等等
      * @return T
      */
-    T getTemplate();
+    T getTemplate(C c);
 
     /**
      * 获取相关配置信息
