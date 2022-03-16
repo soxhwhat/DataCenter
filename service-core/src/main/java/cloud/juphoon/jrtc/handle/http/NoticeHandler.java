@@ -38,7 +38,7 @@ public class NoticeHandler extends DefaultNoticeEventHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Arrays.asList(EventType.VERIFY_CODE, EventType.VERIFY_JOIN);
+        return Arrays.asList(LOGIN_EVENT, LOGOUT_EVENT, VERIFY_CODE, VERIFY_JOIN, ROOM_NOTICE, SNAPSHOT_NOTICE);
     }
 
 

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static cloud.juphoon.jrtc.api.EventType.SEND_ONLINE;
+
 /**
  * <p>在开始处详细描述该类的作用</p>
  * <p>描述请遵循 javadoc 规范</p>
@@ -26,7 +28,6 @@ import java.util.Map;
 @Component
 public class SendOnlineHandler extends DefaultNoticeEventHandler {
 
-    protected EventType sendOnline = new EventType(1, 5);
 
     NoticeHttpProcessor noticeHttpProcessor;
 
@@ -36,7 +37,7 @@ public class SendOnlineHandler extends DefaultNoticeEventHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Arrays.asList(sendOnline);
+        return Arrays.asList(SEND_ONLINE);
     }
 
     @Override

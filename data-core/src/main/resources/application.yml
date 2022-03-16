@@ -23,3 +23,9 @@ mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+iron:
+  debug:
+    enabled: true
+notice:
+  config:
+    uri: http://127.0.0.1:8089

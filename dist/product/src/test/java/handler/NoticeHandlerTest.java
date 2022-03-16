@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +23,9 @@ import java.util.Map;
  * @date    2022/3/4 16:49
  * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
-@SpringBootTest(classes = DataCenterApplication.class)
+@SpringBootTest(classes = DataCollectionApplication.class)
 @Slf4j
+@ActiveProfiles("mysql")
 public class NoticeHandlerTest {
 
     @Autowired
@@ -32,7 +34,7 @@ public class NoticeHandlerTest {
     @Test
     public void testVerCodeHandler() throws InterruptedException {
         Event event = new Event();
-        event.setType(1);
+        event.setType(25);
         event.setNumber(1);
         Map<String ,Object> map = new HashMap();
         event.setParams(map);

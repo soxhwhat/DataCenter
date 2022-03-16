@@ -41,7 +41,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     private boolean isAllCare = false;
 
-    List<EventType> careEvents = new ArrayList<>();
+    HashSet<EventType> careEvents = new HashSet<>();
 
     /**
      * 设置队列服务
@@ -54,7 +54,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     @Override
     public List<EventType> careEvents() {
-        return careEvents;
+        return new ArrayList<>(careEvents);
     }
 
     /**

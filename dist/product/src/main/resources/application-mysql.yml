@@ -56,6 +56,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
 iron:
+  debug:
+    enabled: true
   event:
     mongo:
       0: ticket_event
@@ -63,4 +65,4 @@ iron:
       0: ticket_event
 notice:
   config:
-    uri: http://127.0.0.1:8081
+    uri: http://127.0.0.1:8089
