@@ -6,6 +6,9 @@ import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +26,10 @@ public abstract class AbstractDatabaseHandler extends AbstractEventHandler {
     @Override
     public boolean handle(EventContext ec) {
         JrtcAcdCommonPo commonPo = buildJrtcAcdCommonPo(ec.getEvent().getParams());
+        return handle(commonPo);
+    }
+
+    public boolean handle(JrtcAcdCommonPo commonPo) {
         JrtcAcdCommonPo localObj = selectByUnique(commonPo);
         if (null == localObj) {
             // 上锁，保证并发时 确定只有一条数据insert
@@ -52,6 +59,39 @@ public abstract class AbstractDatabaseHandler extends AbstractEventHandler {
         }
     }
 
+    protected List<Map<String, Long>> splitStatTime(long interval, Long beginTimestamp, Long endTimestamp) {
+        long remainder = beginTimestamp % interval;
+        long statTime = beginTimestamp - remainder;
+        List<Map<String, Long>> list = new ArrayList<>();
+
+        while (statTime <= endTimestamp) {
+            long duration = interval;
+            Map<String, Long> map = new HashMap<>(2);
+            map.put("statTime", statTime);
+
+            if (statTime + interval >= endTimestamp) {
+                if (beginTimestamp > statTime) {
+                    // 一个区间内结束的
+                    duration = endTimestamp - beginTimestamp;
+                } else {
+                    // 跨区间结束
+                    duration = endTimestamp - statTime;
+                }
+                map.put("duration",duration);
+                list.add(map);
+                break;
+            }
+            // 首个区间，比较起始时间和区间的时间
+            if (beginTimestamp > statTime) {
+                duration = interval - remainder;
+            }
+            map.put("duration", duration);
+            list.add(map);
+            statTime = statTime + interval;
+        }
+        return list;
+    }
+
     /**
      * 构建具体表的po
      * @param params
@@ -74,7 +114,7 @@ public abstract class AbstractDatabaseHandler extends AbstractEventHandler {
     abstract int insertSelective(JrtcAcdCommonPo commonPo);
 
     /**
-     * 根据id更新值
+     * 根据唯一字段更新值
      * @param uniqueHashCode
      * @param duration
      * @param cnt

@@ -21,7 +21,7 @@ import java.util.Map;
  * @Description:
  */
 @SpringBootTest(classes = DataCenterApplication.class)
-@ActiveProfiles("oracle")
+@ActiveProfiles("mysql")
 public class Test {
 
     @Autowired
@@ -57,8 +57,8 @@ public class Test {
         map.put("eventNum",(short) 1);
         map.put("eventType",(short) 10);
         map.put("skill","111");
-        map.put("statType",(byte)1);
-        map.put("statTime", LocalDateTime.of(LocalDate.now(), LocalTime.MIN).toInstant(ZoneOffset.of("+8")).toEpochMilli());
+        map.put("beginTimestamp", 1647935486000L);
+        map.put("endTimestamp", 1647942686000L);
         event.setParams(map);
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);

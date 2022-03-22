@@ -13,7 +13,11 @@ public class JrtcDataCenterConstant {
     public final static String KEY_AGREE = "AGREE";
 
 
-    //***************** handle bean name ***********************************
+    //***************** 数据库模块 bean-name ***********************************
+    /**
+     * DatabaseEventProcessor bean name
+     */
+    public static final String DATABASE_EVENT_PROCESSOR = "databaseEventProcessor";
     /**
      * JrtcAcdCallinfoStatDailyHandler bean name
      */
@@ -22,7 +26,7 @@ public class JrtcDataCenterConstant {
      * JrtcAcdCallinfoStatPartHandler bean name
      */
     public static final String CALLINFO_STAT_PART = "callinfoStatPart";
-    public static final String SQL_EVENT_PROCESSOR = "mySqlEventProcessor";
+
 
     /**
        http 模块
