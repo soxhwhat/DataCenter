@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.entity.po;
+package com.juphoon.rtc.datacenter.entity.po.acdstat;
 
 import java.util.Date;
 
@@ -17,14 +17,14 @@ import lombok.ToString;
 @Setter
 @ToString
 @TableName("jrtc_acd_agentop_sign_daily")
-public class JrtcAcdAgentopSignDailyPo {
+public class AcdAgentOpSignDailyPO {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
     private Date gmtCreated;
 
-    private Date gmtModitified;
+    private Date gmtModified;
 
     /**
     * 域ID

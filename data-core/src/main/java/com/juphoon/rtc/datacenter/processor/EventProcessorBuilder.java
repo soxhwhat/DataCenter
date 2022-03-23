@@ -6,6 +6,7 @@ import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.mq.EventQueueService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2/18/22 11:12 AM
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
+@Slf4j
 public class EventProcessorBuilder {
     public static Builder newProcessor(AbstractEventProcessor processor,
                                        DataServiceBuilder.Builder dataServiceBuilder) {
@@ -70,12 +72,17 @@ public class EventProcessorBuilder {
 
         /**
          * 添加处理句柄
-         * TODO 这里是否需要外部传参
          *
          * @param handler
          * @return
          */
         public Builder handler(AbstractEventHandler handler) {
+            assert null != handler : "handler 不能为空";
+
+            if (!handler.isEnabled()) {
+                log.info("* handler {} disabled *", handler.getName());
+            }
+
             handler.setProcessor(this.processor);
             handlers.add(handler);
             return this;

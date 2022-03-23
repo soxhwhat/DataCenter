@@ -9,31 +9,60 @@ package com.juphoon.rtc.datacenter.api;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  * @since 2022/3/22 17:30
  */
-public class StatType {
-    long statType;
-    long interval;
+public enum StatType {
 
-    public StatType(long statType, long interval) {
+    /**
+     * 15分钟统计
+     */
+    STAT_15MIN((byte) 1, 15 * 60 * 1000),
+
+    /**
+     * 30分钟统计
+     */
+    STAT_30MIN((byte) 2, 30 * 60 * 1000),
+
+    /**
+     * 小时统计
+     */
+    STAT_HOUR((byte) 3, 60 * 60 * 1000),
+
+    /**
+     * 日统计
+     */
+    STAT_DAY((byte) 4, 24 * 60 * 60 * 1000);
+
+
+    /**
+     * 类型
+     */
+    private byte statType;
+
+    /**
+     * 间隔
+     */
+    private long interval;
+
+    StatType(byte statType, long interval) {
         this.statType = statType;
         this.interval = interval;
     }
 
-    public StatType() {
-    }
-
-    public long getStatType() {
-        return statType;
-    }
-
-    public void setStatType(long statType) {
-        this.statType = statType;
-    }
-
+    /**
+     * 获取间隔时长
+     *
+     * @return
+     */
     public long getInterval() {
         return interval;
     }
 
-    public void setInterval(long interval) {
-        this.interval = interval;
+
+    /**
+     * 获取统计类型
+     *
+     * @return
+     */
+    public byte getStatType() {
+        return statType;
     }
 }

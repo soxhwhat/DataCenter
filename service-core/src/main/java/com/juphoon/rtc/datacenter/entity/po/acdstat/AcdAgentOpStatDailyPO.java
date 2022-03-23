@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.entity.po;
+package com.juphoon.rtc.datacenter.entity.po.acdstat;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
@@ -6,19 +6,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
-* 坐席时段报表
-* @author Yuan
-*/
+ * 坐席操作日汇总表
+ *
+ * @author Yuan
+ */
 @Getter
 @Setter
 @ToString
-@TableName("jrtc_acd_agentop_stat_part")
-public class JrtcAcdAgentopStatPartPo extends JrtcAcdCommonPo {
-
-    /**
-    * 汇总类型(15分钟、1小时等)
-    */
-    private Byte statType;
+@TableName("jrtc_acd_agentop_stat_daily")
+public class AcdAgentOpStatDailyPO extends AcdCommonPO {
 
     /**
     * 事件触发成员

@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mq.mapper;
+package com.juphoon.rtc.datacenter.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,9 +13,9 @@ import org.apache.ibatis.annotations.Param;
  * @since 2022/3/10 14:51
  */
 @Mapper
-public interface JrtcAcdCommonMapper {
+public interface AcdCommonMapper {
 
-    int updateAddValueByUniqueHashCode(@Param("tableName")String tableName, @Param("uniqueHashCode")Integer uniqueHashCode,
+    int updateAddValueByUniqueHashCode(@Param("tableName") String tableName, @Param("uniqueHashCode") Integer uniqueHashCode,
                                        @Param("duration") Long duration,
                                        @Param("cnt") Integer cnt);
 }

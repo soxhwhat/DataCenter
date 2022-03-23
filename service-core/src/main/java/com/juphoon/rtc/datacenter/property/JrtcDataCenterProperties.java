@@ -21,10 +21,15 @@ public class JrtcDataCenterProperties {
 
     private Agree agree = new Agree();
 
+    private AcdStat acdStat = new AcdStat();
+
+    /**
+     * 赞同
+     */
     @Data
     public static class Agree {
         /**
-         * 赞同通知开关
+         * 赞同通知开关(默认关闭)
          */
         private boolean enabled = false;
 
@@ -33,6 +38,39 @@ public class JrtcDataCenterProperties {
          */
         private List<String> hosts;
     }
+
+    /**
+     * 客服报表统计
+     */
+    @Data
+    public static class AcdStat {
+        /**
+         * 客服报表统计开关(默认打开)
+         */
+        private boolean enabled = true;
+
+        /**
+         * 15分钟话务统计
+         */
+        private boolean callInfo15minEnabled = false;
+
+        /**
+         * 30分钟话务统计
+         */
+        private boolean callInfo30minEnabled = false;
+
+        /**
+         * 小时话务统计
+         */
+        private boolean callInfoHourEnabled = false;
+
+        /**
+         * 天话务统计
+         */
+        private boolean callInfoDailyEnabled = true;
+    }
+
+
 
 }
 

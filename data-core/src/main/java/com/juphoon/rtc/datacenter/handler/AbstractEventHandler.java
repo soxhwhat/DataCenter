@@ -32,4 +32,40 @@ public abstract class AbstractEventHandler implements IEventHandler, ICare {
     public boolean isRedo() {
         return false;
     }
+
+    /**
+     * 是否启用
+     */
+    private boolean enabled = true;
+
+    /**
+     * 是否启用
+     * @return
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * 设置启用
+     * @param enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * handler名称
+     */
+    private String name = this.toString();
+
+    /**
+     * 获取名称
+     *
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
 }

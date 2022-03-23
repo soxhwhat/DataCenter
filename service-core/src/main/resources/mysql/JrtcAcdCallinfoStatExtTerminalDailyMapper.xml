@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.juphoon.rtc.datacenter.mq.mapper.JrtcAcdCallinfoStatExtTerminalDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalDailyPo">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
     <!--@Table jrtc_acd_callinfo_stat_ext_terminal_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -30,7 +30,7 @@
     delete from jrtc_acd_callinfo_stat_ext_terminal_daily
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalDailyPo" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_callinfo_stat_ext_terminal_daily (gmt_created, gmt_moditified, domain_id, 
       app_id, stat_time, skill, 
@@ -39,7 +39,7 @@
       #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=TIMESTAMP}, #{skill,jdbcType=VARCHAR}, 
       #{cnt,jdbcType=INTEGER}, #{terminal,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalDailyPo" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_callinfo_stat_ext_terminal_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -95,7 +95,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalDailyPo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
     update jrtc_acd_callinfo_stat_ext_terminal_daily
     <set>
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalDailyPo">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
     update jrtc_acd_callinfo_stat_ext_terminal_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},

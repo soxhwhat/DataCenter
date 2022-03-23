@@ -1,7 +1,6 @@
-package cloud.juphoon.jrtc.processor.impl;
+package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.StatType;
-import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
