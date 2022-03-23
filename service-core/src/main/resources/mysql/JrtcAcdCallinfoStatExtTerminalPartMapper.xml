@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdCallinfoStatExtTerminalPartMapper">
-  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+<mapper namespace="com.juphoon.rtc.datacenter.mq.mapper.JrtcAcdCallinfoStatExtTerminalPartMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
     <!--@mbg.generated-->
     <!--@Table jrtc_acd_callinfo_stat_ext_terminal_part-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -32,7 +32,7 @@
     delete from jrtc_acd_callinfo_stat_ext_terminal_part
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_callinfo_stat_ext_terminal_part (gmt_created, gmt_moditified, domain_id, 
       app_id, stat_time, stat_type, 
@@ -43,7 +43,7 @@
       #{skill,jdbcType=VARCHAR}, #{cnt,jdbcType=INTEGER}, #{terminal,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_callinfo_stat_ext_terminal_part
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -105,7 +105,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
     <!--@mbg.generated-->
     update jrtc_acd_callinfo_stat_ext_terminal_part
     <set>
@@ -139,7 +139,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdCallinfoStatExtTerminalPartPo">
     <!--@mbg.generated-->
     update jrtc_acd_callinfo_stat_ext_terminal_part
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},

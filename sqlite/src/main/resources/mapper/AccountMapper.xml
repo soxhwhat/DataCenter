@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cloud.juphoon.jrtc.sqlite.mapper.MyBatisAccountMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.sqlite.mapper.MyBatisAccountMapper">
 
     <select id="createTable">
         create table t_account
@@ -22,7 +22,7 @@
         where tac.account = #{account}
     </select>
 
-    <insert id="insertBatch" parameterType="cloud.juphoon.jrtc.sqlite.entity.Account">
+    <insert id="insertBatch" parameterType="com.juphoon.rtc.datacenter.sqlite.entity.Account">
         insert into t_account
         values
         <foreach collection="accounts" item="account" open="(" close=")" separator="),(">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cloud.juphoon.jrtc.mapper.JrtcAcdAgentopSignDailyMapper">
-  <resultMap id="BaseResultMap" type="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+<mapper namespace="com.juphoon.rtc.datacenter.mq.mapper.JrtcAcdAgentopSignDailyMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.JrtcAcdAgentopSignDailyPo">
     <!--@mbg.generated-->
     <!--@Table jrtc_acd_agentop_sign_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -35,7 +35,7 @@
     delete from jrtc_acd_agentop_sign_daily
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_agentop_sign_daily (gmt_created, gmt_moditified, domain_id, 
       app_id, stat_time, agent_id, 
@@ -48,7 +48,7 @@
       #{lastLogout,jdbcType=BIGINT}, #{firstSignIn,jdbcType=BIGINT}, #{lastSignOut,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdAgentopSignDailyPo" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_agentop_sign_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdAgentopSignDailyPo">
     <!--@mbg.generated-->
     update jrtc_acd_agentop_sign_daily
     <set>
@@ -171,7 +171,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cloud.juphoon.jrtc.entity.po.JrtcAcdAgentopSignDailyPo">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.JrtcAcdAgentopSignDailyPo">
     <!--@mbg.generated-->
     update jrtc_acd_agentop_sign_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},

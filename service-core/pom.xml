@@ -3,37 +3,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>data-core</artifactId>
-        <groupId>cloud.juphoon.jrtc</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>jrtcDataCenter-Parent</artifactId>
+        <groupId>com.juphoon.rtc.datacenter</groupId>
+        <version>2202.0.0</version>
     </parent>
 
-    <groupId>cloud.juphoon.jrtc</groupId>
     <artifactId>service-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>service-core</name>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <artifactId>data-core</artifactId>
-            <groupId>cloud.juphoon.jrtc</groupId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <version>2202.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.7</version>
+            <version>${httpclient.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.76</version>
-        </dependency>
     </dependencies>
 
 </project>
