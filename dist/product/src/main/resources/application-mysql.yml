@@ -20,7 +20,7 @@ spring:
       #      uri: mongodb://root:123456@121.196.205.39:27017/test1?authSource=admin
       #      uri: mongodb://192.168.4.74:27017/admin
       host: 192.168.4.74
-      database: admin
+      database: test
       port: 27017
       server-selection-timeout: 600
       connect-timeout: 800
@@ -58,11 +58,6 @@ mybatis-plus:
 iron:
   debug:
     enabled: true
-  event:
-    mongo:
-      0: ticket_event
-    kafka:
-      0: ticket_event
 notice:
   config:
     uri: http://127.0.0.1:8089

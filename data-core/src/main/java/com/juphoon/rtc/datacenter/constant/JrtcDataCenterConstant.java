@@ -12,6 +12,20 @@ public class JrtcDataCenterConstant {
     public final static String URL_PARAMS = "?name=Juphoon";
     public final static String KEY_AGREE = "AGREE";
 
+    public final static Integer STATE_READYING = 0;
+    public final static Integer STATE_LOADING = 1;
+
+    public static final String THEA_SERVER_COLLECTION = "thea_server_collection";
+    public static final String THEA_CLIENT_COLLECTION = "thea_client_collection";
+    public static final int THEA_SERVER_CODE = 901;
+    public static final int THEA_CLIENT_CODE = 900;
+    public static final String UNDER_LINE = "_";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String EVENT_COLLECTION = "event_collection";
+    public static final String VERSION_SOURCE = "_source";
+    public static final String POINT = ".";
+    public static final String TAGS = "tags";
+
 
     //***************** 数据库模块 bean-name ***********************************
     /**
@@ -40,6 +54,7 @@ public class JrtcDataCenterConstant {
      http mongo kafka 模块
      */
     public static final String EVENT_MONGO_HANDLER = "eventMongoHandler";
+    public static final String THEA_MONGO_HANDLER = "theaMongoHandler";
     public static final String MONGO_PROCESSOR = "mongoProcessor";
     public static final String EVENT_KAFKA_HANDLER = "eventKafkaHandler";
     public static final String KAFKA_PROCESSOR = "kafkaProcessor";

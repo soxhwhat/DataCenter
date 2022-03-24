@@ -13,6 +13,7 @@ import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.property.JrtcDataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
+import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.BeanFactory;
@@ -53,6 +54,9 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdCallInfoStatPartHourHandler acdCallInfoStatPartHourHandler;
 
+    @Autowired
+    private LogService logService;
+
     @Bean
     @ConditionalOnMissingBean
     public DataService config() {
@@ -85,6 +89,7 @@ public class DefaultDataServiceConfiguration {
         return DataServiceBuilder.processors()
                 // 赞同通知
                 .processor(agreeNotifyProcessor)
+                    .logService(logService)
                     // 构造测试handler
                     .handler(new AgreeLoginNotifyHandler())
                     .handler(new AgreeLogoutNotifyHandler())
@@ -93,6 +98,7 @@ public class DefaultDataServiceConfiguration {
                     .end()
                 // 客服统计
                 .processor(acdEventProcessor)
+                    .logService(logService)
                     .handler(acdCallInfoStatDailyHandler)
                     .handler(acdCallInfoStatPart15MinHandler)
                     .handler(acdCallInfoStatPart30MinHandler)
