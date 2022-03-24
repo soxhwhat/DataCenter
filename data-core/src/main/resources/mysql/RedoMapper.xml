@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.IRedoMapper">
+
+
+    <insert id="initHandleDataTable">
+        create table if not exists t_redo (
+                                              id INTEGER primary key AUTOINCREMENT,
+                                              event_id TEXT event_id,
+                                              handle_clz TEXT,
+                                              create_time_stamp INTEGER default (strftime('%s','now')) ,
+            begin_time_stamp INTEGER,
+            retry_count INTEGER
+            );
+    </insert>
+
+</mapper>

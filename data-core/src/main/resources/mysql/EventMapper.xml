@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.IEventMapper">
+
+    <insert id="initEventTable">
+        create table if not exists t_event (
+           id TEXT ,
+           type INTEGER,
+           number INTEGER,
+           params TEXT,
+           create_timestamp INTEGER default (strftime('%s','now')),
+            begin_timestamp INTEGER default (strftime('%s','now')),
+            state INTEGER not null,
+            retry_count INTEGER not null,
+            process_clz_name TEXT not null
+
+            );
+    </insert>
+</mapper>
