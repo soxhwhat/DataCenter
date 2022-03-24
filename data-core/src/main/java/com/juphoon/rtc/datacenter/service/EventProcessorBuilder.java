@@ -1,13 +1,13 @@
 package com.juphoon.rtc.datacenter.service;
 
+import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
-import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
-import com.juphoon.rtc.datacenter.mq.EventQueueService;
-import com.juphoon.rtc.datacenter.mq.service.LogService;
+import com.juphoon.rtc.datacenter.mq.service.AbstractEventQueueService;
+import com.juphoon.rtc.datacenter.mq.service.impl.DisruptorEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.mq.service.impl.SampleEventQueueServiceImpl;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
-import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ public class EventProcessorBuilder {
 
     public static class Builder {
         private AbstractEventProcessor processor;
-        private LogService logService;
 
         private DataServiceBuilder.Builder dataServiceBuilder;
 
@@ -38,7 +37,7 @@ public class EventProcessorBuilder {
             this.dataServiceBuilder = dataServiceBuilder;
         }
 
-        private EventQueueService eventQueueService;
+        private AbstractEventQueueService eventQueueService;
 
         private List<AbstractEventHandler> handlers = new ArrayList<>();
 
@@ -49,13 +48,18 @@ public class EventProcessorBuilder {
          */
         public DataServiceBuilder.Builder end() {
             if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService(processor, logService);
+                mq(new EventQueueConfig());
             }
 
             this.processor.setQueueService(this.eventQueueService);
-            this.processor.addEventHandler(new FirstInnerEventHandler());
+            /// 自动装载
+//            this.processor.addEventHandler(new FirstInnerEventHandler());
+
             this.processor.addEventHandlers(handlers);
-            this.processor.addEventHandler(new LastInnerEventHandler(eventQueueService));
+
+            /// 自动装载
+//            this.processor.addEventHandler(new FirstInnerEventHandler());
+            this.processor.addEventHandler(new LastInnerEventHandler());
 
             dataServiceBuilder.addProcessor(processor);
             return dataServiceBuilder;
@@ -69,7 +73,13 @@ public class EventProcessorBuilder {
          * @return
          */
         public Builder mq(EventQueueConfig config) {
-            this.eventQueueService = new EventQueueService(config, processor, this.logService);
+            if (JrtcDataCenterConstant.DATA_CENTER_QUEUE_MODE_SIMPLE.equalsIgnoreCase(config.getType())) {
+                this.eventQueueService = new SampleEventQueueServiceImpl();
+            } else {
+                this.eventQueueService = new DisruptorEventQueueServiceImpl(config);
+            }
+            this.eventQueueService.setProcessor(processor);
+
             return this;
         }
 
@@ -90,31 +100,6 @@ public class EventProcessorBuilder {
             }
 
             return this;
-        }
-
-        /**
-         * 添加处理句柄
-         *
-         * @param logService
-         * @return
-         */
-        public Builder logService(LogService logService) {
-            this.logService = logService;
-            return this;
-        }
-
-        public IEventProcessor build() {
-            // TODO
-            if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService(this.processor, this.logService);
-            }
-
-            this.processor.setQueueService(this.eventQueueService);
-            this.processor.addEventHandler(new FirstInnerEventHandler());
-            this.processor.addEventHandlers(handlers);
-            this.processor.addEventHandler(new LastInnerEventHandler(eventQueueService));
-
-            return processor;
         }
     }
 }

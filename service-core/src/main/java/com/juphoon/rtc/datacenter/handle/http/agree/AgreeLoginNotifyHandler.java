@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.handle.http.agree;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,11 @@ import java.util.*;
 @Slf4j
 @Component
 public class AgreeLoginNotifyHandler extends AbstractAgreeNoticeHandler {
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.AgreeLoginNotifyHandler;
+    }
+
     @Override
     public List<EventType> careEvents() {
         return Collections.singletonList(EventType.LOGIN_EVENT);

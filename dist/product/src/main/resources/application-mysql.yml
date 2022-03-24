@@ -58,6 +58,8 @@ mybatis-plus:
 iron:
   debug:
     enabled: true
+  cube:
+    enabled: false
 notice:
   config:
     uri: http://127.0.0.1:8089

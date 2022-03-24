@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.handle.kafka;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.KafkaException;
@@ -20,6 +21,10 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 @Slf4j
 @Configuration
 public class EventKafkaHandler extends AbstractKafkaHandler {
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.EventKafkaHandler;
+    }
 
     @Override
     public List<EventType> careEvents() {

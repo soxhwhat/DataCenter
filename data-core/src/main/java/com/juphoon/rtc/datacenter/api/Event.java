@@ -12,7 +12,6 @@ import java.util.Map;
  * @Date: 2022/2/10 18:17
  * @Description:
  */
-@Getter
 @Setter
 @ToString
 public class Event {
@@ -27,6 +26,18 @@ public class Event {
 
     public EventType getEventType() {
         return new EventType(type, number);
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+    public short eventType() {
+        return type.shortValue();
+    }
+
+    public short eventNumber() {
+        return number.shortValue();
     }
 
     /**
@@ -68,9 +79,9 @@ public class Event {
         return (short) params.get("eventNum");
     }
 
-    public short eventType() {
-        return (short) params.get("eventType");
-    }
+//    public short eventType() {
+//        return (short) params.get("eventType");
+//    }
 
     public String skill() {
         return (String) params.get("skill");

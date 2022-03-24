@@ -5,6 +5,8 @@ import com.juphoon.rtc.datacenter.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 /**
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/16 15:00
@@ -25,7 +27,9 @@ public class EventRouterImpl implements IEventRouter {
      * @param event
      */
     @Override
-    public void router(EventContext event) throws Exception {
+    public void router(@Valid EventContext event) {
+        assert null != dataService : "dataService 未初始化!";
+
         dataService.commit(event);
     }
 

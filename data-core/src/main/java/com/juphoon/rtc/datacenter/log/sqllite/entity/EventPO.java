@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mq.entity;
+package com.juphoon.rtc.datacenter.log.sqllite.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

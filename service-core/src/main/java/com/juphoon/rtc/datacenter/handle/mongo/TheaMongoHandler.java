@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.cube.model.Event;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,10 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
 @Component
 @Slf4j
 public class TheaMongoHandler extends AbstractMongoHandler{
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.TheaMongoHandler;
+    }
 
     public static final String TESSAR = "tessar";
     public static final String TYPE = ".type";

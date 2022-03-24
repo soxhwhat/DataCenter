@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.service;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date: 2022/2/16 17:59
  * @Description:
  */
+@Slf4j
 public class DataService {
     private List<IEventProcessor> processors;
 
@@ -27,10 +29,24 @@ public class DataService {
      * @throws Exception
      */
     public void commit(EventContext ec) {
+        log.debug("commit ec:{}", ec);
+
         for (IEventProcessor processor : processors) {
-            EventContext eventContext = new EventContext();
-            BeanUtils.copyProperties(ec,eventContext);
-            processor.process(eventContext);
+            log.debug("{} process ec:{}", processor.getName(), ec.getRequestId());
+
+            /// 若是重做消息且处理器ID匹配
+            if (ec.isRedoEvent() && ec.getProcessorId().equals(processor.getId())) {
+                processor.process(ec);
+                break;
+            }
+            /// 若是新消息，则需要复制一份
+            else {
+                EventContext copy = new EventContext();
+                BeanUtils.copyProperties(ec, copy);
+                copy.setProcessorId(processor.getId());
+                ///
+                processor.process(copy);
+            }
         }
     }
 

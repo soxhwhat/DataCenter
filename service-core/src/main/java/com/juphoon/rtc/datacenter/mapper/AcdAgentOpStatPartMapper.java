@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mapper;
+package com.juphoon.rtc.datacenter.log.sqllite.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO;

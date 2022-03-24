@@ -13,6 +13,6 @@ public class JrtcLoginEvent {
     private Event event;
 
     public long getDuration() {
-        return (Long) event.getParams().get("duration");
+        return event.duration();
     }
 }

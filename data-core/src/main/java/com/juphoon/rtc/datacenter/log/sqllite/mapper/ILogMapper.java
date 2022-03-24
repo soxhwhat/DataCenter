@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mq.mapper;
+package com.juphoon.rtc.datacenter.log.sqllite.mapper;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.baomidou.dynamic.datasource.annotation.DS;

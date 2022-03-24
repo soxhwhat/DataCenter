@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.handle.mongo;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,10 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 @Slf4j
 @Component
 public class EventMongoHandler extends AbstractMongoHandler {
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.EventMongoHandler;
+    }
 
     @Override
     public List<EventType> careEvents() {

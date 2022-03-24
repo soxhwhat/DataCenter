@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.handle;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractHttpEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -23,6 +24,10 @@ import java.util.List;
  */
 @Slf4j
 public class TestHttpEventHandler extends AbstractHttpEventHandler {
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.TestHttpEventHandler;
+    }
 
     private static final String END_POINT = "/test";
 
@@ -34,7 +39,7 @@ public class TestHttpEventHandler extends AbstractHttpEventHandler {
     @Override
     public boolean exchange(String url, RestTemplate restTemplate, EventContext ec) {
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(url + "/" + END_POINT)
-                .queryParam("a", ec.getEvent().getType())
+                .queryParam("a", ec.getEvent().eventType())
                 .queryParam("b", "你好")
                 .queryParam("c", "./)(*JJ<>")
                 .encode()

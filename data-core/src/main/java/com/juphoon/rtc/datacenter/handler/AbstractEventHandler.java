@@ -2,8 +2,8 @@ package com.juphoon.rtc.datacenter.handler;
 
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.ICare;
-import com.juphoon.rtc.datacenter.mq.service.LogService;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import lombok.Setter;
 
@@ -16,9 +16,30 @@ import java.util.List;
  */
 @Setter
 public abstract class AbstractEventHandler implements IEventHandler, ICare {
+    /**
+     * 是否启用(外界配置)
+     */
+    private boolean enabled = true;
 
     public AbstractEventProcessor processor;
-    public LogService logService;
+
+    /**
+     * 是否启用
+     * @return
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+
+
+    /**
+     * 设置启用
+     * @param enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     @Override
     public boolean care(Event event) {
@@ -30,44 +51,5 @@ public abstract class AbstractEventHandler implements IEventHandler, ICare {
         }
     }
 
-    @Override
-    public boolean isRedo() {
-        return true;
-    }
-
-    /**
-     * 是否启用
-     */
-    private boolean enabled = true;
-
-    /**
-     * 是否启用
-     * @return
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * 设置启用
-     * @param enabled
-     */
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    /**
-     * handler名称
-     */
-    private String name = this.toString();
-
-    /**
-     * 获取名称
-     *
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
 
 }

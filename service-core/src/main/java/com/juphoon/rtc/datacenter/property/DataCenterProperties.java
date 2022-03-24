@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.property;
 
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
+import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,13 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX)
 @Data
-public class JrtcDataCenterProperties {
+public class DataCenterProperties {
 
     private Agree agree = new Agree();
 
     private AcdStat acdStat = new AcdStat();
+
+    private Mq mq = new Mq();
 
     /**
      * 赞同
@@ -73,6 +76,40 @@ public class JrtcDataCenterProperties {
     }
     //iron.datacenter.acd-stat.enabled=true
 
+
+    @Data
+    public static class Mq {
+        /**
+         * 类型
+         * sample | distuptor(default)
+         */
+        private String type = "sample";
+
+        /**
+         * 队列大小
+         */
+        private int capacity = 1024;
+
+        /**
+         * 数据库文件名
+         */
+        private String dbName = "datacenter.db";
+
+        /**
+         * 转化为内部类
+         *
+         * @return
+         */
+        public EventQueueConfig trans() {
+            EventQueueConfig config = new EventQueueConfig();
+
+            config.setType(type);
+            config.setQueueSize(capacity);
+            config.setDbName(dbName);
+
+            return config;
+        }
+    }
 
 }
 

@@ -1,21 +1,18 @@
 package com.juphoon.rtc.datacenter.processor;
 
-import com.juphoon.rtc.datacenter.api.Event;
-import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.ICare;
+import com.juphoon.rtc.datacenter.api.*;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
-import com.juphoon.rtc.datacenter.mq.IEventQueueService;
-import com.juphoon.rtc.datacenter.utils.SnowFlakeGenerateIdWorker;
-import lombok.EqualsAndHashCode;
+import com.juphoon.rtc.datacenter.log.IEventLogService;
+import com.juphoon.rtc.datacenter.log.IRedoEventLogService;
+import com.juphoon.rtc.datacenter.mq.service.IEventQueueService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,7 +25,6 @@ import java.util.Set;
  * @update:
  * <p>1. 2022-03-22. ajian.zheng 增加处理器名</p>
  */
-@EqualsAndHashCode
 @Slf4j
 @Setter
 @Getter
@@ -53,18 +49,29 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 关心事件集合
      */
-    Set<EventType> careEvents = new HashSet<>();
+    private Set<EventType> careEvents = new HashSet<>();
 
     /**
      * 处理器名
      */
-    private String name = this.toString();
+    private ProcessorId processorId;
+
+    @Autowired
+    private IEventLogService eventLogService;
+
+    @Autowired
+    private IRedoEventLogService redoEventLogService;
+
+    @Autowired
+    private FirstInnerEventHandler firstInnerEventHandler;
+
+    @Autowired
+    private LastInnerEventHandler lastInnerEventHandler;
 
     /**
      * 是否启用
      */
     private boolean enabled = true;
-
 
     public boolean isEnabled() {
         return enabled;
@@ -77,13 +84,24 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 设置处理器名
      *
-     * @param name
+     * @param id
      */
-    public void setProcessorName(String name) {
-        this.name = name;
+    public void setProcessorId(ProcessorId id) {
+        this.processorId = id;
     }
 
-    private static SnowFlakeGenerateIdWorker snowFlakeGenerateIdWorker = new SnowFlakeGenerateIdWorker(5L, 5L);
+    @Override
+    public String getName() {
+        assert null != processorId : "processorId 必须设置";
+        return processorId.getName();
+    }
+
+    @Override
+    public String getId() {
+        assert null != processorId : "processorId 未设置";
+
+        return processorId.getId();
+    }
 
     /**
      * 设置队列服务
@@ -157,17 +175,112 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     @Override
     public void process(EventContext ec) {
-        //TODO 如果是重做的情况需要判断当前process是否仍然需要消费该数据
-        if (!StringUtils.isEmpty(ec.getProcessClzName()) && !this.getClass().getName().equals(ec.getProcessClzName())) {
+        if (!care(ec.getEvent())) {
             return;
         }
-        if (care(ec.getEvent()) || isAllCare) {
-            if (StringUtils.isEmpty(ec.getId())) {
-                ec.setId(snowFlakeGenerateIdWorker.generateNextId());
-                ec.setProcessClzName(this.getClass().getName());
-            }
+
+        try {
             queueService.submit(ec);
+        } catch (Exception ex) {
+            // 入队失败
+            ec.setQueued(false);
+            log.warn("processor:{} submit ec:{} 异常:e", getName(), ec.getRequestId(), ex);
+        }
+
+        try {
+            if (!ec.isRedoEvent()) {
+                eventLogService.saveEvent(ec);
+            }
+        } catch (Exception ex) {
+            log.warn("processor:{} 持久化 ec:{} 异常:", getName(), ec.getRequestId(), ex);
         }
     }
+
+    /**
+     * 重做回调入口(实际工作入口)
+     *
+     * @param ec
+     */
+    public void onProcess(EventContext ec) {
+        /// first
+        firstInnerEventHandler.handle(ec);
+
+        for (IEventHandler handler : getEventHandlers()) {
+
+            // 不关心
+            if (!handler.care(ec.getEvent())) {
+                continue;
+            }
+
+            if (ec.isRedoEvent()) {
+                onRedoEvent(ec, handler);
+            } else {
+                onFreshEvent(ec, handler);
+            }
+        }
+
+        /// last todo 异常处理（可能死循环）
+        lastInnerEventHandler.handle(ec);
+    }
+
+    /**
+     * 处理新鲜事件
+     *
+     * @return
+     */
+    public void onFreshEvent(EventContext ec, IEventHandler handler) {
+        long start = System.currentTimeMillis();
+
+        try {
+            /// 处理成功
+            if (handler.handle(ec)) {
+                log.debug("{} handle ec:{} 成功, cost:{}",
+                        handler.getName(), ec.getId(), System.currentTimeMillis() - start);
+            }
+            /// 处理失败
+            else {
+                log.info("{} handle ec:{} 失败", handler.getName(), ec.getId());
+                redoEventLogService.saveRedoEvent(ec, handler);
+            }
+        } catch (Exception e) {
+            log.warn("handler {} handle ec:{} 异常:", handler.getName(), ec.getId(), e);
+        }
+    }
+
+    /**
+     * 重做消息统一处理方法
+     *
+     * @param ec
+     * @param handler
+     * @return
+     */
+    public void onRedoEvent(EventContext ec, IEventHandler handler) {
+        // 重做不包含当前handler
+        if (!ec.getRedoHandlerIds().contains(handler.getId())) {
+            return;
+        }
+
+        try {
+            /// 重做成功
+            if (handler.handle(ec)) {
+                /// 删除ec中的失败标记
+                ec.cleanRedoFlag(handler);
+
+                log.info("{} reHandle ec:{} 成功", handler.getName(), ec);
+
+                redoEventLogService.removeRedoEvent(ec, handler);
+            }
+            /// 重做失败
+            else {
+                /// 打印日志，啥也不做
+                log.info("{} reHandle ec:{} 失败", handler.getName(), ec.getId());
+            }
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug("handler {} reHandle ec:{} 异常:", handler.getName(), ec.getId(), e);
+            }
+        }
+    }
+
 
 }

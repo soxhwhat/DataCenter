@@ -8,12 +8,15 @@ import lombok.Data;
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
- * @author  ajian.zheng@juphoon.com
- * @date    2/18/22 11:13 AM
- * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
+ * @author ajian.zheng@juphoon.com
+ * @date 2/18/22 11:13 AM
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Data
 public class EventQueueConfig implements IConfig {
+
+    private String type;
+
     /**
      * 内存队列大小
      */

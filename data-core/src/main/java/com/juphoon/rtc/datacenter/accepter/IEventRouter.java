@@ -9,6 +9,10 @@ import com.juphoon.rtc.datacenter.api.EventContext;
  */
 public interface IEventRouter {
 
-    void router(EventContext ec) throws Exception;
-
+    /**
+     * 消息路由
+     *
+     * @param ec
+     */
+    void router(EventContext ec);
 }

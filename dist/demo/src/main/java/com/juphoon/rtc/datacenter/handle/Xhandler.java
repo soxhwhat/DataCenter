@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.handle;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.property.TestConfig;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Xhandler extends AbstractCareAllEventHandler {
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.Xhandler;
+    }
+
     @Autowired
     private TestConfig testConfig;
 

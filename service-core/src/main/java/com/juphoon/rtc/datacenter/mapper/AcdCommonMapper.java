@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mapper;
+package com.juphoon.rtc.datacenter.log.sqllite.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

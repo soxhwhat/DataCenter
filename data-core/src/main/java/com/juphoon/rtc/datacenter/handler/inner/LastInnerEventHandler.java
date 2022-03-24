@@ -1,9 +1,13 @@
 package com.juphoon.rtc.datacenter.handler.inner;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.mq.IEventQueueService;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
+import com.juphoon.rtc.datacenter.log.IEventLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>通用最后处理句柄</p>
@@ -16,24 +20,36 @@ import lombok.extern.slf4j.Slf4j;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
+@Component
+@Scope("prototype")
 public class LastInnerEventHandler extends AbstractCareAllEventHandler {
-
-    private IEventQueueService queueService;
-
-    public LastInnerEventHandler(IEventQueueService queueService){
-        this.queueService = queueService;
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.LAST;
     }
+    
+    @Autowired
+    private IEventLogService eventLogService;
 
     @Override
     public boolean handle(EventContext ec) {
-        // TODO
-        log.info("LastInnerEventHandler正在执行中,ec:{}", ec);
-        queueService.processOk(ec);
+        if (ec.processOk()) {
+            eventLogService.removeEvent(ec);
+        }
+
+        log.info("{} process ec:{},{} ret:{},cost:{}",
+                ec.getProcessorId(),
+                ec.getEvent().eventType(),
+                ec.getEvent().eventNumber(),
+                ec.processOk(),
+                System.currentTimeMillis() - ec.getBeginTimestamp()
+        );
+
         return true;
     }
 
     @Override
-    public boolean isRedo() {
-        return false;
+    public String getId() {
+        return this.getClass().getName();
     }
 }

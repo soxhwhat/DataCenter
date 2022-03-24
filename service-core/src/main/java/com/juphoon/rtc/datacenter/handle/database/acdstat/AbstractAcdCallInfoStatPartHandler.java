@@ -5,7 +5,7 @@ import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.StatType;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatPartPO;
-import com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatPartMapper;
+import com.juphoon.rtc.datacenter.log.sqllite.mapper.AcdCallInfoStatPartMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

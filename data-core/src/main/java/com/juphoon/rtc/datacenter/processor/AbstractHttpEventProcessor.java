@@ -17,6 +17,7 @@ public abstract class AbstractHttpEventProcessor extends AbstractEventProcessor 
      *
      * @param ec
      * @param handler
+     * @return
      */
     public abstract boolean exchange(EventContext ec, AbstractHttpEventHandler handler);
 }

@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mq;
+package com.juphoon.rtc.datacenter.mq.service;
 
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 
@@ -8,7 +8,6 @@ import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
  * @Description:
  */
 public abstract class AbstractEventQueueService implements IEventQueueService {
-
     protected AbstractEventProcessor processor;
 
     /**
@@ -19,6 +18,7 @@ public abstract class AbstractEventQueueService implements IEventQueueService {
     public void setProcessor(AbstractEventProcessor processor) {
         this.processor = processor;
     }
+
     /**
      * 获取处理器
      */
@@ -26,8 +26,5 @@ public abstract class AbstractEventQueueService implements IEventQueueService {
         return processor;
     }
 
-    /// TODO
-    /// 线程池消费事件   回调到 process 开启消费流程
-    /// processor.handle(ec);
 
 }

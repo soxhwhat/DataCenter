@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.StatType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AcdCallInfoStatPart30MinHandler extends AbstractAcdCallInfoStatPartHandler {
     @Override
-    public String getName() {
-        return "话务统计30分钟Handler";
+    public HandlerId handlerId() {
+        return HandlerId.AcdCallInfoStatPart30MinHandler;
     }
 
     @Override

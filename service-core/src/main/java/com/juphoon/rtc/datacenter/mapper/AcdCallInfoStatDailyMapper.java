@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.mapper;
+package com.juphoon.rtc.datacenter.log.sqllite.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

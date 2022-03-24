@@ -1,15 +1,16 @@
 package com.juphoon.rtc.datacenter.handler;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.ICare;
+import com.juphoon.rtc.datacenter.api.INamed;
 
 /**
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/16 21:54
  * @Description:
  */
-public interface IEventHandler extends ICare {
-
+public interface IEventHandler extends ICare, INamed {
     /**
      * 执行入口
      *
@@ -20,9 +21,27 @@ public interface IEventHandler extends ICare {
     boolean handle(EventContext ec) throws Exception;
 
     /**
-     * 重做
+     * 必须指定一个handlerId
      *
      * @return
      */
-    boolean isRedo();
+    HandlerId handlerId();
+
+    /**
+     * 获取handler 名
+     * @return
+     */
+    @Override
+    default String getName() {
+        return handlerId().getName();
+    }
+
+    /**
+     * 获取handler Id
+     * @return
+     */
+    @Override
+    default String getId() {
+        return handlerId().getId();
+    }
 }

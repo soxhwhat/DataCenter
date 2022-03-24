@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.IEventMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.log.sqllite.mapper.IEventMapper">
 
     <insert id="initEventTable">
         create table if not exists t_event (

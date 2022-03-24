@@ -1,11 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
-import com.juphoon.rtc.datacenter.api.Event;
-import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.StatType;
+import com.juphoon.rtc.datacenter.api.*;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO;
-import com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatDailyMapper;
+import com.juphoon.rtc.datacenter.log.sqllite.mapper.AcdCallInfoStatDailyMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +23,11 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 @Slf4j
 @Component
 public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallInfoStatDailyPO> {
+
+    @Override
+    public HandlerId handlerId() {
+        return HandlerId.AcdCallInfoStatDailyHandler;
+    }
 
     @Autowired
     private AcdCallInfoStatDailyMapper acdCallInfoStatDailyMapper;
