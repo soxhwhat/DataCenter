@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.api;
+package com.juphoon.rtc.datacenter.mq.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

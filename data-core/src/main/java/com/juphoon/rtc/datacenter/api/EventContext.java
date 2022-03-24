@@ -23,6 +23,7 @@ public class EventContext {
      * 消息id
      */
     private String id;
+
     /**
      * 消息体
      */

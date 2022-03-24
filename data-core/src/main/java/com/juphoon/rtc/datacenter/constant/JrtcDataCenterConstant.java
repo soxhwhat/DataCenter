@@ -26,7 +26,6 @@ public class JrtcDataCenterConstant {
     public static final String POINT = ".";
     public static final String TAGS = "tags";
 
-
     //***************** 数据库模块 bean-name ***********************************
     /**
      * DatabaseEventProcessor bean name

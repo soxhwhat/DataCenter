@@ -2,7 +2,7 @@ package com.juphoon.rtc.datacenter.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.juphoon.rtc.datacenter.api.EventPO;
+import com.juphoon.rtc.datacenter.mq.entity.EventPO;
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import org.apache.ibatis.annotations.Mapper;
 

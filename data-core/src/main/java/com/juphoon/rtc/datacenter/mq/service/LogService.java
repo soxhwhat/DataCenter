@@ -1,9 +1,9 @@
-package com.juphoon.rtc.datacenter.service;
+package com.juphoon.rtc.datacenter.mq.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.EventPO;
-import com.juphoon.rtc.datacenter.api.RedoPO;
+import com.juphoon.rtc.datacenter.mq.entity.EventPO;
+import com.juphoon.rtc.datacenter.mq.entity.RedoPO;
 
 import java.util.List;
 

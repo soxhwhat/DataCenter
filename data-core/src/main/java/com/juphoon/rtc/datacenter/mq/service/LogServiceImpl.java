@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.service;
+package com.juphoon.rtc.datacenter.mq.service;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -6,12 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.EventPO;
-import com.juphoon.rtc.datacenter.api.RedoPO;
+import com.juphoon.rtc.datacenter.mq.entity.EventPO;
+import com.juphoon.rtc.datacenter.mq.entity.RedoPO;
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.mapper.IEventMapper;
 import com.juphoon.rtc.datacenter.mapper.IRedoMapper;
-import com.juphoon.rtc.datacenter.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

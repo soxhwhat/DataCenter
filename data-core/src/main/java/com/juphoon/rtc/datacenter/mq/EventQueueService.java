@@ -1,11 +1,9 @@
 package com.juphoon.rtc.datacenter.mq;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.RedoPO;
-import com.juphoon.rtc.datacenter.mq.mapper.ILogMapper;
+import com.juphoon.rtc.datacenter.mq.entity.RedoPO;
+import com.juphoon.rtc.datacenter.mq.service.LogService;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
-import com.juphoon.rtc.datacenter.handler.IEventHandler;
-import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
@@ -26,8 +24,8 @@ public class EventQueueService extends AbstractEventQueueService {
     /**
      * with default property
      */
-    public EventQueueService(AbstractEventProcessor processor,LogService logService) {
-        this(new EventQueueConfig(),processor,logService);
+    public EventQueueService(AbstractEventProcessor processor, LogService logService) {
+        this(new EventQueueConfig(), processor, logService);
     }
 
     /**
@@ -40,7 +38,7 @@ public class EventQueueService extends AbstractEventQueueService {
         this.processor = processor;
         this.logService = logService;
         DisruptorEventQueue queue = new DisruptorEventQueue();
-        queue.init(config , this);
+        queue.init(config, this);
         this.eventQueue = queue;
     }
 
@@ -72,17 +70,17 @@ public class EventQueueService extends AbstractEventQueueService {
                 logService.updateEventRetry(ec);
             }
         } catch (Exception e) {
-            log.error("插入事件开始日志错误:{}" , e);
+            log.error("插入事件开始日志错误:{}", e);
         }
     }
 
     @Override
     public void redo(EventContext ec, String handleName) {
         //如果已经重做过了 说明已存在数据库中 则不写入重做记录中 避免数据重复
-        log.info("redo方法执行中:{}" ,ec);
+        log.info("redo方法执行中:{}", ec);
         if (ec.getRetryCount() == 0) {
             String redoId = logService.handleFailLog(ec, handleName);
-            ec.getRedoClzMap().put(handleName,redoId);
+            ec.getRedoClzMap().put(handleName, redoId);
         }
     }
 
@@ -93,7 +91,7 @@ public class EventQueueService extends AbstractEventQueueService {
     @Override
     public void processOk(EventContext ec) {
         List<RedoPO> redoDataByEventId = logService.getRedoDataByEventId(ec.getId());
-        if (CollectionUtils.isEmpty(redoDataByEventId)){
+        if (CollectionUtils.isEmpty(redoDataByEventId)) {
             logService.allSuccess(ec.getId());
         } else {
             logService.updateEventReady(ec.getId());

@@ -4,7 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.juphoon.rtc.datacenter.api.RedoPO;
+import com.juphoon.rtc.datacenter.mq.entity.RedoPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

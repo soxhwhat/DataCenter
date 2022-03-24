@@ -1,6 +1,5 @@
-package com.juphoon.rtc.datacenter.service;
+package com.juphoon.rtc.datacenter.mq.service;
 
-import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class LogServiceBuilder {
     private LogService logService;
 
     @PostConstruct
-    public void initTables(){
+    public void initTables() {
         logService.initTables();
     }
 }
