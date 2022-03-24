@@ -1,12 +1,13 @@
-package com.juphoon.rtc.datacenter.processor;
+package com.juphoon.rtc.datacenter.service;
 
-import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
-import com.juphoon.rtc.datacenter.mq.service.LogService;
-import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
+import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.mq.EventQueueService;
+import com.juphoon.rtc.datacenter.mq.service.LogService;
+import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
+import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class EventProcessorBuilder {
          */
         public DataServiceBuilder.Builder end() {
             if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService(processor,logService);
+                this.eventQueueService = new EventQueueService(processor, logService);
             }
 
             this.processor.setQueueService(this.eventQueueService);
@@ -68,7 +69,7 @@ public class EventProcessorBuilder {
          * @return
          */
         public Builder mq(EventQueueConfig config) {
-            this.eventQueueService = new EventQueueService(config,processor,this.logService);
+            this.eventQueueService = new EventQueueService(config, processor, this.logService);
             return this;
         }
 
@@ -83,13 +84,14 @@ public class EventProcessorBuilder {
 
             if (!handler.isEnabled()) {
                 log.info("* handler {} disabled *", handler.getName());
+            } else {
+                handler.setProcessor(this.processor);
+                handlers.add(handler);
             }
 
-            handler.setProcessor(this.processor);
-            handler.setLogService(this.logService);
-            handlers.add(handler);
             return this;
         }
+
         /**
          * 添加处理句柄
          *
@@ -104,7 +106,7 @@ public class EventProcessorBuilder {
         public IEventProcessor build() {
             // TODO
             if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService(this.processor,this.logService);
+                this.eventQueueService = new EventQueueService(this.processor, this.logService);
             }
 
             this.processor.setQueueService(this.eventQueueService);

@@ -77,6 +77,9 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
         }
     }
 
+    /**
+     * |....？.>.|...>...|......|...>....
+     */
     public List<T> splitStatTime(T po, Long beginTimestamp, Long endTimestamp, StatType type) {
         long remainder = beginTimestamp % type.getInterval();
         long statTime = beginTimestamp - remainder;

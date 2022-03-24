@@ -38,6 +38,8 @@ public class JrtcDataCenterProperties {
          */
         private List<String> hosts;
     }
+    // iron.datacenter.agree.enabled=true
+    // iron.datacenter.
 
     /**
      * 客服报表统计
@@ -69,7 +71,7 @@ public class JrtcDataCenterProperties {
          */
         private boolean callInfoDailyEnabled = true;
     }
-
+    //iron.datacenter.acd-stat.enabled=true
 
 
 }

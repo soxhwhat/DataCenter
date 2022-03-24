@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.service;
 
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
-import com.juphoon.rtc.datacenter.processor.EventProcessorBuilder;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,14 +28,14 @@ public class DataServiceBuilder {
             return EventProcessorBuilder.newProcessor(processor, this);
         }
 
-        public void addProcessor(AbstractEventProcessor processor) {
-            if (processor.isEnabled()) {
+        void addProcessor(AbstractEventProcessor processor) {
+            if (!processor.isEnabled()) {
                 log.info("* processor {} disabled *", processor.getName());
+            } else {
                 processors.add(processor);
             }
         }
 
-        // todo dataservice 需要把 processor 模块包装起来
         public DataService build() {
             return new DataService(processors);
         }
