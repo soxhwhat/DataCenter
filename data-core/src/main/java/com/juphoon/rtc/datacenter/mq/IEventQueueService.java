@@ -25,9 +25,16 @@ public interface IEventQueueService {
     /// 线程池消费事件   回调到 process 开启消费流程
     /// processor.handle(ec);
 
-    void redo(EventContext ec);
+    void redo(EventContext ec,String handleName);
 
+    /**
+     * 1、判断当前事件是否还有需要重做的handle
+     * 2、如没有 则删除event事件
+     * 3、如有 则不处理 等待下次扫描重做
+     * @param ec
+     */
     void processOk(EventContext ec);
 
-    void redoOk(EventContext ec);
+    void redoOk(String redoId);
+
 }

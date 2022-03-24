@@ -16,12 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class FirstInnerEventHandler extends AbstractCareAllEventHandler {
+
     @Override
     public boolean handle(EventContext ec) {
         log.info("FirstInnerEventHandler 正在执行中,ec:{}", ec);
-        // TODO
-        ec.handle();
-
         return true;
     }
 }

@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.mq.EventQueueService;
 import lombok.extern.slf4j.Slf4j;
+import com.juphoon.rtc.datacenter.service.LogService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class EventProcessorBuilder {
 
     public static class Builder {
         private AbstractEventProcessor processor;
+        private LogService logService;
 
         private DataServiceBuilder.Builder dataServiceBuilder;
 
@@ -46,7 +48,7 @@ public class EventProcessorBuilder {
          */
         public DataServiceBuilder.Builder end() {
             if (null == this.eventQueueService) {
-                this.eventQueueService = new EventQueueService(this.processor);
+                this.eventQueueService = new EventQueueService(processor,logService);
             }
 
             this.processor.setQueueService(this.eventQueueService);
@@ -66,7 +68,7 @@ public class EventProcessorBuilder {
          * @return
          */
         public Builder mq(EventQueueConfig config) {
-            this.eventQueueService = new EventQueueService(config, processor);
+            this.eventQueueService = new EventQueueService(config,processor,this.logService);
             return this;
         }
 
@@ -84,8 +86,33 @@ public class EventProcessorBuilder {
             }
 
             handler.setProcessor(this.processor);
+            handler.setLogService(this.logService);
             handlers.add(handler);
             return this;
+        }
+        /**
+         * 添加处理句柄
+         *
+         * @param logService
+         * @return
+         */
+        public Builder logService(LogService logService) {
+            this.logService = logService;
+            return this;
+        }
+
+        public IEventProcessor build() {
+            // TODO
+            if (null == this.eventQueueService) {
+                this.eventQueueService = new EventQueueService(this.processor,this.logService);
+            }
+
+            this.processor.setQueueService(this.eventQueueService);
+            this.processor.addEventHandler(new FirstInnerEventHandler());
+            this.processor.addEventHandlers(handlers);
+            this.processor.addEventHandler(new LastInnerEventHandler(eventQueueService));
+
+            return processor;
         }
     }
 }

@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,15 +18,26 @@ import java.util.List;
 @Setter
 @ToString
 public class EventContext {
+
+    /**
+     * 消息id
+     */
+    private String id;
     /**
      * 消息体
      */
     private Event event;
 
     /**
+     * key为重做的handle名称   value为redoId
      * 重做handle的Class列表
      */
-    private List<String> redoClzList;
+    private Map<String,String> redoClzMap = new HashMap<>();
+
+    /**
+     * process的类名
+     */
+    private String processClzName;
 
     /**
      * 创建时间

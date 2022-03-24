@@ -52,11 +52,13 @@ public class DisruptorEventQueue implements IEventQueue{
     public boolean push(EventContext ec) throws Exception {
         try {
             disruptor.publishEvent((eventContext, l) -> {
+                eventContext.setId(ec.getId());
                 eventContext.setEvent(ec.getEvent());
                 eventContext.setBeginTimestamp(ec.getBeginTimestamp());
                 eventContext.setCreatedTimestamp(ec.getBeginTimestamp());
                 eventContext.setRetryCount(ec.getRetryCount());
-                eventContext.setRedoClzList(ec.getRedoClzList());
+                eventContext.setRedoClzMap(ec.getRedoClzMap());
+                eventContext.setProcessClzName(ec.getProcessClzName());
             });
         } catch (Exception e){
             log.error("push内存队列失败:{}",e);

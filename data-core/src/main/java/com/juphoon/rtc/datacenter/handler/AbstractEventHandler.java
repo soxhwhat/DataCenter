@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.ICare;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
+import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.Setter;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
 @Setter
 public abstract class AbstractEventHandler implements IEventHandler, ICare {
 
-    protected AbstractEventProcessor processor;
+    public AbstractEventProcessor processor;
+    public LogService logService;
 
     @Override
     public boolean care(Event event) {
@@ -30,7 +32,7 @@ public abstract class AbstractEventHandler implements IEventHandler, ICare {
 
     @Override
     public boolean isRedo() {
-        return false;
+        return true;
     }
 
     /**

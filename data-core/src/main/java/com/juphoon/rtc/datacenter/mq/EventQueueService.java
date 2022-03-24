@@ -1,10 +1,13 @@
 package com.juphoon.rtc.datacenter.mq;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.RedoPO;
 import com.juphoon.rtc.datacenter.mq.mapper.ILogMapper;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
+import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -18,13 +21,13 @@ public class EventQueueService extends AbstractEventQueueService {
 
     protected IEventQueue eventQueue;
 
-    protected ILogMapper logMapper;
+    protected LogService logService;
 
     /**
      * with default property
      */
-    public EventQueueService(AbstractEventProcessor processor) {
-        this(new EventQueueConfig(),processor);
+    public EventQueueService(AbstractEventProcessor processor,LogService logService) {
+        this(new EventQueueConfig(),processor,logService);
     }
 
     /**
@@ -32,10 +35,10 @@ public class EventQueueService extends AbstractEventQueueService {
      *
      * @param config
      */
-    public EventQueueService(EventQueueConfig config,AbstractEventProcessor processor) {
+    public EventQueueService(EventQueueConfig config, AbstractEventProcessor processor, LogService logService) {
         // todo 后期添加动态加载logMapper  支持不同的mq支持不同的log数据源
         this.processor = processor;
-//        this.logMapper = SpringBeanUtils.getBean(ILogMapper.class);
+        this.logService = logService;
         DisruptorEventQueue queue = new DisruptorEventQueue();
         queue.init(config , this);
         this.eventQueue = queue;
@@ -54,39 +57,51 @@ public class EventQueueService extends AbstractEventQueueService {
         // 1. 数据落地
         // 2. 有界内存队列
         // 3. 驱动线程池消费队列
+        ec.handle();
         log.info("ec:{}", ec);
-//        logMapper.insertEvent(ec);
+        boolean pushSuccess = true;
         try {
             eventQueue.push(ec);
         } catch (Exception e) {
-            //TODO 此时一般为内存队列溢出 直接写入重做日志  后续最好加入熔断
-            redo(ec);
-
+            pushSuccess = false;
+        }
+        try {
+            if (ec.getRetryCount() == 0) {
+                logService.eventBeginLog(ec, pushSuccess);
+            } else {
+                logService.updateEventRetry(ec);
+            }
+        } catch (Exception e) {
+            log.error("插入事件开始日志错误:{}" , e);
         }
     }
-
-    /// TODO
-    /// 线程池消费事件   回调到 process 开启消费流程
-    /// processor.handle(ec);
 
     @Override
-    public void redo(EventContext ec) {
+    public void redo(EventContext ec, String handleName) {
         //如果已经重做过了 说明已存在数据库中 则不写入重做记录中 避免数据重复
-        if (ec.getRetryCount() < 0) {
-            List<IEventHandler> eventHandlers = processor.getEventHandlers();
-            for (IEventHandler handle : eventHandlers) {
-//                logMapper.insertHandleData(ec, handle.getClass().getName());
-            }
+        log.info("redo方法执行中:{}" ,ec);
+        if (ec.getRetryCount() == 0) {
+            String redoId = logService.handleFailLog(ec, handleName);
+            ec.getRedoClzMap().put(handleName,redoId);
         }
     }
 
+    /**
+     * 1、判断重做日志中是否存在
+     * @param ec
+     */
     @Override
     public void processOk(EventContext ec) {
-//        logMapper.removeEvent(ec);
+        List<RedoPO> redoDataByEventId = logService.getRedoDataByEventId(ec.getId());
+        if (CollectionUtils.isEmpty(redoDataByEventId)){
+            logService.allSuccess(ec.getId());
+        } else {
+            logService.updateEventReady(ec.getId());
+        }
     }
 
     @Override
-    public void redoOk(EventContext ec) {
-//        logMapper.removeHandleData(ec);
+    public void redoOk(String redoId) {
+        logService.redoSuccess(redoId);
     }
 }

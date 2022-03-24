@@ -1,9 +1,11 @@
 package com.juphoon.rtc.datacenter.handle.kafka;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import org.springframework.kafka.core.KafkaTemplate;
+
 
 /**
  * @Author: Zhiwei.zhai
@@ -11,8 +13,6 @@ import org.springframework.kafka.core.KafkaTemplate;
  * @Description:
  */
 public abstract class AbstractKafkaHandler extends AbstractEventHandler {
-
-    public DataListenableFutureCallback callback = new DataListenableFutureCallback();
 
     public KafkaProcessor kafkaProcessor;
 
@@ -28,7 +28,15 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
     }
 
     public String getTopic(EventContext ec) {
-        return getKafkaProcessor().getConfig().collectionMap.get(ec.getEvent().getType().toString());
+        Integer type = ec.getEvent().getEventType().getType();
+        if (type.equals(EventType.TICKER_STATUS_WAIT.getType())){
+            return "ticket_events";
+        } else if (type.equals(EventType.STAFF_BEAT)){
+            return "agent_status";
+        } else if (type.equals(EventType.QUEUE_BEAT)){
+            return "queue.status";
+        }
+        return null;
     }
 
 }

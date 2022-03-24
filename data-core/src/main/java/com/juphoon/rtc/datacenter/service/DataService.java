@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.service;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -27,7 +28,9 @@ public class DataService {
      */
     public void commit(EventContext ec) {
         for (IEventProcessor processor : processors) {
-            processor.process(ec);
+            EventContext eventContext = new EventContext();
+            BeanUtils.copyProperties(ec,eventContext);
+            processor.process(eventContext);
         }
     }
 

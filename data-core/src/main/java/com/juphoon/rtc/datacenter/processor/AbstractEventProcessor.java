@@ -10,9 +10,13 @@ import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.IEventQueueService;
+import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import com.juphoon.rtc.datacenter.utils.SnowFlakeGenerateIdWorker;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,6 +29,7 @@ import java.util.Set;
  * @update:
  * <p>1. 2022-03-22. ajian.zheng 增加处理器名</p>
  */
+@EqualsAndHashCode
 @Slf4j
 @Setter
 @Getter
@@ -78,6 +83,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     public void setProcessorName(String name) {
         this.name = name;
     }
+
+    private static SnowFlakeGenerateIdWorker snowFlakeGenerateIdWorker = new SnowFlakeGenerateIdWorker(5L, 5L);
 
     /**
      * 设置队列服务
@@ -151,7 +158,15 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     @Override
     public void process(EventContext ec) {
+        //TODO 如果是重做的情况需要判断当前process是否仍然需要消费该数据
+        if (!StringUtils.isEmpty(ec.getProcessClzName()) && !this.getClass().getName().equals(ec.getProcessClzName())) {
+            return;
+        }
         if (care(ec.getEvent()) || isAllCare) {
+            if (StringUtils.isEmpty(ec.getId())) {
+                ec.setId(snowFlakeGenerateIdWorker.generateNextId());
+                ec.setProcessClzName(this.getClass().getName());
+            }
             queueService.submit(ec);
         }
     }
