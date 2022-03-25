@@ -48,6 +48,9 @@ spring:
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    host: 192.168.15.254
+    password: juphoon419708
 mybatis-plus:
   global-config:
     db-config:
@@ -58,15 +61,22 @@ mybatis-plus:
 iron:
   debug:
     enabled: true
+  event:
+    mongo:
+      0: ticket_event
+    kafka:
+      0: ticket_event
   cube:
-    enabled: false
-notice:
-  config:
-    uri: http://127.0.0.1:8089
-    max-connect-per-route: 2
-    max-total-connect: 2
-notice2:
-  config:
-    uri: http://127.0.0.1:8089
-    max-connect-per-route: 3
-    max-total-connect: 3
+    enabled: true
+    serverCfg: D:\service\d01\server.cfg
+    debugMode: true
+    libraryName: CommonJNI
+
+  datacenter:
+    agree:
+      hosts:
+        - http://127.0.0.1:10099
+      enabled: true
+  threadpool:
+    enabled: true
+
