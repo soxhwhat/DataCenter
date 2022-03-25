@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.api;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -15,20 +14,51 @@ import java.util.Map;
 @Setter
 @ToString
 public class Event {
+    private Integer domainId;
+
+    private Integer appId;
+
+    private String uuid;
+
     /**
-     * 消息体
+     * 事件类型
      */
     private Integer type;
 
+    /**
+     * 事件编号
+     */
     private Integer number;
 
-    private Map<String, Object> params;
+    /**
+     * 其他参数
+     */
+    private Map<String, String> params;
 
+
+
+
+    //************************ 方法区 **************************
+
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    /**
+     * 生成事件类型
+     *
+     * @return
+     */
     public EventType getEventType() {
         return new EventType(type, number);
     }
 
-    public Map<String, Object> getParams() {
+    public Map<String, String> getParams() {
         return params;
     }
 
@@ -46,7 +76,7 @@ public class Event {
      * @return
      */
     public long beginTimestamp() {
-        return (Long) params.get("beginTimestamp");
+        return Long.valueOf(params.get("beginTimestamp"));
     }
 
     /**
@@ -55,36 +85,28 @@ public class Event {
      * @return
      */
     public long endTimestamp() {
-        return (Long) params.get("endTimestamp");
+        return Long.valueOf(params.get("endTimestamp"));
     }
 
 
     public int domainId() {
-        return (int) params.get("domainId");
+        return domainId;
     }
 
     public int appId() {
-        return (int) params.get("appId");
+        return appId;
     }
 
     public long duration() {
-        return (long) params.get("duration");
+        return Long.valueOf(params.get("duration"));
     }
 
     public short endType() {
-        return (short) params.get("endType");
+        return Short.valueOf(params.get("endType"));
     }
-
-    public short endNum() {
-        return (short) params.get("eventNum");
-    }
-
-//    public short eventType() {
-//        return (short) params.get("eventType");
-//    }
 
     public String skill() {
-        return (String) params.get("skill");
+        return params.get("skill");
     }
 
 }

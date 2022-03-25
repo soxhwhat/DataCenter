@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 //@Component
 //@ConditionalOnProperty(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX, name = "queue", havingValue = "sample")
-public class SampleEventQueueServiceImpl extends AbstractEventQueueService {
+public class SimpleEventQueueServiceImpl extends AbstractEventQueueService {
     @Override
     public void submit(EventContext ec) throws Exception {
         log.info("submit ec:{}", ec);

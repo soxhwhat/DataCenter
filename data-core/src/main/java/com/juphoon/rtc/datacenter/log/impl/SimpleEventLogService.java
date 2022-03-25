@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 //@ConditionalOnProperty(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX, name = "queue", havingValue = "sample")
-public class SampleEventLogService implements IEventLogService {
+public class SimpleEventLogService implements IEventLogService {
     @Override
     public void saveEvent(EventContext ec) {
         log.info("saveElement:{}", ec);

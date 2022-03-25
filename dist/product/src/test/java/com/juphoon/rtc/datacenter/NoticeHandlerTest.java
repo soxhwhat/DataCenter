@@ -34,7 +34,7 @@ public class NoticeHandlerTest {
         Event event = new Event();
         event.setType(25);
         event.setNumber(1);
-        Map<String, Object> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         event.setParams(map);
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);

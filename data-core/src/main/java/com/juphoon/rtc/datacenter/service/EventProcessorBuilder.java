@@ -6,7 +6,7 @@ import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.mq.service.AbstractEventQueueService;
 import com.juphoon.rtc.datacenter.mq.service.impl.DisruptorEventQueueServiceImpl;
-import com.juphoon.rtc.datacenter.mq.service.impl.SampleEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.mq.service.impl.SimpleEventQueueServiceImpl;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,7 +74,7 @@ public class EventProcessorBuilder {
          */
         public Builder mq(EventQueueConfig config) {
             if (JrtcDataCenterConstant.DATA_CENTER_QUEUE_MODE_SIMPLE.equalsIgnoreCase(config.getType())) {
-                this.eventQueueService = new SampleEventQueueServiceImpl();
+                this.eventQueueService = new SimpleEventQueueServiceImpl();
             } else {
                 this.eventQueueService = new DisruptorEventQueueServiceImpl(config);
             }

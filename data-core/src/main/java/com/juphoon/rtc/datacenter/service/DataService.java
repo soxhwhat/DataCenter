@@ -32,7 +32,7 @@ public class DataService {
         log.debug("commit ec:{}", ec);
 
         for (IEventProcessor processor : processors) {
-            log.debug("{} process ec:{}", processor.getName(), ec.getRequestId());
+            log.debug("{} process ec:{}", processor.getName(), ec.body());
 
             /// 若是重做消息且处理器ID匹配
             if (ec.isRedoEvent() && ec.getProcessorId().equals(processor.getId())) {
@@ -48,6 +48,15 @@ public class DataService {
                 processor.process(copy);
             }
         }
+    }
+
+    /**
+     * 批量提交
+     *
+     * @param contexts
+     */
+    public void commit(List<EventContext> contexts) {
+        contexts.forEach(this::commit);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.mq.service;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 
 /**
  * @Author: Zhiwei.zhai

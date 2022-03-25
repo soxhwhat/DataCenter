@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.StatType;
 import lombok.Getter;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  */
 @Getter
 @Component
+@Scope("prototype")
 public class DatabaseEventProcessor extends AbstractEventProcessor {
     public DatabaseEventProcessor() {
     }

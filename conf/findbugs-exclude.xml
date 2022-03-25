@@ -4,5 +4,6 @@
         <Package name="Account"/>
         <Package name="AuthServer"/>
         <Package name="PortalPlatform"/>
+        <Package name="DataCollection"/>
     </Match>
 </FindBugsFilter>

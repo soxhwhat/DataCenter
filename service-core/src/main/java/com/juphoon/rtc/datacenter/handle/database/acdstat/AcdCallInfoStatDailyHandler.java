@@ -54,19 +54,9 @@ public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallI
 
     @Override
     public AcdCallInfoStatDailyPO poFromEvent(Event event) {
-        Map<String, Object> params = event.getParams();
 
         AcdCallInfoStatDailyPO po = new AcdCallInfoStatDailyPO();
-
-
-        po.setAppId((Integer) params.get("appId"));
-        po.setDomainId((Integer) params.get("domainId"));
-        po.setCnt(1);
-        po.setDuration((Long) params.get("duration"));
-        po.setEndType((Short) params.get("endType"));
-        po.setEventNum((Short) params.get("eventNum"));
-        po.setEventType((Short) params.get("eventType"));
-        po.setSkill((String) params.get("skill"));
+        po.fromEvent(event);
 
         return po;
     }

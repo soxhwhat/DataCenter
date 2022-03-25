@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +25,13 @@ public class Test {
 
     @SneakyThrows
     @org.junit.jupiter.api.Test
-    public void t1(){
+    public void t1() {
         Event event = new Event();
         event.setType(0);
         event.setNumber(0);
-        Map<String ,Object> map = new HashMap();
-        map.put("beginTimeStamp","2021-05-06 10:20:30");
-        map.put("beginTimeStamp","2021-05-06 10:30:30");
+        Map<String, String> map = new HashMap<>();
+        map.put("beginTimeStamp", "2021-05-06 10:20:30");
+        map.put("beginTimeStamp", "2021-05-06 10:30:30");
         event.setParams(map);
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);
@@ -45,20 +41,20 @@ public class Test {
 
     @SneakyThrows
     @org.junit.jupiter.api.Test
-    public void databaseTest(){
+    public void databaseTest() {
         Event event = new Event();
         event.setType(10);
         event.setNumber(1);
-        Map<String ,Object> map = new HashMap(8);
-        map.put("appId",0);
-        map.put("domainId",100645);
-        map.put("duration",(long) 1000);
-        map.put("endType",(short) 0);
-        map.put("eventNum",(short) 1);
-        map.put("eventType",(short) 10);
-        map.put("skill","111");
-        map.put("beginTimestamp", 1647935486000L);
-        map.put("endTimestamp", 1647942686000L);
+        Map<String, String> map = new HashMap<>(8);
+        map.put("appId", "0");
+        map.put("domainId", "100645");
+        map.put("duration", "1000");
+        map.put("endType", "0");
+        map.put("eventNum", "1");
+        map.put("eventType", "10");
+        map.put("skill", "111");
+        map.put("beginTimestamp", "1647935486000");
+        map.put("endTimestamp", "1647942686000");
         event.setParams(map);
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);

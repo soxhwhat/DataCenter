@@ -3,7 +3,6 @@ package com.juphoon.rtc.datacenter.api;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -17,8 +16,9 @@ import java.util.StringJoiner;
  */
 @Getter
 @Setter
-@ToString
 public class EventContext {
+
+    private String from;
 
     /**
      * rpc magic

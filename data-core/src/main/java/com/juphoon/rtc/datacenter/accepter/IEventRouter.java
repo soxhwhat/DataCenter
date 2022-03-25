@@ -1,6 +1,9 @@
 package com.juphoon.rtc.datacenter.accepter;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.mq.service.IEventQueueService;
+
+import java.util.List;
 
 /**
  * @Author: Zhiwei.zhai
@@ -12,7 +15,7 @@ public interface IEventRouter {
     /**
      * 消息路由
      *
-     * @param ec
+     * @param contexts
      */
-    void router(EventContext ec);
+    void router(List<EventContext> contexts);
 }

@@ -35,6 +35,7 @@ public abstract class AbstractMongoHandler extends AbstractEventHandler {
     public String getCollectionName(EventContext ec) {
         Integer type = ec.getEvent().getEventType().getType();
         String day = DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
+
         if (type.equals(EventType.TICKER_STATUS_WAIT.getType())){
             return "jrtc.events" + UNDER_LINE + day;
         } else if (type.equals(EventType.TICKER_COMPLETE)){

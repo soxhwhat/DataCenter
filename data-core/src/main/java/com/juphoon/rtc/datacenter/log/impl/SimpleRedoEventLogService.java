@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 //@ConditionalOnProperty(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX, name = "queue", havingValue = "sample")
-public class SampleRedoEventLogService implements IRedoEventLogService {
+public class SimpleRedoEventLogService implements IRedoEventLogService {
     @Override
     public void saveRedoEvent(EventContext ec, IEventHandler handler) {
         log.info("saveRedoEvent ec:{},handler:{}", ec, handler.getName());

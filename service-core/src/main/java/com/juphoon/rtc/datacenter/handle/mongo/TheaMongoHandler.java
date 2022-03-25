@@ -1,20 +1,15 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
-import com.juphoon.rtc.datacenter.cube.model.Event;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -28,7 +23,7 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
  */
 @Component
 @Slf4j
-public class TheaMongoHandler extends AbstractMongoHandler{
+public class TheaMongoHandler extends AbstractMongoHandler {
     @Override
     public HandlerId handlerId() {
         return HandlerId.TheaMongoHandler;
@@ -44,36 +39,36 @@ public class TheaMongoHandler extends AbstractMongoHandler{
     @Override
     public List<EventType> careEvents() {
         return Arrays.asList(EventType.TICKER_STATUS_WAIT, EventType.TICKER_STATUS_RING
-                ,EventType.TICKER_STATUS_TALK,EventType.TICKER_STATUS_OVERFLOW
-                ,EventType.TICKER_STATUS_TRANSFER,EventType.TICKER_STATUS_INVITE_AGENT);
+                , EventType.TICKER_STATUS_TALK, EventType.TICKER_STATUS_OVERFLOW
+                , EventType.TICKER_STATUS_TRANSFER, EventType.TICKER_STATUS_INVITE_AGENT);
     }
 
     @Override
     public boolean handle(EventContext ec) throws Exception {
-        Map<String, Object> params = ec.getEvent().getParams();
-        JSONObject jsonObject = (JSONObject) JSON.toJSON(params);
-        Event eventPo = jsonObject.toJavaObject(Event.class);
-        // 900  client 901 server
-        JSONObject theaClientJson = new JSONObject();
-        if (eventPo.getParams().contains(TESSAR) && eventPo.getType() == THEA_CLIENT_CODE){
-            theaClientJson.put("value",eventPo.getParams());
-            theaClientJson.put("thea_client_timestamp",System.currentTimeMillis());
-            getMongoTemplate().insert(theaClientJson.toString(), THEA_CLIENT_COLLECTION);
-            return true;
-        }
-        JSONObject theaServerJson = new JSONObject();
-        if (eventPo.getParams().contains(TESSAR) && eventPo.getType() == THEA_SERVER_CODE){
-            theaServerJson.put("value",eventPo.getParams());
-            theaServerJson.put("thea_server_timestamp",System.currentTimeMillis());
-            getMongoTemplate().insert(theaServerJson.toString(), THEA_SERVER_COLLECTION);
-            return true;
-        }
+//        Map<String, Object> params = ec.getEvent().getParams();
+//        JSONObject jsonObject = (JSONObject) JSON.toJSON(params);
+//        Event eventPo = jsonObject.toJavaObject(Event.class);
+//        // 900  client 901 server
+//        JSONObject theaClientJson = new JSONObject();
+//        if (eventPo.getParams().contains(TESSAR) && eventPo.getType() == THEA_CLIENT_CODE) {
+//            theaClientJson.put("value", eventPo.getParams());
+//            theaClientJson.put("thea_client_timestamp", System.currentTimeMillis());
+//            getMongoTemplate().insert(theaClientJson.toString(), THEA_CLIENT_COLLECTION);
+//            return true;
+//        }
+//        JSONObject theaServerJson = new JSONObject();
+//        if (eventPo.getParams().contains(TESSAR) && eventPo.getType() == THEA_SERVER_CODE) {
+//            theaServerJson.put("value", eventPo.getParams());
+//            theaServerJson.put("thea_server_timestamp", System.currentTimeMillis());
+//            getMongoTemplate().insert(theaServerJson.toString(), THEA_SERVER_COLLECTION);
+//            return true;
+//        }
         return true;
     }
 
 
-//    @PostConstruct
-    public void init(){
+    //    @PostConstruct
+    public void init() {
         Set<String> indexKeyMap = new ConcurrentSkipListSet<>();
         getMongoTemplate().indexOps(EVENT_COLLECTION).getIndexInfo().forEach(v -> {
             v.getIndexFields().forEach(index -> {
@@ -98,16 +93,16 @@ public class TheaMongoHandler extends AbstractMongoHandler{
         if (!indexKeyMap.contains(VERSION_SOURCE + POINT + TAGS)) {
             createIndex(EVENT_COLLECTION, VERSION_SOURCE + "." + TAGS);
         }
-        if (!indexKeyMap.contains(VERSION_SOURCE + TYPE )) {
-            createIndex(EVENT_COLLECTION, VERSION_SOURCE + ".type" );
+        if (!indexKeyMap.contains(VERSION_SOURCE + TYPE)) {
+            createIndex(EVENT_COLLECTION, VERSION_SOURCE + ".type");
         }
         if (!indexKeyMap.contains(VERSION_SOURCE + EVENTNUMBER)) {
             createIndex(EVENT_COLLECTION, VERSION_SOURCE + ".eventNumber");
         }
-        if (!indexKeyMap.contains(THEA_CLIENT+ TIMESTAMP)) {
+        if (!indexKeyMap.contains(THEA_CLIENT + TIMESTAMP)) {
             createIndex(THEA_CLIENT_COLLECTION, "thea_client_" + TIMESTAMP);
         }
-        if (!indexKeyMap.contains(THEA_SERVER+ TIMESTAMP)) {
+        if (!indexKeyMap.contains(THEA_SERVER + TIMESTAMP)) {
             createIndex(THEA_SERVER_COLLECTION, "thea_server_" + TIMESTAMP);
         }
     }

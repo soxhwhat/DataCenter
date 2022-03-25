@@ -27,18 +27,27 @@ public class EventMongoHandler extends AbstractMongoHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Arrays.asList(TICKER_STATUS_WAIT, TICKER_STATUS_RING
-                ,TICKER_STATUS_TALK,TICKER_STATUS_OVERFLOW
-                ,TICKER_STATUS_TRANSFER,TICKER_STATUS_INVITE_AGENT
-                ,STAFF_STATUS_BUSY,STAFF_STATUS_FREE,STAFF_STATUS_KEEP,STAFF_STATUS_LOGIN
-                ,TICKER_COMPLETE,STAFF_BEAT,QUEUE_BEAT);
+        return Arrays.asList(
+                TICKER_STATUS_WAIT,
+                TICKER_STATUS_RING,
+                TICKER_STATUS_TALK,
+                TICKER_STATUS_OVERFLOW,
+                TICKER_STATUS_TRANSFER,
+                TICKER_STATUS_INVITE_AGENT,
+                STAFF_STATUS_BUSY,
+                STAFF_STATUS_FREE,
+                STAFF_STATUS_KEEP,
+                STAFF_STATUS_LOGIN,
+                TICKER_COMPLETE,
+                STAFF_BEAT,
+                QUEUE_BEAT);
     }
 
     @Override
     public boolean handle(EventContext ec) {
         try {
             String collectionName = getCollectionName(ec);
-            log.info("ec:{},collectionName:{}",ec,collectionName);
+            log.info("ec:{},collectionName:{}", ec, collectionName);
             getMongoTemplate().insert(ec.getEvent().getParams(), collectionName);
         } catch (DataAccessException e) {
             return false;

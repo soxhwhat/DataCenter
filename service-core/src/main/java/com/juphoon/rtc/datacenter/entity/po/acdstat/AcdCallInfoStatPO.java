@@ -44,7 +44,7 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
         this.setAppId(event.domainId());
         this.setSkill(event.skill());
         this.setEventType(event.eventType());
-        this.setEventNum(event.endNum());
+        this.setEventNum(event.eventNumber());
         this.setDuration(event.duration());
         this.setEndType(event.endType());
     }
