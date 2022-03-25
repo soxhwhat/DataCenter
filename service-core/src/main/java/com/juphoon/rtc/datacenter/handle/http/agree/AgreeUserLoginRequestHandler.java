@@ -36,8 +36,11 @@ public class AgreeUserLoginRequestHandler extends AbstractAgreeNoticeHandler {
     }
 
     @Override
-    public Map<String, Object> handleRequest(EventContext ec) {
-        // todo
-        return null;
+    public Map<String, String> handleRequest(EventContext ec) {
+        return ec.getEvent().getParams();
+        //        Map<String, String> params = ec.convertStringMap();
+//        deleteRoomIdSuffix(params);
+//        deleteUserIdSuffix(params);
+//        return ec.convertObjectMap(params);
     }
 }

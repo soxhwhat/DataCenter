@@ -10,29 +10,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * <p>登出通知</p>
+ * <p>在开始处详细描述该类的作用</p>
+ * <p>描述请遵循 javadoc 规范</p>
+ * <p>TODO</p>
  *
- * @author ajian.zheng
- * @date 2022-03-22
+ * @author ke.wang@juphoon.com
+ * @date 2022/3/24 15:56
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
-@Slf4j
 @Component
-public class AgreeLogoutNotifyHandler extends AbstractAgreeNoticeHandler {
+@Slf4j
+public class AgreeRoomNoticeHandler extends AbstractAgreeNoticeHandler {
     @Override
     public HandlerId handlerId() {
-        return HandlerId.AgreeUserLogoutNotifyHandler;
+        return HandlerId.AgreeRoomNotifyHandler;
     }
 
     @Override
     public String endpoint() {
-        return "/userlogout_notify";
+        return "/room_notify";
     }
 
     @Override
     public List<EventType> careEvents() {
-        return Collections.singletonList(EventType.LOGOUT_EVENT);
+        return Collections.singletonList(EventType.ROOM_NOTICE);
     }
 
     @Override
@@ -40,17 +42,16 @@ public class AgreeLogoutNotifyHandler extends AbstractAgreeNoticeHandler {
         //noticeServiceImpl类中已经封装好了参数，这一版暂时先这样，后续定义新的rpc接口时再重新封装
         return ec.getEvent().getParams();
 //        Map<String, String> params = ec.convertStringMap();
+//
 //        deleteRoomIdSuffix(params);
-//        String uri = params.get("account");
-//        String username = params.get("username");
-//        if (StringUtils.isEmpty(uri)) {
-//            uri = username;
+//        deleteUserIdSuffix(params);
+//        if (isCdUser(params)) {
+//            log.info("isCdUser:{}",params);
 //        }
-//        uri = getUsername(uri);
-//        params.put("userId", uri);
-//        params.put("username", uri);
-//        cacheService.hRemove(KEY_AGREE, uri);
-//        params.put("errorcode", "0");
+//        if(isSecondRoom(params)){
+//            log.info("isSecondRoom:{}",params);
+//        }
+//
 //        return ec.convertObjectMap(params);
     }
 }

@@ -98,28 +98,25 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
 
     /// TODO 严格的参数类型检查
     private Event trans(DataCollection.Event from) throws JsonProcessingException {
-        Event to = new Event();
-
-        to.setDomainId((int) from.domainId);
-        to.setAppId((int) from.appId);
-        to.setUuid(from.uuid);
-        to.setType(from.type);
-        to.setNumber(from.eventNumber);
-
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, String>> typeRef = new TypeReference<HashMap<String, String>>() {
         };
 
         Map<String, String> params = mapper.readValue(from.params, typeRef);
 
-        to.setParams(params);
-
-        return to;
+        return Event.builder()
+                .domainId((int) from.domainId)
+                .appId((int) from.appId)
+                .type(from.type)
+                .number(from.eventNumber)
+                .params(params)
+                .uuid(from.uuid)
+                .build();
     }
 
     private static String hexStr = "0123456789ABCDEF";
 
-    public static String binaryToHexString(byte[] bytes) {
+    private static String binaryToHexString(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         String hex;
         for (byte aByte : bytes) {

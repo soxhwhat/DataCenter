@@ -22,13 +22,15 @@ public class TransbufferReq {
 
     private String databuf;
 
-    public Map<String,Object> convertToMap(){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("appguid",this.getAppguid());
-        map.put("userid",this.getUserid());
-        map.put("username",this.getUsername());
-        map.put("datesize",this.getDatesize());
-        map.put("databuf",this.getDatabuf());
+    public Map<String, String> convertToMap() {
+        HashMap<String, String> map = new HashMap<>(5);
+
+        map.put("appguid", this.getAppguid());
+        map.put("userid", this.getUserid());
+        map.put("username", this.getUsername());
+        map.put("datesize", this.getDatesize());
+        map.put("databuf", this.getDatabuf());
+
         return map;
     }
 

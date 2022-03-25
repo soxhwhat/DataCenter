@@ -14,8 +14,6 @@
 package com.juphoon.rtc.datacenter.service;
 
 
-import com.juphoon.rtc.datacenter.entity.notice.CubeNoticeResponse;
-
 import java.util.Map;
 
 /**
@@ -23,21 +21,21 @@ import java.util.Map;
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
- * @author  ke.wang@juphoon.com
- * @date   2022/3/25
- * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
+ * @author ke.wang@juphoon.com
+ * @date 2022/3/25
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 public interface NoticeService {
 
-    CubeNoticeResponse verCode(Map<String, String> params);
+    void verCode(Map<String, String> params);
 
-    CubeNoticeResponse verJoinRoom(Map<String, String> params);
+    void verJoinRoom(Map<String, String> params);
 
-    CubeNoticeResponse roomNotice(Map<String, String> params);
+    void roomNotice(Map<String, String> params);
 
-    Map<String,String> recordSnapshotNotice(Map<String, String> params);
+    Map<String, String> recordSnapshotNotice(Map<String, String> params);
 
-    Map<String,String> sendOnlineMessageAndNotice(String sendUserUri, String receiverUri, Map<String, String> params) ;
+    Map<String, String> sendOnlineMessageAndNotice(String sendUserUri, String receiverUri, Map<String, String> params);
 
     void keepAlive(int type, String uri, String username, Map<String, String> params);
 }

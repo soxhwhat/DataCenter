@@ -2,9 +2,7 @@ package com.juphoon.rtc.datacenter.configuration;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLoginNotifyHandler;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLogoutNotifyHandler;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeUserLoginRequestHandler;
+import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
@@ -17,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * <p>产品默认构造器</p>
@@ -62,7 +62,7 @@ public class DefaultDataServiceConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DataService config() {
+    public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
 
         // 赞同通知
         HttpClientEventProcessor agreeNotifyProcessor = beanFactory.getBean(HttpClientEventProcessor.class);
@@ -73,6 +73,7 @@ public class DefaultDataServiceConfiguration {
             config.setHosts(properties.getAgree().getHosts());
 
             agreeNotifyProcessor.setConfig(config);
+            agreeNotifyProcessor.setEnabled(properties.getAgree().isEnabled());
         }
 
         agreeNotifyProcessor.setEnabled(properties.getAgree().isEnabled());
@@ -98,13 +99,17 @@ public class DefaultDataServiceConfiguration {
         return DataServiceBuilder.processors()
                 // 赞同通知
                 .processor(agreeNotifyProcessor)
-                    .mq(properties.getMq().trans())
-                    // 构造测试handler
-                    .handler(new AgreeLoginNotifyHandler())
-                    .handler(new AgreeLogoutNotifyHandler())
-                    .handler(new AgreeUserLoginRequestHandler())
-                    // todo 补充其他handler
-                    .end()
+                .mq(properties.getMq().trans())
+                // 构造测试handler
+                .handler(handlerMap.get("agreeLoginNotifyHandler"))
+                .handler(handlerMap.get("agreeLogoutNotifyHandler"))
+                .handler(handlerMap.get("agreePrepareEnterRoomHandler"))
+                .handler(handlerMap.get("agreeRecordSnapshotHandler"))
+                .handler(handlerMap.get("agreeRoomNoticeHandler"))
+                .handler(handlerMap.get("agreeSendOnlineMessageHandler"))
+                .handler(handlerMap.get("agreeUserLoginRequestHandler"))
+                // todo 补充其他handler
+                .end()
                 // 客服统计
                 .processor(acdEventProcessor)
                     .mq(properties.getMq().trans())

@@ -1,8 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.http.agree;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.handler.AbstractHttpEventHandler;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -12,6 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Map;
 import java.util.UUID;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.URL_PARAMS;
 
 
 /**
@@ -35,13 +37,13 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
      * @param ec
      * @return
      */
-    public abstract Map<String, Object> handleRequest(EventContext ec);
+    public abstract Map<String, String> handleRequest(EventContext ec);
 
     @Override
     public boolean exchange(String url, RestTemplate restTemplate, EventContext ec) {
         boolean ret = true;
 
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(url + endpoint()).encode().toUriString();
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(url + endpoint() + URL_PARAMS).encode().toUriString();
         String reqId = UUID.randomUUID().toString();
 
         HttpHeaders headers = new HttpHeaders();
@@ -49,10 +51,11 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
 
         try {
             // 生成请求参数
-            Map<String, Object> params = handleRequest(ec);
-
+            Map<String, String> params = handleRequest(ec);
             assert null != params : "请求参数为空";
 
+            /// 1. 风格保持赞同接口统一
+            /// 2. 方便问题定位沟通请求id
             params.put("reqid", reqId);
 
             HttpEntity entity = new HttpEntity<>(params, headers);

@@ -16,10 +16,8 @@ package com.juphoon.rtc.datacenter.service.impl;
 
 import com.juphoon.iron.component.utils.IronJsonUtils;
 import com.juphoon.iron.component.utils.response.IronException;
-
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.cube.agent.AccountAgentImpl;
 import com.juphoon.rtc.datacenter.entity.notice.CubeNoticeResponse;
 import com.juphoon.rtc.datacenter.entity.notice.TransbufferReq;
@@ -34,7 +32,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +43,9 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.KEY_AGR
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
- * @author  ke.wang@juphoon.com
- * @date   2022/3/25
- * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]       
+ * @author ke.wang@juphoon.com
+ * @date 2022/3/25
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
 @Service
@@ -64,89 +61,63 @@ public class NoticeServiceImpl implements NoticeService {
     private CacheService cacheService;
 
     @Autowired
-    DataService dataService;
-
+    private DataService dataService;
 
     @Autowired
     public NoticeServiceImpl(NoticeProperties noticeProperties) {
-        log.info("noticeProperties:{}", noticeProperties);
         this.noticeProperties = noticeProperties;
-
     }
 
+    /// 登录请求属于业务核心逻辑，应该要同步接口实现，不宜使用异步方式 TODO
+    ///
 
     @Override
-    public CubeNoticeResponse verCode(Map<String, String> params) {
-        params.put("appguid", noticeProperties.getAppguid());
-        EventContext eventContext = buildContext(Event
-                .builder()
-                .type(25)
-                .number(1)
-                .params(convertToObjectMap(params))
-                .build());
-        try {
-            dataService.commit(eventContext);
-        } catch (Exception e) {
-            throw new IronException("验证失败");
-        }
-        return buildResponse();
+    public void verCode(Map<String, String> params) {
+        log.info("登录请求:{}", params);
 
+        params.put("appguid", noticeProperties.getAppguid());
+
+        dataService.commit(buildContext(25, 3, params));
     }
 
-
-
-    @Override
-    public CubeNoticeResponse verJoinRoom(Map<String, String> params) {
-        params.put("appguid", noticeProperties.getAppguid());
-        if (isSecondRoom(params)) {
-            return new CubeNoticeResponse(true, new HashMap<>());
-        }
-        try {
-            dataService.commit(buildContext(Event
-                    .builder()
-                    .type(25)
-                    .number(2)
-                    .params(convertToObjectMap(params))
-                    .build()));
-        } catch (Exception e) {
-            throw new IronException("验证失败");
-        }
-        return buildResponse();
-    }
+    /// TODO 所有 type/number 都改为宏/常量
 
     @Override
-    public CubeNoticeResponse roomNotice(Map<String, String> params) {
+    public void verJoinRoom(Map<String, String> params) {
+        log.info("登录通知:{}", params);
+
         params.put("appguid", noticeProperties.getAppguid());
-        log.info("进出房间通知，{}", params);
 
         if (isSecondRoom(params)) {
-            return new CubeNoticeResponse(true, new HashMap<>());
+            log.debug("isSecondRoom");
+            return;
         }
-        try {
-            dataService.commit(buildContext(Event
-                    .builder()
-                    .type(25)
-                    .number(3)
-                    .params(convertToObjectMap(params))
-                    .build()));
-        } catch (Exception e) {
-            throw new IronException("通知失败");
-        }
-        return buildResponse();
 
+        dataService.commit(buildContext(25, 2, params));
+    }
+
+    @Override
+    public void roomNotice(Map<String, String> params) {
+        log.info("进出房间通知:{}", params);
+
+        params.put("appguid", noticeProperties.getAppguid());
+
+        if (isSecondRoom(params)) {
+            log.debug("isSecondRoom");
+            return;
+        }
+
+        dataService.commit(buildContext(25, 3, params));
     }
 
     @Override
     public Map<String, String> recordSnapshotNotice(Map<String, String> params) {
+        log.info("录制通知:{}", params);
+
         params.put("appguid", noticeProperties.getAppguid());
-        log.info("通知录制文件:{}", params);
+
         try {
-            dataService.commit(buildContext(Event
-                    .builder()
-                    .type(25)
-                    .number(4)
-                    .params(convertToObjectMap(params))
-                    .build()));
+            buildContext(25, 4, params);
         } catch (Exception e) {
             throw new IronException("通知失败");
         }
@@ -159,23 +130,16 @@ public class NoticeServiceImpl implements NoticeService {
             if (ret) {
                 TransbufferReq transbufferReq = new TransbufferReq();
                 String json = IronJsonUtils.objectToJson(params);
-                String databuf = Base64Utils.encodeToString(json.getBytes());
+                String dataBuf = Base64Utils.encodeToString(json.getBytes());
                 transbufferReq.setAppguid(noticeProperties.getAppguid());
-                transbufferReq.setDatesize(String.valueOf(databuf.length()));
+                transbufferReq.setDatesize(String.valueOf(dataBuf.length()));
                 transbufferReq.setUserid(sendUserUri);
                 transbufferReq.setUsername(sendUserUri);
-                transbufferReq.setDatabuf(databuf);
+                transbufferReq.setDatabuf(dataBuf);
                 log.info("send notice..... {}", receiverUri);
-                try {
-                    dataService.commit(buildContext(Event
-                            .builder()
-                            .type(25)
-                            .number(5)
-                            .params(transbufferReq.convertToMap())
-                            .build()));
-                } catch (Exception e) {
-                    throw new IronException("通知失败");
-                }
+
+                ///
+                dataService.commit(buildContext(25, 5, params));
             }
         });
         return new HashMap<>();
@@ -202,53 +166,24 @@ public class NoticeServiceImpl implements NoticeService {
                 userKeepAlive.setUserid(uri);
                 userKeepAlive.setUsername(username);
                 cacheService.hPut(KEY_AGREE, uri, userKeepAlive);
-                try {
-                    dataService.commit(buildContext(Event
-                            .builder()
-                            .type(25)
-                            .number(7)
-                            .params(convertToObjectMap(params))
-                            .build()));
-                } catch (Exception e) {
-                    throw new IronException("登录失败");
-                }
+
+                dataService.commit(buildContext(25, 7, params));
             }
         } else if (type == 1) {
             cacheService.hRemove(KEY_AGREE, uri);
+
             params.put("errorcode", "0");
-            try {
-                dataService.commit(buildContext(Event
-                        .builder()
-                        .type(25)
-                        .number(6)
-                        .params(convertToObjectMap(params))
-                        .build()));
-            } catch (Exception e) {
-                throw new IronException("登录失败");
-            }
+
+            dataService.commit(buildContext(25, 6, params));
         }
     }
 
-    public EventContext buildContext(Event event) {
+    private EventContext buildContext(Integer type, Integer number, Map<String, String> params) {
+        Event event = Event.builder().type(type).number(number).params(params).build();
+
         EventContext eventContext = new EventContext();
-        eventContext.setProcessorId(ProcessorId.AGREE.getId());
         eventContext.setEvent(event);
         return eventContext;
-    }
-
-    public CubeNoticeResponse buildResponse() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("return_code", "SUCCESS");
-        map.put("return_msg", "");
-        return new CubeNoticeResponse(true, map);
-    }
-
-    public Map<String, Object> convertToObjectMap(Map<String, String> stringMap) {
-        Map<String, Object> objectMap = new HashMap<>();
-        stringMap.forEach((k, v) -> {
-            objectMap.put(k, v);
-        });
-        return objectMap;
     }
 
     private boolean isSecondRoom(Map<String, String> params) {

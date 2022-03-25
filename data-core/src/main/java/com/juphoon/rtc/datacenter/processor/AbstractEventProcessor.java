@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.processor;
 
+import com.juphoon.iron.component.utils.response.IronException;
 import com.juphoon.rtc.datacenter.api.*;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
@@ -206,6 +207,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
             }
         } catch (Exception ex) {
             log.warn("processor:{} 持久化 ec:{} 异常:", getName(), ec.getRequestId(), ex);
+            //感觉没啥用，暂时先这样
+            throw new IronException();
         }
     }
 

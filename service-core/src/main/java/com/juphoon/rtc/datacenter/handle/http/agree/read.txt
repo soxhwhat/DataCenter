@@ -1,1 +1,5 @@
 对接赞同
+
+1.暂时是先把noticeService原先的rpc接口迁移过来。
+2.handler模块直接return param。
+3.后续rpc接口调整之后再改handler。

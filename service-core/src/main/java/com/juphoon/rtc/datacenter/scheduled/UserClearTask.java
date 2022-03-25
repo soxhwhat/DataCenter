@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.scheduled;
 
 import com.juphoon.rtc.datacenter.entity.notice.UserKeepAlive;
-import com.juphoon.rtc.datacenter.property.JrtcDataCenterProperties;
 import com.juphoon.rtc.datacenter.property.NoticeProperties;
 import com.juphoon.rtc.datacenter.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +31,7 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.URL_PAR
 @Slf4j
 public class UserClearTask {
 
-    @Autowired
-    JrtcDataCenterProperties jrtcDataCenterProperties;
+
 
     @Autowired
     CacheService cacheService;

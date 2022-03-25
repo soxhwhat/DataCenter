@@ -63,20 +63,53 @@ public enum HandlerId {
      */
     AcdAgentOpStatDailyHandler("acdAgentOpStatDailyHandler", "坐席日汇总handler"),
 
-    /**
-     * 赞同登录通知handler
-     */
-    AgreeLoginNotifyHandler("agreeLoginNotifyHandler", "赞同登录通知handler"),
+    /// 赞同
 
     /**
-     * 赞同登出通知handler
-     */
-    AgreeLogoutNotifyHandler("agreeLogoutNotifyHandler", "赞同登出通知handler"),
-
-    /**
-     * 赞同登录请求handler
+     * 1.1 客户端用户登录认证
+     * <p>userlogin_request</p>
      */
     AgreeUserLoginRequestHandler("agreeUserLoginRequestHandler", "赞同登录请求handler"),
+
+    /**
+     * 1.2 客户端用户登录通知
+     * <p>userlogin_notify</p>
+     */
+    AgreeLoginNotifyHandler("agreeLoginNotifyHandler", "赞同客户端用户登录通知handler"),
+
+    /**
+     * 1.3 进房间验证通知
+     * <p>prepare_enterroom</p>
+     */
+    AgreePrepareEnterRoomHandler("agreePrepareEnterRoomHandler", "赞同进房间验证通知handler"),
+
+    /**
+     * 1.4 进出房间通知
+     * <p>room_notify</p>
+     */
+    AgreeRoomNotifyHandler("agreeRoomNotifyHandler", "赞同进出房间通知handler"),
+
+    /**
+     * 1.5 透明通道数据通知
+     * <p>transbuffer_notify</p>
+     */
+    AgreeTransBufferNotifyHandler("agreeTransBufferNotifyHandler", "赞同透明通道数据通知handler"),
+
+    /**
+     * 1.7 录像或拍照结束通知
+     * <p>recordsnapshot_notify</p>
+     */
+    AgreeRecordSnapShotNotifyHandler("agreeRecordSnapShotNotifyHandler", "赞同录像或拍照结束通知handler"),
+
+    /**
+     * 1.8 客户端用户签退通知
+     * <p>userlogout_notify</p>
+     */
+    AgreeUserLogoutNotifyHandler("agreeUserLogoutNotifyHandler", "赞同客户端用户签退通知handler"),
+
+
+    /// 赞同 end
+
 
     /**
      * 西亚mongoHandler

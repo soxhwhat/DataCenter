@@ -2,9 +2,6 @@ package com.juphoon.rtc.datacenter.cube.notice;
 
 import Common.Exception;
 import Common.ServerCall;
-import com.juphoon.iron.component.threadpool.AbstractIronTask;
-import com.juphoon.iron.component.threadpool.IronThreadPool;
-import com.juphoon.rtc.datacenter.entity.notice.CubeNoticeResponse;
 import com.juphoon.rtc.datacenter.service.NoticeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,160 +14,151 @@ import java.util.Map;
 /**
  * @author rongbin.huang
  * @create 2019-12-16 4:38 PM
+ *
+ * @update 1. 2022-03-25 ke.wang 移植
+ * @update 2. 2022-03-28 ajian.zheng 去除线程池依赖
+ *
  **/
 @Slf4j
 @Component
+@SuppressWarnings("PMD")
 public class NoticeEventServerImpl extends Event.NoticeEventServer {
 
     @Autowired
     private NoticeService noticeService;
 
-    @Autowired
-    private IronThreadPool ironThreadPool;
-
     @Override
-    public void verCode_begin(ServerCall __call, Map<String, String> params) throws Exception {
+    public void verCode_begin(ServerCall serverCall, Map<String, String> params) throws Exception {
         log.info("verCode_begin {}", params);
-        ironThreadPool.submit(new AbstractIronTask() {
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    deleteUserIdSuffix(params);
-                    CubeNoticeResponse result = noticeService.verCode(params);
 
-                    verCode_end(__call, true, result.getResult());
+        boolean ret = true;
 
-                } catch (java.lang.Exception e) {
-                    __call.setReason(e.getMessage());
-                    verCode_end(__call, false, new HashMap<>());
-                }
-            }
-        });
+        try {
+            deleteRoomIdSuffix(params);
+            deleteUserIdSuffix(params);
 
+            noticeService.verCode(params);
+        } catch (java.lang.Exception e) {
+            log.warn("e", e);
+            serverCall.setReason(e.getMessage());
+            ret = false;
+        }
+
+        verCode_end(serverCall, ret, null);
     }
 
     @Override
-    public void verJoinRoom_begin(ServerCall __call, Map<String, String> params) throws Exception {
+    public void verJoinRoom_begin(ServerCall serverCall, Map<String, String> params) throws Exception {
         log.info("verJoinRoom_begin {}", params);
-        ironThreadPool.submit(new AbstractIronTask() {
 
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    deleteUserIdSuffix(params);
-                    if (isCdUser(params)) {
-                        roomNotice_end(__call, true, new HashMap<>());
-                        return;
-                    }
-                    CubeNoticeResponse result = noticeService.verJoinRoom(params);
-                    verJoinRoom_end(__call, true, result.getResult());
-                } catch (java.lang.Exception e) {
-                    __call.setReason(e.getMessage());
-                    verJoinRoom_end(__call, false, new HashMap<>());
-                }
+        boolean ret = true;
+
+        try {
+            deleteRoomIdSuffix(params);
+            deleteUserIdSuffix(params);
+
+            /// cd 不通知
+            if (isCdUser(params)) {
+                roomNotice_end(serverCall, true, new HashMap<>());
+                return;
             }
-        });
 
+            noticeService.verJoinRoom(params);
+        } catch (java.lang.Exception e) {
+            log.warn("e", e);
+            serverCall.setReason(e.getMessage());
+            ret = false;
+        }
 
+        verJoinRoom_end(serverCall, ret, null);
     }
 
     @Override
-    public void roomNotice_begin(ServerCall __call, Map<String, String> params) throws Exception {
+    public void roomNotice_begin(ServerCall serverCall, Map<String, String> params) throws Exception {
         log.info("roomNotice_begin {}", params);
-        ironThreadPool.submit(new AbstractIronTask() {
 
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    deleteUserIdSuffix(params);
-                    if (isCdUser(params)) {
-                        roomNotice_end(__call, true, new HashMap<>());
-                        return;
-                    }
-                    CubeNoticeResponse result = noticeService.roomNotice(params);
-                    roomNotice_end(__call, true, result.getResult());
-                } catch (java.lang.Exception e) {
-                    __call.throwException(new Exception(e.getMessage()));
-                }
+        boolean ret = true;
+
+        try {
+            deleteRoomIdSuffix(params);
+            deleteUserIdSuffix(params);
+            if (isCdUser(params)) {
+                roomNotice_end(serverCall, true, new HashMap<>());
+                return;
             }
 
-        });
+            noticeService.roomNotice(params);
+        } catch (java.lang.Exception e) {
+            log.warn("e", e);
+            serverCall.throwException(new Exception(e.getMessage()));
+            ret = false;
+        }
 
+        roomNotice_end(serverCall, ret, null);
     }
 
     @Override
-    public void recordSnapshotNotice_begin(ServerCall __call, Map<String, String> params) throws Exception {
+    public void recordSnapshotNotice_begin(ServerCall serverCall, Map<String, String> params) throws Exception {
         log.info("recordSnapshotNotice_begin {}", params);
-        ironThreadPool.submit(new AbstractIronTask() {
 
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    deleteUserIdSuffix(params);
-                    Map result = noticeService.recordSnapshotNotice(params);
-                    recordSnapshotNotice_end(__call, true, result);
-                } catch (java.lang.Exception e) {
-                    log.error("e", e);
-                    __call.setReason(e.getMessage());
-                    recordSnapshotNotice_end(__call, false, null);
-                }
-            }
+        boolean ret = true;
 
-        });
+        try {
+            deleteRoomIdSuffix(params);
+            deleteUserIdSuffix(params);
+            noticeService.recordSnapshotNotice(params);
+        } catch (java.lang.Exception e) {
+            log.warn("e", e);
+            serverCall.setReason(e.getMessage());
+            ret = false;
+        }
 
+        recordSnapshotNotice_end(serverCall, ret, null);
     }
 
     @Override
-    public void sendOnlineMessageAndNotice_begin(ServerCall __call, String receiverUri, Map<String, String> params) throws Exception {
-        ironThreadPool.submit(new AbstractIronTask() {
+    public void sendOnlineMessageAndNotice_begin(ServerCall serverCall, String receiverUri, Map<String, String> params) throws Exception {
+        log.info("sendOnlineMessageAndNotice_begin {}", params);
 
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    String sendUserUri = __call.getParam("account");
-                    Map result = noticeService.sendOnlineMessageAndNotice(getUsername(sendUserUri), receiverUri, params);
+        boolean ret = true;
 
-                    sendOnlineMessageAndNotice_end(__call, true, result);
-                } catch (java.lang.Exception e) {
-                    log.error("e", e);
-                    __call.setReason(e.getMessage());
-                    sendOnlineMessageAndNotice_end(__call, false, null);
-                }
-            }
+        try {
+            deleteRoomIdSuffix(params);
 
-        });
+            String sendUserUri = serverCall.getParam("account");
 
+            noticeService.sendOnlineMessageAndNotice(getUsername(sendUserUri), receiverUri, params);
+        } catch (java.lang.Exception e) {
+            log.error("e", e);
+            serverCall.setReason(e.getMessage());
+            ret = false;
+        }
+
+        sendOnlineMessageAndNotice_end(serverCall, ret, null);
     }
 
     @Override
-    public void keepAlive_begin(ServerCall __call, int type, String username, Map<String, String> params) throws Exception {
-        ironThreadPool.submit(new AbstractIronTask() {
+    public void keepAlive_begin(ServerCall serverCall, int type, String username, Map<String, String> params) throws Exception {
+        log.info("sendOnlineMessageAndNotice_begin {}", params);
 
-            @Override
-            public void onRunning() {
-                try {
-                    deleteRoomIdSuffix(params);
-                    String uri = __call.getParam("account");
-                    if (StringUtils.isEmpty(uri)) {
-                        uri = username;
-                    }
+        boolean ret = true;
 
-                    noticeService.keepAlive(type, getUsername(uri), username, params);
-
-                    keepAlive_end(__call, true, new HashMap<>());
-                } catch (java.lang.Exception e) {
-                    log.error("e", e);
-                    __call.setReason(e.getMessage());
-                    keepAlive_end(__call, false, null);
-                }
-
+        try {
+            deleteRoomIdSuffix(params);
+            String uri = serverCall.getParam("account");
+            if (StringUtils.isEmpty(uri)) {
+                uri = username;
             }
-        });
+
+            noticeService.keepAlive(type, getUsername(uri), username, params);
+
+        } catch (java.lang.Exception e) {
+            log.error("e", e);
+            serverCall.setReason(e.getMessage());
+            ret = false;
+        }
+
+        keepAlive_end(serverCall, ret, null);
     }
 
 
@@ -183,7 +171,7 @@ public class NoticeEventServerImpl extends Event.NoticeEventServer {
                 params.put("username", userid);
             }
         } catch (java.lang.Exception e) {
-
+            /// TODO，异常应该有后续，异常后该如何处理呢
         }
     }
 
@@ -217,7 +205,7 @@ public class NoticeEventServerImpl extends Event.NoticeEventServer {
                 params.put("roomid", roomid);
             }
         } catch (java.lang.Exception e) {
-
+            /// TODO，异常应该有后续，异常后该如何处理呢
         }
 
     }

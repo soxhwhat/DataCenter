@@ -33,8 +33,7 @@ public class DemoDataCenterApplication {
         log.info("value:{}", value);
         EventContext ec = new EventContext();
 
-        Event event = new Event();
-        event.setType(value);
+        Event event = Event.builder().type(0).number(0).params(null).build();
 
         ec.setEvent(event);
 
