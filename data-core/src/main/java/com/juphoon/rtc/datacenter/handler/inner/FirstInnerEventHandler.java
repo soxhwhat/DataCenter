@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.handler.inner;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@Setter
 @Scope("prototype")
 public class FirstInnerEventHandler extends AbstractCareAllEventHandler {
     @Override
@@ -27,15 +29,20 @@ public class FirstInnerEventHandler extends AbstractCareAllEventHandler {
     }
 
     @Override
+    public String getName() {
+        return getProcessor().getName() + handlerId().getName();
+    }
+
+    @Override
+    public String getId() {
+        return getProcessor().getId() + handlerId().getId();
+    }
+
+    @Override
     public boolean handle(EventContext ec) {
         log.debug("handle ec:{}", ec.getRequestId());
 
         ec.handle();
         return true;
-    }
-
-    @Override
-    public String getId() {
-        return this.getClass().getName();
     }
 }

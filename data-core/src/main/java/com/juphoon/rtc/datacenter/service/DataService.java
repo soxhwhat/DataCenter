@@ -29,6 +29,8 @@ public class DataService {
      * @throws Exception
      */
     public void commit(EventContext ec) {
+        assert  null != ec : "ec为空";
+
         log.debug("commit ec:{}", ec);
 
         for (IEventProcessor processor : processors) {

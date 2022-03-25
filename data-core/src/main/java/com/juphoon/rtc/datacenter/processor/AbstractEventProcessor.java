@@ -12,8 +12,10 @@ import com.juphoon.rtc.datacenter.mq.service.IEventQueueService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +31,19 @@ import java.util.Set;
 @Setter
 @Getter
 public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
+
+    @Autowired
+    private BeanFactory beanFactory;
+
+    @PostConstruct
+    public void abstractEventProcessorInit() {
+        firstInnerEventHandler = beanFactory.getBean(FirstInnerEventHandler.class);
+        firstInnerEventHandler.setProcessor(this);
+
+        lastInnerEventHandler = beanFactory.getBean(LastInnerEventHandler.class);
+        lastInnerEventHandler.setProcessor(this);
+    }
+
     /**
      * 注册需要关注的类型
      * 只有关注的类型才会被当前process消费
@@ -62,10 +77,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     @Autowired
     private IRedoEventLogService redoEventLogService;
 
-    @Autowired
     private FirstInnerEventHandler firstInnerEventHandler;
 
-    @Autowired
     private LastInnerEventHandler lastInnerEventHandler;
 
     /**

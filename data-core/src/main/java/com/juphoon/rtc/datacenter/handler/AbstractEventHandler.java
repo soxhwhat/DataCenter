@@ -2,9 +2,9 @@ package com.juphoon.rtc.datacenter.handler;
 
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.ICare;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
  * @Description:
  */
 @Setter
+@Getter
 public abstract class AbstractEventHandler implements IEventHandler, ICare {
     /**
      * 是否启用(外界配置)
@@ -30,8 +31,6 @@ public abstract class AbstractEventHandler implements IEventHandler, ICare {
     public boolean isEnabled() {
         return enabled;
     }
-
-
 
     /**
      * 设置启用

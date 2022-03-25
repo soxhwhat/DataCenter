@@ -32,12 +32,20 @@ public class NoticeHandlerTest {
     @Test
     public void testVerCodeHandler() throws InterruptedException {
         Event event = new Event();
-        event.setType(25);
+
+        event.setDomainId(100645);
+        event.setAppId(0);
+        event.setType(10);
         event.setNumber(1);
         Map<String, String> map = new HashMap<>();
+        map.put("test", "value");
         event.setParams(map);
-        EventContext eventContext = new EventContext();
-        eventContext.setEvent(event);
-        dataService.commit(eventContext);
+
+        EventContext ec = new EventContext();
+        ec.setFrom("test");
+        ec.setRequestId("test");
+        ec.setEvent(event);
+
+        dataService.commit(ec);
     }
 }

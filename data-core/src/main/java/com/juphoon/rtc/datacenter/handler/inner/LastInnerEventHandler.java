@@ -24,6 +24,16 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class LastInnerEventHandler extends AbstractCareAllEventHandler {
     @Override
+    public String getName() {
+        return getProcessor().getName() + handlerId().getName();
+    }
+
+    @Override
+    public String getId() {
+        return getProcessor().getId() + handlerId().getId();
+    }
+
+    @Override
     public HandlerId handlerId() {
         return HandlerId.LAST;
     }
@@ -46,10 +56,5 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
         );
 
         return true;
-    }
-
-    @Override
-    public String getId() {
-        return this.getClass().getName();
     }
 }
