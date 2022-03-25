@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.log.sqllite.mapper;
+package com.juphoon.rtc.datacenter.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AcdCommonMapper {
 
-    int updateAddValueByUniqueHashCode(@Param("tableName") String tableName, @Param("uniqueHashCode") Integer uniqueHashCode,
-                                       @Param("duration") Long duration,
-                                       @Param("cnt") Integer cnt);
+    int updateAddValueByUniqueKey(@Param("tableName") String tableName, @Param("uniqueKey") String uniqueKey,
+                                  @Param("duration") Long duration,
+                                  @Param("cnt") Integer cnt);
 }

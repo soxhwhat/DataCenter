@@ -60,17 +60,17 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
                     } catch (DuplicateKeyException e) {
                         tryUpdate(commonPo);
                     }
+                    return;
                 }
             }
         }
-
-        updateByUniqueHashCode(localObj.getUniqueHashCode(), commonPo.getDuration(), commonPo.getCnt());
+        updateByUniqueKey(localObj.getUniqueKey(), commonPo.getDuration(), commonPo.getCnt());
     }
 
     public void tryUpdate(T commonPo) {
         AcdCommonPO localObj = selectByUnique(commonPo);
         if (null != localObj) {
-            updateByUniqueHashCode(localObj.getUniqueHashCode(), commonPo.getDuration(), commonPo.getCnt());
+            updateByUniqueKey(localObj.getUniqueKey(), commonPo.getDuration(), commonPo.getCnt());
         } else {
             log.warn("{}", commonPo.toString());
             throw new RuntimeException("insert failed, then update ,but not found data!!!");
@@ -78,6 +78,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     }
 
     /**
+     * TODO 说明
      * |....？.>.|...>...|......|...>....
      */
     public List<T> splitStatTime(T po, Long beginTimestamp, Long endTimestamp, StatType type) {
@@ -93,12 +94,13 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
             p.setStatTime(statTime);
 
+            // statTime + interval为下个区间的起始时间
             if (statTime + type.getInterval() >= endTimestamp) {
                 if (beginTimestamp > statTime) {
                     // 一个区间内结束的
                     duration = endTimestamp - beginTimestamp;
                 } else {
-                    // 跨区间结束
+                    // 跨区间结束 也可能在临界点结束
                     duration = endTimestamp - statTime;
                 }
                 p.setDuration(duration);
@@ -131,6 +133,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
     /**
      * 构建具体表的po
+     *
      * @param event
      * @return
      */
@@ -138,6 +141,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
     /**
      * 查询确定要更新的那一条数据
+     *
      * @param po
      * @return
      */
@@ -145,6 +149,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
     /**
      * 写入数据
+     *
      * @param commonPo
      * @return
      */
@@ -152,11 +157,12 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
     /**
      * 根据唯一字段更新值
-     * @param uniqueHashCode
+     *
+     * @param uniqueKey
      * @param duration
      * @param cnt
      * @return
      */
-    public abstract int updateByUniqueHashCode(Integer uniqueHashCode, Long duration, Integer cnt);
+    public abstract int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt);
 
 }

@@ -2,7 +2,6 @@ package com.juphoon.rtc.datacenter.service;
 
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
-import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.mq.service.AbstractEventQueueService;
 import com.juphoon.rtc.datacenter.mq.service.impl.DisruptorEventQueueServiceImpl;
@@ -59,7 +58,7 @@ public class EventProcessorBuilder {
 
             /// 自动装载
 //            this.processor.addEventHandler(new FirstInnerEventHandler());
-            this.processor.addEventHandler(new LastInnerEventHandler());
+//            this.processor.addEventHandler(new LastInnerEventHandler());
 
             dataServiceBuilder.addProcessor(processor);
             return dataServiceBuilder;

@@ -44,6 +44,26 @@ public enum HandlerId {
     AcdCallInfoStatDailyHandler("acdCallInfoStatDailyHandler", "话务日汇总handler"),
 
     /**
+     * 15分钟坐席汇总handler
+     */
+    AcdAgentOpStatPart15MinHandler("acdAgentOpStatPart15MinHandler", "15分钟坐席汇总handler"),
+
+    /**
+     * 30分钟坐席汇总handler
+     */
+    AcdAgentOpStatPart30MinHandler("acdAgentOpStatPart30MinHandler", "30分钟坐席汇总handler"),
+
+    /**
+     * 小时坐席汇总handler
+     */
+    AcdAgentOpStatPartHourHandler("acdAgentOpStatPartHourHandler", "小时坐席汇总handler"),
+
+    /**
+     * 坐席日汇总handler
+     */
+    AcdAgentOpStatDailyHandler("acdAgentOpStatDailyHandler", "坐席日汇总handler"),
+
+    /**
      * 赞同登录通知handler
      */
     AgreeLoginNotifyHandler("agreeLoginNotifyHandler", "赞同登录通知handler"),
@@ -72,7 +92,6 @@ public enum HandlerId {
      *
      */
     EventKafkaHandler("eventKafkaHandler", "kafka事件Handler"),
-
 
 
     /**

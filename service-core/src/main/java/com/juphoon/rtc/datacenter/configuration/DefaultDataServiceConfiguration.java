@@ -1,10 +1,7 @@
 package com.juphoon.rtc.datacenter.configuration;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdCallInfoStatDailyHandler;
-import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdCallInfoStatPart15MinHandler;
-import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdCallInfoStatPart30MinHandler;
-import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdCallInfoStatPartHourHandler;
+import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLoginNotifyHandler;
 import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLogoutNotifyHandler;
 import com.juphoon.rtc.datacenter.handle.http.agree.AgreeUserLoginRequestHandler;
@@ -50,6 +47,19 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdCallInfoStatPartHourHandler acdCallInfoStatPartHourHandler;
 
+    @Autowired
+    private AcdAgentOpStatDailyHandler acdAgentOpStatDailyHandler;
+
+    @Autowired
+    private AcdAgentOpStatPart15MinHandler acdAgentOpStatPart15MinHandler;
+
+    @Autowired
+    private AcdAgentOpStatPart30MinHandler acdAgentOpStatPart30MinHandler;
+
+    @Autowired
+    private AcdAgentOpStatPartHourHandler acdAgentOpStatPartHourHandler;
+
+
     @Bean
     @ConditionalOnMissingBean
     public DataService config() {
@@ -77,6 +87,10 @@ public class DefaultDataServiceConfiguration {
         acdCallInfoStatPart15MinHandler.setEnabled(properties.getAcdStat().isCallInfo15minEnabled());
         acdCallInfoStatPart30MinHandler.setEnabled(properties.getAcdStat().isCallInfo30minEnabled());
         acdCallInfoStatPartHourHandler.setEnabled(properties.getAcdStat().isCallInfoHourEnabled());
+        acdAgentOpStatDailyHandler.setEnabled(properties.getAcdStat().isAgentOpDailyEnabled());
+        acdAgentOpStatPart15MinHandler.setEnabled(properties.getAcdStat().isAgentOp15minEnabled());
+        acdAgentOpStatPart30MinHandler.setEnabled(properties.getAcdStat().isAgentOp30minEnabled());
+        acdAgentOpStatPartHourHandler.setEnabled(properties.getAcdStat().isAgentOpHourEnabled());
 
         // TODO 补充其他
 
@@ -84,21 +98,25 @@ public class DefaultDataServiceConfiguration {
         return DataServiceBuilder.processors()
                 // 赞同通知
                 .processor(agreeNotifyProcessor)
-                    .mq(properties.getMq().trans())
-                    // 构造测试handler
-                    .handler(new AgreeLoginNotifyHandler())
-                    .handler(new AgreeLogoutNotifyHandler())
-                    .handler(new AgreeUserLoginRequestHandler())
-                    // todo 补充其他handler
-                    .end()
+                .mq(properties.getMq().trans())
+                // 构造测试handler
+                .handler(new AgreeLoginNotifyHandler())
+                .handler(new AgreeLogoutNotifyHandler())
+                .handler(new AgreeUserLoginRequestHandler())
+                // todo 补充其他handler
+                .end()
                 // 客服统计
                 .processor(acdEventProcessor)
-                    .mq(properties.getMq().trans())
-                    .handler(acdCallInfoStatDailyHandler)
-                    .handler(acdCallInfoStatPart15MinHandler)
-                    .handler(acdCallInfoStatPart30MinHandler)
-                    .handler(acdCallInfoStatPartHourHandler)
-                    .end()
+                .mq(properties.getMq().trans())
+                .handler(acdCallInfoStatDailyHandler)
+                .handler(acdCallInfoStatPart15MinHandler)
+                .handler(acdCallInfoStatPart30MinHandler)
+                .handler(acdCallInfoStatPartHourHandler)
+                .handler(acdAgentOpStatDailyHandler)
+                .handler(acdAgentOpStatPart15MinHandler)
+                .handler(acdAgentOpStatPart30MinHandler)
+                .handler(acdAgentOpStatPartHourHandler)
+                .end()
                 .build();
         //@formatter:on
     }

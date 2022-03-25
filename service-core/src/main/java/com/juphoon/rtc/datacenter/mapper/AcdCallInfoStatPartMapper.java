@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.log.sqllite.mapper;
+package com.juphoon.rtc.datacenter.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -29,7 +29,7 @@ public interface AcdCallInfoStatPartMapper extends BaseMapper<AcdCallInfoStatPar
 
     int updateByPrimaryKey(AcdCallInfoStatPartPO record);
 
-    default AcdCallInfoStatPartPO selectByUniqueCondition(SFunction<AcdCallInfoStatPartPO, ?> column, Integer columnValue) {
+    default AcdCallInfoStatPartPO selectByUniqueCondition(SFunction<AcdCallInfoStatPartPO, ?> column, String columnValue) {
         LambdaQueryWrapper<AcdCallInfoStatPartPO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(column, columnValue);
         return this.selectOne(queryWrapper);

@@ -6,7 +6,6 @@ import lombok.ToString;
 import java.util.Map;
 
 /**
- *
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/10 18:17
  * @Description:
@@ -34,8 +33,6 @@ public class Event {
      * 其他参数
      */
     private Map<String, String> params;
-
-
 
 
     //************************ 方法区 **************************
@@ -106,7 +103,18 @@ public class Event {
     }
 
     public String skill() {
-        return params.get("skill");
+        return params.get("queue");
     }
-
+    public String team() {
+        return params.get("team");
+    }
+    public String shift() {
+        return params.get("shift");
+    }
+    public String agentId() {
+        return params.get("agentId");
+    }
+    public Short extStatus() {
+        return params.get("extStatus") == null ? null : Short.valueOf(params.get("extStatus"));
+    }
 }

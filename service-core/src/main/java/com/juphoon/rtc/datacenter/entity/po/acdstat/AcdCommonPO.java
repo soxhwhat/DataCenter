@@ -33,13 +33,13 @@ public class AcdCommonPO implements Serializable {
     private Date gmtModified;
 
     /**
-    * 域ID
-    */
+     * 域ID
+     */
     private Integer domainId;
 
     /**
-    * 应用ID
-    */
+     * 应用ID
+     */
     private Integer appId;
 
     /**
@@ -48,17 +48,17 @@ public class AcdCommonPO implements Serializable {
     private Long statTime;
 
     /**
-    * 事件总时长，ms
-    */
+     * 事件总时长，ms
+     */
     private Long duration;
 
     /**
-    * 事件总次数
-    */
+     * 事件总次数
+     */
     private Integer cnt = 1;
 
     /**
      * 计算出的值，确定一条数据
      */
-    private Integer uniqueHashCode;
+    private String uniqueKey;
 }

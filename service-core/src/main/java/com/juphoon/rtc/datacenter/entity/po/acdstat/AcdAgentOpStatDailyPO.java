@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.entity.po.acdstat;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.juphoon.rtc.datacenter.utils.Md5Util;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,45 +15,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @TableName("jrtc_acd_agentop_stat_daily")
-public class AcdAgentOpStatDailyPO extends AcdCommonPO {
+public class AcdAgentOpStatDailyPO extends AcdAgentOpStatPO {
 
-    /**
-    * 事件触发成员
-    */
-    private String agentId;
+    @Override
+    public String getUniqueKey() {
+        if (null == super.getUniqueKey()) {
+            String str = new StringBuilder(getStatTime() + "|").append(getAgentId())
+                    .append("|").append(getEventType()).append("|").append(getEventNum())
+                    .append("|").append(getEndType()).append("|").append(getDomainId())
+                    .append("|").append(getAppId()).append("|").append(getShift())
+                    .append("|").append(getTeam()).append("|").append(getSkill())
+                    .append("|").append(getExtStatus())
+                    .toString();
+            super.setUniqueKey(Md5Util.encryptMd5(str));
+        }
+        return super.getUniqueKey();
+    }
 
-    /**
-    * 班次(默认为日期)
-    */
-    private String shift;
-
-    /**
-    * 班组(可选)
-    */
-    private String team;
-
-    /**
-    * 技能组
-    */
-    private String skill;
-
-    /**
-    * 事件类型
-    */
-    private Short eventType;
-
-    /**
-    * 事件编号
-    */
-    private Short eventNum;
-
-    /**
-    * 事件结束类型
-    */
-    private Short endType;
-
-    /**
-    * 扩展状态(示忙子状态小休等)
-    */
-    private Short extStatus;
 }

@@ -6,14 +6,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 话务分时段汇总表
+ * 坐席操作日汇总表
  *
  * @author Yuan
  */
 @Getter
 @Setter
 @ToString
-public class AcdCallInfoStatPO extends AcdCommonPO {
+public class AcdAgentOpStatPO extends AcdCommonPO {
+
+    /**
+     * 事件触发成员
+     */
+    private String agentId;
+
+    /**
+     * 班次(默认为日期)
+     */
+    private String shift;
+
+    /**
+     * 班组(可选)
+     */
+    private String team;
+
     /**
      * 技能组
      */
@@ -35,6 +51,11 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
     private Short endType;
 
     /**
+     * 扩展状态(示忙子状态小休等)
+     */
+    private Short extStatus;
+
+    /**
      * 用event初始化部分字段
      *
      * @param event
@@ -45,8 +66,11 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
         this.setEventType(event.eventType());
         this.setEventNum(event.eventNumber());
         this.setEndType(event.endType());
+        this.setAgentId(event.agentId());
+        this.setExtStatus(event.extStatus());
+        this.setTeam(event.team());
+        this.setShift(event.shift());
         this.setSkill(event.skill());
     }
-
 
 }

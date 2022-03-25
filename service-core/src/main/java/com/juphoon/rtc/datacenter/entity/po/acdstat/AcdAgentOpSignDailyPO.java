@@ -10,7 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
-* 坐席签入签出日表
+ * 坐席签入签出日表
+ *
  * @author Yuan
  */
 @Getter
@@ -20,59 +21,64 @@ import lombok.ToString;
 public class AcdAgentOpSignDailyPO {
 
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private String id;
 
     private Date gmtCreated;
 
     private Date gmtModified;
 
     /**
-    * 域ID
-    */
+     * 域ID
+     */
     private Integer domainId;
 
     /**
-    * 应用ID
-    */
+     * 应用ID
+     */
     private Integer appId;
 
     /**
-    * 汇总时间
-    */
-    private Date statTime;
+     * 汇总时间
+     */
+    private Long statTime;
 
     /**
-    * 事件触发成员
-    */
+     * 事件触发成员
+     */
     private String agentId;
 
     /**
-    * 班次(默认为日期)
-    */
+     * 班次(默认为日期)
+     */
     private String shift;
 
     /**
-    * 班组(可选)
-    */
+     * 班组(可选)
+     */
     private String team;
 
     /**
-    * 首次登录时间戳(毫秒)
-    */
+     * 首次登录时间戳(毫秒)
+     */
     private Long firstLogin;
 
     /**
-    * 最后登出时间戳(毫秒)
-    */
+     * 最后登出时间戳(毫秒)
+     */
     private Long lastLogout;
 
     /**
-    * 首次签入时间戳(毫秒)
-    */
+     * 首次签入时间戳(毫秒)
+     */
     private Long firstSignIn;
 
     /**
-    * 最后签出时间戳(毫秒)
-    */
+     * 最后签出时间戳(毫秒)
+     */
     private Long lastSignOut;
+
+    /**
+     * 计算出的值，确定一条数据
+     */
+    private String uniqueKey;
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mq.mapper.JrtcAcdCallinfoStatDailyMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatDailyMapper">
   <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
     <!--@mbg.generated-->
     <!--@Table JRTC_ACD_CALLINFO_STAT_DAILY-->
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="GMT_CREATED" jdbcType="TIMESTAMP" property="gmtCreated" />
-    <result column="GMT_MODITIFIED" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="DOMAIN_ID" jdbcType="DECIMAL" property="domainId" />
     <result column="APP_ID" jdbcType="DECIMAL" property="appId" />
     <result column="STAT_TIME" jdbcType="DECIMAL" property="statTime" />
@@ -16,12 +16,12 @@
     <result column="END_TYPE" jdbcType="DECIMAL" property="endType" />
     <result column="DURATION" jdbcType="DECIMAL" property="duration" />
     <result column="CNT" jdbcType="DECIMAL" property="cnt" />
-    <result column="UNIQUE_HASH_CODE" jdbcType="DECIMAL" property="uniqueHashCode" />
+    <result column="UNIQUE_KEY" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    ID, GMT_CREATED, GMT_MODITIFIED, DOMAIN_ID, APP_ID, STAT_TIME, SKILL, EVENT_TYPE, 
-    EVENT_NUM, END_TYPE, DURATION, CNT, UNIQUE_HASH_CODE
+    ID, GMT_CREATED, GMT_MODIFIED, DOMAIN_ID, APP_ID, STAT_TIME, SKILL, EVENT_TYPE,
+    EVENT_NUM, END_TYPE, DURATION, CNT, UNIQUE_KEY
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -37,16 +37,16 @@
   </delete>
   <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
     <!--@mbg.generated-->
-    insert into JRTC_ACD_CALLINFO_STAT_DAILY (ID, GMT_CREATED, GMT_MODITIFIED, 
-      DOMAIN_ID, APP_ID, STAT_TIME, 
-      SKILL, EVENT_TYPE, EVENT_NUM, 
-      END_TYPE, DURATION, CNT, 
-      UNIQUE_HASH_CODE)
-    values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, 
-      #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL}, 
-      #{skill,jdbcType=VARCHAR}, #{eventType,jdbcType=DECIMAL}, #{eventNum,jdbcType=DECIMAL}, 
-      #{endType,jdbcType=DECIMAL}, #{duration,jdbcType=DECIMAL}, #{cnt,jdbcType=DECIMAL}, 
-      #{uniqueHashCode,jdbcType=DECIMAL})
+    insert into JRTC_ACD_CALLINFO_STAT_DAILY (ID, GMT_CREATED, GMT_MODIFIED,
+      DOMAIN_ID, APP_ID, STAT_TIME,
+      SKILL, EVENT_TYPE, EVENT_NUM,
+      END_TYPE, DURATION, CNT,
+      UNIQUE_KEY)
+    values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+      #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL},
+      #{skill,jdbcType=VARCHAR}, #{eventType,jdbcType=DECIMAL}, #{eventNum,jdbcType=DECIMAL},
+      #{endType,jdbcType=DECIMAL}, #{duration,jdbcType=DECIMAL}, #{cnt,jdbcType=DECIMAL},
+      #{uniqueKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
     <!--@mbg.generated-->
@@ -58,8 +58,8 @@
       <if test="gmtCreated != null">
         GMT_CREATED,
       </if>
-      <if test="gmtModitified != null">
-        GMT_MODITIFIED,
+      <if test="gmtModified != null">
+        GMT_MODIFIED,
       </if>
       <if test="domainId != null">
         DOMAIN_ID,
@@ -88,8 +88,8 @@
       <if test="cnt != null">
         CNT,
       </if>
-      <if test="uniqueHashCode != null">
-        UNIQUE_HASH_CODE,
+      <if test="uniqueKey != null">
+        UNIQUE_KEY,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -99,8 +99,8 @@
       <if test="gmtCreated != null">
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModitified != null">
-        #{gmtModitified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="domainId != null">
         #{domainId,jdbcType=DECIMAL},
@@ -129,8 +129,8 @@
       <if test="cnt != null">
         #{cnt,jdbcType=DECIMAL},
       </if>
-      <if test="uniqueHashCode != null">
-        #{uniqueHashCode,jdbcType=DECIMAL},
+      <if test="uniqueKey != null">
+        #{uniqueKey,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,8 +141,8 @@
       <if test="gmtCreated != null">
         GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModitified != null">
-        GMT_MODITIFIED = #{gmtModitified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="domainId != null">
         DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
@@ -171,8 +171,8 @@
       <if test="cnt != null">
         CNT = #{cnt,jdbcType=DECIMAL},
       </if>
-      <if test="uniqueHashCode != null">
-        UNIQUE_HASH_CODE = #{uniqueHashCode,jdbcType=DECIMAL},
+      <if test="uniqueKey != null">
+        UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -181,7 +181,7 @@
     <!--@mbg.generated-->
     update JRTC_ACD_CALLINFO_STAT_DAILY
     set GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
-      GMT_MODITIFIED = #{gmtModitified,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
       APP_ID = #{appId,jdbcType=DECIMAL},
       STAT_TIME = #{statTime,jdbcType=DECIMAL},
@@ -191,7 +191,7 @@
       END_TYPE = #{endType,jdbcType=DECIMAL},
       DURATION = #{duration,jdbcType=DECIMAL},
       CNT = #{cnt,jdbcType=DECIMAL},
-      UNIQUE_HASH_CODE = #{uniqueHashCode,jdbcType=DECIMAL}
+      UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

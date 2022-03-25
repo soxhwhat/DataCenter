@@ -4,8 +4,8 @@ import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.StatType;
-import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatPartPO;
-import com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatPartMapper;
+import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO;
+import com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatPartMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,17 +16,19 @@ import java.util.List;
 import static com.juphoon.rtc.datacenter.api.EventType.*;
 
 /**
- * <p>话务信息抽象类</p>
+ * <p>坐席信息抽象类</p>
+ * <p>描述请遵循 javadoc 规范</p>
+ * <p>TODO</p>
  *
- * @author ajian.zheng@juphoon.com
- * @date 3/23/22 7:35 PM
+ * @author wenjun.yuan@juphoon.com
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
+ * @since 2022/3/10 11:49
  */
 @Slf4j
-public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStatHandler<AcdCallInfoStatPartPO> {
+public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatHandler<AcdAgentOpStatPartPO> {
 
     @Autowired
-    private AcdCallInfoStatPartMapper AcdCallInfoStatPartMapper;
+    private AcdAgentOpStatPartMapper acdAgentOpStatPartMapper;
 
     /**
      * 设置handler的统计类型
@@ -37,11 +39,11 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void handle(EventContext ec, AcdCallInfoStatPartPO po) {
+    public void handle(EventContext ec, AcdAgentOpStatPartPO po) {
         Long beginTimestamp = ec.getEvent().beginTimestamp();
         Long endTimestamp = ec.getEvent().endTimestamp();
 
-        List<AcdCallInfoStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
+        List<AcdAgentOpStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
         try {
             list.forEach(this::upsert);
         } catch (Exception e) {
@@ -50,9 +52,9 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
     }
 
     @Override
-    public AcdCallInfoStatPartPO poFromEvent(Event event) {
+    public AcdAgentOpStatPartPO poFromEvent(Event event) {
         // TODO 参数校验
-        AcdCallInfoStatPartPO po = new AcdCallInfoStatPartPO();
+        AcdAgentOpStatPartPO po = new AcdAgentOpStatPartPO();
         po.fromEvent(event);
         po.setStatType(statType().getStatType());
         return po;
@@ -61,24 +63,25 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
     @Override
     public List<EventType> careEvents() {
         // TODO 待定事件：转接，邀请坐席
-        return Arrays.asList(TICKER_STATUS_WAIT, TICKER_STATUS_RING, TICKER_STATUS_TALK, TICKER_STATUS_OVERFLOW);
+        return Arrays.asList(TICKER_STATUS_RING, TICKER_STATUS_TALK, STAFF_STATUS_BUSY, STAFF_STATUS_FREE,
+                STAFF_STATUS_KEEP, STAFF_STATUS_LOGIN);
     }
 
     @Override
-    public AcdCallInfoStatPartPO selectByUnique(AcdCallInfoStatPartPO po) {
-        return AcdCallInfoStatPartMapper.selectByUniqueCondition(AcdCallInfoStatPartPO::getUniqueKey, po.getUniqueKey());
+    public AcdAgentOpStatPartPO selectByUnique(AcdAgentOpStatPartPO po) {
+        return acdAgentOpStatPartMapper.selectByUniqueCondition(AcdAgentOpStatPartPO::getUniqueKey, po.getUniqueKey());
     }
 
     @Override
-    public int insertSelective(AcdCallInfoStatPartPO po) {
+    public int insertSelective(AcdAgentOpStatPartPO po) {
         // TODO 加个缓存，先从缓存中查询
-        return AcdCallInfoStatPartMapper.insertSelective(po);
+        return acdAgentOpStatPartMapper.insertSelective(po);
     }
 
     // todo 表名不便作为参数
     @Override
     public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
-        return AcdCallInfoStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_callinfo_stat_part", uniqueKey, duration, cnt);
+        return acdAgentOpStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_agentop_stat_part", uniqueKey, duration, cnt);
     }
 
 }

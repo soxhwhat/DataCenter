@@ -73,6 +73,27 @@ public class DataCenterProperties {
          * 天话务统计
          */
         private boolean callInfoDailyEnabled = true;
+
+
+        /**
+         * 15分钟坐席统计
+         */
+        private boolean agentOp15minEnabled = false;
+
+        /**
+         * 30分钟坐席统计
+         */
+        private boolean agentOp30minEnabled = false;
+
+        /**
+         * 小时坐席统计
+         */
+        private boolean agentOpHourEnabled = false;
+
+        /**
+         * 天坐席统计
+         */
+        private boolean agentOpDailyEnabled = true;
     }
     //iron.datacenter.acd-stat.enabled=true
 
@@ -81,9 +102,9 @@ public class DataCenterProperties {
     public static class Mq {
         /**
          * 类型
-         * sample | distuptor(default)
+         * simple | distuptor(default)
          */
-        private String type = "sample";
+        private String type = "simple";
 
         /**
          * 队列大小

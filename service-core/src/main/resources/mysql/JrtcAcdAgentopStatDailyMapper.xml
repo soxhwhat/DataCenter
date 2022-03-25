@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mq.mapper.JrtcAcdAgentopStatDailyMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatDailyMapper">
   <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     <!--@Table jrtc_acd_agentop_stat_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
-    <result column="gmt_moditified" jdbcType="TIMESTAMP" property="gmtModitified" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="domain_id" jdbcType="INTEGER" property="domainId" />
     <result column="app_id" jdbcType="INTEGER" property="appId" />
-    <result column="stat_time" jdbcType="TIMESTAMP" property="statTime" />
+    <result column="stat_time" jdbcType="BIGINT" property="statTime" />
     <result column="agent_id" jdbcType="VARCHAR" property="agentId" />
     <result column="shift" jdbcType="VARCHAR" property="shift" />
     <result column="team" jdbcType="VARCHAR" property="team" />
@@ -20,15 +20,16 @@
     <result column="duration" jdbcType="BIGINT" property="duration" />
     <result column="cnt" jdbcType="INTEGER" property="cnt" />
     <result column="ext_status" jdbcType="SMALLINT" property="extStatus" />
+    <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, gmt_created, gmt_moditified, domain_id, app_id, stat_time, agent_id, shift, team, 
-    skill, event_type, event_num, end_type, duration, cnt, ext_status
+    id, gmt_created, gmt_modified, domain_id, app_id, stat_time, agent_id, shift, team,
+    skill, event_type, event_num, end_type, duration, cnt, ext_status, unique_key
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from jrtc_acd_agentop_stat_daily
     where id = #{id,jdbcType=BIGINT}
@@ -40,18 +41,18 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into jrtc_acd_agentop_stat_daily (gmt_created, gmt_moditified, domain_id, 
-      app_id, stat_time, agent_id, 
-      shift, team, skill, 
-      event_type, event_num, end_type, 
-      duration, cnt, ext_status
-      )
-    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModitified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER}, 
-      #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=TIMESTAMP}, #{agentId,jdbcType=VARCHAR}, 
-      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR}, 
-      #{eventType,jdbcType=SMALLINT}, #{eventNum,jdbcType=SMALLINT}, #{endType,jdbcType=SMALLINT}, 
-      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=SMALLINT}
-      )
+    insert into jrtc_acd_agentop_stat_daily (gmt_created, gmt_modified, domain_id,
+      app_id, stat_time, agent_id,
+      shift, team, skill,
+      event_type, event_num, end_type,
+      duration, cnt, ext_status,
+      unique_key)
+    values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER},
+      #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=BIGINT}, #{agentId,jdbcType=VARCHAR},
+      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR},
+      #{eventType,jdbcType=SMALLINT}, #{eventNum,jdbcType=SMALLINT}, #{endType,jdbcType=SMALLINT},
+      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=SMALLINT},
+      #{uniqueKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -60,8 +61,8 @@
       <if test="gmtCreated != null">
         gmt_created,
       </if>
-      <if test="gmtModitified != null">
-        gmt_moditified,
+      <if test="gmtModified != null">
+        gmt_modified,
       </if>
       <if test="domainId != null">
         domain_id,
@@ -102,13 +103,16 @@
       <if test="extStatus != null">
         ext_status,
       </if>
+      <if test="uniqueKey != null">
+        unique_key,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="gmtCreated != null">
         #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModitified != null">
-        #{gmtModitified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="domainId != null">
         #{domainId,jdbcType=INTEGER},
@@ -117,7 +121,7 @@
         #{appId,jdbcType=INTEGER},
       </if>
       <if test="statTime != null">
-        #{statTime,jdbcType=TIMESTAMP},
+        #{statTime,jdbcType=BIGINT},
       </if>
       <if test="agentId != null">
         #{agentId,jdbcType=VARCHAR},
@@ -149,6 +153,9 @@
       <if test="extStatus != null">
         #{extStatus,jdbcType=SMALLINT},
       </if>
+      <if test="uniqueKey != null">
+        #{uniqueKey,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
@@ -158,8 +165,8 @@
       <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModitified != null">
-        gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="domainId != null">
         domain_id = #{domainId,jdbcType=INTEGER},
@@ -168,7 +175,7 @@
         app_id = #{appId,jdbcType=INTEGER},
       </if>
       <if test="statTime != null">
-        stat_time = #{statTime,jdbcType=TIMESTAMP},
+        stat_time = #{statTime,jdbcType=BIGINT},
       </if>
       <if test="agentId != null">
         agent_id = #{agentId,jdbcType=VARCHAR},
@@ -200,6 +207,9 @@
       <if test="extStatus != null">
         ext_status = #{extStatus,jdbcType=SMALLINT},
       </if>
+      <if test="uniqueKey != null">
+        unique_key = #{uniqueKey,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -207,10 +217,10 @@
     <!--@mbg.generated-->
     update jrtc_acd_agentop_stat_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      gmt_moditified = #{gmtModitified,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       domain_id = #{domainId,jdbcType=INTEGER},
       app_id = #{appId,jdbcType=INTEGER},
-      stat_time = #{statTime,jdbcType=TIMESTAMP},
+      stat_time = #{statTime,jdbcType=BIGINT},
       agent_id = #{agentId,jdbcType=VARCHAR},
       shift = #{shift,jdbcType=VARCHAR},
       team = #{team,jdbcType=VARCHAR},
@@ -220,7 +230,8 @@
       end_type = #{endType,jdbcType=SMALLINT},
       duration = #{duration,jdbcType=BIGINT},
       cnt = #{cnt,jdbcType=INTEGER},
-      ext_status = #{extStatus,jdbcType=SMALLINT}
+      ext_status = #{extStatus,jdbcType=SMALLINT},
+      unique_key = #{uniqueKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
