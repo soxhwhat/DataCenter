@@ -3,6 +3,8 @@ package com.juphoon.rtc.datacenter.api;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -59,12 +61,12 @@ public class Event {
         return params;
     }
 
-    public short eventType() {
-        return type.shortValue();
+    public Integer eventType() {
+        return type;
     }
 
-    public short eventNumber() {
-        return number.shortValue();
+    public Integer eventNumber() {
+        return number;
     }
 
     /**
@@ -95,26 +97,44 @@ public class Event {
     }
 
     public long duration() {
-        return Long.valueOf(params.get("duration"));
+        return Long.valueOf(params.getOrDefault("duration", "0"));
     }
 
-    public short endType() {
-        return Short.valueOf(params.get("endType"));
+    public Integer endType() {
+        return Integer.valueOf(params.getOrDefault("endType", "0"));
     }
 
+    /**
+     * 排队机带过来的是queue
+     *
+     * @return
+     */
     public String skill() {
-        return params.get("queue");
+        return params.getOrDefault("queue", "");
     }
+
     public String team() {
-        return params.get("team");
+        return params.getOrDefault("team", "");
     }
+
     public String shift() {
-        return params.get("shift");
+        return params.getOrDefault("shift", defaultShirt());
     }
+
     public String agentId() {
-        return params.get("agentId");
+        return params.getOrDefault("agentId", "");
     }
-    public Short extStatus() {
-        return params.get("extStatus") == null ? null : Short.valueOf(params.get("extStatus"));
+
+    public Integer extStatus() {
+        return Integer.valueOf(params.getOrDefault("extStatus", "0"));
+    }
+
+    private static String defaultShirt() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        return sdf.format(new Date());
+    }
+
+    public static void main(String[] args) {
+        System.out.println(defaultShirt());
     }
 }

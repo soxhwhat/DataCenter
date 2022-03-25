@@ -38,22 +38,22 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
     /**
      * 事件类型
      */
-    private Short eventType;
+    private Integer eventType;
 
     /**
      * 事件编号
      */
-    private Short eventNum;
+    private Integer eventNum;
 
     /**
      * 事件结束类型
      */
-    private Short endType;
+    private Integer endType;
 
     /**
      * 扩展状态(示忙子状态小休等)
      */
-    private Short extStatus;
+    private Integer extStatus;
 
     /**
      * 用event初始化部分字段

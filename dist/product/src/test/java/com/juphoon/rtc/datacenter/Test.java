@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.service.DataService;
 import lombok.SneakyThrows;
+import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @Date: 2022/3/4 10:32
  * @Description:
  */
+@Ignore
 @SpringBootTest(classes = DataCenterApplication.class)
 @ActiveProfiles("mysql")
 public class Test {

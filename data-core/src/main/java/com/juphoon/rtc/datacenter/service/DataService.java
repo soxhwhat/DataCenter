@@ -31,7 +31,7 @@ public class DataService {
     public void commit(EventContext ec) {
         assert  null != ec : "ec为空";
 
-        log.debug("commit ec:{}", ec);
+        log.info("commit ec:{}", ec.body());
 
         for (IEventProcessor processor : processors) {
             log.debug("{} process ec:{}", processor.getName(), ec.body());

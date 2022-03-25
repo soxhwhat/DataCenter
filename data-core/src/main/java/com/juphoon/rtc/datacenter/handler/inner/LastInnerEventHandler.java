@@ -47,6 +47,7 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
             eventLogService.removeEvent(ec);
         }
 
+        log.info("ec:{},{},{}", ec.getMagic(), ec.getEvent().getUuid(), ec.getFrom());
         log.info("{} process ec:{},{} ret:{},cost:{}",
                 ec.getProcessorId(),
                 ec.getEvent().eventType(),

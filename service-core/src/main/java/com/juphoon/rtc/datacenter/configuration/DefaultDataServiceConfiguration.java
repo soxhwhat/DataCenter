@@ -98,25 +98,25 @@ public class DefaultDataServiceConfiguration {
         return DataServiceBuilder.processors()
                 // 赞同通知
                 .processor(agreeNotifyProcessor)
-                .mq(properties.getMq().trans())
-                // 构造测试handler
-                .handler(new AgreeLoginNotifyHandler())
-                .handler(new AgreeLogoutNotifyHandler())
-                .handler(new AgreeUserLoginRequestHandler())
-                // todo 补充其他handler
-                .end()
+                    .mq(properties.getMq().trans())
+                    // 构造测试handler
+                    .handler(new AgreeLoginNotifyHandler())
+                    .handler(new AgreeLogoutNotifyHandler())
+                    .handler(new AgreeUserLoginRequestHandler())
+                    // todo 补充其他handler
+                    .end()
                 // 客服统计
                 .processor(acdEventProcessor)
-                .mq(properties.getMq().trans())
-                .handler(acdCallInfoStatDailyHandler)
-                .handler(acdCallInfoStatPart15MinHandler)
-                .handler(acdCallInfoStatPart30MinHandler)
-                .handler(acdCallInfoStatPartHourHandler)
-                .handler(acdAgentOpStatDailyHandler)
-                .handler(acdAgentOpStatPart15MinHandler)
-                .handler(acdAgentOpStatPart30MinHandler)
-                .handler(acdAgentOpStatPartHourHandler)
-                .end()
+                    .mq(properties.getMq().trans())
+                    .handler(acdCallInfoStatDailyHandler)
+                    .handler(acdCallInfoStatPart15MinHandler)
+                    .handler(acdCallInfoStatPart30MinHandler)
+                    .handler(acdCallInfoStatPartHourHandler)
+                    .handler(acdAgentOpStatDailyHandler)
+                    .handler(acdAgentOpStatPart15MinHandler)
+                    .handler(acdAgentOpStatPart30MinHandler)
+                    .handler(acdAgentOpStatPartHourHandler)
+                    .end()
                 .build();
         //@formatter:on
     }

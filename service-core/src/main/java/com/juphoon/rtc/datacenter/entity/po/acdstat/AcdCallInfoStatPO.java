@@ -22,17 +22,17 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
     /**
      * 事件类型
      */
-    private Short eventType;
+    private Integer eventType;
 
     /**
      * 事件编号
      */
-    private Short eventNum;
+    private Integer eventNum;
 
     /**
      * 事件结束类型
      */
-    private Short endType;
+    private Integer endType;
 
     /**
      * 用event初始化部分字段

@@ -18,6 +18,8 @@ import java.util.StringJoiner;
 @Setter
 public class EventContext {
 
+    private String magic;
+
     private String from;
 
     /**
@@ -129,8 +131,8 @@ public class EventContext {
      * @return
      */
     public String body() {
-
         return new StringJoiner(", ", EventContext.class.getSimpleName() + "[", "]")
+                .add("from='" + from + "'")
                 .add("requestId='" + requestId + "'")
                 .add("processorId='" + processorId + "'")
                 .add("event=" + event)

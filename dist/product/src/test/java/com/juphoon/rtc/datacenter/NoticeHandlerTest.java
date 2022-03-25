@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.service.DataService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @date 2022/3/4 16:49
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
+@Ignore
 @SpringBootTest(classes = DataCenterApplication.class)
 @Slf4j
 @ActiveProfiles("mysql")

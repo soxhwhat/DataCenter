@@ -14,12 +14,12 @@
     <result column="shift" jdbcType="VARCHAR" property="shift" />
     <result column="team" jdbcType="VARCHAR" property="team" />
     <result column="skill" jdbcType="VARCHAR" property="skill" />
-    <result column="event_type" jdbcType="SMALLINT" property="eventType" />
-    <result column="event_num" jdbcType="SMALLINT" property="eventNum" />
-    <result column="end_type" jdbcType="SMALLINT" property="endType" />
+    <result column="event_type" jdbcType="INTEGER" property="eventType" />
+    <result column="event_num" jdbcType="INTEGER" property="eventNum" />
+    <result column="end_type" jdbcType="INTEGER" property="endType" />
     <result column="duration" jdbcType="BIGINT" property="duration" />
     <result column="cnt" jdbcType="INTEGER" property="cnt" />
-    <result column="ext_status" jdbcType="SMALLINT" property="extStatus" />
+    <result column="ext_status" jdbcType="INTEGER" property="extStatus" />
     <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -50,8 +50,8 @@
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER},
       #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=BIGINT}, #{agentId,jdbcType=VARCHAR},
       #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR},
-      #{eventType,jdbcType=SMALLINT}, #{eventNum,jdbcType=SMALLINT}, #{endType,jdbcType=SMALLINT},
-      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=SMALLINT},
+      #{eventType,jdbcType=INTEGER}, #{eventNum,jdbcType=INTEGER}, #{endType,jdbcType=INTEGER},
+      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=INTEGER},
       #{uniqueKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
@@ -136,13 +136,13 @@
         #{skill,jdbcType=VARCHAR},
       </if>
       <if test="eventType != null">
-        #{eventType,jdbcType=SMALLINT},
+        #{eventType,jdbcType=INTEGER},
       </if>
       <if test="eventNum != null">
-        #{eventNum,jdbcType=SMALLINT},
+        #{eventNum,jdbcType=INTEGER},
       </if>
       <if test="endType != null">
-        #{endType,jdbcType=SMALLINT},
+        #{endType,jdbcType=INTEGER},
       </if>
       <if test="duration != null">
         #{duration,jdbcType=BIGINT},
@@ -151,7 +151,7 @@
         #{cnt,jdbcType=INTEGER},
       </if>
       <if test="extStatus != null">
-        #{extStatus,jdbcType=SMALLINT},
+        #{extStatus,jdbcType=INTEGER},
       </if>
       <if test="uniqueKey != null">
         #{uniqueKey,jdbcType=VARCHAR},
@@ -190,13 +190,13 @@
         skill = #{skill,jdbcType=VARCHAR},
       </if>
       <if test="eventType != null">
-        event_type = #{eventType,jdbcType=SMALLINT},
+        event_type = #{eventType,jdbcType=INTEGER},
       </if>
       <if test="eventNum != null">
-        event_num = #{eventNum,jdbcType=SMALLINT},
+        event_num = #{eventNum,jdbcType=INTEGER},
       </if>
       <if test="endType != null">
-        end_type = #{endType,jdbcType=SMALLINT},
+        end_type = #{endType,jdbcType=INTEGER},
       </if>
       <if test="duration != null">
         duration = #{duration,jdbcType=BIGINT},
@@ -205,7 +205,7 @@
         cnt = #{cnt,jdbcType=INTEGER},
       </if>
       <if test="extStatus != null">
-        ext_status = #{extStatus,jdbcType=SMALLINT},
+        ext_status = #{extStatus,jdbcType=INTEGER},
       </if>
       <if test="uniqueKey != null">
         unique_key = #{uniqueKey,jdbcType=VARCHAR},
@@ -225,12 +225,12 @@
       shift = #{shift,jdbcType=VARCHAR},
       team = #{team,jdbcType=VARCHAR},
       skill = #{skill,jdbcType=VARCHAR},
-      event_type = #{eventType,jdbcType=SMALLINT},
-      event_num = #{eventNum,jdbcType=SMALLINT},
-      end_type = #{endType,jdbcType=SMALLINT},
+      event_type = #{eventType,jdbcType=INTEGER},
+      event_num = #{eventNum,jdbcType=INTEGER},
+      end_type = #{endType,jdbcType=INTEGER},
       duration = #{duration,jdbcType=BIGINT},
       cnt = #{cnt,jdbcType=INTEGER},
-      ext_status = #{extStatus,jdbcType=SMALLINT},
+      ext_status = #{extStatus,jdbcType=INTEGER},
       unique_key = #{uniqueKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

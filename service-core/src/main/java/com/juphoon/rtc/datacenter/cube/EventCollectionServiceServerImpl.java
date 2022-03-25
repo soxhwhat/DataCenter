@@ -55,6 +55,9 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
     }
 
     private boolean process(ServerCall serverCall, List<DataCollection.Event> eventList) {
+        String magic = binaryToHexString(serverCall.getMagic());
+        log.debug("magic:{}", magic);
+
         boolean ret = true;
         try {
             if (null == eventList || eventList.isEmpty()) {
@@ -63,7 +66,7 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
             }
 
             String host = serverCall.getParam("host");
-            List<EventContext> eventContexts = trans(eventList, host);
+            List<EventContext> eventContexts = trans(eventList, host, magic);
             eventRouter.router(eventContexts);
         } catch (java.lang.Exception e) {
             ret = false;
@@ -73,7 +76,7 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
         return ret;
     }
 
-    private List<EventContext> trans(List<DataCollection.Event> from, String host) throws
+    private List<EventContext> trans(List<DataCollection.Event> from, String host, String magic) throws
             JsonProcessingException {
         List<EventContext> ret = new ArrayList<>();
 
@@ -85,6 +88,7 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
             ec.setRequestId(t.getUuid());
             ec.setEvent(t);
             ec.setFrom(host);
+            ec.setMagic(magic);
 
             ret.add(ec);
         }
@@ -111,5 +115,20 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
         to.setParams(params);
 
         return to;
+    }
+
+    private static String hexStr = "0123456789ABCDEF";
+
+    public static String binaryToHexString(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        String hex;
+        for (byte aByte : bytes) {
+            //字节高4位
+            hex = String.valueOf(hexStr.charAt((aByte & 0xF0) >> 4));
+            //字节低4位
+            hex += String.valueOf(hexStr.charAt(aByte & 0x0F));
+            result.append(hex);
+        }
+        return result.toString();
     }
 }

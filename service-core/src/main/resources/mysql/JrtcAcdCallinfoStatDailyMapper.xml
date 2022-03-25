@@ -11,9 +11,9 @@
     <result column="app_id" jdbcType="INTEGER" property="appId" />
     <result column="stat_time" jdbcType="BIGINT" property="statTime" />
     <result column="skill" jdbcType="VARCHAR" property="skill" />
-    <result column="event_type" jdbcType="SMALLINT" property="eventType" />
-    <result column="event_num" jdbcType="SMALLINT" property="eventNum" />
-    <result column="end_type" jdbcType="SMALLINT" property="endType" />
+    <result column="event_type" jdbcType="INTEGER" property="eventType" />
+    <result column="event_num" jdbcType="INTEGER" property="eventNum" />
+    <result column="end_type" jdbcType="INTEGER" property="endType" />
     <result column="duration" jdbcType="BIGINT" property="duration" />
     <result column="cnt" jdbcType="INTEGER" property="cnt" />
     <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey" />
@@ -44,7 +44,7 @@
       )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER},
       #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=BIGINT}, #{skill,jdbcType=VARCHAR},
-      #{eventType,jdbcType=SMALLINT}, #{eventNum,jdbcType=SMALLINT}, #{endType,jdbcType=SMALLINT},
+      #{eventType,jdbcType=INTEGER}, #{eventNum,jdbcType=INTEGER}, #{endType,jdbcType=INTEGER},
       #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{uniqueKey,jdbcType=VARCHAR}
       )
   </insert>
@@ -109,13 +109,13 @@
         #{skill,jdbcType=VARCHAR},
       </if>
       <if test="eventType != null">
-        #{eventType,jdbcType=SMALLINT},
+        #{eventType,jdbcType=INTEGER},
       </if>
       <if test="eventNum != null">
-        #{eventNum,jdbcType=SMALLINT},
+        #{eventNum,jdbcType=INTEGER},
       </if>
       <if test="endType != null">
-        #{endType,jdbcType=SMALLINT},
+        #{endType,jdbcType=INTEGER},
       </if>
       <if test="duration != null">
         #{duration,jdbcType=BIGINT},
@@ -151,13 +151,13 @@
         skill = #{skill,jdbcType=VARCHAR},
       </if>
       <if test="eventType != null">
-        event_type = #{eventType,jdbcType=SMALLINT},
+        event_type = #{eventType,jdbcType=INTEGER},
       </if>
       <if test="eventNum != null">
-        event_num = #{eventNum,jdbcType=SMALLINT},
+        event_num = #{eventNum,jdbcType=INTEGER},
       </if>
       <if test="endType != null">
-        end_type = #{endType,jdbcType=SMALLINT},
+        end_type = #{endType,jdbcType=INTEGER},
       </if>
       <if test="duration != null">
         duration = #{duration,jdbcType=BIGINT},
@@ -180,9 +180,9 @@
       app_id = #{appId,jdbcType=INTEGER},
       stat_time = #{statTime,jdbcType=BIGINT},
       skill = #{skill,jdbcType=VARCHAR},
-      event_type = #{eventType,jdbcType=SMALLINT},
-      event_num = #{eventNum,jdbcType=SMALLINT},
-      end_type = #{endType,jdbcType=SMALLINT},
+      event_type = #{eventType,jdbcType=INTEGER},
+      event_num = #{eventNum,jdbcType=INTEGER},
+      end_type = #{endType,jdbcType=INTEGER},
       duration = #{duration,jdbcType=BIGINT},
       cnt = #{cnt,jdbcType=INTEGER},
       unique_key = #{uniqueKey,jdbcType=VARCHAR}
