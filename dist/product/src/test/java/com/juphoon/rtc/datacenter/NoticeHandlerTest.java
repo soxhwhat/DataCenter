@@ -23,31 +23,31 @@ import java.util.Map;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Ignore
-@SpringBootTest(classes = DataCenterApplication.class)
-@Slf4j
-@ActiveProfiles("mysql")
+//@SpringBootTest(classes = DataCenterApplication.class)
+//@Slf4j
+//@ActiveProfiles("mysql")
 public class NoticeHandlerTest {
 
-    @Autowired
-    private DataService dataService;
+//    @Autowired
+//    private DataService dataService;
 
     @Test
     public void testVerCodeHandler() throws InterruptedException {
-        Event event = new Event();
-
-        event.setDomainId(100645);
-        event.setAppId(0);
-        event.setType(10);
-        event.setNumber(1);
-        Map<String, String> map = new HashMap<>();
-        map.put("test", "value");
-        event.setParams(map);
-
-        EventContext ec = new EventContext();
-        ec.setFrom("test");
-        ec.setRequestId("test");
-        ec.setEvent(event);
-
-        dataService.commit(ec);
+//        Event event = new Event();
+//
+//        event.setDomainId(100645);
+//        event.setAppId(0);
+//        event.setType(1);
+//        event.setNumber(1);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("test", "value");
+//        event.setParams(map);
+//
+//        EventContext ec = new EventContext();
+//        ec.setFrom("test");
+//        ec.setRequestId("test");
+//        ec.setEvent(event);
+//
+//        dataService.commit(ec);
     }
 }
