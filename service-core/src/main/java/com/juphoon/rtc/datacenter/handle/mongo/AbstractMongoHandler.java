@@ -33,17 +33,17 @@ public abstract class AbstractMongoHandler extends AbstractEventHandler {
     }
 
     public String getCollectionName(EventContext ec) {
-        Integer type = ec.getEvent().getEventType().getType();
+        EventType type = ec.getEvent().getEventType();
         String day = DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
 
-        if (type.equals(EventType.TICKER_STATUS_WAIT.getType())){
+        if (type.getType().equals(EventType.TICKER_STATUS_WAIT.getType())){
             return "jrtc.events" + UNDER_LINE + day;
-        } else if (type.equals(EventType.TICKER_COMPLETE)){
-            return "jrtc.records" + UNDER_LINE + day;
-        } else if (type.equals(EventType.STAFF_BEAT)){
-            return "jrtc.status" + UNDER_LINE + day;
-        } else if (type.equals(EventType.QUEUE_BEAT)){
-            return "jrtc.status" + UNDER_LINE + day;
+        } else if (EventType.TICKER_COMPLETE.equals(type)){
+            return "jrtc.records";
+        } else if (EventType.STAFF_BEAT.equals(type)){
+            return "jrtc.status";
+        } else if (EventType.QUEUE_BEAT.equals(type)){
+            return "jrtc.status";
         }
         return null;
     }

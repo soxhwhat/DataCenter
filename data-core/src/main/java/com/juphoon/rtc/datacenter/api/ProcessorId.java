@@ -17,7 +17,17 @@ public enum ProcessorId {
     /**
      * 客服统计
      */
-    ACD_STAT("acdStatProcessor", "客服统计理器");
+    ACD_STAT("acdStatProcessor", "客服统计理器"),
+
+    /**
+     * 事件mongo入库
+     */
+    MONGO("mongoProcessor", "Mongo事件入库"),
+
+    /**
+     * 事件mongo入库
+     */
+    KAFKA("kafkaProcessor", "Kafka事件推送");
 
 
     /**

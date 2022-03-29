@@ -48,8 +48,9 @@ public class EventMongoHandler extends AbstractMongoHandler {
         try {
             String collectionName = getCollectionName(ec);
             log.info("ec:{},collectionName:{}", ec, collectionName);
-            getMongoTemplate().insert(ec.getEvent().getParams(), collectionName);
+            getMongoTemplate().insert(ec.getEvent(), collectionName);
         } catch (DataAccessException e) {
+            log.error("DataAccessException:{}",e);
             return false;
         } catch (Exception e) {
             log.error("{}", e);

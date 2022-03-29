@@ -3,8 +3,16 @@ package com.juphoon.rtc.datacenter.configuration;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
+import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLoginNotifyHandler;
+import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLogoutNotifyHandler;
+import com.juphoon.rtc.datacenter.handle.http.agree.AgreeUserLoginRequestHandler;
+import com.juphoon.rtc.datacenter.handle.kafka.EventKafkaHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.EventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.TheaMongoHandler;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
+import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
+import com.juphoon.rtc.datacenter.processor.MongoProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
@@ -60,6 +68,12 @@ public class DefaultDataServiceConfiguration {
     private AcdAgentOpStatPartHourHandler acdAgentOpStatPartHourHandler;
 
 
+    @Autowired
+    private EventMongoHandler eventMongoHandler;
+
+    @Autowired
+    private TheaMongoHandler theaMongoHandler;
+
     @Bean
     @ConditionalOnMissingBean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
@@ -94,7 +108,8 @@ public class DefaultDataServiceConfiguration {
         acdAgentOpStatPartHourHandler.setEnabled(properties.getAcdStat().isAgentOpHourEnabled());
 
         // TODO 补充其他
-
+        MongoProcessor mongoProcessor = beanFactory.getBean(MongoProcessor.class);
+        mongoProcessor.setProcessorId(ProcessorId.MONGO);
         //@formatter:off
         return DataServiceBuilder.processors()
                 // 赞同通知
@@ -121,6 +136,11 @@ public class DefaultDataServiceConfiguration {
                     .handler(acdAgentOpStatPart15MinHandler)
                     .handler(acdAgentOpStatPart30MinHandler)
                     .handler(acdAgentOpStatPartHourHandler)
+                    .end()
+                .processor(mongoProcessor)
+                    .mq(properties.getMq().trans())
+                    .handler(eventMongoHandler)
+//                    .handler(theaMongoHandler)
                     .end()
                 .build();
         //@formatter:on
