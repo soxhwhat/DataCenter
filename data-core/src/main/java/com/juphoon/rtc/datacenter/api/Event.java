@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -140,6 +141,18 @@ public class Event {
 
     public Map<String, String> getParams() {
         return params;
+    }
+
+    /**
+     * 深度复制map
+     *
+     * @return
+     */
+    public Map<String, String> getParamsCopy() {
+        if (null == params) {
+            return new HashMap<>(0);
+        }
+        return new HashMap<>(params);
     }
 
     public Integer eventType() {

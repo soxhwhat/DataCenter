@@ -36,14 +36,4 @@ public class AgreeRecordSnapshotHandler extends AbstractAgreeNoticeHandler {
     public List<EventType> careEvents() {
         return Collections.singletonList(EventType.SNAPSHOT_NOTICE);
     }
-
-    @Override
-    public Map<String, String> handleRequest(EventContext ec) {
-        //noticeServiceImpl类中已经封装好了参数，这一版暂时先这样，后续定义新的rpc接口时再重新封装
-        return ec.getEvent().getParams();
-//        Map<String, String> params = ec.convertStringMap();
-//        deleteRoomIdSuffix(params);
-//        deleteUserIdSuffix(params);
-//        return ec.convertObjectMap(params);
-    }
 }

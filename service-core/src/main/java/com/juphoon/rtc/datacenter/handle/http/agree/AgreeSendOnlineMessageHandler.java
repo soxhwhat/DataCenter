@@ -36,31 +36,4 @@ public class AgreeSendOnlineMessageHandler extends AbstractAgreeNoticeHandler {
     public List<EventType> careEvents() {
         return Collections.singletonList(EventType.SEND_ONLINE);
     }
-
-    @Override
-    public Map<String, String> handleRequest(EventContext ec) {
-        //noticeServiceImpl类中已经封装好了参数，这一版暂时先这样，后续定义新的rpc接口时再重新封装
-        return ec.getEvent().getParams();
-//        Map<String, String> params = ec.convertStringMap();
-//        deleteRoomIdSuffix(params);
-//        String sendUserUri = params.get("account");
-//        sendUserUri = getUsername(sendUserUri);
-//        params.put("account", sendUserUri);
-//        String receiverUri = params.get("receiverUri");
-//        TransbufferReq transbufferReq = new TransbufferReq();
-//        String finalSendUserUri = sendUserUri;
-//        sessionAgent.sendImOnlineMessage(receiverUri, params, ret -> {
-//            if (ret) {
-//                String json = IronJsonUtils.objectToJson(params);
-//                String databuf = Base64Utils.encodeToString(json.getBytes());
-//                transbufferReq.setDatesize(String.valueOf(databuf.length()));
-//                transbufferReq.setUserid(finalSendUserUri);
-//                transbufferReq.setUsername(finalSendUserUri);
-//                transbufferReq.setDatabuf(databuf);
-//                log.info("send notice..... {}", receiverUri);
-//            }
-//        });
-//
-//        return transbufferReq.convertToMap();
-    }
 }

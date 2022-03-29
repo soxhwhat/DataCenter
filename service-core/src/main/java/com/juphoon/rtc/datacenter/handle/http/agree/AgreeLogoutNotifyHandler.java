@@ -34,23 +34,4 @@ public class AgreeLogoutNotifyHandler extends AbstractAgreeNoticeHandler {
     public List<EventType> careEvents() {
         return Collections.singletonList(EventType.LOGOUT_EVENT);
     }
-
-    @Override
-    public Map<String, String> handleRequest(EventContext ec) {
-        //noticeServiceImpl类中已经封装好了参数，这一版暂时先这样，后续定义新的rpc接口时再重新封装
-        return ec.getEvent().getParams();
-//        Map<String, String> params = ec.convertStringMap();
-//        deleteRoomIdSuffix(params);
-//        String uri = params.get("account");
-//        String username = params.get("username");
-//        if (StringUtils.isEmpty(uri)) {
-//            uri = username;
-//        }
-//        uri = getUsername(uri);
-//        params.put("userId", uri);
-//        params.put("username", uri);
-//        cacheService.hRemove(KEY_AGREE, uri);
-//        params.put("errorcode", "0");
-//        return ec.convertObjectMap(params);
-    }
 }

@@ -31,13 +31,13 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
      */
     public abstract String endpoint();
 
-    /**
-     * 处理请求
-     *
-     * @param ec
-     * @return
-     */
-    public abstract Map<String, String> handleRequest(EventContext ec);
+//    /**
+//     * 处理请求
+//     *
+//     * @param ec
+//     * @return
+//     */
+//    public abstract Map<String, String> handleRequest(EventContext ec);
 
     @Override
     public boolean exchange(String url, RestTemplate restTemplate, EventContext ec) {
@@ -51,7 +51,8 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
 
         try {
             // 生成请求参数
-            Map<String, String> params = handleRequest(ec);
+            Map<String, String> params = ec.getEvent().getParamsCopy();
+
             assert null != params : "请求参数为空";
 
             /// 1. 风格保持赞同接口统一

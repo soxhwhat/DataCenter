@@ -34,13 +34,4 @@ public class AgreeUserLoginRequestHandler extends AbstractAgreeNoticeHandler {
     public String endpoint() {
         return "/userlogin_request";
     }
-
-    @Override
-    public Map<String, String> handleRequest(EventContext ec) {
-        return ec.getEvent().getParams();
-        //        Map<String, String> params = ec.convertStringMap();
-//        deleteRoomIdSuffix(params);
-//        deleteUserIdSuffix(params);
-//        return ec.convertObjectMap(params);
-    }
 }

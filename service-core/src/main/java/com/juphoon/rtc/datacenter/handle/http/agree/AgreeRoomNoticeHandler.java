@@ -36,22 +36,4 @@ public class AgreeRoomNoticeHandler extends AbstractAgreeNoticeHandler {
     public List<EventType> careEvents() {
         return Collections.singletonList(EventType.ROOM_NOTICE);
     }
-
-    @Override
-    public Map<String, String> handleRequest(EventContext ec) {
-        //noticeServiceImpl类中已经封装好了参数，这一版暂时先这样，后续定义新的rpc接口时再重新封装
-        return ec.getEvent().getParams();
-//        Map<String, String> params = ec.convertStringMap();
-//
-//        deleteRoomIdSuffix(params);
-//        deleteUserIdSuffix(params);
-//        if (isCdUser(params)) {
-//            log.info("isCdUser:{}",params);
-//        }
-//        if(isSecondRoom(params)){
-//            log.info("isSecondRoom:{}",params);
-//        }
-//
-//        return ec.convertObjectMap(params);
-    }
 }
