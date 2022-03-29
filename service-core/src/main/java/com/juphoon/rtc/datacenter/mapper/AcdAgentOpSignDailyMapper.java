@@ -15,13 +15,32 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AcdAgentOpSignDailyMapper extends BaseMapper<AcdAgentOpSignDailyPO> {
-    int deleteByPrimaryKey(Long id);
 
+    /**
+     * insert record to table selective
+     * @param record the record
+     * @return insert count
+     */
     int insertSelective(AcdAgentOpSignDailyPO record);
 
+    /**
+     * select by primary key
+     * @param id primary key
+     * @return object by primary key
+     */
     AcdAgentOpSignDailyPO selectByPrimaryKey(Long id);
 
+    /**
+     * update record selective
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKeySelective(AcdAgentOpSignDailyPO record);
 
+    /**
+     * update record
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKey(AcdAgentOpSignDailyPO record);
 }

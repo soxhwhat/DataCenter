@@ -12,6 +12,7 @@
       <if test="cnt != null">
         cnt = cnt + #{cnt,jdbcType=INTEGER},
       </if>
+        GMT_MODIFIED = CURRENT_TIMESTAMP
     </set>
     where unique_key = #{uniqueKey,jdbcType=VARCHAR}
   </update>

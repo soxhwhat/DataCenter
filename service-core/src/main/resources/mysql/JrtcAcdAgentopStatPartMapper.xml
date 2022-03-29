@@ -35,11 +35,6 @@
     from jrtc_acd_agentop_stat_part
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from jrtc_acd_agentop_stat_part
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_agentop_stat_part (gmt_created, gmt_modified, domain_id,

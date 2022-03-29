@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatExtTerminalDailyMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdExtTerminalDailyMapper">
   <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
-    <!--@Table jrtc_acd_callinfo_stat_ext_terminal_daily-->
+    <!--@Table jrtc_acd_ext_terminal_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
@@ -24,17 +24,12 @@
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
-    from jrtc_acd_callinfo_stat_ext_terminal_daily
+    from jrtc_acd_ext_terminal_daily
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from jrtc_acd_callinfo_stat_ext_terminal_daily
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into jrtc_acd_callinfo_stat_ext_terminal_daily (gmt_created, gmt_modified, domain_id,
+    insert into jrtc_acd_ext_terminal_daily (gmt_created, gmt_modified, domain_id,
       app_id, stat_time, skill,
       cnt, terminal, unique_key
       )
@@ -45,7 +40,7 @@
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into jrtc_acd_callinfo_stat_ext_terminal_daily
+    insert into jrtc_acd_ext_terminal_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="gmtCreated != null">
         gmt_created,
@@ -107,7 +102,7 @@
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
-    update jrtc_acd_callinfo_stat_ext_terminal_daily
+    update jrtc_acd_ext_terminal_daily
     <set>
       <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -141,7 +136,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalDailyPO">
     <!--@mbg.generated-->
-    update jrtc_acd_callinfo_stat_ext_terminal_daily
+    update jrtc_acd_ext_terminal_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       domain_id = #{domainId,jdbcType=INTEGER},

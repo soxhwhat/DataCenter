@@ -19,14 +19,33 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @DS("kiwi")
 public interface AcdCallInfoStatDailyMapper extends BaseMapper<AcdCallInfoStatDailyPO>, AcdCommonMapper {
-    int deleteByPrimaryKey(Long id);
 
+    /**
+     * insert record to table selective
+     * @param record the record
+     * @return insert count
+     */
     int insertSelective(AcdCallInfoStatDailyPO record);
 
+    /**
+     * select by primary key
+     * @param id primary key
+     * @return object by primary key
+     */
     AcdCallInfoStatDailyPO selectByPrimaryKey(Long id);
 
+    /**
+     * update record selective
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKeySelective(AcdCallInfoStatDailyPO record);
 
+    /**
+     * update record
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKey(AcdCallInfoStatDailyPO record);
 
     default AcdCallInfoStatDailyPO selectByCondition(SFunction<AcdCallInfoStatDailyPO, ?> column, String columnValue) {

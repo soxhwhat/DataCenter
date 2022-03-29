@@ -5,7 +5,7 @@ import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPa
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * <p>jrtc_acd_callinfo_stat_ext_terminal_part表的mapper类</p>
+ * <p>jrtc_acd_ext_terminal_part表的mapper类</p>
  * <p>描述请遵循 javadoc 规范</p>
  * <p>TODO</p>
  *
@@ -14,14 +14,33 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022/3/10 11:49
  */
 @Mapper
-public interface AcdCallInfoStatExtTerminalPartMapper extends BaseMapper<AcdCallInfoStatExtTerminalPartPO> {
-    int deleteByPrimaryKey(Long id);
+public interface AcdExtTerminalPartMapper extends BaseMapper<AcdCallInfoStatExtTerminalPartPO> {
 
+    /**
+     * insert record to table selective
+     * @param record the record
+     * @return insert count
+     */
     int insertSelective(AcdCallInfoStatExtTerminalPartPO record);
 
+    /**
+     * select by primary key
+     * @param id primary key
+     * @return object by primary key
+     */
     AcdCallInfoStatExtTerminalPartPO selectByPrimaryKey(Long id);
 
+    /**
+     * update record selective
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKeySelective(AcdCallInfoStatExtTerminalPartPO record);
 
+    /**
+     * update record
+     * @param record the updated record
+     * @return update count
+     */
     int updateByPrimaryKey(AcdCallInfoStatExtTerminalPartPO record);
 }

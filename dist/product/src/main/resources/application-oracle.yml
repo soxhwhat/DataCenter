@@ -34,21 +34,36 @@ spring:
           username:
           password:
         oracle:
-          url: jdbc:oracle:thin:@//192.168.4.171:1521/ORCLCDB
+          url: jdbc:oracle:thin:@//192.168.20.96:1521/ORCL
           driver-class-name: oracle.jdbc.OracleDriver
-          username: C##HBR
-          password: juphoon419708
+          username: KIWI
+          password: 123456
       primary: oracle
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    host: 192.168.15.254
+    password: juphoon419708
 mybatis-plus:
   mapper-locations: classpath*:oracle/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 iron:
   debug:
-    enabled: false
+    enabled: true
+  cube:
+    enabled: true
+    serverCfg: D:\workspace\server.cfg
+    startupWaitSeconds: 60
+    debugMode: true
+  datacenter:
+    acd-stat:
+      callInfo15minEnabled: true
+      callInfoHourEnabled: true
+      agentOp15minEnabled: true
+      agentOpHourEnabled: true
   event:
     mongo:
       0: ticket_event
@@ -57,3 +72,5 @@ iron:
 notice:
   config:
     uri: http://127.0.0.1:8081
+logging:
+  config: classpath:logback-spring.xml

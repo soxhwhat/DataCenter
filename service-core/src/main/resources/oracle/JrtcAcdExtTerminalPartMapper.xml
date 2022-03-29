@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdExtTerminalPartMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPartPO">
     <!--@mbg.generated-->
-    <!--@Table JRTC_ACD_CALLINFO_STAT_DAILY-->
+    <!--@Table JRTC_ACD_EXT_TERMINAL_PART-->
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="GMT_CREATED" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="DOMAIN_ID" jdbcType="DECIMAL" property="domainId" />
     <result column="APP_ID" jdbcType="DECIMAL" property="appId" />
     <result column="STAT_TIME" jdbcType="DECIMAL" property="statTime" />
+    <result column="STAT_TYPE" jdbcType="DECIMAL" property="statType" />
     <result column="SKILL" jdbcType="VARCHAR" property="skill" />
-    <result column="EVENT_TYPE" jdbcType="DECIMAL" property="eventType" />
-    <result column="EVENT_NUM" jdbcType="DECIMAL" property="eventNum" />
-    <result column="END_TYPE" jdbcType="DECIMAL" property="endType" />
-    <result column="DURATION" jdbcType="DECIMAL" property="duration" />
+    <result column="TERMINAL" jdbcType="DECIMAL" property="terminal" />
     <result column="CNT" jdbcType="DECIMAL" property="cnt" />
     <result column="UNIQUE_KEY" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    ID, GMT_CREATED, GMT_MODIFIED, DOMAIN_ID, APP_ID, STAT_TIME, SKILL, EVENT_TYPE, EVENT_NUM,
-    END_TYPE, DURATION, CNT, UNIQUE_KEY
+    ID, GMT_CREATED, GMT_MODIFIED, DOMAIN_ID, APP_ID, STAT_TIME, STAT_TYPE, SKILL, TERMINAL, 
+    CNT, UNIQUE_KEY
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from JRTC_ACD_CALLINFO_STAT_DAILY
+    from JRTC_ACD_EXT_TERMINAL_PART
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
+  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPartPO">
     <!--@mbg.generated-->
-    insert into JRTC_ACD_CALLINFO_STAT_DAILY (ID, GMT_CREATED, GMT_MODIFIED,
-      DOMAIN_ID, APP_ID, STAT_TIME,
-      SKILL, EVENT_TYPE, EVENT_NUM,
-      END_TYPE, DURATION, CNT,
-      UNIQUE_KEY)
-    values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
-      #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL},
-      #{skill,jdbcType=VARCHAR}, #{eventType,jdbcType=DECIMAL}, #{eventNum,jdbcType=DECIMAL},
-      #{endType,jdbcType=DECIMAL}, #{duration,jdbcType=DECIMAL}, #{cnt,jdbcType=DECIMAL},
-      #{uniqueKey,jdbcType=VARCHAR})
+    insert into JRTC_ACD_EXT_TERMINAL_PART (ID, GMT_CREATED, GMT_MODIFIED, 
+      DOMAIN_ID, APP_ID, STAT_TIME, 
+      STAT_TYPE, SKILL, TERMINAL, 
+      CNT, UNIQUE_KEY)
+    values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL}, 
+      #{statType,jdbcType=DECIMAL}, #{skill,jdbcType=VARCHAR}, #{terminal,jdbcType=DECIMAL}, 
+      #{cnt,jdbcType=DECIMAL}, #{uniqueKey,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
+  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPartPO">
     <!--@mbg.generated-->
-    insert into JRTC_ACD_CALLINFO_STAT_DAILY
+    insert into JRTC_ACD_EXT_TERMINAL_PART
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -65,20 +61,14 @@
       <if test="statTime != null">
         STAT_TIME,
       </if>
+      <if test="statType != null">
+        STAT_TYPE,
+      </if>
       <if test="skill != null">
         SKILL,
       </if>
-      <if test="eventType != null">
-        EVENT_TYPE,
-      </if>
-      <if test="eventNum != null">
-        EVENT_NUM,
-      </if>
-      <if test="endType != null">
-        END_TYPE,
-      </if>
-      <if test="duration != null">
-        DURATION,
+      <if test="terminal != null">
+        TERMINAL,
       </if>
       <if test="cnt != null">
         CNT,
@@ -106,20 +96,14 @@
       <if test="statTime != null">
         #{statTime,jdbcType=DECIMAL},
       </if>
+      <if test="statType != null">
+        #{statType,jdbcType=DECIMAL},
+      </if>
       <if test="skill != null">
         #{skill,jdbcType=VARCHAR},
       </if>
-      <if test="eventType != null">
-        #{eventType,jdbcType=DECIMAL},
-      </if>
-      <if test="eventNum != null">
-        #{eventNum,jdbcType=DECIMAL},
-      </if>
-      <if test="endType != null">
-        #{endType,jdbcType=DECIMAL},
-      </if>
-      <if test="duration != null">
-        #{duration,jdbcType=DECIMAL},
+      <if test="terminal != null">
+        #{terminal,jdbcType=DECIMAL},
       </if>
       <if test="cnt != null">
         #{cnt,jdbcType=DECIMAL},
@@ -129,9 +113,9 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPartPO">
     <!--@mbg.generated-->
-    update JRTC_ACD_CALLINFO_STAT_DAILY
+    update JRTC_ACD_EXT_TERMINAL_PART
     <set>
       <if test="gmtCreated != null">
         GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -148,20 +132,14 @@
       <if test="statTime != null">
         STAT_TIME = #{statTime,jdbcType=DECIMAL},
       </if>
+      <if test="statType != null">
+        STAT_TYPE = #{statType,jdbcType=DECIMAL},
+      </if>
       <if test="skill != null">
         SKILL = #{skill,jdbcType=VARCHAR},
       </if>
-      <if test="eventType != null">
-        EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
-      </if>
-      <if test="eventNum != null">
-        EVENT_NUM = #{eventNum,jdbcType=DECIMAL},
-      </if>
-      <if test="endType != null">
-        END_TYPE = #{endType,jdbcType=DECIMAL},
-      </if>
-      <if test="duration != null">
-        DURATION = #{duration,jdbcType=DECIMAL},
+      <if test="terminal != null">
+        TERMINAL = #{terminal,jdbcType=DECIMAL},
       </if>
       <if test="cnt != null">
         CNT = #{cnt,jdbcType=DECIMAL},
@@ -172,19 +150,17 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatExtTerminalPartPO">
     <!--@mbg.generated-->
-    update JRTC_ACD_CALLINFO_STAT_DAILY
+    update JRTC_ACD_EXT_TERMINAL_PART
     set GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
       APP_ID = #{appId,jdbcType=DECIMAL},
       STAT_TIME = #{statTime,jdbcType=DECIMAL},
+      STAT_TYPE = #{statType,jdbcType=DECIMAL},
       SKILL = #{skill,jdbcType=VARCHAR},
-      EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
-      EVENT_NUM = #{eventNum,jdbcType=DECIMAL},
-      END_TYPE = #{endType,jdbcType=DECIMAL},
-      DURATION = #{duration,jdbcType=DECIMAL},
+      TERMINAL = #{terminal,jdbcType=DECIMAL},
       CNT = #{cnt,jdbcType=DECIMAL},
       UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}

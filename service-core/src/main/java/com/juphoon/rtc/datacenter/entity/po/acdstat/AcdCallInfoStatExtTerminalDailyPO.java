@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@TableName("jrtc_acd_callinfo_stat_ext_terminal_daily")
+@TableName("jrtc_acd_ext_terminal_daily")
 public class AcdCallInfoStatExtTerminalDailyPO extends AcdCallInfoStatExtTerminalPO {
 
 }
