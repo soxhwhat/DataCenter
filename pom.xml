@@ -11,7 +11,7 @@
 
     <groupId>com.juphoon.rtc.datacenter</groupId>
     <artifactId>jrtcDataCenter-Parent</artifactId>
-    <version>2202.0.0</version>
+    <version>2202.1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>data-core</module>
