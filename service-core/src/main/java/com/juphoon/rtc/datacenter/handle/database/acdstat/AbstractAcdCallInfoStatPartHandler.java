@@ -61,7 +61,7 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
     @Override
     public List<EventType> careEvents() {
         // TODO 待定事件：转接，邀请坐席
-        return Arrays.asList(TICKER_STATUS_WAIT, TICKER_STATUS_RING, TICKER_STATUS_TALK, TICKER_STATUS_OVERFLOW);
+        return Arrays.asList(TICKER_EVENT_WAIT, TICKER_EVENT_RING, TICKER_EVENT_TALK, TICKER_EVENT_OVERFLOW);
     }
 
     @Override

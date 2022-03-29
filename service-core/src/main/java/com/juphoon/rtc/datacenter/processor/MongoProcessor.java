@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.processor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import com.juphoon.rtc.datacenter.api.StatType;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,29 +13,16 @@ import java.util.Map;
  */
 @Component
 public class MongoProcessor extends AbstractEventProcessor {
-
-    private Config config;
-
-    @Autowired
-    protected MongoTemplate mongoTemplate;
-
-    public MongoTemplate getMongoTemplate() {
-        return mongoTemplate;
+    public MongoProcessor() {
     }
 
-    public Config getConfig() {
-        return config;
-    }
-
-    public MongoProcessor(){
-    }
-
-    public MongoProcessor(Config config){
+    public MongoProcessor(MongoProcessor.Config config) {
         this.config = config;
     }
 
-    public static class Config {
-        public Map<Integer,String> collectionMap = new HashMap<>();
-    }
+    private MongoProcessor.Config config;
 
+    public static class Config {
+        public Map<String, StatType> map = new HashMap<>();
+    }
 }

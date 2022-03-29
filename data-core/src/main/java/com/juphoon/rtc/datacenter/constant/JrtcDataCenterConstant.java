@@ -52,7 +52,7 @@ public class JrtcDataCenterConstant {
     /**
      http mongo kafka 模块
      */
-    public static final String EVENT_MONGO_HANDLER = "eventMongoHandler";
+    public static final String EVENT_MONGO_HANDLER = "acdTicketEventMongoHandler";
     public static final String THEA_MONGO_HANDLER = "theaMongoHandler";
     public static final String MONGO_PROCESSOR = "mongoProcessor";
     public static final String EVENT_KAFKA_HANDLER = "eventKafkaHandler";

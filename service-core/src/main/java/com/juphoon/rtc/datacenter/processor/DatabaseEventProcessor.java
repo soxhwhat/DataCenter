@@ -32,7 +32,6 @@ public class DatabaseEventProcessor extends AbstractEventProcessor {
 
     public static class Config {
         public Map<String, StatType> map = new HashMap<>();
-
     }
 
 }

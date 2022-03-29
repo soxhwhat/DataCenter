@@ -28,10 +28,10 @@ public class EventKafkaHandler extends AbstractKafkaHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Arrays.asList(TICKER_STATUS_WAIT, TICKER_STATUS_RING
-                ,TICKER_STATUS_TALK,TICKER_STATUS_OVERFLOW
-                ,TICKER_STATUS_TRANSFER,TICKER_STATUS_INVITE_AGENT
-                ,STAFF_STATUS_BUSY,STAFF_STATUS_FREE,STAFF_STATUS_KEEP,STAFF_STATUS_LOGIN
+        return Arrays.asList(TICKER_EVENT_WAIT, TICKER_EVENT_RING
+                , TICKER_EVENT_TALK, TICKER_EVENT_OVERFLOW
+                , TICKER_EVENT_TRANSFER, TICKER_EVENT_INVITE_AGENT
+                , AGENT_OP_EVENT_BUSY, AGENT_OP_EVENT_FREE, AGENT_OP_EVENT_KEEP, AGENT_OP_EVENT_LOGIN
                 ,TICKER_COMPLETE,STAFF_BEAT,QUEUE_BEAT);
     }
 

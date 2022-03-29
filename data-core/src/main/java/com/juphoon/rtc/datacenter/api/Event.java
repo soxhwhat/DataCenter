@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.api;
 
+import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.util.StringUtils;
@@ -17,9 +18,6 @@ import java.util.UUID;
  */
 @Setter
 @ToString
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
 public class Event {
     private final Integer domainId;
 
@@ -126,17 +124,19 @@ public class Event {
         return uuid;
     }
 
-//    public void setUuid(String uuid) {
-//        this.uuid = uuid;
-//    }
-
     /**
      * 生成事件类型
      *
      * @return
      */
     public EventType getEventType() {
-        return new EventType(type, number);
+        for (EventType et : EventType.values()) {
+            if (eventType().equals(et.getType()) && eventNumber().equals(et.getNumber())) {
+                return et;
+            }
+        }
+
+        throw new JrtcUnknownEventException(eventType() + ":" + eventNumber());
     }
 
     public Map<String, String> getParams() {

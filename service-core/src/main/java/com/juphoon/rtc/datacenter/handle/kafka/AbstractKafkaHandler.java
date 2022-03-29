@@ -29,7 +29,7 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
 
     public String getTopic(EventContext ec) {
         Integer type = ec.getEvent().getEventType().getType();
-        if (type.equals(EventType.TICKER_STATUS_WAIT.getType())){
+        if (type.equals(EventType.TICKER_EVENT_WAIT.getType())){
             return "ticket_events";
         } else if (type.equals(EventType.STAFF_BEAT)){
             return "agent_status";

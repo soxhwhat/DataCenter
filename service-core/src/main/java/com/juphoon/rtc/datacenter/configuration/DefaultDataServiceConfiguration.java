@@ -3,15 +3,10 @@ package com.juphoon.rtc.datacenter.configuration;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLoginNotifyHandler;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeLogoutNotifyHandler;
-import com.juphoon.rtc.datacenter.handle.http.agree.AgreeUserLoginRequestHandler;
-import com.juphoon.rtc.datacenter.handle.kafka.EventKafkaHandler;
-import com.juphoon.rtc.datacenter.handle.mongo.EventMongoHandler;
-import com.juphoon.rtc.datacenter.handle.mongo.TheaMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
-import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
@@ -67,12 +62,12 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdAgentOpStatPartHourHandler acdAgentOpStatPartHourHandler;
 
+    @Autowired
+    private AcdTicketEventMongoHandler acdTicketEventMongoHandler;
 
     @Autowired
-    private EventMongoHandler eventMongoHandler;
+    private AcdEventMongoHandler acdEventMongoHandler;
 
-    @Autowired
-    private TheaMongoHandler theaMongoHandler;
 
     @Bean
     @ConditionalOnMissingBean
@@ -107,24 +102,30 @@ public class DefaultDataServiceConfiguration {
         acdAgentOpStatPart30MinHandler.setEnabled(properties.getAcdStat().isAgentOp30minEnabled());
         acdAgentOpStatPartHourHandler.setEnabled(properties.getAcdStat().isAgentOpHourEnabled());
 
-        // TODO 补充其他
+        /// 事件写入mongodb
         MongoProcessor mongoProcessor = beanFactory.getBean(MongoProcessor.class);
         mongoProcessor.setProcessorId(ProcessorId.MONGO);
+        mongoProcessor.setEnabled(properties.getMongoEvent().isEnabled());
+        acdTicketEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdTicketEventEnabled());
+        acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
+
+        // TODO 补充其他
+
         //@formatter:off
         return DataServiceBuilder.processors()
                 // 赞同通知
                 .processor(agreeNotifyProcessor)
-                .mq(properties.getMq().trans())
-                // 构造测试handler
-                .handler(handlerMap.get("agreeLoginNotifyHandler"))
-                .handler(handlerMap.get("agreeLogoutNotifyHandler"))
-                .handler(handlerMap.get("agreePrepareEnterRoomHandler"))
-                .handler(handlerMap.get("agreeRecordSnapshotHandler"))
-                .handler(handlerMap.get("agreeRoomNoticeHandler"))
-                .handler(handlerMap.get("agreeSendOnlineMessageHandler"))
-                .handler(handlerMap.get("agreeUserLoginRequestHandler"))
-                // todo 补充其他handler
-                .end()
+                    .mq(properties.getMq().trans())
+                    // 构造测试handler
+                    .handler(handlerMap.get("agreeLoginNotifyHandler"))
+                    .handler(handlerMap.get("agreeLogoutNotifyHandler"))
+                    .handler(handlerMap.get("agreePrepareEnterRoomHandler"))
+                    .handler(handlerMap.get("agreeRecordSnapshotHandler"))
+                    .handler(handlerMap.get("agreeRoomNoticeHandler"))
+                    .handler(handlerMap.get("agreeSendOnlineMessageHandler"))
+                    .handler(handlerMap.get("agreeUserLoginRequestHandler"))
+                    // todo 补充其他handler
+                    .end()
                 // 客服统计
                 .processor(acdEventProcessor)
                     .mq(properties.getMq().trans())
@@ -139,7 +140,8 @@ public class DefaultDataServiceConfiguration {
                     .end()
                 .processor(mongoProcessor)
                     .mq(properties.getMq().trans())
-                    .handler(eventMongoHandler)
+                    .handler(acdEventMongoHandler)
+                    .handler(acdTicketEventMongoHandler)
 //                    .handler(theaMongoHandler)
                     .end()
                 .build();

@@ -117,9 +117,15 @@ public enum HandlerId {
     TheaMongoHandler("theaMongoHandler", "西亚mongoHandler"),
 
     /**
-     * mongo事件Handler
+     * 客服话单事件
      */
-    EventMongoHandler("eventMongoHandler", "mongo事件Handler"),
+    AcdTicketEventMongoHandler("acdTicketEventMongoHandler", "客服话单事件mongodb入库Handler"),
+
+    /**
+     * 客服事件mongodb入库handler
+     */
+    AcdEventMongoHandler("acdEventMongoHandler", "客服事件mongodb入库handler"),
+
 
     /**
      *

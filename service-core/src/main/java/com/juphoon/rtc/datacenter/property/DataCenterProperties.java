@@ -26,6 +26,8 @@ public class DataCenterProperties {
 
     private Mq mq = new Mq();
 
+    private MongoEvent mongoEvent = new MongoEvent();
+
     /**
      * 赞同
      */
@@ -130,6 +132,24 @@ public class DataCenterProperties {
 
             return config;
         }
+    }
+
+    @Data
+    public static class MongoEvent {
+        /**
+         * MongoDB事件开关
+         */
+        private boolean enabled = true;
+
+        /**
+         * 客服事件开关
+         */
+        private boolean acdEventEnabled = true;
+
+        /**
+         * 话单事件开关
+         */
+        private boolean acdTicketEventEnabled = true;
     }
 
 }

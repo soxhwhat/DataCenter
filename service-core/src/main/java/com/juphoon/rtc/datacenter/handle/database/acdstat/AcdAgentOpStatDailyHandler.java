@@ -61,8 +61,8 @@ public class AcdAgentOpStatDailyHandler extends AbstractAcdStatHandler<AcdAgentO
     @Override
     public List<EventType> careEvents() {
         // TODO 待定事件：转接，邀请坐席
-        return Arrays.asList(TICKER_STATUS_RING, TICKER_STATUS_TALK, STAFF_STATUS_BUSY, STAFF_STATUS_FREE,
-                STAFF_STATUS_KEEP, STAFF_STATUS_LOGIN);
+        return Arrays.asList(TICKER_EVENT_RING, TICKER_EVENT_TALK, AGENT_OP_EVENT_BUSY, AGENT_OP_EVENT_FREE,
+                AGENT_OP_EVENT_KEEP, AGENT_OP_EVENT_LOGIN);
     }
 
     @Override
