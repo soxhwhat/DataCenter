@@ -19,6 +19,7 @@ import java.util.Map;
 @SpringBootApplication
 @RestController
 @Slf4j
+@SuppressWarnings("PMD")
 public class TestApplication {
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);

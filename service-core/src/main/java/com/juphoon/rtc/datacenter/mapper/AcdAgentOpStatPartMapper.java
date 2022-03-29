@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022/3/10 11:49
  */
 @Mapper
+@SuppressWarnings("PMD")
 public interface AcdAgentOpStatPartMapper extends BaseMapper<AcdAgentOpStatPartPO>, AcdCommonMapper {
 
     /**

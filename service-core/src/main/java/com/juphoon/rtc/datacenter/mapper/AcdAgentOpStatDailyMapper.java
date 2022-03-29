@@ -17,7 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AcdAgentOpStatDailyMapper extends BaseMapper<AcdAgentOpStatDailyPO>, AcdCommonMapper {
-
     /**
      * insert record to table selective
      * @param record the record
@@ -46,6 +45,13 @@ public interface AcdAgentOpStatDailyMapper extends BaseMapper<AcdAgentOpStatDail
      */
     int updateByPrimaryKey(AcdAgentOpStatDailyPO record);
 
+    /**
+     * 查询
+     *
+     * @param column
+     * @param columnValue
+     * @return
+     */
     default AcdAgentOpStatDailyPO selectByCondition(SFunction<AcdAgentOpStatDailyPO, ?> column, String columnValue) {
         LambdaQueryWrapper<AcdAgentOpStatDailyPO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(column, columnValue);

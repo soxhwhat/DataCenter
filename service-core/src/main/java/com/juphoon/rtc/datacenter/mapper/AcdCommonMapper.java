@@ -13,8 +13,8 @@ import org.apache.ibatis.annotations.Param;
  * @since 2022/3/10 14:51
  */
 @Mapper
+@SuppressWarnings("PMD")
 public interface AcdCommonMapper {
-
     int updateAddValueByUniqueKey(@Param("tableName") String tableName, @Param("uniqueKey") String uniqueKey,
                                   @Param("duration") Long duration,
                                   @Param("cnt") Integer cnt);

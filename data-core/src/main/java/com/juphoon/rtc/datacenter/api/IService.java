@@ -10,5 +10,14 @@ package com.juphoon.rtc.datacenter.api;
  * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */ 
 public interface IService {
+
+    /**
+     * 启动方法
+     */
     void start();
+
+    /**
+     * 停止方法
+     */
+    void stop();
 }

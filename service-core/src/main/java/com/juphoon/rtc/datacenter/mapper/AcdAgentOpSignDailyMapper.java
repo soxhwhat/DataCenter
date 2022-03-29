@@ -15,7 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AcdAgentOpSignDailyMapper extends BaseMapper<AcdAgentOpSignDailyPO> {
-
     /**
      * insert record to table selective
      * @param record the record

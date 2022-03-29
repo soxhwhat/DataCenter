@@ -26,7 +26,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStatHandler<AcdCallInfoStatPartPO> {
 
     @Autowired
-    private AcdCallInfoStatPartMapper AcdCallInfoStatPartMapper;
+    private AcdCallInfoStatPartMapper acdCallInfoStatPartMapper;
 
     /**
      * 设置handler的统计类型
@@ -66,19 +66,26 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
 
     @Override
     public AcdCallInfoStatPartPO selectByUnique(AcdCallInfoStatPartPO po) {
-        return AcdCallInfoStatPartMapper.selectByUniqueCondition(AcdCallInfoStatPartPO::getUniqueKey, po.getUniqueKey());
+        return acdCallInfoStatPartMapper.selectByUniqueCondition(AcdCallInfoStatPartPO::getUniqueKey, po.getUniqueKey());
     }
 
     @Override
     public int insertSelective(AcdCallInfoStatPartPO po) {
         // TODO 加个缓存，先从缓存中查询
-        return AcdCallInfoStatPartMapper.insertSelective(po);
+        return acdCallInfoStatPartMapper.insertSelective(po);
     }
 
-    // todo 表名不便作为参数
+    /***
+     * todo 表名不便作为参数
+     *
+     * @param uniqueKey
+     * @param duration
+     * @param cnt
+     * @return
+     */
     @Override
     public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
-        return AcdCallInfoStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_callinfo_stat_part", uniqueKey, duration, cnt);
+        return acdCallInfoStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_callinfo_stat_part", uniqueKey, duration, cnt);
     }
 
 }

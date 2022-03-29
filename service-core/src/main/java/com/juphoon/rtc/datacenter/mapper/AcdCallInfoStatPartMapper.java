@@ -18,6 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 @DS("mysql")
+@SuppressWarnings("PMD")
 public interface AcdCallInfoStatPartMapper extends BaseMapper<AcdCallInfoStatPartPO>, AcdCommonMapper {
 
     /**

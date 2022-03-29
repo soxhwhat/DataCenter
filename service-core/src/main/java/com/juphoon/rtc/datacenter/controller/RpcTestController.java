@@ -28,6 +28,7 @@ import java.util.HashMap;
 @Slf4j
 @RequestMapping
 @ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
+@SuppressWarnings("PMD")
 public class RpcTestController {
 
     @Autowired
@@ -39,7 +40,7 @@ public class RpcTestController {
         StrStrMap.Holder outParams = new StrStrMap.Holder();
         CallParams callParams = CubeUtils.newCallParams();
         callParams.setParam("account", "[username:test@100645.cloud.justalk.com]");
-        boolean ret = Event.NoticeEventAgent.keepAlive(agent, type, "juphoon", new HashMap<>(), outParams, callParams);
+        boolean ret = Event.NoticeEventAgent.keepAlive(agent, type, "juphoon", new HashMap<>(0), outParams, callParams);
         if (!ret) {
             return ObjectAgent.getLastReason();
         }

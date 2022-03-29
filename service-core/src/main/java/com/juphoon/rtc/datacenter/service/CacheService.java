@@ -10,7 +10,8 @@ import java.util.List;
  * @author  ke.wang@juphoon.com
  * @date    2022/3/24 15:12
  * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
- */ 
+ */
+@SuppressWarnings("PMD")
 public interface CacheService {
     void hPut(String hash, String key, Object obj);
 

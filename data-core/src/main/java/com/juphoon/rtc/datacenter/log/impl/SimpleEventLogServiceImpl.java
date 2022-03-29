@@ -13,11 +13,12 @@ import org.springframework.stereotype.Component;
  *
  * @author  ajian.zheng@juphoon.com
  * @date    3/24/22 9:30 PM
+ *
+ * //@ConditionalOnProperty(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX, name = "queue", havingValue = "sample")
  */
 @Slf4j
 @Component
-//@ConditionalOnProperty(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX, name = "queue", havingValue = "sample")
-public class SimpleEventLogService implements IEventLogService {
+public class SimpleEventLogServiceImpl implements IEventLogService {
     @Override
     public void saveEvent(EventContext ec) {
         log.info("saveElement:{}", ec);

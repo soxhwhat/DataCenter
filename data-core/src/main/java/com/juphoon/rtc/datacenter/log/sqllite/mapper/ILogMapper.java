@@ -36,7 +36,9 @@ public interface ILogMapper {
 
     /**
      * 插入handle数据
+     *
      * @param eventContext
+     * @param eventHandlerName
      */
     void insertHandleData(EventContext eventContext, String eventHandlerName);
 

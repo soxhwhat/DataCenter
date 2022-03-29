@@ -18,6 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 @DS("kiwi")
+@SuppressWarnings("PMD")
 public interface AcdCallInfoStatDailyMapper extends BaseMapper<AcdCallInfoStatDailyPO>, AcdCommonMapper {
 
     /**

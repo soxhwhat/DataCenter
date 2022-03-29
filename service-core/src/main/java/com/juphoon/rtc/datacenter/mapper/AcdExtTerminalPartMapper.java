@@ -15,7 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AcdExtTerminalPartMapper extends BaseMapper<AcdCallInfoStatExtTerminalPartPO> {
-
     /**
      * insert record to table selective
      * @param record the record

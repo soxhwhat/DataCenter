@@ -26,15 +26,4 @@ public class TransbufferReq {
     private String datesize;
 
     private String databuf;
-
-    public Map<String,Object> convertToMap(){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("appguid",this.getAppguid());
-        map.put("userid",this.getUserid());
-        map.put("username",this.getUsername());
-        map.put("datesize",this.getDatesize());
-        map.put("databuf",this.getDatabuf());
-        return map;
-    }
-
 }

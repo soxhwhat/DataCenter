@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public abstract class AbstractHttpEventHandler extends AbstractEventHandler {
 
+    @Override
     public AbstractHttpEventProcessor getProcessor() {
         assert this.processor instanceof AbstractHttpEventProcessor : "processor 必须为HttpEventProcessor继承类";
 

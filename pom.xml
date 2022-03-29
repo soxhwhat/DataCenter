@@ -255,6 +255,8 @@
                         <exclude>**/Account/*.java</exclude>
                         <exclude>**/AuthServer/*.java</exclude>
                         <exclude>**/PortalPlatform/*.java</exclude>
+                        <exclude>**/DataCollection/*.java</exclude>
+                        <exclude>**/Event/*.java</exclude>
                     </excludes>
                 </configuration>
                 <dependencies>
@@ -366,6 +368,8 @@
                         <exclude>**/Account/*.java</exclude>
                         <exclude>**/AuthServer/*.java</exclude>
                         <exclude>**/PortalPlatform/*.java</exclude>
+                        <exclude>**/DataCollection/*.java</exclude>
+                        <exclude>**/Event/*.java</exclude>
                     </excludes>
                     <rulesets>
                         <ruleset>rulesets/java/ali-comment.xml</ruleset>

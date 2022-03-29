@@ -8,9 +8,11 @@ import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
  * @Description:
  */
 public interface IEventQueue {
-
     /**
      * 初始化线程池
+     *
+     * @param config
+     * @param queueService
      */
     void init(EventQueueConfig config, AbstractEventQueueService queueService);
 

@@ -25,11 +25,10 @@ public class RedisServiceImpl implements CacheService {
         log.info("RedisServiceImpl");
     }
 
-    private static final String NOTICE_KEY_SUFFIX = "juphoon:noticeEvent:";
+    private static final String NOTICE_KEY_SUFFIX = "jrtc:noticeEvent:";
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
 
     @Override
     public void hPut(String hash, String hKey, Object obj) {

@@ -50,7 +50,7 @@ public class TestHttpEventHandler extends AbstractHttpEventHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HashMap<String, Object> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>(1);
         params.put("name", "IronMain");
 
         HttpEntity entity = new HttpEntity<>(params, headers);

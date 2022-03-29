@@ -30,9 +30,6 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.URL_PAR
 @Component
 @Slf4j
 public class UserClearTask {
-
-
-
     @Autowired
     CacheService cacheService;
 
@@ -49,7 +46,7 @@ public class UserClearTask {
         List<Object> list = cacheService.hGetList(KEY_AGREE);
         list.forEach(obj -> {
             UserKeepAlive keepAlive = (UserKeepAlive) obj;
-            if (System.currentTimeMillis() - keepAlive.getKeepAliveTime() > noticeProperties.getKeepAliveSeconds() * 1000) {
+            if (System.currentTimeMillis() - keepAlive.getKeepAliveTime() > noticeProperties.getKeepAliveMillis()) {
                 removeUri.add(keepAlive.getUserid());
             }
         });
@@ -57,7 +54,7 @@ public class UserClearTask {
             log.info("timeout: {}", uri);
             Object obj = cacheService.hGet(KEY_AGREE, uri);
             UserKeepAlive keepAlive = (UserKeepAlive) obj;
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>(4);
             map.put("appguid", noticeProperties.getAppguid());
             map.put("userid", keepAlive.getUserid());
             map.put("username", keepAlive.getUserid());

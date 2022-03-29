@@ -48,5 +48,7 @@ public class NoticeProperties {
 
     private Integer keepAliveSeconds = 30;
 
-
+    public long getKeepAliveMillis() {
+        return keepAliveSeconds * 1000;
+    }
 }

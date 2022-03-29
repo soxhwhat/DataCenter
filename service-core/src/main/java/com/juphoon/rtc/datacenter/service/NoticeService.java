@@ -25,6 +25,7 @@ import java.util.Map;
  * @date 2022/3/25
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
+@SuppressWarnings("PMD")
 public interface NoticeService {
 
     void verCode(Map<String, String> params);

@@ -78,7 +78,14 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
         return acdAgentOpStatPartMapper.insertSelective(po);
     }
 
-    // todo 表名不便作为参数
+    /**
+     * /// todo 表名不便作为参数
+     *
+     * @param uniqueKey
+     * @param duration
+     * @param cnt
+     * @return
+     */
     @Override
     public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
         return acdAgentOpStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_agentop_stat_part", uniqueKey, duration, cnt);
