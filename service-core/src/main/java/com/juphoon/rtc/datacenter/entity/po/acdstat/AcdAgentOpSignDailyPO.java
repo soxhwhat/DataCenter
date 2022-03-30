@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.entity.po.acdstat;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,6 +19,8 @@ import java.util.Date;
 @Setter
 @ToString
 @TableName("jrtc_acd_agentop_sign_daily")
+@SuppressFBWarnings(value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"},
+        justification = "I prefer to suppress these FindBugs warnings")
 public class AcdAgentOpSignDailyPO {
 
     @TableId(type = IdType.AUTO)

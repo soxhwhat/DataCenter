@@ -2,8 +2,17 @@
 <FindBugsFilter>
     <Match>
         <Package name="Account"/>
+    </Match>
+    <Match>
         <Package name="AuthServer"/>
+    </Match>
+    <Match>
         <Package name="PortalPlatform"/>
+    </Match>
+    <Match>
         <Package name="DataCollection"/>
+    </Match>
+    <Match>
+        <Package name="Event"/>
     </Match>
 </FindBugsFilter>

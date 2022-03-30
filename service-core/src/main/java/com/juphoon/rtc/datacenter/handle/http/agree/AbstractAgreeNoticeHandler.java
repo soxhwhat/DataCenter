@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.handle.http.agree;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.handler.AbstractHttpEventHandler;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -39,6 +40,7 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
 //     */
 //    public abstract Map<String, String> handleRequest(EventContext ec);
 
+    @SuppressFBWarnings(value = {"NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"}, justification = "fixed")
     @Override
     public boolean exchange(String url, RestTemplate restTemplate, EventContext ec) {
         boolean ret = true;
@@ -71,8 +73,8 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
             if (null != response.getBody()) {
                 log.info("reqId:{}, code:{}, msg:{}",
                         reqId,
-                        response.getBody().getReturnCode(),
-                        response.getBody().getReturnMsg());
+                        null == response.getBody().getReturnCode() ? "" : response.getBody().getReturnCode(),
+                        null == response.getBody().getReturnMsg() ? "" : response.getBody().getReturnMsg());
             }
         } catch (RestClientException e) {
             if (log.isDebugEnabled()) {

@@ -44,6 +44,7 @@
         <easymock.version>3.4</easymock.version>
         <jasypt.version>3.0.2</jasypt.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
+        <findbugs.version>3.0.1</findbugs.version>
 
         <maven-source-plugin.versoin>3.0.1</maven-source-plugin.versoin>
         <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
@@ -163,6 +164,11 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco-maven-plugin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs</artifactId>
+            <version>${findbugs.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -207,7 +213,10 @@
                     <effort>Default</effort>
                     <!-- Low、Medium和High (Low最严格) High只扫描严重错误。建议用Medium-->
                     <threshold>Medium</threshold>
+
+                    <!-- 失败终止编译-->
                     <failOnError>false</failOnError>
+
                     <includeTests>true</includeTests>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <xmlOutput>true</xmlOutput>
@@ -234,6 +243,9 @@
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <targetJdk>${java.version}</targetJdk>
                     <printFailingErrors>true</printFailingErrors>
+                    <!-->失败终止编译开关</-->
+<!--                    <failOnViolation>true</failOnViolation>-->
+<!--                    <failurePriority>1</failurePriority>-->
                     <!-- 代码检查规则 -->
                     <rulesets>
                         <ruleset>rulesets/java/ali-comment.xml</ruleset>
@@ -350,7 +362,7 @@
                     <skipEmptyReport>false</skipEmptyReport>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
                     <xmlOutput>true</xmlOutput>
-                    <excludeFilterFile>${user.dir}/src/main/resources/findbugs-exclude.xml</excludeFilterFile>
+                    <excludeFilterFile>${user.dir}/conf/findbugs-exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
 

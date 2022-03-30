@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.api;
 import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -169,7 +170,7 @@ public class Event {
      * @return
      */
     public long beginTimestamp() {
-        return Long.valueOf(params.get("beginTimestamp"));
+        return Long.parseLong(params.get("beginTimestamp"));
     }
 
     /**
@@ -178,7 +179,7 @@ public class Event {
      * @return
      */
     public long endTimestamp() {
-        return Long.valueOf(params.get("endTimestamp"));
+        return Long.parseLong(params.get("endTimestamp"));
     }
 
 
@@ -191,11 +192,11 @@ public class Event {
     }
 
     public long duration() {
-        return Long.valueOf(params.getOrDefault("duration", "0"));
+        return Long.parseLong(params.getOrDefault("duration", "0"));
     }
 
     public Integer endType() {
-        return Integer.valueOf(params.getOrDefault("endType", "0"));
+        return Integer.parseInt(params.getOrDefault("endType", "0"));
     }
 
     /**
@@ -220,15 +221,48 @@ public class Event {
     }
 
     public Integer extStatus() {
-        return Integer.valueOf(params.getOrDefault("extStatus", "0"));
+        return Integer.parseInt(params.getOrDefault("extStatus", "0"));
     }
 
+//    private static String defaultShirt() {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//        return sdf.format(new Date());
+//    }
+
     private static String defaultShirt() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        return sdf.format(new Date());
+        return DateFormatUtils.format(new Date(System.currentTimeMillis()), "yyyyMMdd");
     }
 
     public static void main(String[] args) {
-        System.out.println(defaultShirt());
+//        System.out.println(defaultShirt());
+
+        String ret = defaultShirt();
+        System.out.println(ret);
+
+//        long begin = System.currentTimeMillis();
+//        for (int i = 0; i < 1000000; i++) {
+//            defaultShirt();
+//        }
+//        System.out.println("defaultShirt() cost:" + (System.currentTimeMillis() - begin));
+//
+//        begin = System.currentTimeMillis();
+//        for (int i = 0; i < 1000000; i++) {
+//            defaultShirt2();
+//        }
+//        System.out.println("defaultShirt2() cost:" + (System.currentTimeMillis() - begin));
+//
+//        begin = System.currentTimeMillis();
+//        for (int i = 0; i < 1000000; i++) {
+//            defaultShirt();
+//        }
+//        System.out.println("defaultShirt() cost:" + (System.currentTimeMillis() - begin));
+//
+//        begin = System.currentTimeMillis();
+//        for (int i = 0; i < 1000000; i++) {
+//            defaultShirt2();
+//        }
+//        System.out.println("defaultShirt2() cost:" + (System.currentTimeMillis() - begin));
+            // TODO Auto-generated method stub
+            System.out.println(System.getProperty("user.dir"));
     }
 }
