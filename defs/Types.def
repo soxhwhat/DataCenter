@@ -1,0 +1,57 @@
+module Common 
+{
+vector IntVec<int>; 
+vector LongVec<long>; 
+vector StrVec<string>; 
+vector StreamVec<stream>; 
+
+set IntSet<int>; 
+set LongSet<long>; 
+set StrSet<string>; 
+set StreamSet<stream>; 
+
+map IntBoolMap<int,bool>; 
+map IntByteMap<int,byte>; 
+map IntIntMap<int,int>; 
+map IntLongMap<int,long>; 
+map IntStrMap<int,string>; 
+map IntStreamMap<int,stream>; 
+
+map LongBoolMap<long,bool>; 
+map LongByteMap<long,byte>; 
+map LongIntMap<long,int>; 
+map LongLongMap<long,long>; 
+map LongStrMap<long,string>; 
+map LongStreamMap<long,stream>; 
+
+map StrBoolMap<string,bool>; 
+map StrByteMap<string,byte>; 
+map StrIntMap<string,int>; 
+map StrLongMap<string,long>; 
+map StrStrMap<string,string>; 
+map StrStreamMap<string,stream>; 
+
+struct ServerId 
+{
+    string _identity; 
+    StrVec _categorys;     
+}; 
+
+struct Endpoint
+{
+    string _protocol;
+    string _host; 
+    int _port = 0; 
+    int _zipSize = -1; 
+    StrStrMap _params; 
+}; 
+vector EndpointVec<Endpoint>; 
+
+struct ObjectId 
+{
+    ServerId _serverId; 
+    string _adapterId; 
+    string _cloudId; 
+    EndpointVec _endpoints; 
+};
+}; 

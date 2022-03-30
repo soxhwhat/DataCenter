@@ -1,0 +1,7 @@
+module Account 
+{
+interface AuthServer 
+{
+    bool authUser(string account,string random,string md5pwd) onexception(false); 
+};
+}; 

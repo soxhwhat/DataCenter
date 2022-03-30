@@ -1,0 +1,70 @@
+#include "Types.def"
+
+module Event
+{
+
+interface NoticeEvent {
+
+
+       /**
+        * 1. 验证码校验（通过java服务验证， java服务先向赞同校验验证码，向cloud发起登录）
+        */
+        bool verCode( Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+       /**
+        *  进房间验证（JSME调java服务，java服务调赞同接口，返回给JSME）
+        *  appguid 应用服务ID
+        *  userid  用户ID
+        *  roomId  房间(会议)号
+        *  roompass 房间密码
+        *  param  用户随路数据
+        */
+        bool verJoinRoom(Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+       /**
+        *  进出房间通知（JSME调java服务，java服务调赞同接/ 或者JSME通过http接口通知java服务）
+        *  acttype 动作类型(0:离开房间 ， 1:进入房间)
+        *  appguid 应用服务ID
+        *  userid  用户ID
+        *  roomId  房间(会议)号
+        *  username 用户名
+        *  errorcode 错误码  0:客户端主动离开房间，  其他：客户端异常
+        */
+        bool roomNotice(Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+        /**
+        *  录像或拍照结束通知（JSME调java服务，java服务调赞同接/ 或者JSME通过http接口通知java服务）
+        *  appguid 应用服务ID
+        *  recordfilename 录像文件名（含路径）
+        *  recordtime  录像时长（秒）
+        *  roomid  会话ID
+        *  strparam 附带参数（字符串）
+        *  errorcode 错误码
+        */
+        bool recordSnapshotNotice(Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+
+        /**
+        *  转发消息 通知第三方
+        * receiverUri: 接收者账号
+        * params：消息包
+        * outParams：
+        *
+        **/
+        bool sendOnlineMessageAndNotice(string receiverUri, Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+        /**
+        *  心跳
+        * type: 0 正常心跳 1 主动退出
+        * username：用户名
+        * params：
+        * outParams：
+        *
+        **/
+        bool keepAlive(int type, string username, Common.StrStrMap params, out Common.StrStrMap outParams) async onexception(false);
+
+    
+}
+
+
+}
