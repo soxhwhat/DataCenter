@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * <p>数据库表handler的抽象类</p>
  * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
  *
  * @author wenjun.yuan@juphoon.com
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
@@ -30,14 +29,11 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
         T po = poFromEvent(ec.getEvent());
         try {
-            handle(ec, po);
+            ret = handle(ec, po);
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug("ec:{}", ec, e);
-                ret = false;
-            }
+            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
+            log.warn(e.getMessage(), e);
         }
-
         return ret;
     }
 
@@ -64,13 +60,13 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
                 }
             }
         }
-        updateByUniqueKey(localObj.getUniqueKey(), commonPo.getDuration(), commonPo.getCnt());
+        updateByUniqueKey(commonPo);
     }
 
     public void tryUpdate(T commonPo) {
-        AcdCommonPO localObj = selectByUnique(commonPo);
+        T localObj = selectByUnique(commonPo);
         if (null != localObj) {
-            updateByUniqueKey(localObj.getUniqueKey(), commonPo.getDuration(), commonPo.getCnt());
+            updateByUniqueKey(commonPo);
         } else {
             log.warn("{}", commonPo.toString());
             throw new RuntimeException("insert failed, then update ,but not found data!!!");
@@ -129,7 +125,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
      * @param po
      * @throws Exception
      */
-    public abstract void handle(EventContext ec, T po) throws Exception;
+    public abstract boolean handle(EventContext ec, T po) throws Exception;
 
     /**
      * 构建具体表的po
@@ -158,11 +154,9 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     /**
      * 根据唯一字段更新值
      *
-     * @param uniqueKey
-     * @param duration
-     * @param cnt
+     * @param po
      * @return
      */
-    public abstract int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt);
+    public abstract int updateByUniqueKey(T po);
 
 }

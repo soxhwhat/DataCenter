@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * <p>jrtc_acd_agentop_sign_daily表的mapper类</p>
  * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
  *
  * @author wenjun.yuan@juphoon.com
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]

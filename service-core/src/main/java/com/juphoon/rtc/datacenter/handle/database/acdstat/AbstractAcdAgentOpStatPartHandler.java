@@ -18,7 +18,6 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 /**
  * <p>坐席信息抽象类</p>
  * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
  *
  * @author wenjun.yuan@juphoon.com
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
@@ -39,21 +38,22 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void handle(EventContext ec, AcdAgentOpStatPartPO po) {
-        Long beginTimestamp = ec.getEvent().beginTimestamp();
-        Long endTimestamp = ec.getEvent().endTimestamp();
-
+    public boolean handle(EventContext ec, AcdAgentOpStatPartPO po) {
+        long beginTimestamp = ec.getEvent().beginTimestamp();
+        long endTimestamp = ec.getEvent().endTimestamp();
         List<AcdAgentOpStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
         try {
             list.forEach(this::upsert);
         } catch (Exception e) {
-            log.info("", e);
+            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
+            log.warn(e.getMessage(), e);
+            return false;
         }
+        return true;
     }
 
     @Override
     public AcdAgentOpStatPartPO poFromEvent(Event event) {
-        // TODO 参数校验
         AcdAgentOpStatPartPO po = new AcdAgentOpStatPartPO();
         po.fromEvent(event);
         po.setStatType(statType().getStatType());
@@ -69,7 +69,7 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
 
     @Override
     public AcdAgentOpStatPartPO selectByUnique(AcdAgentOpStatPartPO po) {
-        return acdAgentOpStatPartMapper.selectByUniqueCondition(AcdAgentOpStatPartPO::getUniqueKey, po.getUniqueKey());
+        return acdAgentOpStatPartMapper.selectByUniqueKey(po.getUniqueKey());
     }
 
     @Override
@@ -78,17 +78,14 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
         return acdAgentOpStatPartMapper.insertSelective(po);
     }
 
-    /**
-     * /// todo 表名不便作为参数
+    /***
      *
-     * @param uniqueKey
-     * @param duration
-     * @param cnt
+     * @param po
      * @return
      */
     @Override
-    public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
-        return acdAgentOpStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_agentop_stat_part", uniqueKey, duration, cnt);
+    public int updateByUniqueKey(AcdAgentOpStatPartPO po) {
+        return acdAgentOpStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 }

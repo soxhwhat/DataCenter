@@ -1,25 +1,21 @@
 package com.juphoon.rtc.datacenter.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>jrtc_acd_callinfo_stat_daily表的mapper类</p>
  * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
  *
  * @author wenjun.yuan@juphoon.com
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  * @since 2022/3/10 11:49
  */
 @Mapper
-@DS("kiwi")
 @SuppressWarnings("PMD")
-public interface AcdCallInfoStatDailyMapper extends BaseMapper<AcdCallInfoStatDailyPO>, AcdCommonMapper {
+public interface AcdCallInfoStatDailyMapper extends BaseMapper<AcdCallInfoStatDailyPO> {
 
     /**
      * insert record to table selective
@@ -49,10 +45,23 @@ public interface AcdCallInfoStatDailyMapper extends BaseMapper<AcdCallInfoStatDa
      */
     int updateByPrimaryKey(AcdCallInfoStatDailyPO record);
 
-    default AcdCallInfoStatDailyPO selectByCondition(SFunction<AcdCallInfoStatDailyPO, ?> column, String columnValue) {
-        LambdaQueryWrapper<AcdCallInfoStatDailyPO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(column, columnValue);
-        return this.selectOne(queryWrapper);
-    }
+    /**
+     * 根据uniqueKey更新次数和时长
+     * @param uniqueKey
+     * @param duration
+     * @param cnt
+     * @return
+     */
+    int updateAddValueByUniqueKey(@Param("uniqueKey") String uniqueKey,
+                                  @Param("duration") Long duration,
+                                  @Param("cnt") Integer cnt);
+
+    /**
+     * 根据uniqueKey查询
+     *
+     * @param uniqueKey
+     * @return
+     */
+    AcdCallInfoStatDailyPO selectByUniqueKey(@Param("uniqueKey") String uniqueKey);
 
 }

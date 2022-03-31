@@ -183,4 +183,23 @@
       unique_key = #{uniqueKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateAddValueByUniqueKey">
+    update jrtc_acd_callinfo_stat_daily
+    <set>
+      <if test="duration != null">
+        duration = duration + #{duration,jdbcType=BIGINT},
+      </if>
+      <if test="cnt != null">
+        cnt = cnt + #{cnt,jdbcType=INTEGER},
+      </if>
+    </set>
+    where unique_key = #{uniqueKey,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByUniqueKey" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from jrtc_acd_callinfo_stat_daily
+    where unique_key = #{uniqueKey,jdbcType=VARCHAR}
+  </select>
 </mapper>

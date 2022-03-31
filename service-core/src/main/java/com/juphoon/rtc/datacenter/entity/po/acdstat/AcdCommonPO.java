@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.security.InvalidParameterException;
 import java.util.Date;
 
 /**
@@ -16,7 +16,6 @@ import java.util.Date;
  * @author Yuan
  */
 @Getter
-@Setter
 @ToString
 @SuppressFBWarnings(value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"},
         justification = "I prefer to suppress these FindBugs warnings")
@@ -51,6 +50,21 @@ public class AcdCommonPO implements Serializable {
     private Long statTime;
 
     /**
+     * 事件类型
+     */
+    private Integer eventType;
+
+    /**
+     * 事件编号
+     */
+    private Integer eventNum;
+
+    /**
+     * 事件结束类型
+     */
+    private Integer endType;
+
+    /**
      * 事件总时长，ms
      */
     private Long duration;
@@ -64,4 +78,67 @@ public class AcdCommonPO implements Serializable {
      * 计算出的值，确定一条数据
      */
     private String uniqueKey;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setGmtCreated(Date gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setDomainId(Integer domainId) {
+        checkParam(domainId, "domainId");
+        this.domainId = domainId;
+    }
+
+    public void setAppId(Integer appId) {
+        checkParam(appId, "appId");
+        this.appId = appId;
+    }
+
+    public void setStatTime(Long statTime) {
+        this.statTime = statTime;
+    }
+
+    public void setEventType(Integer eventType) {
+        checkParam(eventType, "eventType");
+        this.eventType = eventType;
+    }
+
+    public void setEventNum(Integer eventNum) {
+        checkParam(eventNum, "eventNum");
+        this.eventNum = eventNum;
+    }
+
+    public void setEndType(Integer endType) {
+        checkParam(endType, "endType");
+        this.endType = endType;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
+    public void setCnt(Integer cnt) {
+        this.cnt = cnt;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
+    }
+
+    private void checkParam(Integer value, String fieldName) {
+        if (value == null || value < 0) {
+            throwException(fieldName + "[" + value + "] is null or < 0");
+        }
+    }
+
+    protected void throwException(String message) {
+        throw new InvalidParameterException(message);
+    }
 }

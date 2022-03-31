@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,17 +34,19 @@ public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallI
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void handle(EventContext ec, AcdCallInfoStatDailyPO po) {
-        Long beginTimestamp = ec.getEvent().beginTimestamp();
-        Long endTimestamp = ec.getEvent().endTimestamp();
-
+    public boolean handle(EventContext ec, AcdCallInfoStatDailyPO po) {
+        long beginTimestamp = ec.getEvent().beginTimestamp();
+        long endTimestamp = ec.getEvent().endTimestamp();
         // 可能存在跨天
         List<AcdCallInfoStatDailyPO> list = splitStatTime(po, beginTimestamp, endTimestamp, StatType.STAT_DAY);
         try {
             list.forEach(this::upsert);
         } catch (Exception e) {
-            log.info("", e);
+            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
+            log.warn(e.getMessage(), e);
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -60,20 +63,19 @@ public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallI
     }
 
     @Override
-    public AcdCallInfoStatDailyPO selectByUnique(AcdCallInfoStatDailyPO commonPo) {
+    public AcdCallInfoStatDailyPO selectByUnique(AcdCallInfoStatDailyPO po) {
         // TODO 加个缓存，先从缓存中查询
-        return acdCallInfoStatDailyMapper.selectByCondition(AcdCallInfoStatDailyPO::getUniqueKey,
-                commonPo.getUniqueKey());
+        return acdCallInfoStatDailyMapper.selectByUniqueKey(po.getUniqueKey());
     }
 
     @Override
-    public int insertSelective(AcdCallInfoStatDailyPO commonPo) {
+    public int insertSelective(@Validated AcdCallInfoStatDailyPO commonPo) {
         return acdCallInfoStatDailyMapper.insertSelective(commonPo);
     }
 
     @Override
-    public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
-        return acdCallInfoStatDailyMapper.updateAddValueByUniqueKey("jrtc_acd_callinfo_stat_daily", uniqueKey, duration, cnt);
+    public int updateByUniqueKey(AcdCallInfoStatDailyPO po) {
+        return acdCallInfoStatDailyMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 

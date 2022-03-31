@@ -37,21 +37,22 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void handle(EventContext ec, AcdCallInfoStatPartPO po) {
-        Long beginTimestamp = ec.getEvent().beginTimestamp();
-        Long endTimestamp = ec.getEvent().endTimestamp();
-
+    public boolean handle(EventContext ec, AcdCallInfoStatPartPO po) {
+        long beginTimestamp = ec.getEvent().beginTimestamp();
+        long endTimestamp = ec.getEvent().endTimestamp();
         List<AcdCallInfoStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
         try {
             list.forEach(this::upsert);
         } catch (Exception e) {
-            log.info("", e);
+            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
+            log.warn(e.getMessage(), e);
+            return false;
         }
+        return true;
     }
 
     @Override
     public AcdCallInfoStatPartPO poFromEvent(Event event) {
-        // TODO 参数校验
         AcdCallInfoStatPartPO po = new AcdCallInfoStatPartPO();
         po.fromEvent(event);
         po.setStatType(statType().getStatType());
@@ -66,7 +67,7 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
 
     @Override
     public AcdCallInfoStatPartPO selectByUnique(AcdCallInfoStatPartPO po) {
-        return acdCallInfoStatPartMapper.selectByUniqueCondition(AcdCallInfoStatPartPO::getUniqueKey, po.getUniqueKey());
+        return acdCallInfoStatPartMapper.selectByUniqueKey(po.getUniqueKey());
     }
 
     @Override
@@ -76,16 +77,13 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
     }
 
     /***
-     * todo 表名不便作为参数
      *
-     * @param uniqueKey
-     * @param duration
-     * @param cnt
+     * @param po
      * @return
      */
     @Override
-    public int updateByUniqueKey(String uniqueKey, Long duration, Integer cnt) {
-        return acdCallInfoStatPartMapper.updateAddValueByUniqueKey("jrtc_acd_callinfo_stat_part", uniqueKey, duration, cnt);
+    public int updateByUniqueKey(AcdCallInfoStatPartPO po) {
+        return acdCallInfoStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 }

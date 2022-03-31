@@ -248,4 +248,25 @@
       UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="updateAddValueByUniqueKey">
+    <!--@mbg.generated-->
+    update JRTC_ACD_AGENTOP_STAT_PART
+    <set>
+      <if test="duration != null">
+        DURATION = DURATION + #{duration,jdbcType=DECIMAL},
+      </if>
+      <if test="cnt != null">
+        CNT = CNT + #{cnt,jdbcType=DECIMAL},
+      </if>
+        GMT_MODIFIED = CURRENT_TIMESTAMP
+    </set>
+    where UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByUniqueKey" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from JRTC_ACD_AGENTOP_STAT_PART
+    where UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
+  </select>
 </mapper>

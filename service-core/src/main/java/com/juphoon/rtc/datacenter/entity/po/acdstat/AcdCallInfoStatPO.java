@@ -4,9 +4,10 @@ import com.juphoon.rtc.datacenter.api.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.util.StringUtils;
 
 /**
- * 话务分时段汇总表
+ * 话务分时段父类
  *
  * @author Yuan
  */
@@ -20,26 +21,15 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
     private String skill;
 
     /**
-     * 事件类型
-     */
-    private Integer eventType;
-
-    /**
-     * 事件编号
-     */
-    private Integer eventNum;
-
-    /**
-     * 事件结束类型
-     */
-    private Integer endType;
-
-    /**
      * 用event初始化部分字段
      *
      * @param event
      */
     public void fromEvent(Event event) {
+        int skillLength = 32;
+        if (StringUtils.isEmpty(event.skill()) || event.skill().length() > skillLength) {
+            throwException("skill[" + event.skill() + "] is empty or length > " + skillLength);
+        }
         this.setDomainId(event.domainId());
         this.setAppId(event.appId());
         this.setEventType(event.eventType());
@@ -47,6 +37,5 @@ public class AcdCallInfoStatPO extends AcdCommonPO {
         this.setEndType(event.endType());
         this.setSkill(event.skill());
     }
-
 
 }

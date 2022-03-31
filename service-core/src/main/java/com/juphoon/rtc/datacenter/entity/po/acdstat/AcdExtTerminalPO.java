@@ -5,12 +5,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 话务渠道父类
  * @author Yuan
  */
 @Getter
 @Setter
 @ToString
-public class AcdCallInfoStatExtTerminalPO extends AcdCommonPO {
+public class AcdExtTerminalPO extends AcdCommonPO {
 
     /**
      * 技能组
