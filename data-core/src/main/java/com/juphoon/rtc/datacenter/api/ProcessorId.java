@@ -27,8 +27,12 @@ public enum ProcessorId {
     /**
      * 事件mongo入库
      */
-    KAFKA("kafkaProcessor", "Kafka事件推送");
+    KAFKA("kafkaProcessor", "Kafka事件推送"),
 
+    /**
+     * 测试
+     */
+    TEST("testProcessor", "测试处理器");
 
     /**
      * 类型

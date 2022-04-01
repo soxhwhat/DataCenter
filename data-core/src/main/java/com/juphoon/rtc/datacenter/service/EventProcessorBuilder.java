@@ -51,9 +51,6 @@ public class EventProcessorBuilder {
             }
 
             this.processor.setQueueService(this.eventQueueService);
-            /// 自动装载
-//            this.processor.addEventHandler(new FirstInnerEventHandler());
-
             this.processor.addEventHandlers(handlers);
 
             /// 自动装载

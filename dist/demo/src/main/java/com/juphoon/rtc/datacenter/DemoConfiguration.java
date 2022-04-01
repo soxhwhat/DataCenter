@@ -1,10 +1,15 @@
 package com.juphoon.rtc.datacenter;
 
+import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.handle.TestHttpEventHandler;
 import com.juphoon.rtc.datacenter.handle.Xhandler;
 import com.juphoon.rtc.datacenter.handle.Yhandler;
+import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.processor.MongoProcessor;
 import com.juphoon.rtc.datacenter.processor.TestEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
 import org.springframework.beans.factory.BeanFactory;
@@ -29,12 +34,24 @@ public class DemoConfiguration {
     @Autowired
     private BeanFactory beanFactory;
 
+    @Autowired
+    private DataCenterProperties properties;
+
+    @Autowired
+    private AcdTicketEventMongoHandler acdTicketEventMongoHandler;
+
+    @Autowired
+    private AcdEventMongoHandler acdEventMongoHandler;
+
     @Bean
     public DataService config() {
 
         TestEventProcessor testEventProcessor = beanFactory.getBean(TestEventProcessor.class);
+        testEventProcessor.setEnabled(false);
+        testEventProcessor.setProcessorId(ProcessorId.TEST);
         Yhandler yhandler = beanFactory.getBean(Yhandler.class);
         Xhandler xhandler = beanFactory.getBean(Xhandler.class);
+
 
         // 初始化 http processor
         List<String> hosts = new LinkedList<>();
@@ -45,9 +62,14 @@ public class DemoConfiguration {
         config.setHosts(hosts);
 
         HttpClientEventProcessor httpClientEventProcessor = beanFactory.getBean(HttpClientEventProcessor.class);
+        httpClientEventProcessor.setProcessorId(ProcessorId.AGREE);
         httpClientEventProcessor.setConfig(config);
+        httpClientEventProcessor.setEnabled(false);
 
         //
+        MongoProcessor mongoProcessor = beanFactory.getBean(MongoProcessor.class);
+        mongoProcessor.setProcessorId(ProcessorId.MONGO);
+
 
         //@formatter:off
         return DataServiceBuilder.processors()
@@ -60,6 +82,12 @@ public class DemoConfiguration {
                 .processor(httpClientEventProcessor)
                     // 构造测试handler
                     .handler(new TestHttpEventHandler())
+                    .end()
+                .processor(mongoProcessor)
+                    .mq(properties.getMq().trans())
+                    // 构造测试handler
+                    .handler(acdTicketEventMongoHandler)
+                    .handler(acdEventMongoHandler)
                     .end()
                 .build();
 

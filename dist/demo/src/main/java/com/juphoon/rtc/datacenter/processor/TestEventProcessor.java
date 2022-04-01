@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.ProcessorId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +20,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class TestEventProcessor extends AbstractEventProcessor {
+    @Override
+    public ProcessorId getProcessorId() {
+        return ProcessorId.TEST;
+    }
+
     @Value(value = "${demo.value:hi}")
     private String value;
 

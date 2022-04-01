@@ -6,22 +6,12 @@ spring:
       datasource:
         sqllite:
           url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
-          #    url: jdbc:sqlite:a.db
           driver-class-name: org.sqlite.JDBC
           username:
           password:
-#        mysql:
-#          url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-#          driver-class-name: com.mysql.cj.jdbc.Driver
-#          username: kiwi
-#          password: juphoon419708
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 mybatis-plus:
-#  global-config:
-#    db-config:
-#      column-format: '`%s`'
-#  mapper-locations: classpath*:mysql/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
