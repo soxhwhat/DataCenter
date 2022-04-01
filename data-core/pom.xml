@@ -32,12 +32,13 @@
             <artifactId>druid</artifactId>
             <version>${alibaba.druid.version}</version>
         </dependency>
-<!--        TODO 干啥用的-->
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>${p6spy.version}</version>
-        </dependency>
+
+<!--       对SQL语句进行拦截 -->
+<!--        <dependency>-->
+<!--            <groupId>p6spy</groupId>-->
+<!--            <artifactId>p6spy</artifactId>-->
+<!--            <version>${p6spy.version}</version>-->
+<!--        </dependency>-->
 
         <!-- sqlite3驱动包 -->
         <dependency>

@@ -1,9 +1,7 @@
 package com.juphoon.rtc.datacenter.api;
 
 /**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>服务抽象接口</p>
  *
  * @author  ajian.zheng@juphoon.com
  * @date    2/17/22 5:26 PM

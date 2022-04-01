@@ -17,9 +17,7 @@ package com.juphoon.rtc.datacenter.service;
 import java.util.Map;
 
 /**
- * <p>在开始处详细描述作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>赞同通知服务抽象接口</p>
  *
  * @author ke.wang@juphoon.com
  * @date 2022/3/25

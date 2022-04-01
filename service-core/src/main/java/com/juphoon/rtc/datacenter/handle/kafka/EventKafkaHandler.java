@@ -6,12 +6,10 @@ import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static com.juphoon.rtc.datacenter.api.EventType.*;
 
@@ -40,12 +38,13 @@ public class EventKafkaHandler extends AbstractKafkaHandler {
                 , TICKER_COMPLETE, STAFF_BEAT, QUEUE_BEAT);
     }
 
+    @SuppressWarnings("PMD")
     @Override
     public boolean handle(EventContext ec) {
+        /*
         try {
             String topic = getTopic(ec);
             log.info("ec:{},topic:{}", ec, topic);
-            /// TODO 消除告警
             kafkaTemplate.send(topic, ec.getEvent().toString()).get();
         } catch (KafkaException kafkaException) {
             return false;
@@ -55,7 +54,7 @@ public class EventKafkaHandler extends AbstractKafkaHandler {
         } catch (InterruptedException e) {
             return false;
         }
-
+        */
         log.info("执行kafkaHandle结束");
         return true;
     }

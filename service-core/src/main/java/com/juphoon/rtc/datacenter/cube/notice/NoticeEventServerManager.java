@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>原noticeService rpc接口</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
  *
  * @author  ke.wang@juphoon.com
  * @date   2022/3/25

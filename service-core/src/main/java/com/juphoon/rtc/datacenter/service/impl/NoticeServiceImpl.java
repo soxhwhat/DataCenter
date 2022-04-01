@@ -35,9 +35,7 @@ import java.util.Map;
 import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.KEY_AGREE;
 
 /**
- * <p>在开始处详细描述作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>赞同通知实现类</p>
  *
  * @author ke.wang@juphoon.com
  * @date 2022/3/25
@@ -81,8 +79,6 @@ public class NoticeServiceImpl implements NoticeService {
 
         dataService.commit(buildContext(EventType.ROOM_NOTICE, params));
     }
-
-    /// TODO 所有 type/number 都改为宏/常量
 
     @Override
     public void verJoinRoom(Map<String, String> params) {

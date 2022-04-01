@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.util.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -262,7 +261,7 @@ public class Event {
 //            defaultShirt2();
 //        }
 //        System.out.println("defaultShirt2() cost:" + (System.currentTimeMillis() - begin));
-            // TODO Auto-generated method stub
-            System.out.println(System.getProperty("user.dir"));
+        // TODO Auto-generated method stub
+        System.out.println(System.getProperty("user.dir"));
     }
 }

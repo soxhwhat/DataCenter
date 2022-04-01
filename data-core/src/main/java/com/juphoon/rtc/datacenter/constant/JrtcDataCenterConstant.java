@@ -1,12 +1,12 @@
-package com.juphoon.rtc.datacenter.constant;/**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+package com.juphoon.rtc.datacenter.constant;
+
+/**
+ * <p>常量定义</p>
  *
- * @author  ke.wang@juphoon.com
- * @date    2022/3/2 16:38
- * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
- */ 
+ * @author ke.wang@juphoon.com
+ * @date 2022/3/2 16:38
+ * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
+ */
 public class JrtcDataCenterConstant {
 
     public final static String URL_PARAMS = "?name=Juphoon";
@@ -42,7 +42,7 @@ public class JrtcDataCenterConstant {
 
 
     /**
-       http 模块
+     http 模块
      */
     public static final String NOTICE_HANDLER = "noticeHandler";
     public static final String NOTICE_PROCESSOR = "noticeHttpProcessor";

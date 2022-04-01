@@ -3,9 +3,8 @@ package com.juphoon.rtc.datacenter.service;
 import java.util.List;
 
 /**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>赞同通知状态缓存抽象接口</p>
+ * <p>TODO 终端传递准确状态</p>
  *
  * @author  ke.wang@juphoon.com
  * @date    2022/3/24 15:12
