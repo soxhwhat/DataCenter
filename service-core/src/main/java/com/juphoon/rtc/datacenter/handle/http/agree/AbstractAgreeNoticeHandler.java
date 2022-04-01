@@ -53,7 +53,7 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
 
         try {
             // 生成请求参数
-            Map<String, String> params = ec.getEvent().getParamsCopy();
+            Map<String, Object> params = ec.getEvent().getParamsCopy();
 
             assert null != params : "请求参数为空";
 

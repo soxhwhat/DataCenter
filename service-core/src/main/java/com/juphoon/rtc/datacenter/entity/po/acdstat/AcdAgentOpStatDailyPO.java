@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.utils.Md5Util;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * 坐席操作日汇总表
@@ -17,7 +18,6 @@ public class AcdAgentOpStatDailyPO extends AcdAgentOpStatPO {
 
     @Override
     public String getUniqueKey() {
-        // TODO:MD5 apache-
         if (null == super.getUniqueKey()) {
             String str = getStatTime() + "|" + getAgentId() +
                     "|" + getEventType() + "|" + getEventNum() +
@@ -25,7 +25,7 @@ public class AcdAgentOpStatDailyPO extends AcdAgentOpStatPO {
                     "|" + getAppId() + "|" + getShift() +
                     "|" + getTeam() + "|" + getSkill() +
                     "|" + getExtStatus();
-            super.setUniqueKey(Md5Util.encryptMd5(str));
+            super.setUniqueKey(DigestUtils.md5Hex(str));
         }
         return super.getUniqueKey();
     }

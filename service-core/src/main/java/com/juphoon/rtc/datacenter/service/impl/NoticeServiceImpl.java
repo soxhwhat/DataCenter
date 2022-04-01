@@ -160,7 +160,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     private EventContext buildContext(EventType eventType, Map<String, String> params) {
-        Event event = Event.builder().type(eventType.getType()).number(eventType.getNumber()).params(params).build();
+        Event event = Event.builder().type(eventType.getType()).number(eventType.getNumber())
+                .params(convert(params)).build();
 
         EventContext eventContext = new EventContext();
         eventContext.setEvent(event);
@@ -186,4 +187,10 @@ public class NoticeServiceImpl implements NoticeService {
         return true;
     }
 
+    private Map<String, Object> convert(Map<String, String> from) {
+        if (null == from) {
+            return null;
+        }
+        return new HashMap<>(from);
+    }
 }

@@ -36,7 +36,7 @@ public class DemoDataCenterApplication {
         log.info("value:{}", value);
         EventContext ec = new EventContext();
 
-        Map<String, String> params = new HashMap<>(9);
+        Map<String, Object> params = new HashMap<>(9);
         params.put("callId", "123456789");
         params.put("duration", "1");
         params.put("beginTimestamp", "1");
@@ -59,7 +59,7 @@ public class DemoDataCenterApplication {
         log.info("value:{}", value);
         EventContext ec = new EventContext();
 
-        Map<String, String> params = new HashMap<>(13);
+        Map<String, Object> params = new HashMap<>(13);
 
         params.put("callId", "987654321");
         params.put("agentId", "zhangsan");

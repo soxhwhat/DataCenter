@@ -28,29 +28,6 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
     @Autowired
     private AcdCallInfoStatPartMapper acdCallInfoStatPartMapper;
 
-    /**
-     * 设置handler的统计类型
-     *
-     * @return
-     */
-    public abstract StatType statType();
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean handle(EventContext ec, AcdCallInfoStatPartPO po) {
-        long beginTimestamp = ec.getEvent().beginTimestamp();
-        long endTimestamp = ec.getEvent().endTimestamp();
-        List<AcdCallInfoStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
-        try {
-            list.forEach(this::upsert);
-        } catch (Exception e) {
-            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
-            log.warn(e.getMessage(), e);
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public AcdCallInfoStatPartPO poFromEvent(Event event) {
         AcdCallInfoStatPartPO po = new AcdCallInfoStatPartPO();
@@ -82,8 +59,8 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
      * @return
      */
     @Override
-    public int updateByUniqueKey(AcdCallInfoStatPartPO po) {
-        return acdCallInfoStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
+    public void updateByUniqueKey(AcdCallInfoStatPartPO po) {
+        acdCallInfoStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 }

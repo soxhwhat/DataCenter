@@ -3,11 +3,13 @@ package com.juphoon.rtc.datacenter.handle.database.acdstat;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.StatType;
+import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCommonPO;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,13 @@ import java.util.List;
  */
 @Slf4j
 public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends AbstractEventHandler {
+
+    /**
+     * 统计类型
+     *
+     * @return
+     */
+    public abstract StatType statType();
 
     @Override
     public boolean handle(EventContext ec) {
@@ -38,13 +47,37 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     }
 
     /**
+     * 统一回调处理
+     * @param ec
+     * @param po
+     * @return
+     * @throws Exception
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean handle(EventContext ec, T po) throws Exception {
+        long beginTimestamp = ec.getEvent().beginTimestamp();
+        long endTimestamp = ec.getEvent().endTimestamp();
+
+        List<T> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
+        try {
+            list.forEach(this::upsert);
+        } catch (Exception e) {
+            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
+            log.warn(e.getMessage(), e);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * 插入或更新数据
      * // TODO 优化
      *
      * @param commonPo
      * @return
      */
-    public void upsert(T commonPo) {
+    private void upsert(T commonPo) {
         T localObj = selectByUnique(commonPo);
         if (null == localObj) {
             // 上锁，保证并发时 确定只有一条数据insert
@@ -63,7 +96,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
         updateByUniqueKey(commonPo);
     }
 
-    public void tryUpdate(T commonPo) {
+    private void tryUpdate(T commonPo) {
         T localObj = selectByUnique(commonPo);
         if (null != localObj) {
             updateByUniqueKey(commonPo);
@@ -77,7 +110,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
      * TODO 说明
      * |....？.>.|...>...|......|...>....
      */
-    public List<T> splitStatTime(T po, Long beginTimestamp, Long endTimestamp, StatType type) {
+    private List<T> splitStatTime(T po, Long beginTimestamp, Long endTimestamp, StatType type) {
         long remainder = beginTimestamp % type.getInterval();
         long statTime = beginTimestamp - remainder;
 
@@ -119,15 +152,6 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     }
 
     /**
-     * 统一回调处理
-     * @param ec
-     * @param po
-     * @return
-     * @throws Exception
-     */
-    public abstract boolean handle(EventContext ec, T po) throws Exception;
-
-    /**
      * 构建具体表的po
      *
      * @param event
@@ -157,6 +181,6 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
      * @param po
      * @return
      */
-    public abstract int updateByUniqueKey(T po);
+    public abstract void updateByUniqueKey(T po);
 
 }

@@ -1,12 +1,14 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
-import com.juphoon.rtc.datacenter.api.*;
+import com.juphoon.rtc.datacenter.api.Event;
+import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.api.StatType;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatDailyPO;
 import com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatDailyMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
@@ -25,29 +27,17 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallInfoStatDailyPO> {
 
     @Override
+    public StatType statType() {
+        return StatType.STAT_DAY;
+    }
+
+    @Override
     public HandlerId handlerId() {
         return HandlerId.AcdCallInfoStatDailyHandler;
     }
 
     @Autowired
     private AcdCallInfoStatDailyMapper acdCallInfoStatDailyMapper;
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean handle(EventContext ec, AcdCallInfoStatDailyPO po) {
-        long beginTimestamp = ec.getEvent().beginTimestamp();
-        long endTimestamp = ec.getEvent().endTimestamp();
-        // 可能存在跨天
-        List<AcdCallInfoStatDailyPO> list = splitStatTime(po, beginTimestamp, endTimestamp, StatType.STAT_DAY);
-        try {
-            list.forEach(this::upsert);
-        } catch (Exception e) {
-            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
-            log.warn(e.getMessage(), e);
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public AcdCallInfoStatDailyPO poFromEvent(Event event) {
@@ -74,8 +64,8 @@ public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallI
     }
 
     @Override
-    public int updateByUniqueKey(AcdCallInfoStatDailyPO po) {
-        return acdCallInfoStatDailyMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
+    public void updateByUniqueKey(AcdCallInfoStatDailyPO po) {
+        acdCallInfoStatDailyMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 

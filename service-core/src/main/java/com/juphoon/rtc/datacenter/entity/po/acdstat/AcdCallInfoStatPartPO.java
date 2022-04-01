@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.utils.Md5Util;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * 话务分时段汇总表
@@ -21,13 +22,13 @@ public class AcdCallInfoStatPartPO extends AcdCallInfoStatPO {
 
     @Override
     public String getUniqueKey() {
-        // TODO:MD5 apache-
         if (null == super.getUniqueKey()) {
             String str = getStatTime() + "|" + getStatType() +
                     "|" + getSkill() + "|" + getEventType() +
                     "|" + getEventNum() + "|" + getEndType() +
                     "|" + getDomainId() + "|" + getAppId();
-            super.setUniqueKey(Md5Util.encryptMd5(str));
+            super.setUniqueKey(DigestUtils.md5Hex(str));
+
         }
         return super.getUniqueKey();
     }

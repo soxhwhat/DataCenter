@@ -99,10 +99,10 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
     /// TODO 严格的参数类型检查
     private Event trans(DataCollection.Event from) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<HashMap<String, String>> typeRef = new TypeReference<HashMap<String, String>>() {
+        TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
         };
 
-        Map<String, String> params = mapper.readValue(from.params, typeRef);
+        Map<String, Object> params = mapper.readValue(from.params, typeRef);
 
         return Event.builder()
                 .domainId((int) from.domainId)

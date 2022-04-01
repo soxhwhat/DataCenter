@@ -42,7 +42,7 @@ public class AcdTicketEventMongoHandler extends AbstractMongoHandler {
 
     @Override
     public String collectionName(EventContext ec) {
-        return "jrtc.acd.records";
+        return "jrtc.records";
     }
 
     @Override

@@ -1,14 +1,11 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
 import com.juphoon.rtc.datacenter.api.Event;
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.StatType;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO;
 import com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatPartMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,29 +25,6 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
 
     @Autowired
     private AcdAgentOpStatPartMapper acdAgentOpStatPartMapper;
-
-    /**
-     * 设置handler的统计类型
-     *
-     * @return
-     */
-    public abstract StatType statType();
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean handle(EventContext ec, AcdAgentOpStatPartPO po) {
-        long beginTimestamp = ec.getEvent().beginTimestamp();
-        long endTimestamp = ec.getEvent().endTimestamp();
-        List<AcdAgentOpStatPartPO> list = splitStatTime(po, beginTimestamp, endTimestamp, statType());
-        try {
-            list.forEach(this::upsert);
-        } catch (Exception e) {
-            log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
-            log.warn(e.getMessage(), e);
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public AcdAgentOpStatPartPO poFromEvent(Event event) {
@@ -84,8 +58,8 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
      * @return
      */
     @Override
-    public int updateByUniqueKey(AcdAgentOpStatPartPO po) {
-        return acdAgentOpStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
+    public void updateByUniqueKey(AcdAgentOpStatPartPO po) {
+        acdAgentOpStatPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getDuration(), po.getCnt());
     }
 
 }

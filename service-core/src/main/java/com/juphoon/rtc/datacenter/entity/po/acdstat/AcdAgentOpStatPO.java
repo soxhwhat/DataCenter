@@ -48,11 +48,11 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
      */
     public void fromEvent(Event event) {
         int length = 32;
-        if (event.extStatus() != null && event.extStatus() < 0) {
+        if (event.extStatus() < 0) {
             throwException("extStatus[" + event.extStatus() + "] < 0");
         }
-        if (StringUtils.isEmpty(event.agentId()) || event.agentId().length() > (length+length)) {
-            throwException("agentId[" + event.agentId() + "] is empty or length > " + (length+length));
+        if (StringUtils.isEmpty(event.agentId()) || event.agentId().length() > (length + length)) {
+            throwException("agentId[" + event.agentId() + "] is empty or length > " + (length + length));
         }
         if (StringUtils.hasText(event.team()) && event.team().length() > length) {
             throwException("team[" + event.team() + "].length > " + length);

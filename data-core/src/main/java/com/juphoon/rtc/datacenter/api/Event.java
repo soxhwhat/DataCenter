@@ -19,10 +19,19 @@ import java.util.UUID;
 @Setter
 @ToString
 public class Event {
+    /**
+     * 域ID
+     */
     private final Integer domainId;
 
+    /**
+     * 应用ID
+     */
     private final Integer appId;
 
+    /**
+     * 事件唯一ID
+     */
     private final String uuid;
 
     /**
@@ -38,13 +47,18 @@ public class Event {
     /**
      * 其他参数
      */
-    private final Map<String, String> params;
+    private final Map<String, Object> params;
 
+    /**
+     * 构造器
+     *
+     * @return
+     */
     public static Event.Builder builder() {
         return new Builder();
     }
 
-    public Event(Integer domainId, Integer appId, String uuid, Integer type, Integer number, Map<String, String> params) {
+    public Event(Integer domainId, Integer appId, String uuid, Integer type, Integer number, Map<String, Object> params) {
         this.domainId = domainId;
         this.appId = appId;
         this.uuid = uuid;
@@ -64,7 +78,7 @@ public class Event {
 
         private Integer number;
 
-        private Map<String, String> params;
+        private Map<String, Object> params;
 
         Builder() {
             domainId = -1;
@@ -101,7 +115,7 @@ public class Event {
             return this;
         }
 
-        public Builder params(final Map<String, String> params) {
+        public Builder params(final Map<String, Object> params) {
             this.params = params;
             return this;
         }
@@ -139,7 +153,7 @@ public class Event {
         throw new JrtcUnknownEventException(eventType() + ":" + eventNumber());
     }
 
-    public Map<String, String> getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
@@ -148,7 +162,7 @@ public class Event {
      *
      * @return
      */
-    public Map<String, String> getParamsCopy() {
+    public Map<String, Object> getParamsCopy() {
         if (null == params) {
             return new HashMap<>(0);
         }
@@ -169,7 +183,7 @@ public class Event {
      * @return
      */
     public long beginTimestamp() {
-        return Long.parseLong(params.get("beginTimestamp"));
+        return (long) params.get("beginTimestamp");
     }
 
     /**
@@ -178,7 +192,7 @@ public class Event {
      * @return
      */
     public long endTimestamp() {
-        return Long.parseLong(params.get("endTimestamp"));
+        return (long) params.get("beginTimestamp");
     }
 
 
@@ -191,11 +205,11 @@ public class Event {
     }
 
     public long duration() {
-        return Long.parseLong(params.getOrDefault("duration", "0"));
+        return (long) params.getOrDefault("duration", 0L);
     }
 
-    public Integer endType() {
-        return Integer.parseInt(params.getOrDefault("endType", "0"));
+    public int endType() {
+        return (int) params.getOrDefault("endType", 0);
     }
 
     /**
@@ -204,29 +218,24 @@ public class Event {
      * @return
      */
     public String skill() {
-        return params.getOrDefault("queue", "");
+        return (String) params.getOrDefault("queue", "");
     }
 
     public String team() {
-        return params.getOrDefault("team", "");
+        return (String) params.getOrDefault("team", "");
     }
 
     public String shift() {
-        return params.getOrDefault("shift", defaultShirt());
+        return (String) params.getOrDefault("shift", defaultShirt());
     }
 
     public String agentId() {
-        return params.getOrDefault("agentId", "");
+        return (String) params.getOrDefault("agentId", "");
     }
 
-    public Integer extStatus() {
-        return Integer.parseInt(params.getOrDefault("extStatus", "0"));
+    public int extStatus() {
+        return (int) params.getOrDefault("extStatus", 0);
     }
-
-//    private static String defaultShirt() {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//        return sdf.format(new Date());
-//    }
 
     private static String defaultShirt() {
         return DateFormatUtils.format(new Date(System.currentTimeMillis()), "yyyyMMdd");
