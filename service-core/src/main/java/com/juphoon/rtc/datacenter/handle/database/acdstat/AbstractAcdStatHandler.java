@@ -120,9 +120,9 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
 
     /**
      * 统一回调处理
-     *
      * @param ec
      * @param po
+     * @return
      * @throws Exception
      */
     public abstract boolean handle(EventContext ec, T po) throws Exception;
