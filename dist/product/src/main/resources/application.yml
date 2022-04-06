@@ -12,6 +12,7 @@ spring:
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      primary: juphoon
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
