@@ -1,19 +1,15 @@
-package com.juphoon.rtc.datacenter.cube;
+package com.juphoon.rtc.datacenter.cube.service;
 
-import Common.Exception;
-import Common.ObjectServer;
 import Common.ServerCall;
-import DataCollection.EventCollectionServiceServer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.juphoon.iron.cube.starter.AbstractCubeService;
-import com.juphoon.iron.cube.starter.annotation.CubeService;
 import com.juphoon.rtc.datacenter.accepter.IEventRouter;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,40 +17,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>EventCollectionServer RPC服务实现</p>
- *
- * @author ajian.zheng@juphoon.com
- * @date 2022-03-25
+ * @Author: Zhiwei.zhai
+ * @Date: 2022/4/8 10:00
+ * @Description:
  */
 @Slf4j
-@CubeService(serviceName = "#EventCollectionServer")
-@SuppressWarnings("PMD")
-public class EventCollectionServiceServerImpl extends AbstractCubeService {
+@Component
+public class EventCollectionServerProcess {
 
     @Autowired
     private IEventRouter eventRouter;
 
-    @Override
-    public ObjectServer buildServiceServer() {
-        return new EventCollectionServiceServer() {
-            @Override
-            public void event_begin(ServerCall serverCall, List<DataCollection.Event> eventList) throws Exception {
-                event_end(serverCall, process(serverCall, eventList));
-            }
-
-            @Override
-            public void event2_begin(ServerCall serverCall, String topic, List<DataCollection.Event> eventList) throws Exception {
-                event_end(serverCall, process(serverCall, eventList));
-            }
-
-            @Override
-            public boolean subEvent(ServerCall serverCall) throws Exception {
-                return false;
-            }
-        };
-    }
-
-    private boolean process(ServerCall serverCall, List<DataCollection.Event> eventList) {
+    public boolean process(ServerCall serverCall, List<DataCollection.Event> eventList) {
         String magic = binaryToHexString(serverCall.getMagic());
         log.debug("magic:{}", magic);
 
@@ -128,4 +102,5 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
         }
         return result.toString();
     }
+
 }

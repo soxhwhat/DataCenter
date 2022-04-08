@@ -47,7 +47,17 @@ public class AcdEventMongoHandler extends AbstractMongoHandler {
                 AGENT_OP_EVENT_BUSY,
                 AGENT_OP_EVENT_FREE,
                 AGENT_OP_EVENT_KEEP,
-                AGENT_OP_EVENT_LOGIN
+                AGENT_OP_EVENT_LOGIN,
+                RECORD_START,
+                RECORD_STOP,
+                RECORD_FILE_CREATE,
+                RECORD_JOIN_MEETING_SUCCESS,
+                RECORD_JOIN_MEETING_FAIL,
+                RECORD_LEAVE_MEETING,
+                RECORD_ERROR,
+                JSMS_REBOOT,
+                JMDS_REBOOT,
+                CD_ERROR_EXIT
         );
     }
 
