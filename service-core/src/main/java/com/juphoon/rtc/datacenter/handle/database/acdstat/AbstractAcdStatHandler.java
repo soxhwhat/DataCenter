@@ -3,14 +3,15 @@ package com.juphoon.rtc.datacenter.handle.database.acdstat;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.StatType;
-import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatPartPO;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCommonPO;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     public abstract StatType statType();
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean handle(EventContext ec) {
         boolean ret = true;
 
@@ -53,7 +55,6 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
      * @return
      * @throws Exception
      */
-    @Transactional(rollbackFor = Exception.class)
     public boolean handle(EventContext ec, T po) throws Exception {
         long beginTimestamp = ec.getEvent().beginTimestamp();
         long endTimestamp = ec.getEvent().endTimestamp();
@@ -64,6 +65,8 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
         } catch (Exception e) {
             log.warn("ec.id[{}], handler[{}] handle failed!", ec.getId(), handlerId().getName());
             log.warn(e.getMessage(), e);
+            // 捕获了异常，需手动回滚事务
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return false;
         }
 
@@ -77,7 +80,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
      * @param commonPo
      * @return
      */
-    private void upsert(T commonPo) {
+    protected void upsert(T commonPo) {
         T localObj = selectByUnique(commonPo);
         if (null == localObj) {
             // 上锁，保证并发时 确定只有一条数据insert
@@ -96,7 +99,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
         updateByUniqueKey(commonPo);
     }
 
-    private void tryUpdate(T commonPo) {
+    protected void tryUpdate(T commonPo) {
         T localObj = selectByUnique(commonPo);
         if (null != localObj) {
             updateByUniqueKey(commonPo);
@@ -107,12 +110,55 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
     }
 
     /**
-     * TODO 说明
-     * |....？.>.|...>...|......|...>....
+     * 前提：
+     *      起始时间：a
+     *      结束时间：b
+     *      区间起始时间：statTime
+     * 特殊情况：(a或b在区间的时间节点上或相同)
+     *    同一个区间内：  |.ab...|......|
+     *      1； a,b在同一个时间点，并在某个区间的起始时间（同结束时间）    |......(ab)......|
+     *          说明：首个statTime=a,b  进入while，if(statTime + interval > b)=true，结束
+     *      2： a,b在同一个时间点，并在某个区间内的某个时间点  |.....(ab).|......|
+     *          说明：首个statTime为该区间的起始时间，statTime < a,b， 进入while，if(statTime + interval > b))=true，结束
+     *      3： a,b不在同一个时间点但在同一个区间内， a在起始时间点, b不在结束时间点   a....b.|......|
+     *          说明：首个statTime为该区间的起始时间，statTime = a < b， 进入while，if(statTime + interval > b))=true，结束
+     *      4： a,b不在同一个时间点但在同一个区间内， a在起始时间点, b在结束时间点（下一个区间的起始时间点）   a......b......|
+     *          说明：首个statTime为该区间的起始时间，statTime = a < b， 进入while，if(statTime + interval = b))=true，结束
+     *      5： a,b不在同一个时间点但在同一个区间内， a不在起始时间点, b在结束时间点（下一个区间的起始时间点）  |..a...b......|
+     *          说明：首个statTime为该区间的起始时间，statTime < a < b， 进入while，if(statTime + interval = b))=true，结束
+     *    跨一个区间：  |.a....|...b..|......|
+     *      6： a在起始时间点, b不在结束时间点    a......|...b..|......|
+     *          说明：首个statTime为该区间的起始时间，statTime = a < b， 进入while，if(statTime + interval < b))=false，
+     *          计算首个区间的时间if (a = statTime)=true, duration=interval,  statTime = 首个statTime + interval(下个区间的起始时间)
+     *          下个循环if(statTime + interval > b))=true，结束
+     *      7： a在起始时间点, b在结束时间点     a......|......b......|
+     *          说明：首个statTime为该区间的起始时间，statTime = a < b， 进入while，if(statTime + interval < b))=false，
+     *          计算首个区间的时间if (a = statTime)=true, duration=interval,  statTime = 首个statTime + interval(下个区间的起始时间)
+     *          下个循环if(statTime + interval = b))=true，结束
+     *      8： a不在起始时间点, b在结束时间点（下一个区间的起始时间点）   |.a....|......b......|
+     *          说明：首个statTime为该区间的起始时间，statTime < a < b， 进入while，if(statTime + interval < b))=false，
+     *          计算首个区间的时间if (a > statTime)=false, duration=interval-(a-首个statTime),  statTime = 首个statTime + interval(下个区间的起始时间)
+     *          下个循环if(statTime + interval = b))=true，结束
+     *    跨n区间：  |.a....|......|..b...|
+     *      与跨一个区间类似，如跨2次，就是2次循环，3次就是3次循环。
+     *      但在第二次循环及之后if (a > statTime)的判断永远为false。
+     *
+     *  正常情况：(a和b都不在区间的时间节点上)
+     *    同一个区间内：  |.a..b.|......|
+     *      9： 参考5
+     *    跨一个区间：  |.a....|...b..|......|
+     *      10： 参考8
+     *    跨n区间： 同特殊情况的跨n区间
      */
     private List<T> splitStatTime(T po, Long beginTimestamp, Long endTimestamp, StatType type) {
         long remainder = beginTimestamp % type.getInterval();
         long statTime = beginTimestamp - remainder;
+        // 日的 时区要进行处理
+        if (type.equals(StatType.STAT_DAY)) {
+            statTime = LocalDateTime.of(Instant.ofEpochMilli(beginTimestamp).atZone(ZoneOffset.ofHours(8)).toLocalDate(), LocalTime.MIN)
+                    .toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+            remainder = beginTimestamp - statTime;
+        }
 
         List<T> list = new ArrayList<>();
 
@@ -136,6 +182,7 @@ public abstract class AbstractAcdStatHandler<T extends AcdCommonPO> extends Abst
                 list.add(p);
                 break;
             }
+            // 到这里必定是跨区间的
 
             // 首个区间，比较起始时间和区间的时间
             if (beginTimestamp > statTime) {

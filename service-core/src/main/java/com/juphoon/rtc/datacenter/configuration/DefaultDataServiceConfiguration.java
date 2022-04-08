@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.configuration;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
@@ -18,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -68,6 +71,20 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdEventMongoHandler acdEventMongoHandler;
 
+    @Autowired
+    private AcdAgentOpCheckDailyByShiftHandler acdAgentOpCheckDailyByShiftHandler;
+
+    @Autowired
+    private AcdExtServiceLevelDailyHandler acdExtServiceLevelDailyHandler;
+
+    @Autowired
+    private AcdExtServiceLevelPart15MinHandler acdExtServiceLevelPart15MinHandler;
+
+    @Autowired
+    private AcdExtServiceLevelPart30MinHandler acdExtServiceLevelPart30MinHandler;
+
+    @Autowired
+    private AcdExtServiceLevelPartHourHandler acdExtServiceLevelPartHourHandler;
 
     @Bean
     @ConditionalOnMissingBean
@@ -101,6 +118,19 @@ public class DefaultDataServiceConfiguration {
         acdAgentOpStatPart15MinHandler.setEnabled(properties.getAcdStat().isAgentOp15minEnabled());
         acdAgentOpStatPart30MinHandler.setEnabled(properties.getAcdStat().isAgentOp30minEnabled());
         acdAgentOpStatPartHourHandler.setEnabled(properties.getAcdStat().isAgentOpHourEnabled());
+        acdAgentOpCheckDailyByShiftHandler.setEnabled(properties.getAcdStat().isAgentOpCheckDailyEnabled());
+        acdExtServiceLevelDailyHandler.setEnabled(properties.getAcdStat().isExtServiceLevelDailyEnabled());
+        acdExtServiceLevelDailyHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
+        acdExtServiceLevelPart15MinHandler.setEnabled(properties.getAcdStat().isExtServiceLevel15minEnabled());
+        acdExtServiceLevelPart15MinHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
+        acdExtServiceLevelPart30MinHandler.setEnabled(properties.getAcdStat().isExtServiceLevel30minEnabled());
+        acdExtServiceLevelPart30MinHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
+        acdExtServiceLevelPartHourHandler.setEnabled(properties.getAcdStat().isExtServiceLevelHourEnabled());
+        acdExtServiceLevelPartHourHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
+
+        if (!CollectionUtils.isEmpty(properties.getAcdStat().getServiceLevelTypeEnums())) {
+            properties.getAcdStat().getServiceLevelTypeEnums().sort(Comparator.comparingInt(ServiceLevelTypeEnum::getServiceLevel));
+        }
 
         /// 事件写入mongodb
         MongoProcessor mongoProcessor = beanFactory.getBean(MongoProcessor.class);
@@ -137,6 +167,11 @@ public class DefaultDataServiceConfiguration {
                     .handler(acdAgentOpStatPart15MinHandler)
                     .handler(acdAgentOpStatPart30MinHandler)
                     .handler(acdAgentOpStatPartHourHandler)
+                    .handler(acdAgentOpCheckDailyByShiftHandler)
+                    .handler(acdExtServiceLevelDailyHandler)
+                    .handler(acdExtServiceLevelPart15MinHandler)
+                    .handler(acdExtServiceLevelPart30MinHandler)
+                    .handler(acdExtServiceLevelPartHourHandler)
                     .end()
                 .processor(mongoProcessor)
                     .mq(properties.getMq().trans())

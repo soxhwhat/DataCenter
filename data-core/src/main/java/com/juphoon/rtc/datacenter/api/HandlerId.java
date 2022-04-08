@@ -63,6 +63,31 @@ public enum HandlerId {
      */
     AcdAgentOpStatDailyHandler("acdAgentOpStatDailyHandler", "坐席日汇总handler"),
 
+    /**
+     * 坐席签入签出日汇总handler
+     */
+    AcdAgentOpCheckDailyByShiftHandler("acdAgentOpCheckDailyByShiftHandler", "坐席签入签出按班次日汇总handler"),
+
+    /**
+     * 接通量日汇总handler
+     */
+    AcdExtServiceLevelDailyHandler("acdExtServiceLevelDailyHandler", "接通量日汇总handler"),
+
+    /**
+     * 接通量15分钟汇总handler
+     */
+    AcdExtServiceLevelPart15MinHandler("acdExtServiceLevelPart15MinHandler", "接通量15分钟汇总handler"),
+
+    /**
+     * 接通量30分钟汇总handler
+     */
+    AcdExtServiceLevelPart30MinHandler("acdExtServiceLevelPart30MinHandler", "接通量30分钟汇总handler"),
+
+    /**
+     * 接通量小时汇总handler
+     */
+    AcdExtServiceLevelPartHourHandler("acdExtServiceLevelPartHourHandler", "接通量小时汇总handler"),
+
     /// 赞同
 
     /**

@@ -47,22 +47,7 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
      * @param event  event
      */
     public void fromEvent(Event event) {
-        int length = 32;
-        if (event.extStatus() < 0) {
-            throwException("extStatus[" + event.extStatus() + "] < 0");
-        }
-        if (StringUtils.isEmpty(event.agentId()) || event.agentId().length() > (length + length)) {
-            throwException("agentId[" + event.agentId() + "] is empty or length > " + (length + length));
-        }
-        if (StringUtils.hasText(event.team()) && event.team().length() > length) {
-            throwException("team[" + event.team() + "].length > " + length);
-        }
-        if (StringUtils.isEmpty(event.shift()) || event.shift().length() > length) {
-            throwException("shift[" + event.shift() + "] is empty or length > " + length);
-        }
-        if (StringUtils.hasText(event.skill()) && event.skill().length() > length) {
-            throwException("skill[" + event.skill() + "].length > " + length);
-        }
+        commonCheckParam(event);
         this.setDomainId(event.domainId());
         this.setAppId(event.appId());
         this.setEventType(event.eventType());
@@ -73,6 +58,25 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
         this.setTeam(event.team());
         this.setShift(event.shift());
         this.setSkill(event.skill());
+    }
+
+    protected void commonCheckParam(Event event) {
+        int length = 32;
+        if (event.extStatus() < 0) {
+            throwException("extStatus[" + event.extStatus() + "] < 0");
+        }
+        if (StringUtils.hasText(event.skill()) && event.skill().length() > length) {
+            throwException("skill[" + event.skill() + "].length > " + length);
+        }
+        if (StringUtils.isEmpty(event.agentId()) || event.agentId().length() > (length + length)) {
+            throwException("agentId[" + event.agentId() + "] is empty or length > " + (length + length));
+        }
+        if (StringUtils.hasText(event.team()) && event.team().length() > length) {
+            throwException("team[" + event.team() + "].length > " + length);
+        }
+        if (StringUtils.isEmpty(event.shift()) || event.shift().length() > length) {
+            throwException("shift[" + event.shift() + "] is empty or length > " + length);
+        }
     }
 
 }

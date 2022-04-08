@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpSignDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpSignDailyPO">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpCheckDailyMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
     <!--@mbg.generated-->
-    <!--@Table jrtc_acd_agentop_sign_daily-->
+    <!--@Table jrtc_acd_agentop_check_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
@@ -13,40 +13,39 @@
     <result column="agent_id" jdbcType="VARCHAR" property="agentId" />
     <result column="shift" jdbcType="VARCHAR" property="shift" />
     <result column="team" jdbcType="VARCHAR" property="team" />
-    <result column="first_login" jdbcType="BIGINT" property="firstLogin" />
-    <result column="last_logout" jdbcType="BIGINT" property="lastLogout" />
-    <result column="first_sign_in" jdbcType="BIGINT" property="firstSignIn" />
-    <result column="last_sign_out" jdbcType="BIGINT" property="lastSignOut" />
+    <result column="first_check_in" jdbcType="BIGINT" property="firstCheckIn" />
+    <result column="last_check_in" jdbcType="BIGINT" property="lastCheckIn" />
+    <result column="last_check_out" jdbcType="BIGINT" property="lastCheckOut" />
     <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, gmt_created, gmt_modified, domain_id, app_id, stat_time, agent_id, shift, team,
-    first_login, last_logout, first_sign_in, last_sign_out, unique_key
+    first_check_in, last_check_in, last_check_out, unique_key
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
-    from jrtc_acd_agentop_sign_daily
+    from jrtc_acd_agentop_check_daily
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpSignDailyPO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into jrtc_acd_agentop_sign_daily (gmt_created, gmt_modified, domain_id,
+    insert into jrtc_acd_agentop_check_daily (gmt_created, gmt_modified, domain_id,
       app_id, stat_time, agent_id,
-      shift, team, first_login,
-      last_logout, first_sign_in, last_sign_out,
-      unique_key)
+      shift, team, first_check_in,
+      last_check_in, last_check_out, unique_key
+      )
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER},
       #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=BIGINT}, #{agentId,jdbcType=VARCHAR},
-      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{firstLogin,jdbcType=BIGINT},
-      #{lastLogout,jdbcType=BIGINT}, #{firstSignIn,jdbcType=BIGINT}, #{lastSignOut,jdbcType=BIGINT},
-      #{uniqueKey,jdbcType=VARCHAR})
+      #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{firstCheckIn,jdbcType=BIGINT},
+      #{lastCheckIn,jdbcType=BIGINT}, #{lastCheckOut,jdbcType=BIGINT}, #{uniqueKey,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpSignDailyPO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into jrtc_acd_agentop_sign_daily
+    insert into jrtc_acd_agentop_check_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="gmtCreated != null">
         gmt_created,
@@ -72,17 +71,14 @@
       <if test="team != null">
         team,
       </if>
-      <if test="firstLogin != null">
-        first_login,
+      <if test="firstCheckIn != null">
+        first_check_in,
       </if>
-      <if test="lastLogout != null">
-        last_logout,
+      <if test="lastCheckIn != null">
+        last_check_in,
       </if>
-      <if test="firstSignIn != null">
-        first_sign_in,
-      </if>
-      <if test="lastSignOut != null">
-        last_sign_out,
+      <if test="lastCheckOut != null">
+        last_check_out,
       </if>
       <if test="uniqueKey != null">
         unique_key,
@@ -113,26 +109,23 @@
       <if test="team != null">
         #{team,jdbcType=VARCHAR},
       </if>
-      <if test="firstLogin != null">
-        #{firstLogin,jdbcType=BIGINT},
+      <if test="firstCheckIn != null">
+        #{firstCheckIn,jdbcType=BIGINT},
       </if>
-      <if test="lastLogout != null">
-        #{lastLogout,jdbcType=BIGINT},
+      <if test="lastCheckIn != null">
+        #{lastCheckIn,jdbcType=BIGINT},
       </if>
-      <if test="firstSignIn != null">
-        #{firstSignIn,jdbcType=BIGINT},
-      </if>
-      <if test="lastSignOut != null">
-        #{lastSignOut,jdbcType=BIGINT},
+      <if test="lastCheckOut != null">
+        #{lastCheckOut,jdbcType=BIGINT},
       </if>
       <if test="uniqueKey != null">
         #{uniqueKey,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpSignDailyPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
     <!--@mbg.generated-->
-    update jrtc_acd_agentop_sign_daily
+    update jrtc_acd_agentop_check_daily
     <set>
       <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -158,17 +151,14 @@
       <if test="team != null">
         team = #{team,jdbcType=VARCHAR},
       </if>
-      <if test="firstLogin != null">
-        first_login = #{firstLogin,jdbcType=BIGINT},
+      <if test="firstCheckIn != null">
+        first_check_in = #{firstCheckIn,jdbcType=BIGINT},
       </if>
-      <if test="lastLogout != null">
-        last_logout = #{lastLogout,jdbcType=BIGINT},
+      <if test="lastCheckIn != null">
+        last_check_in = #{lastCheckIn,jdbcType=BIGINT},
       </if>
-      <if test="firstSignIn != null">
-        first_sign_in = #{firstSignIn,jdbcType=BIGINT},
-      </if>
-      <if test="lastSignOut != null">
-        last_sign_out = #{lastSignOut,jdbcType=BIGINT},
+      <if test="lastCheckOut != null">
+        last_check_out = #{lastCheckOut,jdbcType=BIGINT},
       </if>
       <if test="uniqueKey != null">
         unique_key = #{uniqueKey,jdbcType=VARCHAR},
@@ -176,9 +166,9 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpSignDailyPO">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
     <!--@mbg.generated-->
-    update jrtc_acd_agentop_sign_daily
+    update jrtc_acd_agentop_check_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       domain_id = #{domainId,jdbcType=INTEGER},
@@ -187,11 +177,48 @@
       agent_id = #{agentId,jdbcType=VARCHAR},
       shift = #{shift,jdbcType=VARCHAR},
       team = #{team,jdbcType=VARCHAR},
-      first_login = #{firstLogin,jdbcType=BIGINT},
-      last_logout = #{lastLogout,jdbcType=BIGINT},
-      first_sign_in = #{firstSignIn,jdbcType=BIGINT},
-      last_sign_out = #{lastSignOut,jdbcType=BIGINT},
+      first_check_in = #{firstCheckIn,jdbcType=BIGINT},
+      last_check_in = #{lastCheckIn,jdbcType=BIGINT},
+      last_check_out = #{lastCheckOut,jdbcType=BIGINT},
       unique_key = #{uniqueKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateLastCheckByUniqueKey">
+    update jrtc_acd_agentop_check_daily
+    <set>
+      <if test="lastCheckIn != null">
+        last_check_in = #{lastCheckIn,jdbcType=BIGINT},
+      </if>
+      <if test="lastCheckOut != null">
+        last_check_out = #{lastCheckOut,jdbcType=BIGINT},
+      </if>
+    </set>
+    where unique_key = #{uniqueKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateFirstCheckByUniqueKey">
+    update jrtc_acd_agentop_check_daily
+    <set>
+      <if test="firstCheckIn != null">
+        first_check_in = #{firstCheckIn,jdbcType=BIGINT},
+      </if>
+      <if test="lastCheckIn != null">
+        last_check_in = #{lastCheckIn,jdbcType=BIGINT},
+      </if>
+    </set>
+    where unique_key = #{uniqueKey,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByUniqueKey" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from jrtc_acd_agentop_check_daily
+    where unique_key = #{uniqueKey,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByShiftAndAgentId" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from jrtc_acd_agentop_check_daily
+    where shift = #{shift,jdbcType=VARCHAR} and agent_id = #{agentId,jdbcType=VARCHAR}
+  </select>
 </mapper>

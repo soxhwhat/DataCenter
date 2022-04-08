@@ -6,29 +6,26 @@ import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
- * 坐席时段报表
+ * 时间内接通量时段报表
  *
  * @author Yuan
  */
 @Getter
 @Setter
 @ToString
-public class AcdAgentOpStatPartPO extends AcdAgentOpStatPO {
+public class AcdExtServiceLevelPartPO extends AcdExtServiceLevelPO {
 
     /**
-     * 汇总类型(15分钟、1小时等)
-     */
+    * 汇总类型(15分钟、1小时等)
+    */
     private Byte statType;
 
     @Override
     public String getUniqueKey() {
         if (null == super.getUniqueKey()) {
             String str = getStatTime() + "|" + getStatType() +
-                    "|" + getAgentId() + "|" + getEventType() +
-                    "|" + getEventNum() + "|" + getEndType() +
                     "|" + getDomainId() + "|" + getAppId() +
-                    "|" + getShift() + "|" + getTeam() +
-                    "|" + getSkill() + "|" + getExtStatus();
+                    "|" + getSkill() + "|" + getServiceLevel();
             super.setUniqueKey(DigestUtils.md5Hex(str));
         }
         return super.getUniqueKey();

@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.entity.po.acdstat;
 
-import com.juphoon.rtc.datacenter.utils.Md5Util;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

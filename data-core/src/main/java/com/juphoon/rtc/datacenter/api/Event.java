@@ -192,9 +192,17 @@ public class Event {
      * @return
      */
     public long endTimestamp() {
-        return (long) params.get("beginTimestamp");
+        return (long) params.get("endTimestamp");
     }
 
+    /**
+     * 排队开始时间，用于求服务水平
+     *
+     * @return
+     */
+    public long incomingTimestamp() {
+        return (long) params.getOrDefault("incomingTimestamp", 0L);
+    }
 
     public int domainId() {
         return domainId;

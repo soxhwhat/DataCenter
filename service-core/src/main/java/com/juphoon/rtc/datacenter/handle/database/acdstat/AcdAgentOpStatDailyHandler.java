@@ -9,7 +9,6 @@ import com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatDailyMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +42,6 @@ public class AcdAgentOpStatDailyHandler extends AbstractAcdStatHandler<AcdAgentO
 
     @Override
     public AcdAgentOpStatDailyPO poFromEvent(Event event) {
-        // TODO 参数校验
         AcdAgentOpStatDailyPO po = new AcdAgentOpStatDailyPO();
         po.fromEvent(event);
         return po;
@@ -63,7 +61,7 @@ public class AcdAgentOpStatDailyHandler extends AbstractAcdStatHandler<AcdAgentO
     }
 
     @Override
-    public int insertSelective(@Validated AcdAgentOpStatDailyPO po) {
+    public int insertSelective(AcdAgentOpStatDailyPO po) {
         return acdAgentOpStatDailyMapper.insertSelective(po);
     }
 

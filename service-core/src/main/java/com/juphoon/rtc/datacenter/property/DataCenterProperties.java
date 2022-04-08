@@ -1,12 +1,17 @@
 package com.juphoon.rtc.datacenter.property;
 
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
+import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_20SEC;
+import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_30SEC;
 
 /**
  * <p>dataCenter默认配置</p>
@@ -96,6 +101,37 @@ public class DataCenterProperties {
          * 天坐席统计
          */
         private boolean agentOpDailyEnabled = true;
+
+        /**
+         * 天坐席签入签出记录
+         */
+        private boolean agentOpCheckDailyEnabled = true;
+
+        /**
+         * 天接通量统计
+         */
+        private boolean extServiceLevelDailyEnabled = false;
+
+        /**
+         * 15分钟接通量统计
+         */
+        private boolean extServiceLevel15minEnabled = false;
+
+        /**
+         * 30分钟接通量统计
+         */
+        private boolean extServiceLevel30minEnabled = false;
+
+        /**
+         * 小时接通量统计
+         */
+        private boolean extServiceLevelHourEnabled = false;
+
+        /**
+         * 默认20s,30s服务水平
+         */
+        private List<ServiceLevelTypeEnum> serviceLevelTypeEnums = Arrays.asList(SERVICE_LEVEL_20SEC, SERVICE_LEVEL_30SEC);
+
     }
     //iron.datacenter.acd-stat.enabled=true
 
