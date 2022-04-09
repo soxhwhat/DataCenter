@@ -6,11 +6,11 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.2.3</version>
+        <version>2202.3.3</version>
     </parent>
 
     <artifactId>demo</artifactId>
-    <version>2202.2.3</version>
+    <version>2202.3.3</version>
 
     <dependencies>
 <!--        <dependency>-->
