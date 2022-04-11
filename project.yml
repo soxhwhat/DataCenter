@@ -1,6 +1,7 @@
 packages:
   - dist/product
   - dist/demo
+  - dist/e01
 deploys:
   - data-core
   - service-core

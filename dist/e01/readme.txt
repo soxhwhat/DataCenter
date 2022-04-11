@@ -1,0 +1,1 @@
+cube-starter 版本不同，北农商基于r21c03，因此只能使用3.X版本的cube-starter
