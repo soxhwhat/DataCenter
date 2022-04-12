@@ -19,13 +19,13 @@
     <result column="end_type" jdbcType="INTEGER" property="endType" />
     <result column="duration" jdbcType="BIGINT" property="duration" />
     <result column="cnt" jdbcType="INTEGER" property="cnt" />
-    <result column="ext_status" jdbcType="INTEGER" property="extStatus" />
+    <result column="sub_state" jdbcType="INTEGER" property="subState" />
     <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, gmt_created, gmt_modified, domain_id, app_id, stat_time, agent_id, shift, team,
-    skill, event_type, event_num, end_type, duration, cnt, ext_status, unique_key
+    skill, event_type, event_num, end_type, duration, cnt, sub_state, unique_key
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -40,13 +40,13 @@
       app_id, stat_time, agent_id,
       shift, team, skill,
       event_type, event_num, end_type,
-      duration, cnt, ext_status,
+      duration, cnt, sub_state,
       unique_key)
     values (#{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{domainId,jdbcType=INTEGER},
       #{appId,jdbcType=INTEGER}, #{statTime,jdbcType=BIGINT}, #{agentId,jdbcType=VARCHAR},
       #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR},
       #{eventType,jdbcType=INTEGER}, #{eventNum,jdbcType=INTEGER}, #{endType,jdbcType=INTEGER},
-      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{extStatus,jdbcType=INTEGER},
+      #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{subState,jdbcType=INTEGER},
       #{uniqueKey,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
@@ -95,8 +95,8 @@
       <if test="cnt != null">
         cnt,
       </if>
-      <if test="extStatus != null">
-        ext_status,
+      <if test="subState != null">
+        sub_state,
       </if>
       <if test="uniqueKey != null">
         unique_key,
@@ -145,8 +145,8 @@
       <if test="cnt != null">
         #{cnt,jdbcType=INTEGER},
       </if>
-      <if test="extStatus != null">
-        #{extStatus,jdbcType=INTEGER},
+      <if test="subState != null">
+        #{subState,jdbcType=INTEGER},
       </if>
       <if test="uniqueKey != null">
         #{uniqueKey,jdbcType=VARCHAR},
@@ -199,8 +199,8 @@
       <if test="cnt != null">
         cnt = #{cnt,jdbcType=INTEGER},
       </if>
-      <if test="extStatus != null">
-        ext_status = #{extStatus,jdbcType=INTEGER},
+      <if test="subState != null">
+        sub_state = #{subState,jdbcType=INTEGER},
       </if>
       <if test="uniqueKey != null">
         unique_key = #{uniqueKey,jdbcType=VARCHAR},
@@ -225,7 +225,7 @@
       end_type = #{endType,jdbcType=INTEGER},
       duration = #{duration,jdbcType=BIGINT},
       cnt = #{cnt,jdbcType=INTEGER},
-      ext_status = #{extStatus,jdbcType=INTEGER},
+      sub_state = #{subState,jdbcType=INTEGER},
       unique_key = #{uniqueKey,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

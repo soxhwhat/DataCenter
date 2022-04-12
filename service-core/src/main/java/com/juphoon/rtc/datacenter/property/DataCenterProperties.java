@@ -105,7 +105,7 @@ public class DataCenterProperties {
         /**
          * 天坐席签入签出记录
          */
-        private boolean agentOpCheckDailyEnabled = true;
+        private boolean agentOpCheckinDailyEnabled = true;
 
         /**
          * 天接通量统计

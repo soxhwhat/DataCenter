@@ -39,7 +39,7 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
     /**
      * 扩展状态(示忙子状态小休等)
      */
-    private Integer extStatus;
+    private Integer subState;
 
     /**
      * 用event初始化部分字段
@@ -54,7 +54,7 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
         this.setEventNum(event.eventNumber());
         this.setEndType(event.endType());
         this.setAgentId(event.agentId());
-        this.setExtStatus(event.extStatus());
+        this.setSubState(event.subState());
         this.setTeam(event.team());
         this.setShift(event.shift());
         this.setSkill(event.skill());
@@ -62,8 +62,8 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
 
     protected void commonCheckParam(Event event) {
         int length = 32;
-        if (event.extStatus() < 0) {
-            throwException("extStatus[" + event.extStatus() + "] < 0");
+        if (event.subState() < 0) {
+            throwException("subState[" + event.subState() + "] < 0");
         }
         if (StringUtils.hasText(event.skill()) && event.skill().length() > length) {
             throwException("skill[" + event.skill() + "].length > " + length);

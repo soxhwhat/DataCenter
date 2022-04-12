@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpCheckDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpCheckinDailyMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO">
     <!--@mbg.generated-->
-    <!--@Table JRTC_ACD_AGENTOP_CHECK_DAILY-->
+    <!--@Table JRTC_ACD_AGENTOP_CHECKIN_DAILY-->
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="GMT_CREATED" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="GMT_MODIFIED" jdbcType="TIMESTAMP" property="gmtModified" />
@@ -13,39 +13,39 @@
     <result column="AGENT_ID" jdbcType="VARCHAR" property="agentId" />
     <result column="SHIFT" jdbcType="VARCHAR" property="shift" />
     <result column="TEAM" jdbcType="VARCHAR" property="team" />
-    <result column="FIRST_CHECK_IN" jdbcType="DECIMAL" property="firstCheckIn" />
-    <result column="LAST_CHECK_IN" jdbcType="DECIMAL" property="lastCheckIn" />
-    <result column="LAST_CHECK_OUT" jdbcType="DECIMAL" property="lastCheckOut" />
+    <result column="FIRST_CHECKIN" jdbcType="DECIMAL" property="firstCheckin" />
+    <result column="LAST_CHECKIN" jdbcType="DECIMAL" property="lastCheckin" />
+    <result column="LAST_CHECKOUT" jdbcType="DECIMAL" property="lastCheckout" />
     <result column="UNIQUE_KEY" jdbcType="VARCHAR" property="uniqueKey" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     ID, GMT_CREATED, GMT_MODIFIED, DOMAIN_ID, APP_ID, STAT_TIME, AGENT_ID, SHIFT, TEAM, 
-    FIRST_CHECK_IN, LAST_CHECK_IN, LAST_CHECK_OUT, UNIQUE_KEY
+    FIRST_CHECKIN, LAST_CHECKIN, LAST_CHECKOUT, UNIQUE_KEY
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
-    from JRTC_ACD_AGENTOP_CHECK_DAILY
+    from JRTC_ACD_AGENTOP_CHECKIN_DAILY
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
+  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO">
     <!--@mbg.generated-->
-    insert into JRTC_ACD_AGENTOP_CHECK_DAILY (ID, GMT_CREATED, GMT_MODIFIED,
+    insert into JRTC_ACD_AGENTOP_CHECKIN_DAILY (ID, GMT_CREATED, GMT_MODIFIED,
       DOMAIN_ID, APP_ID, STAT_TIME, 
       AGENT_ID, SHIFT, TEAM, 
-      FIRST_CHECK_IN, LAST_CHECK_IN, LAST_CHECK_OUT,
+      FIRST_CHECKIN, LAST_CHECKIN, LAST_CHECKOUT,
       UNIQUE_KEY)
     values (#{id,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
       #{domainId,jdbcType=DECIMAL}, #{appId,jdbcType=DECIMAL}, #{statTime,jdbcType=DECIMAL},
       #{agentId,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{team,jdbcType=VARCHAR},
-      #{firstCheckIn,jdbcType=DECIMAL}, #{lastCheckIn,jdbcType=DECIMAL}, #{lastCheckOut,jdbcType=DECIMAL},
+      #{firstCheckin,jdbcType=DECIMAL}, #{lastCheckin,jdbcType=DECIMAL}, #{lastCheckout,jdbcType=DECIMAL},
       #{uniqueKey,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
+  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO">
     <!--@mbg.generated-->
-    insert into JRTC_ACD_AGENTOP_CHECK_DAILY
+    insert into JRTC_ACD_AGENTOP_CHECKIN_DAILY
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
@@ -74,14 +74,14 @@
       <if test="team != null">
         TEAM,
       </if>
-      <if test="firstCheckIn != null">
-        FIRST_CHECK_IN,
+      <if test="firstCheckin != null">
+        FIRST_CHECKIN,
       </if>
-      <if test="lastCheckIn != null">
-        LAST_CHECK_IN,
+      <if test="lastCheckin != null">
+        LAST_CHECKIN,
       </if>
-      <if test="lastCheckOut != null">
-        LAST_CHECK_OUT,
+      <if test="lastCheckout != null">
+        LAST_CHECKOUT,
       </if>
       <if test="uniqueKey != null">
         UNIQUE_KEY,
@@ -115,23 +115,23 @@
       <if test="team != null">
         #{team,jdbcType=VARCHAR},
       </if>
-      <if test="firstCheckIn != null">
-        #{firstCheckIn,jdbcType=DECIMAL},
+      <if test="firstCheckin != null">
+        #{firstCheckin,jdbcType=DECIMAL},
       </if>
-      <if test="lastCheckIn != null">
-        #{lastCheckIn,jdbcType=DECIMAL},
+      <if test="lastCheckin != null">
+        #{lastCheckin,jdbcType=DECIMAL},
       </if>
-      <if test="lastCheckOut != null">
-        #{lastCheckOut,jdbcType=DECIMAL},
+      <if test="lastCheckout != null">
+        #{lastCheckout,jdbcType=DECIMAL},
       </if>
       <if test="uniqueKey != null">
         #{uniqueKey,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO">
     <!--@mbg.generated-->
-    update JRTC_ACD_AGENTOP_CHECK_DAILY
+    update JRTC_ACD_AGENTOP_CHECKIN_DAILY
     <set>
       <if test="gmtCreated != null">
         GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -157,14 +157,14 @@
       <if test="team != null">
         TEAM = #{team,jdbcType=VARCHAR},
       </if>
-      <if test="firstCheckIn != null">
-        FIRST_CHECK_IN = #{firstCheckIn,jdbcType=DECIMAL},
+      <if test="firstCheckin != null">
+        FIRST_CHECKIN = #{firstCheckin,jdbcType=DECIMAL},
       </if>
-      <if test="lastCheckIn != null">
-        LAST_CHECK_IN = #{lastCheckIn,jdbcType=DECIMAL},
+      <if test="lastCheckin != null">
+        LAST_CHECKIN = #{lastCheckin,jdbcType=DECIMAL},
       </if>
-      <if test="lastCheckOut != null">
-        LAST_CHECK_OUT = #{lastCheckOut,jdbcType=DECIMAL},
+      <if test="lastCheckout != null">
+        LAST_CHECKOUT = #{lastCheckout,jdbcType=DECIMAL},
       </if>
       <if test="uniqueKey != null">
         UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR},
@@ -172,9 +172,9 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO">
     <!--@mbg.generated-->
-    update JRTC_ACD_AGENTOP_CHECK_DAILY
+    update JRTC_ACD_AGENTOP_CHECKIN_DAILY
     set GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       DOMAIN_ID = #{domainId,jdbcType=DECIMAL},
@@ -183,33 +183,33 @@
       AGENT_ID = #{agentId,jdbcType=VARCHAR},
       SHIFT = #{shift,jdbcType=VARCHAR},
       TEAM = #{team,jdbcType=VARCHAR},
-      FIRST_CHECK_IN = #{firstCheckIn,jdbcType=DECIMAL},
-      LAST_CHECK_IN = #{lastCheckIn,jdbcType=DECIMAL},
-      LAST_CHECK_OUT = #{lastCheckOut,jdbcType=DECIMAL},
+      FIRST_CHECKIN = #{firstCheckin,jdbcType=DECIMAL},
+      LAST_CHECKIN = #{lastCheckin,jdbcType=DECIMAL},
+      LAST_CHECKOUT = #{lastCheckout,jdbcType=DECIMAL},
       UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateLastCheckByUniqueKey">
-    update JRTC_ACD_AGENTOP_CHECK_DAILY
+    update JRTC_ACD_AGENTOP_CHECKIN_DAILY
     <set>
-      <if test="lastCheckIn != null">
-        LAST_CHECK_IN = #{lastCheckIn,jdbcType=BIGINT},
+      <if test="lastCheckin != null">
+        LAST_CHECKIN = #{lastCheckin,jdbcType=BIGINT},
       </if>
-      <if test="lastCheckOut != null">
-        LAST_CHECK_OUT = #{lastCheckOut,jdbcType=BIGINT},
+      <if test="lastCheckout != null">
+        LAST_CHECKOUT = #{lastCheckout,jdbcType=BIGINT},
       </if>
         GMT_MODIFIED = CURRENT_TIMESTAMP
     </set>
     where UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
   </update>
   <update id="updateFirstCheckByUniqueKey">
-    update JRTC_ACD_AGENTOP_CHECK_DAILY
+    update JRTC_ACD_AGENTOP_CHECKIN_DAILY
     <set>
-      <if test="firstCheckIn != null">
-        FIRST_CHECK_IN = #{firstCheckIn,jdbcType=BIGINT},
+      <if test="firstCheckin != null">
+        FIRST_CHECKIN = #{firstCheckin,jdbcType=BIGINT},
       </if>
-      <if test="lastCheckIn != null">
-        LAST_CHECK_IN = #{lastCheckIn,jdbcType=BIGINT},
+      <if test="lastCheckin != null">
+        LAST_CHECKIN = #{lastCheckin,jdbcType=BIGINT},
       </if>
         GMT_MODIFIED = CURRENT_TIMESTAMP
     </set>
@@ -219,14 +219,14 @@
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
-    from JRTC_ACD_AGENTOP_CHECK_DAILY
+    from JRTC_ACD_AGENTOP_CHECKIN_DAILY
     where UNIQUE_KEY = #{uniqueKey,jdbcType=VARCHAR}
   </select>
   <select id="selectByShiftAndAgentId" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
-    from JRTC_ACD_AGENTOP_CHECK_DAILY
+    from JRTC_ACD_AGENTOP_CHECKIN_DAILY
     where SHIFT = #{shift,jdbcType=VARCHAR} and AGENT_ID = #{agentId,jdbcType=VARCHAR}
   </select>
 </mapper>

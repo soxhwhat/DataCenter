@@ -23,7 +23,7 @@ public class AcdAgentOpStatDailyPO extends AcdAgentOpStatPO {
                     "|" + getEndType() + "|" + getDomainId() +
                     "|" + getAppId() + "|" + getShift() +
                     "|" + getTeam() + "|" + getSkill() +
-                    "|" + getExtStatus();
+                    "|" + getSubState();
             super.setUniqueKey(DigestUtils.md5Hex(str));
         }
         return super.getUniqueKey();

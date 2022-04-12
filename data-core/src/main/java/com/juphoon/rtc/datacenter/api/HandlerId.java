@@ -66,7 +66,7 @@ public enum HandlerId {
     /**
      * 坐席签入签出日汇总handler
      */
-    AcdAgentOpCheckDailyByShiftHandler("acdAgentOpCheckDailyByShiftHandler", "坐席签入签出按班次日汇总handler"),
+    AcdAgentOpCheckinDailyByShiftHandler("acdAgentOpCheckinDailyByShiftHandler", "坐席签入签出按班次日汇总handler"),
 
     /**
      * 接通量日汇总handler

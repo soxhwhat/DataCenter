@@ -241,8 +241,8 @@ public class Event {
         return (String) params.getOrDefault("agentId", "");
     }
 
-    public int extStatus() {
-        return (int) params.getOrDefault("extStatus", 0);
+    public int subState() {
+        return (int) params.getOrDefault("subState", 0);
     }
 
     private static String defaultShirt() {

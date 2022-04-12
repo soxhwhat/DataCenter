@@ -1,12 +1,12 @@
 package com.juphoon.rtc.datacenter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO;
+import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * <p>jrtc_acd_agentop_check_daily表的mapper类</p>
+ * <p>jrtc_acd_agentop_checkin_daily表的mapper类</p>
  * <p>描述请遵循 javadoc 规范</p>
  *
  * @author wenjun.yuan@juphoon.com
@@ -15,56 +15,56 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 @SuppressWarnings("PMD")
-public interface AcdAgentOpCheckDailyMapper extends BaseMapper<AcdAgentOpCheckDailyPO> {
+public interface AcdAgentOpCheckinDailyMapper extends BaseMapper<AcdAgentOpCheckinDailyPO> {
     /**
      * insert record to table selective
      * @param record the record
      * @return insert count
      */
-    int insertSelective(AcdAgentOpCheckDailyPO record);
+    int insertSelective(AcdAgentOpCheckinDailyPO record);
 
     /**
      * select by primary key
      * @param id primary key
      * @return object by primary key
      */
-    AcdAgentOpCheckDailyPO selectByPrimaryKey(Long id);
+    AcdAgentOpCheckinDailyPO selectByPrimaryKey(Long id);
 
     /**
      * update record selective
      * @param record the updated record
      * @return update count
      */
-    int updateByPrimaryKeySelective(AcdAgentOpCheckDailyPO record);
+    int updateByPrimaryKeySelective(AcdAgentOpCheckinDailyPO record);
 
     /**
      * update record
      * @param record the updated record
      * @return update count
      */
-    int updateByPrimaryKey(AcdAgentOpCheckDailyPO record);
+    int updateByPrimaryKey(AcdAgentOpCheckinDailyPO record);
 
     /**
      * 根据uniqueKey更新最后登录登出时间
      * @param uniqueKey
-     * @param lastCheckIn
-     * @param lastCheckOut
+     * @param lastCheckin
+     * @param lastCheckout
      * @return
      */
     int updateLastCheckByUniqueKey(@Param("uniqueKey") String uniqueKey,
-                                   @Param("lastCheckIn") Long lastCheckIn,
-                                   @Param("lastCheckOut") Long lastCheckOut);
+                                   @Param("lastCheckin") Long lastCheckin,
+                                   @Param("lastCheckout") Long lastCheckout);
 
     /**
      * 根据uniqueKey更新首次登录时间
      * @param uniqueKey
-     * @param firstCheckIn
-     * @param lastCheckIn
+     * @param firstCheckin
+     * @param lastCheckin
      * @return
      */
     int updateFirstCheckByUniqueKey(@Param("uniqueKey") String uniqueKey,
-                                   @Param("firstCheckIn") Long firstCheckIn,
-                                   @Param("lastCheckIn") Long lastCheckIn);
+                                   @Param("firstCheckin") Long firstCheckin,
+                                   @Param("lastCheckin") Long lastCheckin);
 
     /**
      * 根据uniqueKey查询
@@ -72,7 +72,7 @@ public interface AcdAgentOpCheckDailyMapper extends BaseMapper<AcdAgentOpCheckDa
      * @param uniqueKey
      * @return
      */
-    AcdAgentOpCheckDailyPO selectByUniqueKey(@Param("uniqueKey") String uniqueKey);
+    AcdAgentOpCheckinDailyPO selectByUniqueKey(@Param("uniqueKey") String uniqueKey);
 
     /**
      * 根据shift和agentId查询
@@ -81,5 +81,5 @@ public interface AcdAgentOpCheckDailyMapper extends BaseMapper<AcdAgentOpCheckDa
      * @param agentId
      * @return
      */
-    AcdAgentOpCheckDailyPO selectByShiftAndAgentId(@Param("shift") String shift, @Param("agentId") String agentId);
+    AcdAgentOpCheckinDailyPO selectByShiftAndAgentId(@Param("shift") String shift, @Param("agentId") String agentId);
 }

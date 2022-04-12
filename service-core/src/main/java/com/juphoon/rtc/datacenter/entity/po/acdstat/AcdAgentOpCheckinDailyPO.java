@@ -15,22 +15,22 @@ import org.apache.commons.codec.digest.DigestUtils;
 @Getter
 @Setter
 @ToString
-public class AcdAgentOpCheckDailyPO extends AcdAgentOpStatPO {
+public class AcdAgentOpCheckinDailyPO extends AcdAgentOpStatPO {
 
     /**
      * 首次签入时间戳(毫秒)
      */
-    private Long firstCheckIn;
+    private Long firstCheckin;
 
     /**
      * 最后签入时间戳(毫秒)
      */
-    private Long lastCheckIn;
+    private Long lastCheckin;
 
     /**
      * 最后签出时间戳(毫秒)
      */
-    private Long lastCheckOut;
+    private Long lastCheckout;
 
     /**
      * 用event初始化部分字段

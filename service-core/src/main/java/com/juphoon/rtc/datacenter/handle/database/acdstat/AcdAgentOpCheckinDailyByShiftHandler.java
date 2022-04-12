@@ -1,8 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
 import com.juphoon.rtc.datacenter.api.*;
-import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckDailyPO;
-import com.juphoon.rtc.datacenter.mapper.AcdAgentOpCheckDailyMapper;
+import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO;
+import com.juphoon.rtc.datacenter.mapper.AcdAgentOpCheckinDailyMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,7 +21,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.AGENT_OP_EVENT_CHECK_OUT;
 
 
 /**
- * <p>jrtc_acd_agentop_check_daily表的handler类</p>
+ * <p>jrtc_acd_agentop_checkin_daily表的handler类</p>
  * <p>本handler按照班次进行更新坐席的签入签出时间</p>
  *
  * @author wenjun.yuan@juphoon.com
@@ -30,9 +30,9 @@ import static com.juphoon.rtc.datacenter.api.EventType.AGENT_OP_EVENT_CHECK_OUT;
  */
 @Slf4j
 @Component
-public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<AcdAgentOpCheckDailyPO> {
+public class AcdAgentOpCheckinDailyByShiftHandler extends AbstractAcdStatHandler<AcdAgentOpCheckinDailyPO> {
     @Autowired
-    private AcdAgentOpCheckDailyMapper acdAgentOpCheckDailyMapper;
+    private AcdAgentOpCheckinDailyMapper acdAgentOpCheckinDailyMapper;
 
     @Override
     public StatType statType() {
@@ -41,11 +41,11 @@ public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<A
 
     @Override
     public HandlerId handlerId() {
-        return HandlerId.AcdAgentOpCheckDailyByShiftHandler;
+        return HandlerId.AcdAgentOpCheckinDailyByShiftHandler;
     }
 
     @Override
-    public boolean handle(EventContext ec, AcdAgentOpCheckDailyPO po) {
+    public boolean handle(EventContext ec, AcdAgentOpCheckinDailyPO po) {
         long beginTimestamp = ec.getEvent().beginTimestamp();
         long statTime = LocalDateTime.of(Instant.ofEpochMilli(beginTimestamp).atZone(ZoneOffset.ofHours(8)).toLocalDate(), LocalTime.MIN)
                 .toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
@@ -70,8 +70,8 @@ public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<A
      * @return
      */
     @Override
-    protected void upsert(AcdAgentOpCheckDailyPO commonPo) {
-        AcdAgentOpCheckDailyPO localObj = selectByUnique(commonPo);
+    protected void upsert(AcdAgentOpCheckinDailyPO commonPo) {
+        AcdAgentOpCheckinDailyPO localObj = selectByUnique(commonPo);
         if (null == localObj) {
             // 上锁，保证并发时 确定只有一条数据insert
             synchronized (this) {
@@ -86,19 +86,19 @@ public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<A
                 }
             }
         }
-        if (localObj.getFirstCheckIn() == null && commonPo.getFirstCheckIn() != null) {
-            updateFirstCheckInByUniqueKey(commonPo);
+        if (localObj.getFirstCheckin() == null && commonPo.getFirstCheckin() != null) {
+            updateFirstCheckinByUniqueKey(commonPo);
         } else {
             updateByUniqueKey(commonPo);
         }
     }
 
     @Override
-    protected void tryUpdate(AcdAgentOpCheckDailyPO commonPo) {
-        AcdAgentOpCheckDailyPO localObj = selectByUnique(commonPo);
+    protected void tryUpdate(AcdAgentOpCheckinDailyPO commonPo) {
+        AcdAgentOpCheckinDailyPO localObj = selectByUnique(commonPo);
         if (null != localObj) {
-            if (localObj.getFirstCheckIn() == null) {
-                updateFirstCheckInByUniqueKey(commonPo);
+            if (localObj.getFirstCheckin() == null) {
+                updateFirstCheckinByUniqueKey(commonPo);
             } else {
                 updateByUniqueKey(commonPo);
             }
@@ -109,14 +109,14 @@ public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<A
     }
 
     @Override
-    public AcdAgentOpCheckDailyPO poFromEvent(Event event) {
-        AcdAgentOpCheckDailyPO po = new AcdAgentOpCheckDailyPO();
+    public AcdAgentOpCheckinDailyPO poFromEvent(Event event) {
+        AcdAgentOpCheckinDailyPO po = new AcdAgentOpCheckinDailyPO();
         po.fromEvent(event);
         if (event.getEventType().getNumber().equals(AGENT_OP_EVENT_CHECK_IN.getNumber())) {
-            po.setFirstCheckIn(event.beginTimestamp());
-            po.setLastCheckIn(event.beginTimestamp());
+            po.setFirstCheckin(event.beginTimestamp());
+            po.setLastCheckin(event.beginTimestamp());
         } else if (event.getEventType().getNumber().equals(AGENT_OP_EVENT_CHECK_OUT.getNumber())) {
-            po.setLastCheckOut(event.beginTimestamp());
+            po.setLastCheckout(event.beginTimestamp());
         }
         return po;
     }
@@ -127,21 +127,21 @@ public class AcdAgentOpCheckDailyByShiftHandler extends AbstractAcdStatHandler<A
     }
 
     @Override
-    public AcdAgentOpCheckDailyPO selectByUnique(AcdAgentOpCheckDailyPO po) {
-        return acdAgentOpCheckDailyMapper.selectByShiftAndAgentId(po.getShift(), po.getAgentId());
+    public AcdAgentOpCheckinDailyPO selectByUnique(AcdAgentOpCheckinDailyPO po) {
+        return acdAgentOpCheckinDailyMapper.selectByShiftAndAgentId(po.getShift(), po.getAgentId());
     }
 
     @Override
-    public int insertSelective(AcdAgentOpCheckDailyPO po) {
-        return acdAgentOpCheckDailyMapper.insertSelective(po);
+    public int insertSelective(AcdAgentOpCheckinDailyPO po) {
+        return acdAgentOpCheckinDailyMapper.insertSelective(po);
     }
 
     @Override
-    public void updateByUniqueKey(AcdAgentOpCheckDailyPO po) {
-        acdAgentOpCheckDailyMapper.updateLastCheckByUniqueKey(po.getUniqueKey(), po.getLastCheckIn(), po.getLastCheckOut());
+    public void updateByUniqueKey(AcdAgentOpCheckinDailyPO po) {
+        acdAgentOpCheckinDailyMapper.updateLastCheckByUniqueKey(po.getUniqueKey(), po.getLastCheckin(), po.getLastCheckout());
     }
 
-    public void updateFirstCheckInByUniqueKey(AcdAgentOpCheckDailyPO po) {
-        acdAgentOpCheckDailyMapper.updateFirstCheckByUniqueKey(po.getUniqueKey(), po.getFirstCheckIn(), po.getLastCheckIn());
+    public void updateFirstCheckinByUniqueKey(AcdAgentOpCheckinDailyPO po) {
+        acdAgentOpCheckinDailyMapper.updateFirstCheckByUniqueKey(po.getUniqueKey(), po.getFirstCheckin(), po.getLastCheckin());
     }
 }

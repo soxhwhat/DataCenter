@@ -28,7 +28,7 @@ public class AcdAgentOpStatPartPO extends AcdAgentOpStatPO {
                     "|" + getEventNum() + "|" + getEndType() +
                     "|" + getDomainId() + "|" + getAppId() +
                     "|" + getShift() + "|" + getTeam() +
-                    "|" + getSkill() + "|" + getExtStatus();
+                    "|" + getSkill() + "|" + getSubState();
             super.setUniqueKey(DigestUtils.md5Hex(str));
         }
         return super.getUniqueKey();

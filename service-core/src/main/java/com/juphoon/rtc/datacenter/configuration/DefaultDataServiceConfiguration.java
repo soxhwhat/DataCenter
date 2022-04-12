@@ -72,7 +72,7 @@ public class DefaultDataServiceConfiguration {
     private AcdEventMongoHandler acdEventMongoHandler;
 
     @Autowired
-    private AcdAgentOpCheckDailyByShiftHandler acdAgentOpCheckDailyByShiftHandler;
+    private AcdAgentOpCheckinDailyByShiftHandler acdAgentOpCheckinDailyByShiftHandler;
 
     @Autowired
     private AcdExtServiceLevelDailyHandler acdExtServiceLevelDailyHandler;
@@ -118,7 +118,7 @@ public class DefaultDataServiceConfiguration {
         acdAgentOpStatPart15MinHandler.setEnabled(properties.getAcdStat().isAgentOp15minEnabled());
         acdAgentOpStatPart30MinHandler.setEnabled(properties.getAcdStat().isAgentOp30minEnabled());
         acdAgentOpStatPartHourHandler.setEnabled(properties.getAcdStat().isAgentOpHourEnabled());
-        acdAgentOpCheckDailyByShiftHandler.setEnabled(properties.getAcdStat().isAgentOpCheckDailyEnabled());
+        acdAgentOpCheckinDailyByShiftHandler.setEnabled(properties.getAcdStat().isAgentOpCheckinDailyEnabled());
         acdExtServiceLevelDailyHandler.setEnabled(properties.getAcdStat().isExtServiceLevelDailyEnabled());
         acdExtServiceLevelDailyHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
         acdExtServiceLevelPart15MinHandler.setEnabled(properties.getAcdStat().isExtServiceLevel15minEnabled());
@@ -167,7 +167,7 @@ public class DefaultDataServiceConfiguration {
                     .handler(acdAgentOpStatPart15MinHandler)
                     .handler(acdAgentOpStatPart30MinHandler)
                     .handler(acdAgentOpStatPartHourHandler)
-                    .handler(acdAgentOpCheckDailyByShiftHandler)
+                    .handler(acdAgentOpCheckinDailyByShiftHandler)
                     .handler(acdExtServiceLevelDailyHandler)
                     .handler(acdExtServiceLevelPart15MinHandler)
                     .handler(acdExtServiceLevelPart30MinHandler)
