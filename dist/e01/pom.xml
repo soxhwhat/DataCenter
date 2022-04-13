@@ -12,6 +12,10 @@
     <version>2202.4.3</version>
     <artifactId>jrtcDataCollection-e01</artifactId>
 
+    <properties>
+        <nms.script>nms_3.5</nms.script>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -75,9 +79,9 @@
             <resource>
                 <directory>src/main/resources</directory>
 
-<!--                <excludes>-->
-<!--                    <exclude>*</exclude>-->
-<!--                </excludes>-->
+                <!--                <excludes>-->
+                <!--                    <exclude>*</exclude>-->
+                <!--                </excludes>-->
 
                 <includes>
                     <include>application.yml</include>
