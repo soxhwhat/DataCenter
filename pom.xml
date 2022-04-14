@@ -45,6 +45,7 @@
         <jasypt.version>3.0.2</jasypt.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <findbugs.version>3.0.1</findbugs.version>
+        <jasypt.version>3.0.2</jasypt.version>
 
         <maven-source-plugin.versoin>3.0.1</maven-source-plugin.versoin>
         <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
@@ -132,6 +133,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dom4j</groupId>

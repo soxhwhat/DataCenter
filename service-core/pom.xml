@@ -28,16 +28,6 @@
             <version>1.2.76</version>
         </dependency>
         <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>${cube-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.juphoon.iron.component</groupId>
-            <artifactId>iron-utils</artifactId>
-            <version>${iron-utils.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
