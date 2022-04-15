@@ -90,7 +90,7 @@ public class NoticeEventServerImpl extends Event.NoticeEventServer {
             noticeService.roomNotice(params);
         } catch (java.lang.Exception e) {
             log.warn("e", e);
-            serverCall.throwException(new Exception(e.getMessage()));
+            serverCall.setReason(e.getMessage());
             ret = false;
         }
 

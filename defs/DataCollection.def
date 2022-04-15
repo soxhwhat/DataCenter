@@ -1,0 +1,139 @@
+#include "Types.def"
+module DataCollection{
+
+    enum EventType
+    {
+        kEventTypeRecord = 0,
+    };
+
+    enum RecordEventAction
+    {
+        kRecordEventActionStart = 0,
+        kRecordEventActionStop,
+        kRecordEventActionPause,
+        kRecordEventActionRsume,
+        kRecordEventActionUploading,
+        kRecordEventActionUploaded,
+        kRecordEventActionError,
+    };
+    struct Event
+    {
+            long timestamp;           //时间戳
+            EventType type;              //事件类型,用以区分不同场景
+            int eventNumber;          //事件号： 加入、离开，登录、终端信息上传
+            string uuid;            //唯一id
+            Common.StrVec tags;      //搜索用的标签
+            string params;  //参数,可用以携带会议号,呼叫号或者设备ID，实际内容
+            long domainId;
+            long appId;
+    };
+    vector EventList <Event>;
+    struct Metric
+    {
+        long timestamp;           //时间戳
+        string serviceType;        //服务名
+        string oid;               //服务oid
+        string version;           //版本号
+        Common.StrStrMap params;  //指标值集合，({指标名称：值})
+        long domainId;
+        long appId;
+    };
+    struct Info
+    {
+        long timestamp;           //时间戳
+        string type;              //类型,
+        Common.StrVec tags;       //标签,查询使用
+        string params;  //参数集合,json类型,其中包含设备信息，appkey,sdk版本等。。
+    };
+    vector MetricList <Metric>;
+
+        //#InfoIdCollectionServer
+    interface InfoIdCollectionService{
+        bool getInfoId(Info info,out string id) async onexception(false);
+    }
+
+        //#LogCollectionServer
+    interface LogCollectionService{
+        bool log(Common.StrVec logList) async onexception(false);
+    }
+
+        //#MetricCollectionServer
+    interface MetricCollectionService{
+        bool metric(Metric metricInfo) async onexception(false);
+    }
+
+        //#EventCollectionServer
+    interface EventCollectionService{
+        bool event(EventList eventList) async onexception(false);
+        bool event2(string topic,EventList eventList) async onexception(false);
+        bool subEvent();
+    }
+
+       //#InfoIdCollectionServer
+    interface GetOidCollectionService{
+        bool gteOid(out string oid) async onexception(false);
+    }
+
+    struct  FlowStatus{
+         string uniqueId;           //业务唯一ID  当前使用会议号///
+         int type;                 //事件类型,用以区分不同场景
+         int status;               //状态值 1: 录制中，  (其他未定)
+         Common.StrStrMap params;              //详细信息(json格式,其中携带录制类型,用以监控查询)
+         /**
+         *  {
+         *    * "type": "remote",
+         *      "ip":"xxxx.xx.xx"
+         *  }
+         **/
+         long domainId;            //
+         long appId;               //
+    };
+
+   struct  FlowStatusJson{
+         string uniqueId;           //业务唯一ID  当前使用会议号///
+         int type;                 //事件类型,用以区分不同场景
+         int status;               //状态值 1: 录制中，  (其他未定)
+         string params;              //详细信息(json格式,其中携带录制类型,用以监控查询)
+         /**
+         *  {
+         *    * "type": "remote",
+         *      "ip":"xxxx.xx.xx"
+         *  }
+         **/
+         long domainId;            //
+         long appId;               //
+    };
+    vector FlowList <FlowStatusJson>;
+
+
+    //#StatusCollectionServer
+    // 用以定时心跳来维护录制状态，服务端做录制监控使用
+    interface StatusCollectionService{
+      /**
+        *  uniqueId 用以标记此业务的唯一ID
+        *  eventPO 当前状态值
+        **/
+        bool putStatus(FlowStatus eventPO) async onexception(false);
+       /**
+        *
+        *  结束的时候
+        **/
+        bool endStatus(FlowStatus eventPO) async onexception(false);
+
+      /**
+        *  uniqueId 用以标记此业务的唯一ID
+        *  eventPO 当前状态值
+        **/
+        bool putStatusJson(FlowStatusJson eventPO) async onexception(false);
+       /**
+        *
+        *  结束的时候
+        **/
+        bool endStatusJson(FlowStatusJson eventPO) async onexception(false);
+
+        bool putStatusJson2(string topic,FlowStatusJson eventPO) async onexception(false);
+
+        bool putStatusListJson2(string topic,FlowList flowList) async onexception(false);
+
+    }
+}
