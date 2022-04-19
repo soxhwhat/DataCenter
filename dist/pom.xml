@@ -6,7 +6,7 @@
     <parent>
         <artifactId>jrtcDataCenter-Parent</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.3</version>
+        <version>2202.5.4</version>
     </parent>
     <packaging>pom</packaging>
 
@@ -22,7 +22,7 @@
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.3</version>
+            <version>2202.5.4</version>
         </dependency>
     </dependencies>
 </project>
