@@ -88,16 +88,16 @@ public class EventCollectionServerProcess {
                 .build();
     }
 
-    private static String hexStr = "0123456789ABCDEF";
+    private static final String HEX_STR = "0123456789ABCDEF";
 
     private static String binaryToHexString(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         String hex;
         for (byte aByte : bytes) {
             //字节高4位
-            hex = String.valueOf(hexStr.charAt((aByte & 0xF0) >> 4));
+            hex = String.valueOf(HEX_STR.charAt((aByte & 0xF0) >> 4));
             //字节低4位
-            hex += String.valueOf(hexStr.charAt(aByte & 0x0F));
+            hex += String.valueOf(HEX_STR.charAt(aByte & 0x0F));
             result.append(hex);
         }
         return result.toString();

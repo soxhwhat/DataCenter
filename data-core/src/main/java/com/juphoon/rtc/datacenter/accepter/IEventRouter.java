@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.accepter;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.mq.service.IEventQueueService;
 
 import java.util.List;
 

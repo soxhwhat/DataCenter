@@ -37,12 +37,12 @@ public enum ProcessorId {
     /**
      * 类型
      */
-    private String name;
+    private final String name;
 
     /**
      * 间隔
      */
-    private String id;
+    private final String id;
 
     ProcessorId(String id, String name) {
         this.id = id;

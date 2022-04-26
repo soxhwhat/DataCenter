@@ -8,6 +8,7 @@
 //
 package Event;
 
+@SuppressWarnings("PMD")
 public abstract class NoticeEventServer extends Common.ObjectServer {
     public abstract void verCode_begin(Common.ServerCall __call,java.util.Map<String,String > params) throws Common.Exception;
     public abstract void verJoinRoom_begin(Common.ServerCall __call,java.util.Map<String,String > params) throws Common.Exception;

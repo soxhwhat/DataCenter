@@ -8,6 +8,7 @@
 //
 package Event;
 
+@SuppressWarnings("PMD")
 public final class NoticeEventAgent {
     public final Common.ObjectAgent __agent;
 

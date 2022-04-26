@@ -42,7 +42,7 @@ public class AcdAgentOpCheckinDailyPO extends AcdAgentOpStatPO {
         commonCheckParam(event);
         this.setDomainId(event.domainId());
         this.setAppId(event.appId());
-        this.setAgentId(event.agentId());
+        this.setAgentId(cutAgentId(event.agentId()));
         this.setTeam(event.team());
         this.setShift(event.shift());
     }

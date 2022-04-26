@@ -14,33 +14,33 @@ public enum StatType {
     /**
      * 15分钟统计
      */
-    STAT_15MIN((byte) 1, 15 * 60 * 1000),
+    STAT_15MIN((byte) 1, 15 * 60 * 1000L),
 
     /**
      * 30分钟统计
      */
-    STAT_30MIN((byte) 2, 30 * 60 * 1000),
+    STAT_30MIN((byte) 2, 30 * 60 * 1000L),
 
     /**
      * 小时统计
      */
-    STAT_HOUR((byte) 3, 60 * 60 * 1000),
+    STAT_HOUR((byte) 3, 60 * 60 * 1000L),
 
     /**
      * 日统计
      */
-    STAT_DAY((byte) 4, 24 * 60 * 60 * 1000);
+    STAT_DAY((byte) 4, 24 * 60 * 60 * 1000L);
 
 
     /**
      * 类型
      */
-    private byte statType;
+    private final byte statType;
 
     /**
      * 间隔
      */
-    private long interval;
+    private final long interval;
 
     StatType(byte statType, long interval) {
         this.statType = statType;

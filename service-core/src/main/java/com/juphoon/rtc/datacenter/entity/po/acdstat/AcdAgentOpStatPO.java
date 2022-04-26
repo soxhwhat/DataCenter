@@ -53,11 +53,17 @@ public class AcdAgentOpStatPO extends AcdCommonPO {
         this.setEventType(event.eventType());
         this.setEventNum(event.eventNumber());
         this.setEndType(event.endType());
-        this.setAgentId(event.agentId());
+        this.setAgentId(cutAgentId(event.agentId()));
         this.setSubState(event.subState());
         this.setTeam(event.team());
         this.setShift(event.shift());
         this.setSkill(event.skill());
+    }
+
+    protected String cutAgentId(String agentId) {
+        String preStr = "[username:";
+        String splitStr = "@";
+        return agentId.split(splitStr)[0].replace(preStr,"");
     }
 
     protected void commonCheckParam(Event event) {

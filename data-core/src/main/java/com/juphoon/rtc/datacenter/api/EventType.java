@@ -184,12 +184,12 @@ public enum EventType {
     /**
      * 事件类型
      */
-    private Integer type;
+    private final Integer type;
 
     /**
      * 事件编号
      */
-    private Integer number;
+    private final Integer number;
 
     EventType(Integer type, Integer number) {
         this.type = type;
