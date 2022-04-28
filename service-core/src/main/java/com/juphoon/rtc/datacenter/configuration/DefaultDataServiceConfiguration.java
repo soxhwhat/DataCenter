@@ -6,6 +6,7 @@ import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.MdEventMongoHandler;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
@@ -40,6 +41,9 @@ public class DefaultDataServiceConfiguration {
 
     @Autowired
     private DataCenterProperties properties;
+
+    @Autowired
+    private MdEventMongoHandler mdEventMongoHandler;
 
     @Autowired
     private AcdCallInfoStatDailyHandler acdCallInfoStatDailyHandler;
@@ -138,7 +142,7 @@ public class DefaultDataServiceConfiguration {
         mongoProcessor.setEnabled(properties.getMongoEvent().isEnabled());
         acdTicketEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdTicketEventEnabled());
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
-
+        mdEventMongoHandler.setEnabled(properties.getMongoEvent().isMdEventEnabled());
         // TODO 补充其他
 
         //@formatter:off
@@ -177,6 +181,7 @@ public class DefaultDataServiceConfiguration {
                     .mq(properties.getMq().trans())
                     .handler(acdEventMongoHandler)
                     .handler(acdTicketEventMongoHandler)
+                    .handler(mdEventMongoHandler)
 //                    .handler(theaMongoHandler)
                     .end()
                 .build();

@@ -152,6 +152,11 @@ public enum HandlerId {
     AcdEventMongoHandler("acdEventMongoHandler", "客服事件mongodb入库handler"),
 
     /**
+     * 终端埋点事件mongodb入库handler
+     */
+    MdEventMongoHandler("mdEventMongoHandler", "终端埋点事件mongodb入库handler"),
+
+    /**
      * 录制事件mongodb入库handler
      */
     AcdRecordEventMongoHandler("acdRecordEventMongoHandler", "客服事件mongodb入库handler"),

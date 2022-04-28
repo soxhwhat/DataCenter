@@ -186,6 +186,8 @@ public class DataCenterProperties {
          * 话单事件开关
          */
         private boolean acdTicketEventEnabled = true;
+
+        private boolean mdEventEnabled = true;
     }
 
 }

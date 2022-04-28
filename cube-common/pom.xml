@@ -10,13 +10,12 @@
     </parent>
     <packaging>pom</packaging>
 
-    <artifactId>dist</artifactId>
+    <artifactId>cube-common</artifactId>
 
     <modules>
-        <module>product</module>
-        <module>e01</module>
-        <module>demo</module>
-        <module>b03</module>
+        <module>common-3.6</module>
+        <module>common-3.5</module>
     </modules>
+
 
 </project>

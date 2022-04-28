@@ -9,8 +9,8 @@
         <version>2202.5.5</version>
     </parent>
 
-    <version>2202.5.5</version>
-    <artifactId>jrtcDataCollection-e01</artifactId>
+    <version>2202.4.3</version>
+    <artifactId>jrtcDataCollection-b03</artifactId>
 
     <properties>
         <nms.script>nms_3.5</nms.script>
@@ -22,12 +22,6 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.7</version>
         </dependency>
-        <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>3.6.12</version>
-        </dependency>
-
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>common-3.5</artifactId>
@@ -46,6 +40,11 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>3.6.12</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -54,7 +53,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.juphoon.rtc.datacenter.E01DataCenterApplication</mainClass>
+                    <mainClass>com.juphoon.rtc.datacenter.B03DataCenterApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

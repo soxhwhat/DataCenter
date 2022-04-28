@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdAgentOpCheckinDailyByShiftHandler;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.AcdAgentOpStatDailyHandler;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.UUID;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class L2UT_AcdAgentOpHandlerTest {
 
     @Autowired

@@ -1,0 +1,100 @@
+#server:
+#  port: 8081
+
+#event.spring.data.mongodb.uri=spring.data.mongodb.uri=mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+#record.spring.data.mongodb.uri=spring.data.mongodb.uri=mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_record?authSource=admin
+event:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+record:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_record?authSource=admin
+md:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+spring:
+  kafka:
+    bootstrap-servers: 192.168.9.99:9092
+    producer:
+      retries: 0
+      acks: 1
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        #        max.block.ms: 2000
+        sasl.mechanism: PLAIN
+        security.protocol: SASL_PLAINTEXT
+        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username=kafka password=kafkapswd;
+  data:
+    mongodb:
+      #      uri: mongodb://root:123456@121.196.205.39:27017/test1?authSource=admin
+      #      uri: mongodb://192.168.4.74:27017/admin
+      host: 192.168.4.74
+      database: test
+      port: 27017
+      server-selection-timeout: 600
+      connect-timeout: 800
+  datasource:
+    dynamic:
+      datasource:
+        log:
+          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
+          #    url: jdbc:sqlite:a.db
+          driver-class-name: org.sqlite.JDBC
+          username:
+          password:
+        mysql:
+          #          url: jdbc:mysql://192.168.4.74:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: kiwi
+          password: juphoon419708
+        kiwi:
+          url: jdbc:mysql://192.168.4.171:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: kiwi
+          password: 123456
+      primary: mysql
+      druid:
+        filters: stat
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    host: 192.168.15.254
+    password: juphoon419708
+mybatis-plus:
+  global-config:
+    db-config:
+      column-format: '`%s`'
+  mapper-locations: classpath*:mysql/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+iron:
+  debug:
+    enabled: true
+  event:
+    mongo:
+      0: ticket_event
+    kafka:
+      0: ticket_event
+  cube:
+    enabled: true
+    serverCfg: D:\service\d01\server.cfg
+    debugMode: true
+    libraryName: CommonJNI
+
+  datacenter:
+    agree:
+      hosts:
+        - http://127.0.0.1:10099
+      enabled: true
+  threadpool:
+    enabled: true
+

@@ -13,6 +13,11 @@
     <version>2202.5.5</version>
 
     <dependencies>
+        <dependency>
+            <artifactId>service-core</artifactId>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <version>2202.5.5</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.httpcomponents</groupId>-->
 <!--            <artifactId>httpclient</artifactId>-->

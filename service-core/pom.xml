@@ -18,6 +18,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>common-3.6</artifactId>
+            <version>2202.5.5</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>

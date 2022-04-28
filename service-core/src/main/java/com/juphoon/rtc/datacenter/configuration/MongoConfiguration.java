@@ -52,4 +52,20 @@ public class MongoConfiguration {
     public MongoTemplate recordMongoTemplate() {
         return new MongoTemplate(recordMongodbFactory(getRecordProperties()));
     }
+
+    @Bean("mdEventMongoProperties")
+    @ConfigurationProperties(prefix = "md.spring.data.mongodb")
+    public MongoProperties getMdEventProperties() {
+        return new MongoProperties();
+    }
+
+    @Bean("mdMongodbFactory")
+    public MongoDatabaseFactory mdEventMongodbFactory(MongoProperties properties) {
+        return new SimpleMongoClientDatabaseFactory(properties.getUri());
+    }
+
+    @Bean("mdMongoTemplate")
+    public MongoTemplate mdEventMongoTemplate() {
+        return new MongoTemplate(mdEventMongodbFactory(getMdEventProperties()));
+    }
 }

@@ -19,6 +19,12 @@
             <version>4.5.7</version>
         </dependency>
 
+        <dependency>
+            <artifactId>service-core</artifactId>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <version>2202.5.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>
