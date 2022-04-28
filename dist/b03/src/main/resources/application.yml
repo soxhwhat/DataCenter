@@ -1,18 +1,18 @@
 server:
-  port: 19986
-#spring:
-#  datasource:
-#    dynamic:
-#      datasource:
-#        sqllite:
-#          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
-#          driver-class-name: org.sqlite.JDBC
-#          username:
-#          password:
-#      druid:
-#        filters: stat
-#        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-#      primary: juphoon
+  port: 8081
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        sqllite:
+          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
+          driver-class-name: org.sqlite.JDBC
+          username:
+          password:
+      druid:
+        filters: stat
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      primary: juphoon
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
