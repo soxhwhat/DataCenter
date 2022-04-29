@@ -8,7 +8,6 @@
 //
 package DataCollection;
 
-@SuppressWarnings("PMD")
 public final class EventType{
     public static final int kEventTypeRecord = 0;
 

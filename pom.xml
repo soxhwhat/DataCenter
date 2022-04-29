@@ -18,7 +18,7 @@
         <module>service-core</module>
         <module>dist</module>
         <module>test</module>
-        <module>cube-common</module>
+        <module>cube-rpc</module>
     </modules>
 
     <properties>

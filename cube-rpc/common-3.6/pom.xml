@@ -4,18 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jrtcDataCenter-Parent</artifactId>
+        <artifactId>cube-rpc</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
         <version>2202.5.5</version>
     </parent>
-    <packaging>pom</packaging>
 
-    <artifactId>cube-common</artifactId>
-
-    <modules>
-        <module>common-3.6</module>
-        <module>common-3.5</module>
-    </modules>
-
+    <version>2202.5.5</version>
+    <artifactId>common-3.6</artifactId>
 
 </project>

@@ -1,8 +1,21 @@
 server:
   port: 8081
 
-event.spring.data.mongodb.uri=spring.data.mongodb.uri=mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
-record.spring.data.mongodb.uri=spring.data.mongodb.uri=mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_record?authSource=admin
+event:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+record:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+md:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
 
 spring:
   kafka:
@@ -72,9 +85,9 @@ iron:
       0: ticket_event
   cube:
     enabled: true
-    serverCfg: D:\service\d01\server.cfg
+    serverCfg: /Users/ajianzheng/Juphoon/Source/Iron/ApiGateway/conf/server.cfg
     debugMode: true
-    libraryName: CommonJNI
+    libraryName: CommonJNI-3.6
 
   datacenter:
     agree:

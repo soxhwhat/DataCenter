@@ -8,7 +8,6 @@
 //
 package DataCollection;
 
-@SuppressWarnings("PMD")
 public final class Event {
     public long timestamp;
     public int type;
