@@ -91,12 +91,12 @@ public class AcdCommonPO implements Serializable {
         this.gmtModified = gmtModified;
     }
 
-    public void setDomainId(Integer domainId) {
+    public void setDomainId(int domainId) {
         checkParam(domainId, "domainId");
         this.domainId = domainId;
     }
 
-    public void setAppId(Integer appId) {
+    public void setAppId(int appId) {
         checkParam(appId, "appId");
         this.appId = appId;
     }

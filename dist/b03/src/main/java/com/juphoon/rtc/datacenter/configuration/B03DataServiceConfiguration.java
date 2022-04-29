@@ -8,7 +8,6 @@ import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdRecordEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
-import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
@@ -33,7 +32,7 @@ import java.util.Map;
 @Setter
 @Getter
 @Component
-public class DefaultDataServiceConfiguration {
+public class B03DataServiceConfiguration {
 
     @Autowired
     private BeanFactory beanFactory;
@@ -89,23 +88,9 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdExtServiceLevelPartHourHandler acdExtServiceLevelPartHourHandler;
 
+    @SuppressWarnings("PMD")
     @Bean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
-
-        // 赞同通知
-        HttpClientEventProcessor agreeNotifyProcessor = beanFactory.getBean(HttpClientEventProcessor.class);
-        agreeNotifyProcessor.setProcessorId(ProcessorId.AGREE);
-
-        if (properties.getAgree().isEnabled()) {
-            HttpClientEventProcessor.Config config = new HttpClientEventProcessor.Config();
-            config.setHosts(properties.getAgree().getHosts());
-
-            agreeNotifyProcessor.setConfig(config);
-            agreeNotifyProcessor.setEnabled(properties.getAgree().isEnabled());
-        }
-
-        agreeNotifyProcessor.setEnabled(properties.getAgree().isEnabled());
-
         // 话务统计
         // 由于在 AbstractEventProcessor 中包含了 @Autowired，因此只能从bean工厂创建
         DatabaseEventProcessor acdEventProcessor = beanFactory.getBean(DatabaseEventProcessor.class);
@@ -144,42 +129,29 @@ public class DefaultDataServiceConfiguration {
 
         //@formatter:off
         return DataServiceBuilder.processors()
-                // 赞同通知
-                .processor(agreeNotifyProcessor)
-                .mq(properties.getMq().trans())
-                // 构造测试handler
-                .handler(handlerMap.get("agreeLoginNotifyHandler"))
-                .handler(handlerMap.get("agreeLogoutNotifyHandler"))
-                .handler(handlerMap.get("agreePrepareEnterRoomHandler"))
-                .handler(handlerMap.get("agreeRecordSnapshotHandler"))
-                .handler(handlerMap.get("agreeRoomNoticeHandler"))
-                .handler(handlerMap.get("agreeSendOnlineMessageHandler"))
-                .handler(handlerMap.get("agreeUserLoginRequestHandler"))
-                .end()
                 // 客服统计
                 .processor(acdEventProcessor)
-                .mq(properties.getMq().trans())
-                .handler(acdCallInfoStatDailyHandler)
-                .handler(acdCallInfoStatPart15MinHandler)
-                .handler(acdCallInfoStatPart30MinHandler)
-                .handler(acdCallInfoStatPartHourHandler)
-                .handler(acdAgentOpStatDailyHandler)
-                .handler(acdAgentOpStatPart15MinHandler)
-                .handler(acdAgentOpStatPart30MinHandler)
-                .handler(acdAgentOpStatPartHourHandler)
-                .handler(acdAgentOpCheckinDailyByShiftHandler)
-                .handler(acdExtServiceLevelDailyHandler)
-                .handler(acdExtServiceLevelPart15MinHandler)
-                .handler(acdExtServiceLevelPart30MinHandler)
-                .handler(acdExtServiceLevelPartHourHandler)
-                .end()
+                    .mq(properties.getMq().trans())
+                    .handler(acdCallInfoStatDailyHandler)
+                    .handler(acdCallInfoStatPart15MinHandler)
+                    .handler(acdCallInfoStatPart30MinHandler)
+                    .handler(acdCallInfoStatPartHourHandler)
+                    .handler(acdAgentOpStatDailyHandler)
+                    .handler(acdAgentOpStatPart15MinHandler)
+                    .handler(acdAgentOpStatPart30MinHandler)
+                    .handler(acdAgentOpStatPartHourHandler)
+                    .handler(acdAgentOpCheckinDailyByShiftHandler)
+                    .handler(acdExtServiceLevelDailyHandler)
+                    .handler(acdExtServiceLevelPart15MinHandler)
+                    .handler(acdExtServiceLevelPart30MinHandler)
+                    .handler(acdExtServiceLevelPartHourHandler)
+                    .end()
                 .processor(mongoProcessor)
-                .mq(properties.getMq().trans())
-                .handler(acdEventMongoHandler)
-                .handler(acdTicketEventMongoHandler)
-                .handler(acdRecordEventMongoHandler)
-//                    .handler(theaMongoHandler)
-                .end()
+                    .mq(properties.getMq().trans())
+                    .handler(acdEventMongoHandler)
+                    .handler(acdTicketEventMongoHandler)
+                    .handler(acdRecordEventMongoHandler)
+                    .end()
                 .build();
         //@formatter:on
     }

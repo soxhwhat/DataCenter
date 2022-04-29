@@ -36,8 +36,12 @@ public abstract class AbstractAcdExtServiceLevelPartHandler extends AbstractAcdE
     }
 
     @Override
-    public int insertSelective(AcdExtServiceLevelPO commonPo) {
-        return acdExtServiceLevelPartMapper.insertSelective((AcdExtServiceLevelPartPO) commonPo);
+    public int insertSelective(AcdExtServiceLevelPO po) {
+        if (po instanceof AcdExtServiceLevelPartPO) {
+            return acdExtServiceLevelPartMapper.insertSelective((AcdExtServiceLevelPartPO) po);
+        }
+
+        throw new RuntimeException("invalid object");
     }
 
     @Override

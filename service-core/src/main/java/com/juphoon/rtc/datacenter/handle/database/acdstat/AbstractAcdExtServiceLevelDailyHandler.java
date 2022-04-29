@@ -39,14 +39,28 @@ public abstract class AbstractAcdExtServiceLevelDailyHandler extends AbstractAcd
         return acdExtServiceLevelDailyMapper.selectByUniqueKey(po.getUniqueKey());
     }
 
+    /**
+     * todo 重新抽象
+     */
     @Override
     public int insertSelective(AcdExtServiceLevelPO commonPo) {
-        return acdExtServiceLevelDailyMapper.insertSelective((AcdExtServiceLevelDailyPO) commonPo);
+        if (commonPo instanceof AcdExtServiceLevelDailyPO) {
+            return acdExtServiceLevelDailyMapper.insertSelective((AcdExtServiceLevelDailyPO) commonPo);
+        }
+
+        throw new RuntimeException("invalid object");
     }
 
+    /**
+     * todo 重新抽象
+     */
     @Override
     public void updateByUniqueKey(AcdExtServiceLevelPO po) {
-        acdExtServiceLevelDailyMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getCnt());
+        if (po instanceof AcdExtServiceLevelDailyPO) {
+            acdExtServiceLevelDailyMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getCnt());
+        }
+
+        throw new RuntimeException("invalid object");
     }
 
 }

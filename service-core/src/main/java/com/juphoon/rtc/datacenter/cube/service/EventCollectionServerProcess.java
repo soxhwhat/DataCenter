@@ -70,7 +70,6 @@ public class EventCollectionServerProcess {
         return ret;
     }
 
-    /// TODO 严格的参数类型检查
     private Event trans(DataCollection.Event from) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtServiceLevelDailyPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>jrtc_acd_ext_connect_daily表的mapper类</p>
@@ -13,8 +14,8 @@ import org.apache.ibatis.annotations.Param;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  * @since 2022/4/06 11:49
  */
+@Component
 @Mapper
-@SuppressWarnings("PMD")
 public interface AcdExtServiceLevelDailyMapper extends BaseMapper<AcdExtServiceLevelDailyPO> {
 
     /**

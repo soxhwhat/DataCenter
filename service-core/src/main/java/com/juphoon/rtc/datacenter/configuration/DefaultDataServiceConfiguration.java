@@ -90,6 +90,7 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdExtServiceLevelPartHourHandler acdExtServiceLevelPartHourHandler;
 
+    @SuppressWarnings("PMD")
     @Bean
     @ConditionalOnMissingBean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
