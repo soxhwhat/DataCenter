@@ -33,6 +33,8 @@ public class DataCenterProperties {
 
     private MongoEvent mongoEvent = new MongoEvent();
 
+    private KafkaEvent kafkaEvent = new KafkaEvent();
+
     /**
      * 赞同
      */
@@ -188,6 +190,29 @@ public class DataCenterProperties {
         private boolean acdTicketEventEnabled = true;
 
         private boolean mdEventEnabled = true;
+    }
+
+    @Data
+    public static class KafkaEvent {
+        /**
+         * kafka事件开关
+         */
+        private boolean enabled = true;
+
+        /**
+         * 客服事件开关
+         */
+        private boolean staffEnabled = true;
+
+        /**
+         * 话单事件开关
+         */
+        private boolean ticketEnabled = true;
+
+        /**
+         * 话单事件开关
+         */
+        private boolean queueEnabled = true;
     }
 
 }

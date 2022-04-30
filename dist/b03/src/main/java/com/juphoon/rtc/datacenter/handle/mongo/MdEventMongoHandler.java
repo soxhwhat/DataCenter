@@ -54,12 +54,12 @@ public class MdEventMongoHandler extends AbstractMongoHandler {
     }
 
     @Override
-    public String collectionName(EventContext ec) {
-        return "jrtc.md.events";
+    public MongoTemplate mongoTemplate() {
+        return mongoTemplate;
     }
 
     @Override
-    public MongoTemplate mongoTemplate() {
-        return mongoTemplate;
+    public String collectionName() {
+        return "jrtc.md.events";
     }
 }

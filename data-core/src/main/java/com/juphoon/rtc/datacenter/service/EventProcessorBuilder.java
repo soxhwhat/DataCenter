@@ -73,6 +73,7 @@ public class EventProcessorBuilder {
                 this.eventQueueService = new SimpleEventQueueServiceImpl();
             } else {
                 this.eventQueueService = new DisruptorEventQueueServiceImpl(config);
+                ((DisruptorEventQueueServiceImpl)this.eventQueueService).init(config,this.eventQueueService);
             }
             this.eventQueueService.setProcessor(processor);
 

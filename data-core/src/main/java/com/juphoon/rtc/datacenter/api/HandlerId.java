@@ -161,11 +161,18 @@ public enum HandlerId {
      */
     AcdRecordEventMongoHandler("acdRecordEventMongoHandler", "客服事件mongodb入库handler"),
 
-
     /**
      *
      */
-    EventKafkaHandler("eventKafkaHandler", "kafka事件Handler"),
+    QueueStatusKafkaHandler("queueStatusKafkaHandler", "队列状态kafka事件Handler"),
+    /**
+     *
+     */
+    StaffStatusKafkaHandler("staffStatusKafkaHandler", "坐席状态kafka事件Handler"),
+    /**
+     *
+     */
+    TicketKafkaHandler("ticketKafkaHandler", "话单kafka事件Handler"),
 
 
     /**

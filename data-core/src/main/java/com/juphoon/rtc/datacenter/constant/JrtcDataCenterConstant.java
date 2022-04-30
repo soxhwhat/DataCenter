@@ -62,8 +62,10 @@ public class JrtcDataCenterConstant {
      * datacenter配置前缀
      */
     public static final String DATA_CENTER_CONFIG_PREFIX = "iron.datacenter";
+    public static final String KAFKA_PREFIX = "kafka";
     public static final String DATA_CENTER_QUEUE_MODE = "queue";
     public static final String DATA_CENTER_QUEUE_MODE_SIMPLE = "simple";
+    public static final String DATA_CENTER_QUEUE_MODE_DISRUPTOR = "disruptor";
 
 
 }

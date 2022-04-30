@@ -1,13 +1,19 @@
 package com.juphoon.rtc.datacenter.configuration;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
+import com.juphoon.rtc.datacenter.handle.kafka.QueueStatusKafkaHandler;
+import com.juphoon.rtc.datacenter.handle.kafka.StaffStatusKafkaHandler;
+import com.juphoon.rtc.datacenter.handle.kafka.TicketKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdRecordEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
+import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
@@ -88,6 +94,16 @@ public class B03DataServiceConfiguration {
     @Autowired
     private AcdExtServiceLevelPartHourHandler acdExtServiceLevelPartHourHandler;
 
+    @Autowired
+    private StaffStatusKafkaHandler staffStatusKafkaHandler;
+
+    @Autowired
+    private QueueStatusKafkaHandler queueStatusKafkaHandler;
+
+    @Autowired
+    private TicketKafkaHandler ticketKafkaHandler;
+
+
     @SuppressWarnings("PMD")
     @Bean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
@@ -127,6 +143,16 @@ public class B03DataServiceConfiguration {
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
         acdRecordEventMongoHandler.setEnabled(true);
 
+        //事件写入kafka
+        KafkaProcessor kafkaProcessor = beanFactory.getBean(KafkaProcessor.class);
+        kafkaProcessor.setProcessorId(ProcessorId.KAFKA);
+        kafkaProcessor.setEnabled(properties.getKafkaEvent().isEnabled());
+        queueStatusKafkaHandler.setEnabled(properties.getKafkaEvent().isQueueEnabled());
+        staffStatusKafkaHandler.setEnabled(properties.getKafkaEvent().isStaffEnabled());
+        ticketKafkaHandler.setEnabled(properties.getKafkaEvent().isTicketEnabled());
+
+        EventQueueConfig kafkaConfig = new DataCenterProperties.Mq().trans();
+        kafkaConfig.setType(JrtcDataCenterConstant.DATA_CENTER_QUEUE_MODE_DISRUPTOR);
         //@formatter:off
         return DataServiceBuilder.processors()
                 // 客服统计
@@ -151,6 +177,12 @@ public class B03DataServiceConfiguration {
                     .handler(acdEventMongoHandler)
                     .handler(acdTicketEventMongoHandler)
                     .handler(acdRecordEventMongoHandler)
+                    .end()
+                .processor(kafkaProcessor)
+                    .mq(kafkaConfig)
+                    .handler(queueStatusKafkaHandler)
+                    .handler(ticketKafkaHandler)
+                    .handler(staffStatusKafkaHandler)
                     .end()
                 .build();
         //@formatter:on
