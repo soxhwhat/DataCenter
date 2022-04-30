@@ -6,10 +6,10 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.5</version>
+        <version>2202.5.6</version>
     </parent>
 
-    <version>2202.5.5</version>
+    <version>2202.5.6</version>
     <artifactId>jrtcDataCollection-product</artifactId>
 
     <dependencies>
@@ -22,7 +22,7 @@
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.5</version>
+            <version>2202.5.6</version>
         </dependency>
 
     </dependencies>
@@ -73,21 +73,21 @@
                 </configuration>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
 
-<!--                <excludes>-->
-<!--                    <exclude>*</exclude>-->
-<!--                </excludes>-->
+<!--&lt;!&ndash;                <excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <exclude>*</exclude>&ndash;&gt;-->
+<!--&lt;!&ndash;                </excludes>&ndash;&gt;-->
 
-                <includes>
-                    <include>application.yml</include>
-                    <include>git.properties</include>
-                </includes>
+<!--                <includes>-->
+<!--                    <include>application.yml</include>-->
+<!--                    <include>git.properties</include>-->
+<!--                </includes>-->
 
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+<!--                <filtering>true</filtering>-->
+<!--            </resource>-->
+<!--        </resources>-->
     </build>
 </project>
