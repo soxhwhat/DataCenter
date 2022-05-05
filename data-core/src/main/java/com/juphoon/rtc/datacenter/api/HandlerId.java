@@ -69,24 +69,44 @@ public enum HandlerId {
     AcdAgentOpCheckinDailyByShiftHandler("acdAgentOpCheckinDailyByShiftHandler", "坐席签入签出按班次日汇总handler"),
 
     /**
-     * 接通量日汇总handler
+     * 服务水平日汇总handler
      */
-    AcdExtServiceLevelDailyHandler("acdExtServiceLevelDailyHandler", "接通量日汇总handler"),
+    AcdExtServiceLevelDailyHandler("acdExtServiceLevelDailyHandler", "服务水平日汇总handler"),
 
     /**
-     * 接通量15分钟汇总handler
+     * 服务水平15分钟汇总handler
      */
-    AcdExtServiceLevelPart15MinHandler("acdExtServiceLevelPart15MinHandler", "接通量15分钟汇总handler"),
+    AcdExtServiceLevelPart15MinHandler("acdExtServiceLevelPart15MinHandler", "服务水平15分钟汇总handler"),
 
     /**
-     * 接通量30分钟汇总handler
+     * 服务水平30分钟汇总handler
      */
-    AcdExtServiceLevelPart30MinHandler("acdExtServiceLevelPart30MinHandler", "接通量30分钟汇总handler"),
+    AcdExtServiceLevelPart30MinHandler("acdExtServiceLevelPart30MinHandler", "服务水平30分钟汇总handler"),
 
     /**
-     * 接通量小时汇总handler
+     * 服务水平小时汇总handler
      */
-    AcdExtServiceLevelPartHourHandler("acdExtServiceLevelPartHourHandler", "接通量小时汇总handler"),
+    AcdExtServiceLevelPartHourHandler("acdExtServiceLevelPartHourHandler", "服务水平小时汇总handler"),
+
+    /**
+     * 渠道平台日汇总handler
+     */
+    AcdExtTerminalDailyHandler("acdExtTerminalDailyHandler", "渠道平台日汇总handler"),
+
+    /**
+     * 渠道平台15分钟汇总handler
+     */
+    AcdExtTerminalPart15MinHandler("acdExtTerminalPart15MinHandler", "渠道平台15分钟汇总handler"),
+
+    /**
+     * 渠道平台30分钟汇总handler
+     */
+    AcdExtTerminalPart30MinHandler("acdExtTerminalPart30MinHandler", "渠道平台30分钟汇总handler"),
+
+    /**
+     * 渠道平台小时汇总handler
+     */
+    AcdExtTerminalPartHourHandler("acdExtTerminalPartHourHandler", "渠道平台小时汇总handler"),
 
     /// 赞同
 

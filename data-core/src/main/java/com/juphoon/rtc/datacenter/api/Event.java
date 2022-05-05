@@ -220,6 +220,10 @@ public class Event {
         return (int) params.getOrDefault("endType", 0);
     }
 
+    public boolean isEndWithException() {
+        return endType() == 0 ? false : true;
+    }
+
     /**
      * 排队机带过来的是queue
      *
@@ -227,6 +231,14 @@ public class Event {
      */
     public String skill() {
         return (String) params.getOrDefault("queue", "");
+    }
+
+    public String channel() {
+        return (String) params.getOrDefault("channel", "");
+    }
+
+    public String platform() {
+        return (String) params.getOrDefault("platform", "");
     }
 
     public String team() {

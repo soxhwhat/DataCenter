@@ -3,6 +3,8 @@ package com.juphoon.rtc.datacenter.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtTerminalDailyPO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>jrtc_acd_ext_terminal_daily表的mapper类</p>
@@ -13,9 +15,11 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022/3/10 11:49
  */
 @Mapper
+@Component
 public interface AcdExtTerminalDailyMapper extends BaseMapper<AcdExtTerminalDailyPO> {
     /**
      * insert record to table selective
+     *
      * @param record the record
      * @return insert count
      */
@@ -23,6 +27,7 @@ public interface AcdExtTerminalDailyMapper extends BaseMapper<AcdExtTerminalDail
 
     /**
      * select by primary key
+     *
      * @param id primary key
      * @return object by primary key
      */
@@ -30,6 +35,7 @@ public interface AcdExtTerminalDailyMapper extends BaseMapper<AcdExtTerminalDail
 
     /**
      * update record selective
+     *
      * @param record the updated record
      * @return update count
      */
@@ -37,8 +43,27 @@ public interface AcdExtTerminalDailyMapper extends BaseMapper<AcdExtTerminalDail
 
     /**
      * update record
+     *
      * @param record the updated record
      * @return update count
      */
     int updateByPrimaryKey(AcdExtTerminalDailyPO record);
+
+    /**
+     * 根据uniqueKey更新次数
+     *
+     * @param uniqueKey
+     * @param cnt
+     * @return
+     */
+    int updateAddValueByUniqueKey(@Param("uniqueKey") String uniqueKey,
+                                  @Param("cnt") Integer cnt);
+
+    /**
+     * 根据uniqueKey查询
+     *
+     * @param uniqueKey
+     * @return
+     */
+    AcdExtTerminalDailyPO selectByUniqueKey(@Param("uniqueKey") String uniqueKey);
 }

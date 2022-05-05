@@ -110,24 +110,44 @@ public class DataCenterProperties {
         private boolean agentOpCheckinDailyEnabled = true;
 
         /**
-         * 天接通量统计
+         * 天服务水平统计
          */
         private boolean extServiceLevelDailyEnabled = false;
 
         /**
-         * 15分钟接通量统计
+         * 15分钟服务水平统计
          */
         private boolean extServiceLevel15minEnabled = false;
 
         /**
-         * 30分钟接通量统计
+         * 30分钟服务水平统计
          */
         private boolean extServiceLevel30minEnabled = false;
 
         /**
-         * 小时接通量统计
+         * 小时服务水平统计
          */
         private boolean extServiceLevelHourEnabled = false;
+
+        /**
+         * 天渠道平台统计
+         */
+        private boolean extTerminalDailyEnabled = false;
+
+        /**
+         * 15分钟渠道平台统计
+         */
+        private boolean extTerminal15minEnabled = false;
+
+        /**
+         * 30分钟渠道平台统计
+         */
+        private boolean extTerminal30minEnabled = false;
+
+        /**
+         * 小时渠道平台统计
+         */
+        private boolean extTerminalHourEnabled = false;
 
         /**
          * 默认20s,30s服务水平

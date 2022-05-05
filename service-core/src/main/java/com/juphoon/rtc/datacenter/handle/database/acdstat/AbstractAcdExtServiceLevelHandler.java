@@ -45,7 +45,7 @@ public abstract class AbstractAcdExtServiceLevelHandler extends AbstractAcdStatH
     @Override
     public boolean handle(EventContext ec, AcdExtServiceLevelPO po) {
         // 非正常结束不处理
-        if (0 != ec.getEvent().endType()) {
+        if (ec.getEvent().isEndWithException()) {
             return true;
         }
 

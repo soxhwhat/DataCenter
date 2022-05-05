@@ -87,6 +87,18 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdExtServiceLevelPartHourHandler acdExtServiceLevelPartHourHandler;
 
+    @Autowired
+    private AcdExtTerminalDailyHandler acdExtTerminalDailyHandler;
+
+    @Autowired
+    private AcdExtTerminalPart15MinHandler acdExtTerminalPart15MinHandler;
+
+    @Autowired
+    private AcdExtTerminalPart30MinHandler acdExtTerminalPart30MinHandler;
+
+    @Autowired
+    private AcdExtTerminalPartHourHandler acdExtTerminalPartHourHandler;
+
     @SuppressWarnings("PMD")
     @Bean
     @ConditionalOnMissingBean
@@ -129,6 +141,10 @@ public class DefaultDataServiceConfiguration {
         acdExtServiceLevelPart30MinHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
         acdExtServiceLevelPartHourHandler.setEnabled(properties.getAcdStat().isExtServiceLevelHourEnabled());
         acdExtServiceLevelPartHourHandler.setServiceLevelTypeEnums(properties.getAcdStat().getServiceLevelTypeEnums());
+        acdExtTerminalDailyHandler.setEnabled(properties.getAcdStat().isExtTerminalDailyEnabled());
+        acdExtTerminalPart15MinHandler.setEnabled(properties.getAcdStat().isExtTerminal15minEnabled());
+        acdExtTerminalPart30MinHandler.setEnabled(properties.getAcdStat().isExtTerminal30minEnabled());
+        acdExtTerminalPartHourHandler.setEnabled(properties.getAcdStat().isExtTerminalHourEnabled());
 
         if (!CollectionUtils.isEmpty(properties.getAcdStat().getServiceLevelTypeEnums())) {
             properties.getAcdStat().getServiceLevelTypeEnums().sort(Comparator.comparingInt(ServiceLevelTypeEnum::getServiceLevel));
@@ -173,6 +189,10 @@ public class DefaultDataServiceConfiguration {
                     .handler(acdExtServiceLevelPart15MinHandler)
                     .handler(acdExtServiceLevelPart30MinHandler)
                     .handler(acdExtServiceLevelPartHourHandler)
+                    .handler(acdExtTerminalDailyHandler)
+                    .handler(acdExtTerminalPart15MinHandler)
+                    .handler(acdExtTerminalPart30MinHandler)
+                    .handler(acdExtTerminalPartHourHandler)
                     .end()
                 .processor(mongoProcessor)
                     .mq(properties.getMq().trans())
