@@ -15,7 +15,6 @@ import java.util.List;
 
 import static com.juphoon.rtc.datacenter.api.EventType.*;
 
-
 /**
  * <p>jrtc_acd_agentop_stat_daily表的handler类</p>
  * <p>描述请遵循 javadoc 规范</p>
@@ -56,7 +55,6 @@ public class AcdAgentOpStatDailyHandler extends AbstractAcdStatHandler<AcdAgentO
 
     @Override
     public AcdAgentOpStatDailyPO selectByUnique(AcdAgentOpStatDailyPO po) {
-        // TODO 加个缓存，先从缓存中查询
         return acdAgentOpStatDailyMapper.selectByUniqueKey(po.getUniqueKey());
     }
 

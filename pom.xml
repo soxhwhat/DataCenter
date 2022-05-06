@@ -29,7 +29,7 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>6.1.0</cube-starter.version>
+        <cube-starter.version>6.1.1</cube-starter.version>
         <iron-utils.version>2.0.1</iron-utils.version>
         <ironCommon.version>1.1.1</ironCommon.version>
         <disruptor.version>3.4.2</disruptor.version>

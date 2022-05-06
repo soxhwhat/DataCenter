@@ -54,7 +54,6 @@ public class AcdCallInfoStatDailyHandler extends AbstractAcdStatHandler<AcdCallI
 
     @Override
     public AcdCallInfoStatDailyPO selectByUnique(AcdCallInfoStatDailyPO po) {
-        // TODO 加个缓存，先从缓存中查询
         return acdCallInfoStatDailyMapper.selectByUniqueKey(po.getUniqueKey());
     }
 

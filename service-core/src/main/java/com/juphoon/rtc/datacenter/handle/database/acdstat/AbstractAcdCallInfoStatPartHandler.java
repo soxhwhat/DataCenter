@@ -1,14 +1,11 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
 import com.juphoon.rtc.datacenter.api.Event;
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.StatType;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdCallInfoStatPartPO;
 import com.juphoon.rtc.datacenter.mapper.AcdCallInfoStatPartMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +46,6 @@ public abstract class AbstractAcdCallInfoStatPartHandler extends AbstractAcdStat
 
     @Override
     public int insertSelective(AcdCallInfoStatPartPO po) {
-        // TODO 加个缓存，先从缓存中查询
         return acdCallInfoStatPartMapper.insertSelective(po);
     }
 

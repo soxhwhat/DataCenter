@@ -27,7 +27,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.TICKER_EVENT_RING;
  */
 @Slf4j
 @Component
-public abstract class AbstractAcdExtServiceLevelHandler extends AbstractAcdStatHandler<AcdExtServiceLevelPO> {
+public abstract class AbstractAcdExtServiceLevelHandler<T extends AcdExtServiceLevelPO> extends AbstractAcdStatHandler<T> {
 
     /**
      * 多少时间内接通量
@@ -43,7 +43,7 @@ public abstract class AbstractAcdExtServiceLevelHandler extends AbstractAcdStatH
     }
 
     @Override
-    public boolean handle(EventContext ec, AcdExtServiceLevelPO po) {
+    public boolean handle(EventContext ec, T po) {
         // 非正常结束不处理
         if (ec.getEvent().isEndWithException()) {
             return true;
@@ -76,8 +76,7 @@ public abstract class AbstractAcdExtServiceLevelHandler extends AbstractAcdStatH
         return true;
     }
 
-    private AcdExtServiceLevelPO inTimeCompare(AcdExtServiceLevelPO po, Long incomingTimestamp, Long endTimestamp,
-                                                     List<ServiceLevelTypeEnum> serviceLevelTypeEnums) {
+    private T inTimeCompare(T po, Long incomingTimestamp, Long endTimestamp, List<ServiceLevelTypeEnum> serviceLevelTypeEnums) {
         for (ServiceLevelTypeEnum serviceLevelTypeEnum : serviceLevelTypeEnums) {
             if (endTimestamp - incomingTimestamp <= serviceLevelTypeEnum.getInTime()) {
                 po.setServiceLevel(serviceLevelTypeEnum.getServiceLevel());

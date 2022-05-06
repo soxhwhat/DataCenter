@@ -27,11 +27,6 @@
     from jrtc_acd_ext_ser_level_daily
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from jrtc_acd_ext_ser_level_daily
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtServiceLevelDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_ext_ser_level_daily (gmt_created, gmt_modified, domain_id,

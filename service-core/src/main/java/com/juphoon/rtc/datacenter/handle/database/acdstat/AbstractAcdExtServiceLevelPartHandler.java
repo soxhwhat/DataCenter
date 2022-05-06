@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
 import com.juphoon.rtc.datacenter.api.Event;
-import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtServiceLevelPO;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtServiceLevelPartPO;
 import com.juphoon.rtc.datacenter.mapper.AcdExtServiceLevelPartMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public abstract class AbstractAcdExtServiceLevelPartHandler extends AbstractAcdExtServiceLevelHandler {
+public abstract class AbstractAcdExtServiceLevelPartHandler extends AbstractAcdExtServiceLevelHandler<AcdExtServiceLevelPartPO> {
 
     @Autowired
     private AcdExtServiceLevelPartMapper acdExtServiceLevelPartMapper;
@@ -31,21 +30,17 @@ public abstract class AbstractAcdExtServiceLevelPartHandler extends AbstractAcdE
     }
 
     @Override
-    public AcdExtServiceLevelPartPO selectByUnique(AcdExtServiceLevelPO po) {
+    public AcdExtServiceLevelPartPO selectByUnique(AcdExtServiceLevelPartPO po) {
         return acdExtServiceLevelPartMapper.selectByUniqueKey(po.getUniqueKey());
     }
 
     @Override
-    public int insertSelective(AcdExtServiceLevelPO po) {
-        if (po instanceof AcdExtServiceLevelPartPO) {
-            return acdExtServiceLevelPartMapper.insertSelective((AcdExtServiceLevelPartPO) po);
-        }
-
-        throw new RuntimeException("invalid object");
+    public int insertSelective(AcdExtServiceLevelPartPO po) {
+        return acdExtServiceLevelPartMapper.insertSelective(po);
     }
 
     @Override
-    public void updateByUniqueKey(AcdExtServiceLevelPO po) {
+    public void updateByUniqueKey(AcdExtServiceLevelPartPO po) {
         acdExtServiceLevelPartMapper.updateAddValueByUniqueKey(po.getUniqueKey(), po.getCnt());
     }
 

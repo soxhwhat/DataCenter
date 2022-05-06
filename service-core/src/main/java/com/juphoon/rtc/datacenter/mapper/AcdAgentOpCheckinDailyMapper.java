@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpCheckinDailyPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>jrtc_acd_agentop_checkin_daily表的mapper类</p>
@@ -14,7 +15,7 @@ import org.apache.ibatis.annotations.Param;
  * @since 2022/3/10 11:49
  */
 @Mapper
-@SuppressWarnings("PMD")
+@Component
 public interface AcdAgentOpCheckinDailyMapper extends BaseMapper<AcdAgentOpCheckinDailyPO> {
     /**
      * insert record to table selective

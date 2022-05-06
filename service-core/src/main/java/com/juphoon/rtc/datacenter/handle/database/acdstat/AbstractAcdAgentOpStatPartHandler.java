@@ -48,7 +48,6 @@ public abstract class AbstractAcdAgentOpStatPartHandler extends AbstractAcdStatH
 
     @Override
     public int insertSelective(AcdAgentOpStatPartPO po) {
-        // TODO 加个缓存，先从缓存中查询
         return acdAgentOpStatPartMapper.insertSelective(po);
     }
 
