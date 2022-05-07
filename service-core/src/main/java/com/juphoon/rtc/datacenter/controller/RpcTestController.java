@@ -62,6 +62,7 @@ public class RpcTestController {
         event.domainId = 100645;
         event.type = 1000;
         event.eventNumber = number;
+        event.timestamp = System.currentTimeMillis();
         Map<String, String> objectObjectHashMap = new HashMap<>();
         objectObjectHashMap.put("key","value");
         String s = IronJsonUtils.objectToJson(objectObjectHashMap);

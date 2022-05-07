@@ -59,6 +59,7 @@ public abstract class AbstractMongoHandler extends AbstractEventHandler {
         eventMapPo.setDomainId(event.domainId());
         eventMapPo.setAppId(event.appId());
         eventMapPo.setType(event.eventType());
+        eventMapPo.setTimestamp(event.timestamp());
         return eventMapPo;
     }
 

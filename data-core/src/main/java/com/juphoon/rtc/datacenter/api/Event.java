@@ -45,6 +45,11 @@ public class Event {
     private final Integer number;
 
     /**
+     * 时间戳
+     */
+    private final Long timestamp;
+
+    /**
      * 其他参数
      */
     private final Map<String, Object> params;
@@ -58,13 +63,14 @@ public class Event {
         return new Builder();
     }
 
-    public Event(Integer domainId, Integer appId, String uuid, Integer type, Integer number, Map<String, Object> params) {
+    public Event(Integer domainId, Integer appId, String uuid, Integer type, Integer number, Long timestamp, Map<String, Object> params) {
         this.domainId = domainId;
         this.appId = appId;
         this.uuid = uuid;
         this.type = type;
         this.number = number;
         this.params = params;
+        this.timestamp = timestamp;
     }
 
     public static class Builder {
@@ -77,6 +83,8 @@ public class Event {
         private Integer type;
 
         private Integer number;
+
+        private Long timestamp;
 
         private Map<String, Object> params;
 
@@ -115,6 +123,11 @@ public class Event {
             return this;
         }
 
+        public Builder timestamp(final Long timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
         public Builder params(final Map<String, Object> params) {
             this.params = params;
             return this;
@@ -126,7 +139,7 @@ public class Event {
             assert null != type : "eventType 不能为空";
             assert null != number : "eventNumber 不能为空";
 
-            return new Event(domainId, appId, uuid, type, number, params);
+            return new Event(domainId, appId, uuid, type, number, timestamp, params);
         }
     }
 
@@ -184,6 +197,10 @@ public class Event {
      */
     public long beginTimestamp() {
         return (long) params.get("beginTimestamp");
+    }
+
+    public Long timestamp() {
+        return timestamp;
     }
 
     /**

@@ -11,6 +11,7 @@ import com.juphoon.rtc.datacenter.handle.kafka.TicketKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdRecordEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.MdEventMongoHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
@@ -103,6 +104,8 @@ public class B03DataServiceConfiguration {
     @Autowired
     private TicketKafkaHandler ticketKafkaHandler;
 
+    @Autowired
+    private MdEventMongoHandler mdEventMongoHandler;
 
     @SuppressWarnings("PMD")
     @Bean
@@ -142,6 +145,7 @@ public class B03DataServiceConfiguration {
         acdTicketEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdTicketEventEnabled());
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
         acdRecordEventMongoHandler.setEnabled(true);
+        mdEventMongoHandler.setEnabled(properties.getMongoEvent().isMdEventEnabled());
 
         //事件写入kafka
         KafkaProcessor kafkaProcessor = beanFactory.getBean(KafkaProcessor.class);
@@ -177,6 +181,7 @@ public class B03DataServiceConfiguration {
                     .handler(acdEventMongoHandler)
                     .handler(acdTicketEventMongoHandler)
                     .handler(acdRecordEventMongoHandler)
+                    .handler(mdEventMongoHandler)
                     .end()
                 .processor(kafkaProcessor)
                     .mq(kafkaConfig)

@@ -82,6 +82,7 @@ public class EventCollectionServerProcess {
                 .appId((int) from.appId)
                 .type(from.type)
                 .number(from.eventNumber)
+                .timestamp(from.timestamp)
                 .params(params)
                 .uuid(from.uuid)
                 .build();
