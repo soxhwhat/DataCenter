@@ -30,6 +30,11 @@ public enum ProcessorId {
     KAFKA("kafkaProcessor", "Kafka事件推送"),
 
     /**
+     * 状态redis入库
+     */
+    REDIS("redisProcessor", "Redis状态记录"),
+
+    /**
      * 测试
      */
     TEST("testProcessor", "测试处理器");

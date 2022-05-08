@@ -1,18 +1,18 @@
 package com.juphoon.rtc.datacenter.handle.kafka;
 
+import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.entity.FlowTicket;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.api.EventType.*;
+import static com.juphoon.rtc.datacenter.api.EventType.STAFF_BEAT;
 
 /**
  * 坐席状态上报处理器
@@ -41,6 +41,15 @@ public class StaffStatusKafkaHandler extends AbstractKafkaHandler {
 
     @Override
     Object getData(EventContext ec) {
-        return ec.getEvent();
+        Event event = ec.getEvent();
+        FlowTicket flowTicket = new FlowTicket();
+        flowTicket.setStatus(event.getNumber());
+        flowTicket.setAppId(String.valueOf(event.appId()));
+        flowTicket.setDomainId(String.valueOf(event.domainId()));
+        flowTicket.setParams(new Document(event.getParams()));
+        flowTicket.setType(event.eventType());
+        flowTicket.setUniqueId(event.getUuid());
+        flowTicket.setUpdateTime(System.currentTimeMillis());
+        return flowTicket;
     }
 }

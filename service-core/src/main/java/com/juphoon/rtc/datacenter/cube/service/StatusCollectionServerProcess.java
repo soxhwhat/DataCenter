@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -27,24 +28,49 @@ public class StatusCollectionServerProcess {
     @Autowired
     private IEventRouter eventRouter;
 
-    public boolean process(ServerCall serverCall, List<FlowStatusJson> statusList) {
-        String magic = binaryToHexString(serverCall.getMagic());
-        log.debug("magic:{}", magic);
-
+    public boolean process(ServerCall serverCall, List<FlowStatusJson> status) {
         boolean ret = true;
         try {
-            if (null == statusList || statusList.isEmpty()) {
-                log.warn("empty");
-                throw new IllegalArgumentException("eventListIsEmpty");
-            }
-            String host = serverCall.getParam("host");
-            List<EventContext> eventContexts = trans(statusList, host, magic);
-            eventRouter.router(eventContexts);
+
+            EventContext ec = trans(status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
+            eventRouter.router(Arrays.asList(ec));
         } catch (Exception e) {
             ret = false;
             serverCall.setReason(e.getMessage());
         }
         return ret;
+    }
+
+    public boolean process(ServerCall serverCall, FlowStatusJson status) {
+        boolean ret = true;
+        try {
+            EventContext ec = trans(status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
+            eventRouter.router(Arrays.asList(ec));
+        } catch (Exception e) {
+            ret = false;
+            serverCall.setReason(e.getMessage());
+        }
+        return ret;
+    }
+
+
+    /**
+     * 转换
+     * @param from
+     * @param host
+     * @param magic
+     * @return
+     * @throws JsonProcessingException
+     */
+    private EventContext trans(FlowStatusJson from, String host, String magic) throws
+            JsonProcessingException {
+        Event t = trans(from);
+        EventContext ec = new EventContext();
+        ec.setRequestId(UUID.randomUUID().toString());
+        ec.setEvent(t);
+        ec.setFrom(host);
+        ec.setMagic(magic);
+        return ec;
     }
 
     /**
@@ -55,21 +81,15 @@ public class StatusCollectionServerProcess {
      * @return
      * @throws JsonProcessingException
      */
-    private List<EventContext> trans(List<FlowStatusJson> from, String host, String magic) throws
+    private EventContext trans(List<FlowStatusJson> from, String host, String magic) throws
             JsonProcessingException {
-        List<EventContext> ret = new ArrayList<>();
-
-        for (FlowStatusJson f : from) {
-            Event t = trans(f);
-            EventContext ec = new EventContext();
-            ec.setRequestId(UUID.randomUUID().toString());
-            ec.setEvent(t);
-            ec.setFrom(host);
-            ec.setMagic(magic);
-            ret.add(ec);
+        EventContext ec = trans(from.get(0),host,magic);
+        List<Event> events = new ArrayList<>();
+        for (FlowStatusJson f : from){
+            events.add(trans(f));
         }
-
-        return ret;
+        ec.setEventList(events);
+        return ec;
     }
 
     /**
@@ -90,7 +110,7 @@ public class StatusCollectionServerProcess {
                 .domainId((int) from.getDomainId())
                 .appId((int) from.getAppId())
                 .type(from.getType())
-                .number(0)
+                .number(from.getStatus())
                 .params(params)
                 .uuid(from.getUniqueId())
                 .build();

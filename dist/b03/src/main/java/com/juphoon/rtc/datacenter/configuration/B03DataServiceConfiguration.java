@@ -11,11 +11,16 @@ import com.juphoon.rtc.datacenter.handle.kafka.TicketKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdRecordEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.redis.QueueCallRedisHandle;
+import com.juphoon.rtc.datacenter.handle.redis.QueueWaitRedisHandle;
+import com.juphoon.rtc.datacenter.handle.redis.StaffRedisHandle;
+import com.juphoon.rtc.datacenter.handle.redis.StaffRemoveRedisHandle;
 import com.juphoon.rtc.datacenter.handle.mongo.MdEventMongoHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
+import com.juphoon.rtc.datacenter.processor.RedisProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
@@ -105,6 +110,14 @@ public class B03DataServiceConfiguration {
     private TicketKafkaHandler ticketKafkaHandler;
 
     @Autowired
+    private QueueWaitRedisHandle queueWaitRedisHandle;
+
+    @Autowired
+    private StaffRedisHandle staffRedisHandle;
+    @Autowired
+    private StaffRemoveRedisHandle staffRemoveRedisHandle;
+
+    @Autowired
     private MdEventMongoHandler mdEventMongoHandler;
 
     @SuppressWarnings("PMD")
@@ -155,6 +168,15 @@ public class B03DataServiceConfiguration {
         staffStatusKafkaHandler.setEnabled(properties.getKafkaEvent().isStaffEnabled());
         ticketKafkaHandler.setEnabled(properties.getKafkaEvent().isTicketEnabled());
 
+        //事件写入redis
+        RedisProcessor redisProcessor = beanFactory.getBean(RedisProcessor.class);
+        redisProcessor.setProcessorId(ProcessorId.REDIS);
+        redisProcessor.setEnabled(properties.getRedisEvent().isEnabled());
+        queueWaitRedisHandle.setEnabled(properties.getRedisEvent().isQueueEnabled());
+        staffRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
+        staffRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
+        staffRemoveRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
+
         EventQueueConfig kafkaConfig = new DataCenterProperties.Mq().trans();
         kafkaConfig.setType(JrtcDataCenterConstant.DATA_CENTER_QUEUE_MODE_DISRUPTOR);
         //@formatter:off
@@ -188,6 +210,12 @@ public class B03DataServiceConfiguration {
                     .handler(queueStatusKafkaHandler)
                     .handler(ticketKafkaHandler)
                     .handler(staffStatusKafkaHandler)
+                    .end()
+                .processor(redisProcessor)
+                    .mq(properties.getMq().trans())
+                    .handler(staffRedisHandle)
+                    .handler(staffRemoveRedisHandle)
+                    .handler(queueWaitRedisHandle)
                     .end()
                 .build();
         //@formatter:on

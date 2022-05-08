@@ -1,6 +1,8 @@
 package com.juphoon.rtc.datacenter.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -17,6 +19,7 @@ import java.util.UUID;
  * @Description:
  */
 @Setter
+@Getter
 @ToString
 public class Event {
     /**
@@ -48,6 +51,11 @@ public class Event {
      * 时间戳
      */
     private final Long timestamp;
+
+    /**
+     * 更新时间
+     */
+    private final Long updateTime = System.currentTimeMillis();
 
     /**
      * 其他参数
@@ -175,6 +183,7 @@ public class Event {
      *
      * @return
      */
+    @JsonIgnore
     public Map<String, Object> getParamsCopy() {
         if (null == params) {
             return new HashMap<>(0);

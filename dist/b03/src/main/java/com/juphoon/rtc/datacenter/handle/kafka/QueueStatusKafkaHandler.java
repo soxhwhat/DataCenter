@@ -1,18 +1,19 @@
 package com.juphoon.rtc.datacenter.handle.kafka;
 
+import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.entity.FlowTicket;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.api.EventType.*;
+import static com.juphoon.rtc.datacenter.api.EventType.QUEUE_WAIT_BEAT;
 
 /**
  * 队列状态上报处理器
@@ -41,6 +42,18 @@ public class QueueStatusKafkaHandler extends AbstractKafkaHandler {
 
     @Override
     Object getData(EventContext ec) {
-        return ec.getEventList();
+        List<FlowTicket> flows = new ArrayList<>();
+        for(Event event : ec.getEventList()){
+            FlowTicket flowTicket = new FlowTicket();
+            flowTicket.setStatus(event.eventNumber());
+            flowTicket.setAppId(String.valueOf(event.appId()));
+            flowTicket.setDomainId(String.valueOf(event.domainId()));
+            flowTicket.setParams(new Document(event.getParams()));
+            flowTicket.setType(event.eventType());
+            flowTicket.setUniqueId(event.getUuid());
+            flowTicket.setUpdateTime(System.currentTimeMillis());
+            flows.add(flowTicket);
+        }
+        return flows;
     }
 }

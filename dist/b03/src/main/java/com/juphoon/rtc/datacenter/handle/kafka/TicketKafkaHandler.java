@@ -1,20 +1,15 @@
 package com.juphoon.rtc.datacenter.handle.kafka;
 
+import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
-import com.juphoon.rtc.datacenter.handle.mongo.AbstractMongoHandler;
+import com.juphoon.rtc.datacenter.entity.EventExt;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static com.juphoon.rtc.datacenter.api.EventType.*;
@@ -28,6 +23,9 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 @Slf4j
 @Component
 public class TicketKafkaHandler extends AbstractKafkaHandler {
+
+    @Autowired
+    private EventDaoImpl eventDao;
 
     @Override
     public List<EventType> careEvents() {
@@ -50,6 +48,19 @@ public class TicketKafkaHandler extends AbstractKafkaHandler {
 
     @Override
     Object getData(EventContext ec) {
-        return ec.getEvent();
+        Event event = ec.getEvent();
+        EventExt eventExt = new EventExt();
+        eventExt.setEventNumber(event.eventNumber());
+        eventExt.setAppId(event.appId());
+        eventExt.setDomainId(event.domainId());
+        eventExt.setType(event.eventType());
+        eventExt.setTimestamp(event.beginTimestamp());
+        eventExt.setUuid(event.getUuid());
+        eventExt.setParams(event.getParams());
+        Object callId = event.getParams().get("callId");
+        if (callId != null) {
+            eventExt.setExt(eventDao.getRelationEventList((String) callId));
+        }
+        return Arrays.asList(eventExt);
     }
 }

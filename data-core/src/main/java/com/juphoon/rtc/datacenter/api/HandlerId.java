@@ -182,17 +182,37 @@ public enum HandlerId {
     AcdRecordEventMongoHandler("acdRecordEventMongoHandler", "客服事件mongodb入库handler"),
 
     /**
-     *
+     * 队列状态kafka处理handler
      */
     QueueStatusKafkaHandler("queueStatusKafkaHandler", "队列状态kafka事件Handler"),
     /**
-     *
+     * 坐席状态kafka处理handler
      */
     StaffStatusKafkaHandler("staffStatusKafkaHandler", "坐席状态kafka事件Handler"),
     /**
-     *
+     * 话单kafka处理handler
      */
     TicketKafkaHandler("ticketKafkaHandler", "话单kafka事件Handler"),
+    /**
+     * 坐席状态redis处理handler
+     */
+    StaffRedisHandler("staffRedisHandler", "坐席状态redis处理handler"),
+    /**
+     * 删除坐席状态redis处理handler
+     */
+    StaffRemoveRedisHandler("staffRemoveRedisHandler", "删除坐席状态redis处理handler"),
+    /**
+     * 队列排队redis处理handler
+     */
+    QueueWaitRedisHandler("queueWaitRedisHandler", "队列排队redis处理handler"),
+    /**
+     * 队列通话redis处理handler
+     */
+    QueueCallRedisHandler("queueCallRedisHandler", "队列通话redis处理handler"),
+    /**
+     * 队列振铃redis处理handler
+     */
+    QueueRingRedisHandler("queueRingRedisHandler", "队列振铃redis处理handler"),
 
 
     /**

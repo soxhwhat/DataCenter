@@ -37,6 +37,11 @@ public class EventContext {
      */
     @NotNull
     private Event event;
+    /**
+     * 消息体列表（提供给部分需要批量处理的handler）
+     */
+    @NotNull
+    private List<Event> eventList;
 
     /**
      * 创建时间
@@ -135,6 +140,7 @@ public class EventContext {
                 .add("requestId='" + requestId + "'")
                 .add("processorId='" + processorId + "'")
                 .add("event=" + event)
+                .add("eventList=" + eventList)
                 .add("createdTimestamp=" + createdTimestamp)
                 .add("beginTimestamp=" + beginTimestamp)
                 .add("redoHandlerIds=" + redoHandlerIds)

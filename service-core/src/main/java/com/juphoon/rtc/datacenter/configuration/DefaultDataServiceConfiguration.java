@@ -6,9 +6,12 @@ import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.redis.QueueWaitRedisHandle;
+import com.juphoon.rtc.datacenter.handle.redis.StaffRedisHandle;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
+import com.juphoon.rtc.datacenter.processor.RedisProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
@@ -99,6 +102,12 @@ public class DefaultDataServiceConfiguration {
     @Autowired
     private AcdExtTerminalPartHourHandler acdExtTerminalPartHourHandler;
 
+    @Autowired
+    private StaffRedisHandle staffRedisHandle;
+
+    @Autowired
+    private QueueWaitRedisHandle queueWaitRedisHandle;
+
     @SuppressWarnings("PMD")
     @Bean
     @ConditionalOnMissingBean
@@ -157,6 +166,11 @@ public class DefaultDataServiceConfiguration {
         acdTicketEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdTicketEventEnabled());
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
         // TODO 补充其他
+        RedisProcessor redisProcessor = beanFactory.getBean(RedisProcessor.class);
+        redisProcessor.setProcessorId(ProcessorId.REDIS);
+        mongoProcessor.setEnabled(properties.getRedisEvent().isEnabled());
+        staffRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
+        queueWaitRedisHandle.setEnabled(properties.getRedisEvent().isQueueEnabled());
 
         //@formatter:off
         return DataServiceBuilder.processors()

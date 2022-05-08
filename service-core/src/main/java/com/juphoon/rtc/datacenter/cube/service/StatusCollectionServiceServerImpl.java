@@ -48,7 +48,7 @@ public class StatusCollectionServiceServerImpl  extends AbstractCubeService {
             @Override
             public void putStatusJson2_begin(ServerCall call, String topic, FlowStatusJson flow) throws Exception {
                 log.info("状态数据上报:{}",flow);
-                putStatusJson2_end(call, serverProcess.process(call, Arrays.asList(flow)));
+                putStatusJson2_end(call, serverProcess.process(call, flow));
             }
         };
     }

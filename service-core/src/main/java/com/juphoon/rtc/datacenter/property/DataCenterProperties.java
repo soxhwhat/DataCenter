@@ -35,6 +35,8 @@ public class DataCenterProperties {
 
     private KafkaEvent kafkaEvent = new KafkaEvent();
 
+    private RedisEvent redisEvent = new RedisEvent();
+
     /**
      * 赞同
      */
@@ -228,6 +230,24 @@ public class DataCenterProperties {
          * 话单事件开关
          */
         private boolean ticketEnabled = true;
+
+        /**
+         * 话单事件开关
+         */
+        private boolean queueEnabled = true;
+    }
+
+    @Data
+    public static class RedisEvent {
+        /**
+         * redis事件开关
+         */
+        private boolean enabled = true;
+
+        /**
+         * 客服事件开关
+         */
+        private boolean staffEnabled = true;
 
         /**
          * 话单事件开关

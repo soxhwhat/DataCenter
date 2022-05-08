@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.handle.kafka;
 
+import com.juphoon.iron.component.utils.IronJsonUtils;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
@@ -27,7 +28,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 public abstract class AbstractKafkaHandler extends AbstractEventHandler {
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    protected KafkaTemplate kafkaTemplate;
 
     @Autowired
     protected KafkaProperties kafkaProperties;
@@ -36,8 +37,9 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
     public boolean handle(EventContext ec) {
         try {
             String topic = getTopic(ec);
-            log.info("ec:{},topic:{}", ec, topic);
-            kafkaTemplate.send(topic, ec.getEvent().toString()).get();
+            String json = IronJsonUtils.objectToJson(getData(ec));
+            log.info("ec:{},topic:{},json:{}", ec.body(), topic,json);
+            kafkaTemplate.send(topic, json).get();
         } catch (KafkaException kafkaException) {
             return false;
         } catch (ExecutionException e) {
@@ -56,4 +58,12 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
      * @return
      */
     abstract String getTopic(EventContext ec);
+
+    /**
+     * 获取数据
+     * @param ec
+     * @return
+     */
+    abstract Object getData(EventContext ec);
+
 }
