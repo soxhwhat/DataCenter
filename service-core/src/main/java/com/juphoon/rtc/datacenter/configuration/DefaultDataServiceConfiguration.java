@@ -6,8 +6,8 @@ import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
-import com.juphoon.rtc.datacenter.handle.redis.QueueWaitRedisHandle;
-import com.juphoon.rtc.datacenter.handle.redis.StaffRedisHandle;
+import com.juphoon.rtc.datacenter.handle.mongo.LogMongoHandler;
+import com.juphoon.rtc.datacenter.handle.redis.*;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.HttpClientEventProcessor;
 import com.juphoon.rtc.datacenter.processor.MongoProcessor;
@@ -106,7 +106,19 @@ public class DefaultDataServiceConfiguration {
     private StaffRedisHandle staffRedisHandle;
 
     @Autowired
+    private StaffRemoveRedisHandle staffRemoveRedisHandle;
+
+    @Autowired
     private QueueWaitRedisHandle queueWaitRedisHandle;
+
+    @Autowired
+    private QueueCallRedisHandle queueCallRedisHandle;
+
+    @Autowired
+    private QueueRingRedisHandle queueRingRedisHandle;
+
+    @Autowired
+    private LogMongoHandler logMongoHandler;
 
     @SuppressWarnings("PMD")
     @Bean
@@ -165,12 +177,17 @@ public class DefaultDataServiceConfiguration {
         mongoProcessor.setEnabled(properties.getMongoEvent().isEnabled());
         acdTicketEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdTicketEventEnabled());
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
+        logMongoHandler.setEnabled(properties.getMongoEvent().isLogEventEnabled());
+
         // TODO 补充其他
         RedisProcessor redisProcessor = beanFactory.getBean(RedisProcessor.class);
         redisProcessor.setProcessorId(ProcessorId.REDIS);
         mongoProcessor.setEnabled(properties.getRedisEvent().isEnabled());
         staffRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
+        staffRemoveRedisHandle.setEnabled(properties.getRedisEvent().isStaffEnabled());
         queueWaitRedisHandle.setEnabled(properties.getRedisEvent().isQueueEnabled());
+        queueCallRedisHandle.setEnabled(properties.getRedisEvent().isQueueEnabled());
+        queueRingRedisHandle.setEnabled(properties.getRedisEvent().isQueueEnabled());
 
         //@formatter:off
         return DataServiceBuilder.processors()
@@ -212,6 +229,16 @@ public class DefaultDataServiceConfiguration {
                     .mq(properties.getMq().trans())
                     .handler(acdEventMongoHandler)
                     .handler(acdTicketEventMongoHandler)
+                    .handler(logMongoHandler)
+//                    .handler(theaMongoHandler)
+                    .end()
+                .processor(redisProcessor)
+                    .mq(properties.getMq().trans())
+                    .handler(queueCallRedisHandle)
+                    .handler(queueWaitRedisHandle)
+                    .handler(queueRingRedisHandle)
+                    .handler(staffRedisHandle)
+                    .handler(staffRemoveRedisHandle)
 //                    .handler(theaMongoHandler)
                     .end()
                 .build();

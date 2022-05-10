@@ -8,13 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.accepter.IEventRouter;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
+import javax.activation.UnsupportedDataTypeException;
 import java.util.*;
+
+import static com.juphoon.rtc.datacenter.cube.service.AbstractServerProcess.binaryToHexString;
 
 /**
  * @Author: Zhiwei.zhai
@@ -28,11 +29,17 @@ public class StatusCollectionServerProcess {
     @Autowired
     private IEventRouter eventRouter;
 
-    public boolean process(ServerCall serverCall, List<FlowStatusJson> status) {
+    public boolean process(ServerCall serverCall, Object status) {
         boolean ret = true;
         try {
-
-            EventContext ec = trans(status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
+            EventContext ec = null;
+            if (status instanceof FlowStatusJson) {
+                ec = trans((FlowStatusJson) status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
+            } else if (status instanceof List) {
+                ec = trans((List<FlowStatusJson>) status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
+            } else {
+                throw new UnsupportedDataTypeException("status 类型错误");
+            }
             eventRouter.router(Arrays.asList(ec));
         } catch (Exception e) {
             ret = false;
@@ -40,22 +47,10 @@ public class StatusCollectionServerProcess {
         }
         return ret;
     }
-
-    public boolean process(ServerCall serverCall, FlowStatusJson status) {
-        boolean ret = true;
-        try {
-            EventContext ec = trans(status, serverCall.getParam("host"), binaryToHexString(serverCall.getMagic()));
-            eventRouter.router(Arrays.asList(ec));
-        } catch (Exception e) {
-            ret = false;
-            serverCall.setReason(e.getMessage());
-        }
-        return ret;
-    }
-
 
     /**
      * 转换
+     *
      * @param from
      * @param host
      * @param magic
@@ -75,6 +70,7 @@ public class StatusCollectionServerProcess {
 
     /**
      * 转换
+     *
      * @param from
      * @param host
      * @param magic
@@ -83,9 +79,9 @@ public class StatusCollectionServerProcess {
      */
     private EventContext trans(List<FlowStatusJson> from, String host, String magic) throws
             JsonProcessingException {
-        EventContext ec = trans(from.get(0),host,magic);
+        EventContext ec = trans(from.get(0), host, magic);
         List<Event> events = new ArrayList<>();
-        for (FlowStatusJson f : from){
+        for (FlowStatusJson f : from) {
             events.add(trans(f));
         }
         ec.setEventList(events);
@@ -95,6 +91,7 @@ public class StatusCollectionServerProcess {
     /**
      * 类型转换
      * TODO 严格的参数类型检查
+     *
      * @param from
      * @return
      * @throws JsonProcessingException
@@ -114,21 +111,6 @@ public class StatusCollectionServerProcess {
                 .params(params)
                 .uuid(from.getUniqueId())
                 .build();
-    }
-
-    private static final String HEX_STR = "0123456789ABCDEF";
-
-    private static String binaryToHexString(byte[] bytes) {
-        StringBuilder result = new StringBuilder();
-        String hex;
-        for (byte aByte : bytes) {
-            //字节高4位
-            hex = String.valueOf(HEX_STR.charAt((aByte & 0xF0) >> 4));
-            //字节低4位
-            hex += String.valueOf(HEX_STR.charAt(aByte & 0x0F));
-            result.append(hex);
-        }
-        return result.toString();
     }
 
 }

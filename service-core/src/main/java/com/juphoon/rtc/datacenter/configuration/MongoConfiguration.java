@@ -68,4 +68,20 @@ public class MongoConfiguration {
     public MongoTemplate mdEventMongoTemplate() {
         return new MongoTemplate(mdEventMongodbFactory(getMdEventProperties()));
     }
+
+    @Bean("logEventMongoProperties")
+    @ConfigurationProperties(prefix = "log.spring.data.mongodb")
+    public MongoProperties getLogEventProperties() {
+        return new MongoProperties();
+    }
+
+    @Bean("logMongodbFactory")
+    public MongoDatabaseFactory logEventMongodbFactory(MongoProperties properties) {
+        return new SimpleMongoClientDatabaseFactory(properties.getUri());
+    }
+
+    @Bean("logMongoTemplate")
+    public MongoTemplate logEventMongoTemplate() {
+        return new MongoTemplate(logEventMongodbFactory(getLogEventProperties()));
+    }
 }

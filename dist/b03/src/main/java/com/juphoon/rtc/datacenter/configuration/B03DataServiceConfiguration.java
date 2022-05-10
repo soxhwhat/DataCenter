@@ -8,14 +8,11 @@ import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.QueueStatusKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.StaffStatusKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.TicketKafkaHandler;
-import com.juphoon.rtc.datacenter.handle.mongo.AcdEventMongoHandler;
-import com.juphoon.rtc.datacenter.handle.mongo.AcdRecordEventMongoHandler;
-import com.juphoon.rtc.datacenter.handle.mongo.AcdTicketEventMongoHandler;
+import com.juphoon.rtc.datacenter.handle.mongo.*;
 import com.juphoon.rtc.datacenter.handle.redis.QueueCallRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.QueueWaitRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.StaffRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.StaffRemoveRedisHandle;
-import com.juphoon.rtc.datacenter.handle.mongo.MdEventMongoHandler;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
 import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
@@ -120,6 +117,9 @@ public class B03DataServiceConfiguration {
     @Autowired
     private MdEventMongoHandler mdEventMongoHandler;
 
+    @Autowired
+    private LogMongoHandler logMongoHandler;
+
     @SuppressWarnings("PMD")
     @Bean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
@@ -159,6 +159,7 @@ public class B03DataServiceConfiguration {
         acdEventMongoHandler.setEnabled(properties.getMongoEvent().isAcdEventEnabled());
         acdRecordEventMongoHandler.setEnabled(true);
         mdEventMongoHandler.setEnabled(properties.getMongoEvent().isMdEventEnabled());
+        logMongoHandler.setEnabled(properties.getMongoEvent().isLogEventEnabled());
 
         //事件写入kafka
         KafkaProcessor kafkaProcessor = beanFactory.getBean(KafkaProcessor.class);
@@ -204,6 +205,7 @@ public class B03DataServiceConfiguration {
                     .handler(acdTicketEventMongoHandler)
                     .handler(acdRecordEventMongoHandler)
                     .handler(mdEventMongoHandler)
+                    .handler(logMongoHandler)
                     .end()
                 .processor(kafkaProcessor)
                     .mq(kafkaConfig)

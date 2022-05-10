@@ -211,7 +211,15 @@ public class DataCenterProperties {
          */
         private boolean acdTicketEventEnabled = true;
 
+        /**
+         * 埋点事件开关
+         */
         private boolean mdEventEnabled = true;
+
+        /**
+         * 日志事件开关
+         */
+        private boolean logEventEnabled = false;
     }
 
     @Data

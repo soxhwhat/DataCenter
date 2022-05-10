@@ -20,7 +20,6 @@ public class JrtcDataCenterConstant {
     public static final int THEA_SERVER_CODE = 901;
     public static final int THEA_CLIENT_CODE = 900;
     public static final String UNDER_LINE = "_";
-    public static final String TIMESTAMP = "timestamp";
     public static final String EVENT_COLLECTION = "event_collection";
     public static final String VERSION_SOURCE = "_source";
     public static final String POINT = ".";
@@ -68,4 +67,11 @@ public class JrtcDataCenterConstant {
     public static final String DATA_CENTER_QUEUE_MODE_DISRUPTOR = "disruptor";
 
 
+    /**
+     * log日志收集
+     */
+    public static final String TIMESTAMP = "timestamp";
+    public static final String UNDERLINE_TIMESTAMP = "_timestamp";
+    public static final String UNDERLINE_VERSION_KEY = "_ver";
+    public static final Integer UNDERLINE_VERSION_VALUE = 1;
 }
