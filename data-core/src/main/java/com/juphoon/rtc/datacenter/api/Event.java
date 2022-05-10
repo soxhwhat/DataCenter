@@ -272,7 +272,7 @@ public class Event {
     }
 
     public String shift() {
-        return (String) params.getOrDefault("shift", defaultShirt());
+        return (String) (StringUtils.isEmpty(params.get("shift")) ? defaultShirt() : params.get("shift"));
     }
 
     public String agentId() {
