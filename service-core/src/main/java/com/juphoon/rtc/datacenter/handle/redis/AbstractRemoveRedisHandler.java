@@ -18,7 +18,7 @@ import java.time.Duration;
  * @update
  */
 @Slf4j
-public abstract class AbstractRemoveRedisHandler extends AbstractEventHandler {
+public abstract class AbstractRemoveRedisHandler extends AbstractRedisHandler {
 
     @Override
     public boolean handle(EventContext ec) {
@@ -32,21 +32,8 @@ public abstract class AbstractRemoveRedisHandler extends AbstractEventHandler {
             log.error("{}", e);
             return true;
         }
-        log.info("执行RedisHandle结束");
+        log.info("执行{}结束", this.getClass().getName());
         return true;
     }
 
-    /**
-     * 集合名
-     *
-     * @return
-     */
-    public abstract String keyName();
-
-    /**
-     * 获取redis模板
-     *
-     * @return
-     */
-    public abstract RedisTemplate redisTemplate();
 }

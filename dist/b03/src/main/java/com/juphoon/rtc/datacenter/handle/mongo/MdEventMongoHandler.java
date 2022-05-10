@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;

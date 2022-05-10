@@ -23,6 +23,7 @@ public class JrtcDataCenterConstant {
     public static final String EVENT_COLLECTION = "event_collection";
     public static final String VERSION_SOURCE = "_source";
     public static final String POINT = ".";
+    public static final String FROM = "from";
     public static final String TAGS = "tags";
 
     //***************** 数据库模块 bean-name ***********************************

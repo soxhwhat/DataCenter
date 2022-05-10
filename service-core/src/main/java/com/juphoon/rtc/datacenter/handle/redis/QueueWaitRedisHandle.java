@@ -43,7 +43,7 @@ public class QueueWaitRedisHandle extends AbstractBatchRedisHandler {
 
     @Override
     public String keyName() {
-        return "jrtc.queue.wait.status";
+        return "jrtc:monitor:queue:wait:status";
     }
 
     @Override
@@ -53,6 +53,6 @@ public class QueueWaitRedisHandle extends AbstractBatchRedisHandler {
 
     @Override
     public Duration expireTime() {
-        return Duration.ofSeconds(10);
+        return properties.getRedisEvent().getQueueExpireTime();
     }
 }

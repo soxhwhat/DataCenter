@@ -25,7 +25,7 @@ public class QueueCallRedisHandle extends AbstractBatchRedisHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Arrays.asList(EventType.QUEUE_WAIT_BEAT);
+        return Arrays.asList(EventType.QUEUE_CALL_BEAT);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class QueueCallRedisHandle extends AbstractBatchRedisHandler {
 
     @Override
     public String keyName() {
-        return "jrtc.queue.call.status";
+        return "jrtc:monitor:queue:call:status";
     }
 
     @Override
@@ -45,6 +45,6 @@ public class QueueCallRedisHandle extends AbstractBatchRedisHandler {
 
     @Override
     public Duration expireTime() {
-        return Duration.ofSeconds(10);
+        return properties.getRedisEvent().getQueueExpireTime();
     }
 }

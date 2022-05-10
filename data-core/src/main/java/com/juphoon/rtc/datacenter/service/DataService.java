@@ -22,6 +22,7 @@ public class DataService {
         this.processors = processors;
     }
 
+    public static final Integer LIMIT = 500;
     /**
      * 提交任务
      *
@@ -30,11 +31,15 @@ public class DataService {
      */
     public void commit(EventContext ec) {
         assert  null != ec : "ec为空";
-
-        log.info("commit ec:{}", ec.body());
+        String body = ec.body();
+        //防止输出日志太庞大
+        if (body.length() > LIMIT) {
+            body = body.substring(0 , LIMIT);
+        }
+        log.info("commit ec:{}",body);
 
         for (IEventProcessor processor : processors) {
-            log.debug("{} process ec:{}", processor.getName(), ec.body());
+            log.debug("{} process ec:{}", processor.getName(), body);
 
             /// 若是重做消息且处理器ID匹配
             if (ec.isRedoEvent() && ec.getProcessorId().equals(processor.getId())) {

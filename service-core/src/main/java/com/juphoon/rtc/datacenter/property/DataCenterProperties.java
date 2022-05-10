@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -261,6 +262,16 @@ public class DataCenterProperties {
          * 话单事件开关
          */
         private boolean queueEnabled = true;
+
+        /**
+         * 坐席过期时间
+         */
+        private Duration staffExpireTime = Duration.ofHours(2);
+
+        /**
+         * 队列过期时间
+         */
+        private Duration queueExpireTime = Duration.ofSeconds(15);
     }
 
 }

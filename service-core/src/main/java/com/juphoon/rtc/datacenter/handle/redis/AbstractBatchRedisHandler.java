@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.FROM;
+
 
 /**
  * <p>redis操作handler抽象类</p>
@@ -26,25 +28,39 @@ import java.util.stream.Collectors;
  * @update
  */
 @Slf4j
-public abstract class AbstractBatchRedisHandler extends AbstractEventHandler {
+public abstract class AbstractBatchRedisHandler extends AbstractRedisHandler {
 
+    /**
+     * 先删除再批量插入
+     * key = 队列号 + serviceId
+     *
+     * @param ec
+     * @return
+     */
     @Override
     public boolean handle(EventContext ec) {
 
         try {
             log.info("ec:{},keyName:{}", ec.body(), keyName());
             Map<String, Event> data = ec.getEventList().stream().collect(Collectors.toMap(Event::getUuid, Function.identity()));
+            //删除操作
             BoundHashOperations ops = redisTemplate().boundHashOps(keyName());
             Set keys = ops.keys();
-            if (!CollectionUtils.isEmpty(keys)){
+            if (!CollectionUtils.isEmpty(keys)) {
                 for (Object key : keys) {
                     ops.delete(key);
                 }
             }
-            data.entrySet().stream().forEach(entry ->
-                    ops.put(entry.getKey(), IronJsonUtils.objectToJson(entry.getValue()))
-            );
-            redisTemplate().boundHashOps(keyName()).expire(expireTime());
+            //插入操作
+            data.entrySet().stream().forEach(entry -> {
+                //key = 队列号 + serviceId
+                String key = entry.getKey() + ":" + entry.getValue().getParams().getOrDefault(FROM, "");
+                ops.put(key, IronJsonUtils.objectToJson(entry.getValue()));
+            });
+            //过时操作
+            if (expireTime().toMillis() != 0) {
+                redisTemplate().boundHashOps(keyName()).expire(expireTime());
+            }
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);
             return false;
@@ -52,28 +68,7 @@ public abstract class AbstractBatchRedisHandler extends AbstractEventHandler {
             log.error("{}", e);
             return true;
         }
-        log.info("执行RedisHandle结束");
+        log.info("执行{}结束", this.getClass().getName());
         return true;
     }
-
-    /**
-     * 集合名
-     *
-     * @return
-     */
-    public abstract String keyName();
-
-    /**
-     * 获取redis模板
-     *
-     * @return
-     */
-    public abstract RedisTemplate redisTemplate();
-
-    /**
-     * 获取redis模板
-     *
-     * @return
-     */
-    public abstract Duration expireTime();
 }

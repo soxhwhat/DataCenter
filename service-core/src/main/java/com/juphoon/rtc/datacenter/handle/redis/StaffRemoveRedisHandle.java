@@ -35,12 +35,17 @@ public class StaffRemoveRedisHandle extends AbstractRemoveRedisHandler {
 
     @Override
     public String keyName() {
-        return "jrtc.staff.status";
+        return "jrtc:monitor:staff:status";
     }
 
     @Override
     public RedisTemplate redisTemplate() {
         return redisTemplate;
+    }
+
+    @Override
+    public Duration expireTime() {
+        return null;
     }
 
 }

@@ -78,9 +78,6 @@ public class LogMongoHandler extends AbstractMongoHandler {
     @Override
     public boolean handle(EventContext ec) {
         String collectionName = collectionName(ec);
-
-        log.info("ec:{},collectionName:{}", ec, collectionName);
-
         try {
             mongoTemplate().insert(ec.getEvent().getParams().values(), collectionName);
         } catch (DataAccessException e) {

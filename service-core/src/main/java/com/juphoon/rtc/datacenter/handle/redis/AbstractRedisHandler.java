@@ -3,7 +3,9 @@ package com.juphoon.rtc.datacenter.handle.redis;
 import com.juphoon.iron.component.utils.IronJsonUtils;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -20,12 +22,17 @@ import java.time.Duration;
 @Slf4j
 public abstract class AbstractRedisHandler extends AbstractEventHandler {
 
+    @Autowired
+    DataCenterProperties properties;
+
     @Override
     public boolean handle(EventContext ec) {
         try {
             log.info("ec:{},keyName:{}", ec.body(), keyName());
             redisTemplate().boundHashOps(keyName()).put(ec.getEvent().getUuid(), IronJsonUtils.objectToJson(ec.getEvent()));
-            redisTemplate().boundHashOps(keyName()).expire(expireTime());
+            if (expireTime().toMillis() != 0) {
+                redisTemplate().boundHashOps(keyName()).expire(expireTime());
+            }
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);
             return false;
@@ -33,7 +40,7 @@ public abstract class AbstractRedisHandler extends AbstractEventHandler {
             log.error("{}", e);
             return true;
         }
-        log.info("执行RedisHandle结束");
+        log.info("执行{}结束", this.getClass().getName());
         return true;
     }
 

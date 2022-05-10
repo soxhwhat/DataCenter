@@ -35,7 +35,7 @@ public class StaffRedisHandle extends AbstractRedisHandler {
 
     @Override
     public String keyName() {
-        return "jrtc.staff.status";
+        return "jrtc:monitor:staff:status";
     }
 
     @Override
@@ -49,6 +49,6 @@ public class StaffRedisHandle extends AbstractRedisHandler {
      */
     @Override
     public Duration expireTime() {
-        return Duration.ofSeconds(15);
+        return properties.getRedisEvent().getStaffExpireTime();
     }
 }
