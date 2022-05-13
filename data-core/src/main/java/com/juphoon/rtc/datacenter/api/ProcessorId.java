@@ -35,6 +35,11 @@ public enum ProcessorId {
     REDIS("redisProcessor", "Redis状态记录"),
 
     /**
+     * 终端埋点
+     */
+    MD("mdProcessor", "终端埋点处理器"),
+
+    /**
      * 测试
      */
     TEST("testProcessor", "测试处理器");

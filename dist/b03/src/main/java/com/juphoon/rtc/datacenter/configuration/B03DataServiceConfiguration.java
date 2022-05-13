@@ -3,21 +3,18 @@ package com.juphoon.rtc.datacenter.configuration;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
+import com.juphoon.rtc.datacenter.handle.database.MdEventDatabaseHandler;
 import com.juphoon.rtc.datacenter.handle.database.acdstat.*;
 import com.juphoon.rtc.datacenter.handle.http.agree.AbstractAgreeNoticeHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.QueueStatusKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.StaffStatusKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.kafka.TicketKafkaHandler;
 import com.juphoon.rtc.datacenter.handle.mongo.*;
-import com.juphoon.rtc.datacenter.handle.redis.QueueCallRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.QueueWaitRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.StaffRedisHandle;
 import com.juphoon.rtc.datacenter.handle.redis.StaffRemoveRedisHandle;
 import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
-import com.juphoon.rtc.datacenter.processor.DatabaseEventProcessor;
-import com.juphoon.rtc.datacenter.processor.KafkaProcessor;
-import com.juphoon.rtc.datacenter.processor.MongoProcessor;
-import com.juphoon.rtc.datacenter.processor.RedisProcessor;
+import com.juphoon.rtc.datacenter.processor.*;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.DataService;
 import com.juphoon.rtc.datacenter.service.DataServiceBuilder;
@@ -120,13 +117,19 @@ public class B03DataServiceConfiguration {
     @Autowired
     private LogMongoHandler logMongoHandler;
 
+    @Autowired
+    private MdEventDatabaseHandler mdEventDatabaseHandler;
+
     @SuppressWarnings("PMD")
     @Bean
     public DataService config(Map<String, AbstractAgreeNoticeHandler> handlerMap) {
         // 话务统计
         // 由于在 AbstractEventProcessor 中包含了 @Autowired，因此只能从bean工厂创建
         DatabaseEventProcessor acdEventProcessor = beanFactory.getBean(DatabaseEventProcessor.class);
-
+        // 终端埋点事件功能
+        MdProcessor mdProcessor = beanFactory.getBean(MdProcessor.class);
+        mdProcessor.setProcessorId(ProcessorId.MD);
+        mdProcessor.setEnabled(properties.getMdEvent().isEnabled());
         acdEventProcessor.setProcessorId(ProcessorId.ACD_STAT);
         acdEventProcessor.setEnabled(properties.getAcdStat().isEnabled());
         acdCallInfoStatDailyHandler.setEnabled(properties.getAcdStat().isCallInfoDailyEnabled());
@@ -161,6 +164,7 @@ public class B03DataServiceConfiguration {
         mdEventMongoHandler.setEnabled(properties.getMongoEvent().isMdEventEnabled());
         logMongoHandler.setEnabled(properties.getMongoEvent().isLogEventEnabled());
 
+        mdEventDatabaseHandler.setEnabled(properties.getMdEvent().isMdHandlerEnabled());
         //事件写入kafka
         KafkaProcessor kafkaProcessor = beanFactory.getBean(KafkaProcessor.class);
         kafkaProcessor.setProcessorId(ProcessorId.KAFKA);
@@ -182,6 +186,10 @@ public class B03DataServiceConfiguration {
         kafkaConfig.setType(JrtcDataCenterConstant.DATA_CENTER_QUEUE_MODE_DISRUPTOR);
         //@formatter:off
         return DataServiceBuilder.processors()
+                //广发埋点
+                .processor(mdProcessor)
+                .handler(mdEventDatabaseHandler)
+                .end()
                 // 客服统计
                 .processor(acdEventProcessor)
                     .mq(properties.getMq().trans())

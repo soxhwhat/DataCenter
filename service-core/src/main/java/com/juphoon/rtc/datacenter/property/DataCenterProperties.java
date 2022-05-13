@@ -38,6 +38,8 @@ public class DataCenterProperties {
 
     private RedisEvent redisEvent = new RedisEvent();
 
+    private MdEvent mdEvent = new MdEvent();
+
     /**
      * 赞同
      */
@@ -193,6 +195,16 @@ public class DataCenterProperties {
 
             return config;
         }
+    }
+
+    @Data
+    public static class MdEvent{
+        /**
+            埋点processor开关
+         */
+        private boolean enabled = true;
+
+        private boolean mdHandlerEnabled = true;
     }
 
     @Data
