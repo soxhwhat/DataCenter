@@ -9,7 +9,7 @@
         <version>2202.5.8</version>
     </parent>
 
-    <version>2202.5.8</version>
+    <version>2202.5.9</version>
     <artifactId>jrtcDataCollection-b03</artifactId>
 
     <properties>
