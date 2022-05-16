@@ -1,11 +1,10 @@
 package com.juphoon.rtc.datacenter.api;
 
-import com.juphoon.rtc.datacenter.handler.IHandler;
+import com.juphoon.rtc.datacenter.JrtcIdGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  *
@@ -16,6 +15,13 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class BasicContext {
+
+    /**
+     * context唯一id
+     * <b>redo时需要重新生成，一定要注意</b>
+     */
+    private Long id = JrtcIdGenerator.newId();
+
     /**
      * rpc magic
      */
@@ -43,9 +49,10 @@ public abstract class BasicContext {
     private long beginTimestamp = 0;
 
     /**
-     * 重做handler列表
+     * 重做handler
+     * <b>每次重做都需要重新生成</b>
      */
-    private List<String> redoHandlerIds;
+    private String redoHandler;
 
     /**
      * 重做次数
@@ -69,51 +76,43 @@ public abstract class BasicContext {
         return retryCount > 0;
     }
 
-    public String getId() {
-        // TODO, 消息唯一ID
-        // TODO, 消息唯一ID
-        // TODO, 消息唯一ID
-        // TODO, 消息唯一ID
-        // TODO, 消息唯一ID
-        // TODO, 消息唯一ID
-        assert null != processorId : "processorId 不能为空";
-
-        return requestId + processorId;
-    }
-
     public abstract EventType getEventType();
+//
+//    public void fail() {
+//        failCount++;
+//    }
 
-    /**
-     * 是否重做OK
-     * 1. 是重做消息
-     * 2. 重做handler列表为空
-     *
-     * @return
-     */
-    public <T extends BasicContext> boolean redoOk(IHandler<T> handler) {
-        return isRedoEvent() && null != redoHandlerIds && redoHandlerIds.isEmpty();
-    }
+//    /**
+//     * 是否重做OK
+//     * 1. 是重做消息
+//     * 2. 重做handler列表为空
+//     *
+//     * @return
+//     */
+//    public <T extends BasicContext> boolean redoOk(IHandler<T> handler) {
+//        return isRedoEvent() && null != redoHandlerIds && redoHandlerIds.isEmpty();
+//    }
 
-    /**
-     * 清理handler重做标记
-     * @param handler
-     */
-    public  <T extends BasicContext> void cleanRedoFlag(IHandler<T> handler) {
-        if (null == redoHandlerIds) {
-            return;
-        }
+//    /**
+//     * 清理handler重做标记
+//     * @param handler
+//     */
+//    public  <T extends BasicContext> void cleanRedoFlag(IHandler<T> handler) {
+//        if (null == redoHandlerIds) {
+//            return;
+//        }
+//
+//        redoHandlerIds.remove(handler.getId());
+//    }
 
-        redoHandlerIds.remove(handler.getId());
-    }
-
-    /**
-     * 消息是否处理OK
-     * 1. 重做handler列表为空
-     * @return
-     */
-    public boolean processOk() {
-        return null == redoHandlerIds || redoHandlerIds.isEmpty();
-    }
+//    /**
+//     * 消息是否处理OK
+//     * 1. 重做handler列表为空
+//     * @return
+//     */
+//    public int getFailCount() {
+//        return failCount;
+//    }
 
     @Override
     public String toString() {

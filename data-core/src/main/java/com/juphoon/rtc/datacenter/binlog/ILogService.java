@@ -2,6 +2,8 @@ package com.juphoon.rtc.datacenter.binlog;
 
 import com.juphoon.rtc.datacenter.handler.IHandler;
 
+import java.util.List;
+
 /**
  * <p>mq日志服务</p>
  * <p>用于事件高可靠，</p>
@@ -19,10 +21,25 @@ import com.juphoon.rtc.datacenter.handler.IHandler;
 public interface ILogService<T> {
     /**
      * 保存新事件
-     * todo 删除
+     *
      * @param t
      */
     void save(T t);
+
+    /**
+     * 保存重做事件
+     *
+     * @param t
+     * @param handler
+     */
+    void save(T t, IHandler handler);
+
+    /**
+     * 批量保存新事件
+     *
+     * @param t
+     */
+    void save(List<T> t);
 
     /**
      * 删除事件
@@ -30,19 +47,4 @@ public interface ILogService<T> {
      * @param t
      */
     void remove(T t);
-
-    /**
-     * 保存重做日志
-     * todo, add processor
-     * @param t
-     * @param handler
-     */
-    void saveRedo(T t, IHandler<T> handler);
-
-    /**
-     * 删除事件
-     *
-     * @param t
-     */
-    void removeRedo(T t);
 }

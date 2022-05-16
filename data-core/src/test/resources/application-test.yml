@@ -1,0 +1,18 @@
+server:
+  port: 0
+iron:
+  cube:
+    enabled: false
+  dataserver:
+    processors:
+        - processor: AcdStatEventProcessor
+          id:
+          name: 排队机统计事件处理器
+          event-log: AcdStatEventLogServiceSqliteImpl
+          redo-log: AcdStatEventLogServiceSqliteImpl
+          mq: disruptor
+          handlers:
+            - AcdCallInfoStatPart15MinHandler
+            - AcdCallInfoStatPart30MinHandler
+            - AcdCallInfoStatPartHourlyHandler
+

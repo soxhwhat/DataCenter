@@ -52,17 +52,20 @@ public class LastInnerHandler<T extends BasicContext> extends AbstractHandler<T>
 
         /*
          * 若处理成功，则删除事件
+         * 重做事件独立处理
+         * TODO 确认
          */
-        if (t.processOk()) {
+//        if (t.processOk()) {
+            // 顺序保证，先删库
             getProcessor().logService().remove(t);
+            // 再清理set
             getProcessor().queueService().success(t);
-        }
+//        }
 
-        log.debug("{} process t:{},{} ret:{},cost:{}",
+        log.debug("{} process t:{},{} cost:{}",
                 t.getProcessorId(),
                 t.getEventType(),
                 t,
-                t.processOk(),
                 System.currentTimeMillis() - t.getBeginTimestamp()
         );
 

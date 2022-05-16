@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.binlog.mapper.agree.AgreeEventLogMapper">
+
+    <insert id="initTable">
+        create table event_log
+        (
+            id        integer     not null
+                constraint event_log_pk
+                    primary key autoincrement,
+            uuid      varchar(32) not null,
+            domain    int         not null,
+            app       int         not null,
+            type      int         not null,
+            number    int         not null,
+            timestamp bigint      not null,
+            processor varchar(64) not null,
+            params    text
+        );
+
+        create index event_log_ts_index
+            on event_log (timestamp);
+
+        create unique index event_log_uuid_uindex
+            on event_log (uuid);
+    </insert>
+
+</mapper>

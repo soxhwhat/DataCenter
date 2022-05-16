@@ -23,7 +23,7 @@ public abstract class AbstractLogQueueService implements IQueueService<LogContex
 
     private AbstractLogProcessor processor;
 
-    private Set<String> eventIndex = Sets.newConcurrentHashSet();
+    private Set<Long> eventIndex = Sets.newConcurrentHashSet();
 
     /**
      * 获取处理器

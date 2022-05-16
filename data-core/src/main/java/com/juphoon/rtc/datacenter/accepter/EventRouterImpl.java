@@ -17,8 +17,8 @@ public class EventRouterImpl implements IEventRouter {
     /**
      * 由service模块注入
      */
-    @Autowired
-    private EventService dataService;
+//    @Autowired
+//    private EventService dataService;
 
     /**
      * 把消息发送到各个process中 一条消息通过多个process
@@ -28,8 +28,8 @@ public class EventRouterImpl implements IEventRouter {
      */
     @Override
     public void router(List<EventContext> contexts) {
-        assert null != dataService : "dataService 未初始化!";
-
-        dataService.commit(contexts);
+//        assert null != dataService : "dataService 未初始化!";
+//
+//        dataService.commit(contexts);
     }
 }

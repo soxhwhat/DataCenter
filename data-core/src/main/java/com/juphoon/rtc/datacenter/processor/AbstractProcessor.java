@@ -227,7 +227,7 @@ public abstract class AbstractProcessor<T extends BasicContext> implements IProc
             /// 处理失败
             else {
                 log.info("{} handle ec:{} 失败", handler.getName(), t.getId());
-                logService().saveRedo(t, handler);
+                logService().save(t, handler);
             }
         } catch (Exception e) {
             log.warn("handler {} handle ec:{} 异常:", handler.getName(), t.getId(), e);
@@ -243,24 +243,21 @@ public abstract class AbstractProcessor<T extends BasicContext> implements IProc
      */
     private void onRedoEvent(T t, IHandler<T> handler) {
         // 重做不包含当前handler
-        if (!t.getRedoHandlerIds().contains(handler.getId())) {
+        if (!t.getRedoHandler().equals(handler.getId())) {
             return;
         }
 
         try {
             /// 重做成功
             if (handler.handle(t)) {
-                /// 删除ec中的失败标记
-                t.cleanRedoFlag(handler);
-
                 log.info("{} reHandle ec:{} 成功", handler.getName(), t);
 
-                logService().removeRedo(t);
+                logService().remove(t);
             }
             /// 重做失败
             else {
                 /// 打印日志，啥也不做
-                log.info("{} reHandle ec:{} 失败", handler.getName(), t.getId());
+                log.warn("{} redo ec:{} 失败", handler.getName(), t.getId());
             }
         } catch (Exception e) {
             log.debug("handler {} reHandle ec:{} 异常:", handler.getName(), t.getId(), e);

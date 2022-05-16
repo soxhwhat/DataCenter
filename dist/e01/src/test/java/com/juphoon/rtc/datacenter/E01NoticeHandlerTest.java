@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class E01NoticeHandlerTest {
 
 //    @Autowired
-//    private DataService dataService;
+//    private EventService dataService;
 
     @Test
     public void testVerCodeHandler() throws InterruptedException {

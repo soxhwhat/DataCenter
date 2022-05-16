@@ -29,18 +29,19 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>6.1.1</cube-starter.version>
+        <cube-starter.version>6.2.5</cube-starter.version>
+        <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
         <ironCommon.version>1.1.1</ironCommon.version>
         <disruptor.version>3.4.2</disruptor.version>
         <alibaba.druid.version>1.1.9</alibaba.druid.version>
         <p6spy.version>3.8.7</p6spy.version>
-        <baomidou.version>3.1.1</baomidou.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <ojdbc6.version>11.2.0.4</ojdbc6.version>
         <httpclient.version>4.5.7</httpclient.version>
-
+        <guava.version>31.1-jre</guava.version>
         <logback.version>1.2.10</logback.version>
-        <sqlite.jdbc.version>3.27.2.1</sqlite.jdbc.version>
+        <sqlite.jdbc.version>3.31.1</sqlite.jdbc.version>
         <cn-hutool.version>5.7.9</cn-hutool.version>
         <jackson.version>2.11.0</jackson.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -79,6 +80,12 @@
             <artifactId>iron-common</artifactId>
             <version>${ironCommon.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis</groupId>-->
+<!--            <artifactId>mybatis</artifactId>-->
+<!--            <version>${mybatis.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.juphoon.iron.component</groupId>
             <artifactId>iron-utils</artifactId>
@@ -311,7 +318,7 @@
                     <append>true</append>
                     <!--                        <includes>-->
                     <!--                            <include>com/juphoon/unit/test/controller/*</include>-->
-                    <!--                            <include>com/juphoon/unit/test/service/impl/*</include>-->
+                    <!--                            <include>com/juphoon/unit/test/impl/impl/*</include>-->
                     <!--                        </includes>-->
                     <rules>
                         <rule implementation="org.jacoco.maven.RuleConfiguration">

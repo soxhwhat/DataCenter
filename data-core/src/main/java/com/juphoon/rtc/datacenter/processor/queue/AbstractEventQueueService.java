@@ -22,7 +22,7 @@ public abstract class AbstractEventQueueService implements IQueueService<EventCo
 
     private AbstractEventProcessor processor;
 
-    private Set<String> eventIndex = Sets.newConcurrentHashSet();
+    private Set<Long> eventIndex = Sets.newConcurrentHashSet();
 
     /**
      * 获取处理器

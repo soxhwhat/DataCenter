@@ -60,7 +60,7 @@
 //        eventContext.setId(eventPo.getId());
 //        eventContext.setRetryCount(eventPo.getRetryCount());
 //        eventContext.setRedoClzMap(redoClzMap);
-//        eventContext.setCreatedTimestamp(eventPo.getCreateTimestamp());
+//        eventContext.setReceivedTimestamp(eventPo.getCreateTimestamp());
 //        eventContext.setBeginTimestamp(eventPo.getBeginTimestamp());
 //        eventContext.setProcessClzName(eventPo.getProcessClzName());
 //        //封装event
