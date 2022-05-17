@@ -9,8 +9,8 @@
 package DataCollection;
 
 public abstract class StatusCollectionServiceServer extends Common.ObjectServer {
-    public abstract void putStatusJson2_begin(Common.ServerCall __call, String topic, FlowStatusJson eventPO) throws Common.Exception;
-    public abstract void putStatusListJson2_begin(Common.ServerCall __call,String topic,java.util.List<FlowStatusJson > flowList) throws Common.Exception;
+    public abstract void putStatusJson2_begin(Common.ServerCall __call,String topic,DataCollection.FlowStatusJson eventPO) throws Common.Exception;
+    public abstract void putStatusListJson2_begin(Common.ServerCall __call,String topic,java.util.List<DataCollection.FlowStatusJson > flowList) throws Common.Exception;
 
     public final boolean __ex(Common.ServerCall __call,String __cmd,Common.IputStream __iput) throws Common.Exception {
         if (__cmd.compareTo("putStatusJson2.StatusCollectionService.DataCollection") == 0) { __cmd_putStatusJson2(__call,__iput);return true;}
@@ -23,9 +23,9 @@ public abstract class StatusCollectionServiceServer extends Common.ObjectServer 
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            break;
+            case 0:
+                __oput.write(__ret);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -35,9 +35,9 @@ public abstract class StatusCollectionServiceServer extends Common.ObjectServer 
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            break;
+            case 0:
+                __oput.write(__ret);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -46,13 +46,13 @@ public abstract class StatusCollectionServiceServer extends Common.ObjectServer 
         __outer: {
             Common.VerList __vers = __call.verList();
             String topic;
-            FlowStatusJson eventPO;
+            DataCollection.FlowStatusJson eventPO;
             switch (__vers.ver(false)) {
-            case 0:
-                topic = __iput.readString();
-                eventPO = FlowStatusJson.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    topic = __iput.readString();
+                    eventPO = DataCollection.FlowStatusJson.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             putStatusJson2_begin(__call,topic,eventPO);
@@ -68,13 +68,13 @@ public abstract class StatusCollectionServiceServer extends Common.ObjectServer 
         __outer: {
             Common.VerList __vers = __call.verList();
             String topic;
-            java.util.List<FlowStatusJson > flowList;
+            java.util.List<DataCollection.FlowStatusJson > flowList;
             switch (__vers.ver(false)) {
-            case 0:
-                topic = __iput.readString();
-                flowList = FlowList.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    topic = __iput.readString();
+                    flowList = DataCollection.FlowList.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             putStatusListJson2_begin(__call,topic,flowList);

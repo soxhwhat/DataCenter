@@ -15,15 +15,15 @@ public final class EventCollectionServiceAgent {
         this.__agent = agent;
     }
 
-    public final boolean event(final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params) {
+    public final boolean event(final java.util.List<Event > eventList, final Common.CallParams __params) {
         return event(__agent,eventList,__params);
     }
 
-    public final void event_begin(final Common.AgentAsync __async,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params,final Object __userdata) {
+    public final void event_begin(final Common.AgentAsync __async, final java.util.List<Event > eventList, final Common.CallParams __params, final Object __userdata) {
         event_begin(__agent,__async,eventList,__params,__userdata);
     }
 
-    public static final boolean event(final Common.ObjectAgent __agent,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params) {
+    public static final boolean event(final Common.ObjectAgent __agent, final java.util.List<Event > eventList, final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -35,13 +35,13 @@ public final class EventCollectionServiceAgent {
                     if (__ver > 0) __ver = 0;
                 }
                 switch (__ver) {
-                    case 0:
-                        __oput.write((short)1);
-                        __oput.write((short)__ver);
-                        DataCollection.EventList.__write(__oput,eventList);
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
+                case 0:
+                    __oput.write((short)1);
+                    __oput.write((short)__ver);
+                    EventList.__write(__oput,eventList);
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
@@ -57,11 +57,11 @@ public final class EventCollectionServiceAgent {
                 }
                 boolean __ret;
                 switch (__rslt) {
-                    case 0:
-                        __ret = __iput.value.readBool();
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
+                case 0:
+                    __ret = __iput.value.readBool();
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
                 }
                 Common.ObjectAgent.processFinal(__iput.value);
                 return __ret;
@@ -75,7 +75,7 @@ public final class EventCollectionServiceAgent {
         }
     }
 
-    public static final void event_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params,final Object __userdata) {
+    public static final void event_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final java.util.List<Event > eventList, final Common.CallParams __params, final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -87,13 +87,13 @@ public final class EventCollectionServiceAgent {
                         if (__ver > 0) __ver = 0;
                     }
                     switch (__ver) {
-                        case 0:
-                            __oput.write((short)1);
-                            __oput.write((short)__ver);
-                            DataCollection.EventList.__write(__oput,eventList);
-                            break;
-                        default:
-                            throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
+                    case 0:
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        EventList.__write(__oput,eventList);
+                        break;
+                    default:
+                        throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
                     }
                     __agent.ex_async(this,"event.EventCollectionService.DataCollection",__oput,__params,0);
                 } catch (Common.CallException ex) {
@@ -138,8 +138,8 @@ public final class EventCollectionServiceAgent {
                 case 0:
                     __ret = __iput.readBool();
                     break;
-                default:
-                    throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
+            default:
+                throw new Common.CallException(Common.ObjectAgent.versionError("event.EventCollectionService.DataCollection"));
             }
             Common.ObjectAgent.processFinal(__iput);
             return __ret;
@@ -152,15 +152,15 @@ public final class EventCollectionServiceAgent {
         }
     }
 
-    public final boolean event2(final String topic,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params) {
+    public final boolean event2(final String topic, final java.util.List<Event > eventList, final Common.CallParams __params) {
         return event2(__agent,topic,eventList,__params);
     }
 
-    public final void event2_begin(final Common.AgentAsync __async,final String topic,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params,final Object __userdata) {
+    public final void event2_begin(final Common.AgentAsync __async, final String topic, final java.util.List<Event > eventList, final Common.CallParams __params, final Object __userdata) {
         event2_begin(__agent,__async,topic,eventList,__params,__userdata);
     }
 
-    public static final boolean event2(final Common.ObjectAgent __agent,final String topic,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params) {
+    public static final boolean event2(final Common.ObjectAgent __agent, final String topic, final java.util.List<Event > eventList, final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -172,14 +172,14 @@ public final class EventCollectionServiceAgent {
                     if (__ver > 0) __ver = 0;
                 }
                 switch (__ver) {
-                    case 0:
-                        __oput.write((short)1);
-                        __oput.write((short)__ver);
-                        __oput.write(topic);
-                        DataCollection.EventList.__write(__oput,eventList);
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
+                case 0:
+                    __oput.write((short)1);
+                    __oput.write((short)__ver);
+                    __oput.write(topic);
+                    EventList.__write(__oput,eventList);
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
@@ -195,11 +195,11 @@ public final class EventCollectionServiceAgent {
                 }
                 boolean __ret;
                 switch (__rslt) {
-                    case 0:
-                        __ret = __iput.value.readBool();
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
+                case 0:
+                    __ret = __iput.value.readBool();
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
                 }
                 Common.ObjectAgent.processFinal(__iput.value);
                 return __ret;
@@ -213,7 +213,7 @@ public final class EventCollectionServiceAgent {
         }
     }
 
-    public static final void event2_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final String topic,final java.util.List<DataCollection.Event > eventList,final Common.CallParams __params,final Object __userdata) {
+    public static final void event2_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final String topic, final java.util.List<Event > eventList, final Common.CallParams __params, final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -225,14 +225,14 @@ public final class EventCollectionServiceAgent {
                         if (__ver > 0) __ver = 0;
                     }
                     switch (__ver) {
-                        case 0:
-                            __oput.write((short)1);
-                            __oput.write((short)__ver);
-                            __oput.write(topic);
-                            DataCollection.EventList.__write(__oput,eventList);
-                            break;
-                        default:
-                            throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
+                    case 0:
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        __oput.write(topic);
+                        EventList.__write(__oput,eventList);
+                        break;
+                    default:
+                        throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
                     }
                     __agent.ex_async(this,"event2.EventCollectionService.DataCollection",__oput,__params,0);
                 } catch (Common.CallException ex) {
@@ -277,8 +277,8 @@ public final class EventCollectionServiceAgent {
                 case 0:
                     __ret = __iput.readBool();
                     break;
-                default:
-                    throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
+            default:
+                throw new Common.CallException(Common.ObjectAgent.versionError("event2.EventCollectionService.DataCollection"));
             }
             Common.ObjectAgent.processFinal(__iput);
             return __ret;
@@ -311,12 +311,12 @@ public final class EventCollectionServiceAgent {
                     if (__ver > 0) __ver = 0;
                 }
                 switch (__ver) {
-                    case 0:
-                        __oput.write((short)1);
-                        __oput.write((short)__ver);
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
+                case 0:
+                    __oput.write((short)1);
+                    __oput.write((short)__ver);
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
@@ -332,11 +332,11 @@ public final class EventCollectionServiceAgent {
                 }
                 boolean __ret;
                 switch (__rslt) {
-                    case 0:
-                        __ret = __iput.value.readBool();
-                        break;
-                    default:
-                        throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
+                case 0:
+                    __ret = __iput.value.readBool();
+                    break;
+                default:
+                    throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
                 }
                 Common.ObjectAgent.processFinal(__iput.value);
                 return __ret;
@@ -362,12 +362,12 @@ public final class EventCollectionServiceAgent {
                         if (__ver > 0) __ver = 0;
                     }
                     switch (__ver) {
-                        case 0:
-                            __oput.write((short)1);
-                            __oput.write((short)__ver);
-                            break;
-                        default:
-                            throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
+                    case 0:
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        break;
+                    default:
+                        throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
                     }
                     __agent.ex_async(this,"subEvent.EventCollectionService.DataCollection",__oput,__params,0);
                 } catch (Common.CallException ex) {
@@ -412,8 +412,8 @@ public final class EventCollectionServiceAgent {
                 case 0:
                     __ret = __iput.readBool();
                     break;
-                default:
-                    throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
+            default:
+                throw new Common.CallException(Common.ObjectAgent.versionError("subEvent.EventCollectionService.DataCollection"));
             }
             Common.ObjectAgent.processFinal(__iput);
             return __ret;

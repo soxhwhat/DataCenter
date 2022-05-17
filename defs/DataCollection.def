@@ -55,6 +55,7 @@ module DataCollection{
         //#LogCollectionServer
     interface LogCollectionService{
         bool log(Common.StrVec logList) async onexception(false);
+		bool serverLog(Common.StrVec logList) async onexception(false);
     }
 
         //#MetricCollectionServer

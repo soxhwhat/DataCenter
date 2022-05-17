@@ -15,15 +15,15 @@ public final class NoticeEventAgent {
         this.__agent = agent;
     }
 
-    public final boolean verCode(final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return verCode(__agent, params, outParams, __params);
+    public final boolean verCode(final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return verCode(__agent,params,outParams,__params);
     }
 
-    public final void verCode_begin(final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        verCode_begin(__agent, __async, params, __params, __userdata);
+    public final void verCode_begin(final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        verCode_begin(__agent,__async,params,__params,__userdata);
     }
 
-    public static final boolean verCode(final Common.ObjectAgent __agent, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean verCode(final Common.ObjectAgent __agent,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -36,21 +36,21 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
-                        Common.StrStrMap.__write(__oput, params);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("verCode.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("verCode.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event"));
                     continue;
@@ -59,8 +59,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event"));
@@ -79,7 +78,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void verCode_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void verCode_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -92,59 +91,56 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
-                            Common.StrStrMap.__write(__oput, params);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "verCode.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"verCode.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean verCode_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean verCode_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("verCode.NoticeEvent.Event"));
@@ -162,15 +158,15 @@ public final class NoticeEventAgent {
         }
     }
 
-    public final boolean verJoinRoom(final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return verJoinRoom(__agent, params, outParams, __params);
+    public final boolean verJoinRoom(final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return verJoinRoom(__agent,params,outParams,__params);
     }
 
-    public final void verJoinRoom_begin(final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        verJoinRoom_begin(__agent, __async, params, __params, __userdata);
+    public final void verJoinRoom_begin(final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        verJoinRoom_begin(__agent,__async,params,__params,__userdata);
     }
 
-    public static final boolean verJoinRoom(final Common.ObjectAgent __agent, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean verJoinRoom(final Common.ObjectAgent __agent,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -183,21 +179,21 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
-                        Common.StrStrMap.__write(__oput, params);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("verJoinRoom.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("verJoinRoom.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event"));
                     continue;
@@ -206,8 +202,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event"));
@@ -226,7 +221,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void verJoinRoom_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void verJoinRoom_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -239,59 +234,56 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
-                            Common.StrStrMap.__write(__oput, params);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "verJoinRoom.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"verJoinRoom.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean verJoinRoom_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean verJoinRoom_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("verJoinRoom.NoticeEvent.Event"));
@@ -309,15 +301,15 @@ public final class NoticeEventAgent {
         }
     }
 
-    public final boolean roomNotice(final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return roomNotice(__agent, params, outParams, __params);
+    public final boolean roomNotice(final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return roomNotice(__agent,params,outParams,__params);
     }
 
-    public final void roomNotice_begin(final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        roomNotice_begin(__agent, __async, params, __params, __userdata);
+    public final void roomNotice_begin(final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        roomNotice_begin(__agent,__async,params,__params,__userdata);
     }
 
-    public static final boolean roomNotice(final Common.ObjectAgent __agent, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean roomNotice(final Common.ObjectAgent __agent,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -330,21 +322,21 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
-                        Common.StrStrMap.__write(__oput, params);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("roomNotice.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("roomNotice.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event"));
                     continue;
@@ -353,8 +345,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event"));
@@ -373,7 +364,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void roomNotice_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void roomNotice_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -386,59 +377,56 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
-                            Common.StrStrMap.__write(__oput, params);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "roomNotice.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"roomNotice.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean roomNotice_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean roomNotice_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("roomNotice.NoticeEvent.Event"));
@@ -456,15 +444,15 @@ public final class NoticeEventAgent {
         }
     }
 
-    public final boolean recordSnapshotNotice(final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return recordSnapshotNotice(__agent, params, outParams, __params);
+    public final boolean recordSnapshotNotice(final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return recordSnapshotNotice(__agent,params,outParams,__params);
     }
 
-    public final void recordSnapshotNotice_begin(final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        recordSnapshotNotice_begin(__agent, __async, params, __params, __userdata);
+    public final void recordSnapshotNotice_begin(final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        recordSnapshotNotice_begin(__agent,__async,params,__params,__userdata);
     }
 
-    public static final boolean recordSnapshotNotice(final Common.ObjectAgent __agent, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean recordSnapshotNotice(final Common.ObjectAgent __agent,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -477,21 +465,21 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
-                        Common.StrStrMap.__write(__oput, params);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("recordSnapshotNotice.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("recordSnapshotNotice.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event"));
                     continue;
@@ -500,8 +488,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event"));
@@ -520,7 +507,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void recordSnapshotNotice_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void recordSnapshotNotice_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -533,59 +520,56 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
-                            Common.StrStrMap.__write(__oput, params);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "recordSnapshotNotice.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"recordSnapshotNotice.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean recordSnapshotNotice_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean recordSnapshotNotice_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("recordSnapshotNotice.NoticeEvent.Event"));
@@ -603,15 +587,15 @@ public final class NoticeEventAgent {
         }
     }
 
-    public final boolean sendOnlineMessageAndNotice(final String receiverUri, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return sendOnlineMessageAndNotice(__agent, receiverUri, params, outParams, __params);
+    public final boolean sendOnlineMessageAndNotice(final String receiverUri,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return sendOnlineMessageAndNotice(__agent,receiverUri,params,outParams,__params);
     }
 
-    public final void sendOnlineMessageAndNotice_begin(final Common.AgentAsync __async, final String receiverUri, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        sendOnlineMessageAndNotice_begin(__agent, __async, receiverUri, params, __params, __userdata);
+    public final void sendOnlineMessageAndNotice_begin(final Common.AgentAsync __async,final String receiverUri,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        sendOnlineMessageAndNotice_begin(__agent,__async,receiverUri,params,__params,__userdata);
     }
 
-    public static final boolean sendOnlineMessageAndNotice(final Common.ObjectAgent __agent, final String receiverUri, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean sendOnlineMessageAndNotice(final Common.ObjectAgent __agent,final String receiverUri,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -624,22 +608,22 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
                         __oput.write(receiverUri);
-                        Common.StrStrMap.__write(__oput, params);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("sendOnlineMessageAndNotice.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("sendOnlineMessageAndNotice.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event"));
                     continue;
@@ -648,8 +632,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event"));
@@ -668,7 +651,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void sendOnlineMessageAndNotice_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final String receiverUri, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void sendOnlineMessageAndNotice_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final String receiverUri,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -681,60 +664,57 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
                             __oput.write(receiverUri);
-                            Common.StrStrMap.__write(__oput, params);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "sendOnlineMessageAndNotice.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"sendOnlineMessageAndNotice.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean sendOnlineMessageAndNotice_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean sendOnlineMessageAndNotice_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("sendOnlineMessageAndNotice.NoticeEvent.Event"));
@@ -752,15 +732,15 @@ public final class NoticeEventAgent {
         }
     }
 
-    public final boolean keepAlive(final int type, final String username, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
-        return keepAlive(__agent, type, username, params, outParams, __params);
+    public final boolean keepAlive(final int type,final String username,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
+        return keepAlive(__agent,type,username,params,outParams,__params);
     }
 
-    public final void keepAlive_begin(final Common.AgentAsync __async, final int type, final String username, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
-        keepAlive_begin(__agent, __async, type, username, params, __params, __userdata);
+    public final void keepAlive_begin(final Common.AgentAsync __async,final int type,final String username,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
+        keepAlive_begin(__agent,__async,type,username,params,__params,__userdata);
     }
 
-    public static final boolean keepAlive(final Common.ObjectAgent __agent, final int type, final String username, final java.util.Map<String, String> params, Common.StrStrMap.Holder outParams, final Common.CallParams __params) {
+    public static final boolean keepAlive(final Common.ObjectAgent __agent,final int type,final String username,final java.util.Map<String,String > params,Common.StrStrMap.Holder outParams,final Common.CallParams __params) {
         try {
             int __loop = 0;
             while (true) {
@@ -773,23 +753,23 @@ public final class NoticeEventAgent {
                 }
                 switch (__ver) {
                     case 0:
-                        __oput.write((short) 1);
-                        __oput.write((short) __ver);
+                        __oput.write((short)1);
+                        __oput.write((short)__ver);
                         __oput.write(type);
                         __oput.write(username);
-                        Common.StrStrMap.__write(__oput, params);
+                        Common.StrStrMap.__write(__oput,params);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event"));
                 }
                 Common.IputStream.Holder __iput = new Common.IputStream.Holder();
                 Common.CallError.Holder __error = new Common.CallError.Holder();
-                int __rslt = __agent.ex_sync("keepAlive.NoticeEvent.Event", __oput, __iput, __params, __error);
+                int __rslt = __agent.ex_sync("keepAlive.NoticeEvent.Event",__oput,__iput,__params,__error);
                 if (__rslt == -1)
                     throw new Common.CallException(__error.value);
-                if ((__rslt >> 16) != 0) {
-                    assert ((__rslt >> 16) == 1);
-                    __loop++;
+                if ((__rslt>>16) != 0) {
+                    assert((__rslt>>16) == 1);
+                    __loop ++;
                     if (__loop >= 3)
                         throw new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event"));
                     continue;
@@ -798,8 +778,7 @@ public final class NoticeEventAgent {
                 switch (__rslt) {
                     case 0:
                         __ret = __iput.value.readBool();
-                        if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                        outParams.value = Common.StrStrMap.__read(__iput.value);
+                        if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput.value);
                         break;
                     default:
                         throw new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event"));
@@ -818,7 +797,7 @@ public final class NoticeEventAgent {
         }
     }
 
-    public static final void keepAlive_begin(final Common.ObjectAgent __agent, final Common.AgentAsync __async, final int type, final String username, final java.util.Map<String, String> params, final Common.CallParams __params, final Object __userdata) {
+    public static final void keepAlive_begin(final Common.ObjectAgent __agent,final Common.AgentAsync __async,final int type,final String username,final java.util.Map<String,String > params,final Common.CallParams __params,final Object __userdata) {
         (new Common.AgentAsync() {
             public final void start() {
                 try {
@@ -831,61 +810,58 @@ public final class NoticeEventAgent {
                     }
                     switch (__ver) {
                         case 0:
-                            __oput.write((short) 1);
-                            __oput.write((short) __ver);
+                            __oput.write((short)1);
+                            __oput.write((short)__ver);
                             __oput.write(type);
                             __oput.write(username);
-                            Common.StrStrMap.__write(__oput, params);
+                            Common.StrStrMap.__write(__oput,params);
                             break;
                         default:
                             throw new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event"));
                     }
-                    __agent.ex_async(this, "keepAlive.NoticeEvent.Event", __oput, __params, 0);
+                    __agent.ex_async(this,"keepAlive.NoticeEvent.Event",__oput,__params,0);
                 } catch (Common.CallException ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 } catch (Common.Exception ex) {
                     if (__async != null)
-                        Common.ObjectAgent.throwException(__async, ex, __userdata);
+                        Common.ObjectAgent.throwException(__async,ex,__userdata);
                 }
             }
-
-            public final void cmdResult(int __rslt, Common.IputStream __iput, Object __userdata) {
-                if ((__rslt >> 16) != 1) {
+            public final void cmdResult(int __rslt,Common.IputStream __iput,Object __userdata) {
+                if ((__rslt>>16)!=1) {
                     if (__async != null)
-                        __async.cmdResult(__rslt, __iput, __userdata);
+                        __async.cmdResult(__rslt,__iput,__userdata);
                     return;
                 }
-                __loop++;
+                __loop ++;
                 if (__loop >= 3) {
                     if (__async != null) {
                         try {
-                            Common.ObjectAgent.throwException(__async, new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event")), __userdata);
+                            Common.ObjectAgent.throwException(__async,new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event")),__userdata);
                         } catch (Common.Exception ex) {
-                            Common.ObjectAgent.throwException(__async, ex, __userdata);
+                            Common.ObjectAgent.throwException(__async,ex,__userdata);
                         }
                     }
                     return;
                 }
                 start();
             }
-
             private int __loop = 0;
         }).start();
     }
 
-    public static final boolean keepAlive_end(int __rslt, Common.IputStream __iput, Common.StrStrMap.Holder outParams) {
+    public static final boolean keepAlive_end(int __rslt,Common.IputStream __iput,Common.StrStrMap.Holder outParams) {
         try {
             Common.CallError.Holder __error = new Common.CallError.Holder();
-            if (Common.ObjectAgent.processException(__rslt, __iput, __error))
+            if (Common.ObjectAgent.processException(__rslt,__iput,__error))
                 throw new Common.CallException(__error.value);
-            assert ((__rslt >> 16) == 0);
+            assert((__rslt>>16) == 0);
             boolean __ret;
             switch (__rslt) {
                 case 0:
                     __ret = __iput.readBool();
-                    if (outParams == null) outParams = new Common.StrStrMap.Holder();
-                    outParams.value = Common.StrStrMap.__read(__iput);
+                    if (outParams == null) outParams = new Common.StrStrMap.Holder();outParams.value = Common.StrStrMap.__read(__iput);
                     break;
                 default:
                     throw new Common.CallException(Common.ObjectAgent.versionError("keepAlive.NoticeEvent.Event"));

@@ -31,10 +31,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -44,10 +44,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -57,10 +57,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -70,10 +70,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -83,10 +83,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -96,10 +96,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
-        case 0:
-            __oput.write(__ret);
-            Common.StrStrMap.__write(__oput,outParams);
-            break;
+            case 0:
+                __oput.write(__ret);
+                Common.StrStrMap.__write(__oput,outParams);
+                break;
         }
         __call.cmdResult(__ver,__oput);
     }
@@ -109,10 +109,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             Common.VerList __vers = __call.verList();
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             verCode_begin(__call,params);
@@ -129,10 +129,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             Common.VerList __vers = __call.verList();
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             verJoinRoom_begin(__call,params);
@@ -149,10 +149,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             Common.VerList __vers = __call.verList();
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             roomNotice_begin(__call,params);
@@ -169,10 +169,10 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             Common.VerList __vers = __call.verList();
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             recordSnapshotNotice_begin(__call,params);
@@ -190,11 +190,11 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             String receiverUri;
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                receiverUri = __iput.readString();
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    receiverUri = __iput.readString();
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             sendOnlineMessageAndNotice_begin(__call,receiverUri,params);
@@ -213,12 +213,12 @@ public abstract class NoticeEventServer extends Common.ObjectServer {
             String username;
             java.util.Map<String,String > params;
             switch (__vers.ver(false)) {
-            case 0:
-                type = __iput.readInt();
-                username = __iput.readString();
-                params = Common.StrStrMap.__read(__iput);
-                break;
-            default: break __outer;
+                case 0:
+                    type = __iput.readInt();
+                    username = __iput.readString();
+                    params = Common.StrStrMap.__read(__iput);
+                    break;
+                default: break __outer;
             }
             __start(false);
             keepAlive_begin(__call,type,username,params);

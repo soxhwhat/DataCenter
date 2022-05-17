@@ -88,7 +88,7 @@ public final class Event {
         __oput.textEnd();
     }
 
-    public static Event __textRead(Common.IputStream __iput, String __name, int __idx) {
+    public static Event __textRead(Common.IputStream __iput,String __name,int __idx) {
         if (!__iput.textStart(__name,__idx)) return null;
         Event __obj = new Event();
         __obj.timestamp = __iput.textReadLong("timestamp",0,(long)0);
