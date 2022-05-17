@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.processor;
 
+import com.juphoon.rtc.datacenter.api.ProcessorId;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -11,4 +12,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class RedisProcessor extends AbstractEventProcessor {
+    @Override
+    ProcessorId processorId() {
+        return ProcessorId.REDIS;
+    }
 }

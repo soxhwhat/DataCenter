@@ -1,38 +1,5 @@
 server:
-  port: 8089
-spring:
-  datasource:
-    dynamic:
-      datasource:
-        log:
-          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
-          #    url: jdbc:sqlite:a.db
-          driver-class-name: org.sqlite.JDBC
-          username:
-          password:
-        mysql:
-          url: jdbc:mysql://192.168.4.74:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: kiwi
-          password: juphoon419708
-      primary: mysql
-      druid:
-        filters: stat
-        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-mybatis-plus:
-  mapper-locations: classpath:mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  port: 0
 iron:
-  debug:
-    enabled: true
-notice:
-  config:
-    uri: http://127.0.0.1:8089
-    max-connect-per-route: 2
-    max-total-connect: 2
-notice2:
-  config:
-    uri: http://127.0.0.1:8089
-    max-connect-per-route: 3
-    max-total-connect: 3
+  cube:
+    enabled: false

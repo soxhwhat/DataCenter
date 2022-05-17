@@ -26,20 +26,22 @@ import java.util.List;
 @SuppressWarnings("PMD")
 public class EventCollectionEntryServiceServerImpl extends AbstractCubeEntry {
 
-    @Autowired
-    EventCollectionServerProcess eventCollectionServer;
+//    @Autowired
+//    EventCollectionServerProcess eventCollectionServer;
 
     @Override
     public ObjectServer buildServiceServer() {
         return new EventCollectionServiceServer() {
             @Override
             public void event_begin(ServerCall serverCall, List<DataCollection.Event> eventList) throws Exception {
-                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
+                log.info("event_begin:{}", eventList);
+//                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
             }
 
             @Override
             public void event2_begin(ServerCall serverCall, String topic, List<DataCollection.Event> eventList) throws Exception {
-                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
+                log.info("event2_begin:{}", eventList);
+//                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
             }
 
             @Override

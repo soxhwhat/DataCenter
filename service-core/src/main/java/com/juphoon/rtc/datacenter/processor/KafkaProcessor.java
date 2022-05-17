@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.processor;
 
+import com.juphoon.rtc.datacenter.api.ProcessorId;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,4 +14,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class KafkaProcessor extends AbstractEventProcessor {
+    @Override
+    ProcessorId processorId() {
+        return ProcessorId.KAFKA;
+    }
 }

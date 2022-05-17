@@ -3,35 +3,47 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jrtcDataCenter-Parent</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
         <version>2202.5.16</version>
+        <artifactId>jrtcDataCenter-Parent</artifactId>
     </parent>
 
     <artifactId>test</artifactId>
 
     <dependencies>
-
-
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>service-core</artifactId>
+            <version>2202.5.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>jrtcDataCollection-e01</artifactId>
+            <version>2202.5.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>jrtcDataCollection-b03</artifactId>
+            <version>2202.5.16</version>
+        </dependency>
     </dependencies>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <mainClass>TestApplication</mainClass>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <version>${spring-boot.version}</version>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.juphoon.rtc.datacenter.test.TestApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <version>${spring-boot.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

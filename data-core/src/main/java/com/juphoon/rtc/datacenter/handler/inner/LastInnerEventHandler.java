@@ -3,7 +3,8 @@ package com.juphoon.rtc.datacenter.handler.inner;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
-import com.juphoon.rtc.datacenter.log.IEventLogService;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,9 +21,17 @@ import org.springframework.stereotype.Component;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
-@Component
-@Scope("prototype")
 public class LastInnerEventHandler extends AbstractCareAllEventHandler {
+    private IEventLogService eventLogService;
+
+    public LastInnerEventHandler(IEventProcessor processor) {
+        setProcessor(processor);
+    }
+
+    public void setEventLogService(IEventLogService eventLogService) {
+        this.eventLogService = eventLogService;
+    }
+
     @Override
     public String getName() {
         return getProcessor().getName() + handlerId().getName();
@@ -37,9 +46,6 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
     public HandlerId handlerId() {
         return HandlerId.LAST;
     }
-    
-    @Autowired
-    private IEventLogService eventLogService;
 
     @Override
     public boolean handle(EventContext ec) {

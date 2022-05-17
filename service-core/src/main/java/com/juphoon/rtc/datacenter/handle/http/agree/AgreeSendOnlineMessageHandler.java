@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.handle.http.agree;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -24,7 +22,7 @@ import java.util.Map;
 public class AgreeSendOnlineMessageHandler extends AbstractAgreeNoticeHandler {
     @Override
     public HandlerId handlerId() {
-        return HandlerId.AgreeTransBufferNotifyHandler;
+        return HandlerId.AgreeSendOnlineMessageHandler;
     }
 
     @Override

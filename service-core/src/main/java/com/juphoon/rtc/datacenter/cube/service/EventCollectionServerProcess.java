@@ -22,7 +22,7 @@ import java.util.Map;
  * @Description:
  */
 @Slf4j
-@Component
+//@Component
 public class EventCollectionServerProcess extends AbstractServerProcess<DataCollection.Event>{
 
     @Override

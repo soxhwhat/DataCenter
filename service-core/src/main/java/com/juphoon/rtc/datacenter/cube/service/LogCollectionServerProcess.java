@@ -18,7 +18,7 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
  * @Description:
  */
 @Slf4j
-@Component
+//@Component
 public class LogCollectionServerProcess extends AbstractServerProcess<String> {
 
     @Override

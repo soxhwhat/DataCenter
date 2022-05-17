@@ -82,4 +82,16 @@ public class JrtcDataCenterConstant {
     public static final Integer UNDERLINE_VERSION_VALUE = 1;
     public static final String SOURCE_INFO_KEY = "info";
     public static final String TYPE = "_type";
+
+
+    /**
+     * scope
+     */
+    public static final String RESOURCE_SCOPE_GLOBAL = "global";
+    public static final String RESOURCE_SCOPE_INNER = "inner";
+    public static final String RESOURCE_SCOPE_TEST = "test";
+    public static final String RESOURCE_SCOPE_B01 = "b01";
+    public static final String RESOURCE_SCOPE_B03 = "b03";
+    public static final String RESOURCE_SCOPE_E01 = "e01";
+    public static final String RESOURCE_SCOPE_AGREE = "agree";
 }

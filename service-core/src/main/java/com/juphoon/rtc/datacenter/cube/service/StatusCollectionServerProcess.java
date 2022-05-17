@@ -26,8 +26,9 @@ import static com.juphoon.rtc.datacenter.cube.service.AbstractServerProcess.bina
 @Component
 public class StatusCollectionServerProcess {
 
-    @Autowired
-    private IEventRouter eventRouter;
+    /// todo 重要
+//    @Autowired
+//    private IEventRouter eventRouter;
 
     public boolean process(ServerCall serverCall, Object status) {
         boolean ret = true;
@@ -40,7 +41,7 @@ public class StatusCollectionServerProcess {
             } else {
                 throw new UnsupportedDataTypeException("status 类型错误");
             }
-            eventRouter.router(Arrays.asList(ec));
+//            eventRouter.router(Arrays.asList(ec));
         } catch (Exception e) {
             ret = false;
             serverCall.setReason(e.getMessage());

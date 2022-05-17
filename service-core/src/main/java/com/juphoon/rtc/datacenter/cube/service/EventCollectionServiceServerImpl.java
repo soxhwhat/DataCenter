@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2022-03-25
  */
 @Slf4j
-@CubeService(serviceName = "#EventCollectionServer")
+//@CubeService(serviceName = "#EventCollectionServer")
 @SuppressWarnings("PMD")
 public class EventCollectionServiceServerImpl extends AbstractCubeService {
 

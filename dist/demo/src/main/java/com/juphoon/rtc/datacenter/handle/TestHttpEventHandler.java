@@ -22,7 +22,7 @@ import java.util.List;
 public class TestHttpEventHandler extends AbstractHttpEventHandler {
     @Override
     public HandlerId handlerId() {
-        return HandlerId.TestHttpEventHandler;
+        return HandlerId.Xhandler;
     }
 
     private static final String END_POINT = "/test";

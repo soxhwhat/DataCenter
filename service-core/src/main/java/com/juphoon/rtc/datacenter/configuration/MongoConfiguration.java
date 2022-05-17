@@ -70,7 +70,7 @@ public class MongoConfiguration {
     }
 
     @Bean("logEventMongoProperties")
-    @ConfigurationProperties(prefix = "log.spring.data.mongodb")
+    @ConfigurationProperties(prefix = "storage.spring.data.mongodb")
     public MongoProperties getLogEventProperties() {
         return new MongoProperties();
     }

@@ -30,7 +30,7 @@
 //
 //    public NoticeHandler(NoticeHttpProcessor noticeHttpProcessor) {
 //        this.noticeHttpProcessor = noticeHttpProcessor;
-//        log.info("noticeHandler");
+//        storage.info("noticeHandler");
 //    }
 //
 //    NoticeHttpProcessor noticeHttpProcessor;

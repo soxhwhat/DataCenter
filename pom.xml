@@ -225,7 +225,7 @@
                     <threshold>Medium</threshold>
 
                     <!-- 失败终止编译-->
-                    <failOnError>true</failOnError>
+                    <failOnError>false</failOnError>
 
                     <includeTests>true</includeTests>
                     <findbugsXmlOutput>true</findbugsXmlOutput>
@@ -269,7 +269,7 @@
                         <ruleset>rulesets/java/ali-other.xml</ruleset>
                         <ruleset>rulesets/java/ali-set.xml</ruleset>
                     </rulesets>
-                    <failOnViolation>true</failOnViolation>
+                    <failOnViolation>false</failOnViolation>
                     <failurePriority>5</failurePriority>
 
                     <!-- 排除不需要扫描的类 -->

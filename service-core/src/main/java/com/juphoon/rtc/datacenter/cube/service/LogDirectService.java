@@ -16,13 +16,13 @@ import java.util.List;
 
 @Setter
 @Slf4j
-@Component
-@CubeDirect(serviceName = "LogDirectServer", endPointsValue = "sarc;")
+//@Component
+//@CubeDirect(serviceName = "LogDirectServer", endPointsValue = "sarc;")
 @SuppressWarnings("PMD")
 public class LogDirectService extends AbstractCubeDirect {
 
-    @Autowired
-    LogCollectionServerProcess logCollectionServerProcess;
+//    @Autowired
+//    LogCollectionServerProcess logCollectionServerProcess;
 
     @Override
     public ObjectServer buildServiceServer() {
@@ -30,13 +30,13 @@ public class LogDirectService extends AbstractCubeDirect {
             @Override
             public void log_begin(ServerCall __call, List<String> logList) throws Exception {
                 log.info("终端日志上报:{}", logList.size());
-                logCollectionServerProcess.process(__call, logList);
+//                logCollectionServerProcess.process(__call, logList);
             }
 
             @Override
             public void serverLog_begin(ServerCall __call, List<String> logList) throws Exception {
-                log.info("终端服务日志上报:{}", logList.size());
-                logCollectionServerProcess.process(__call, logList);
+                log.info("日志上报:{}", logList.size());
+//                logCollectionServerProcess.process(__call, logList);
             }
         };
     }

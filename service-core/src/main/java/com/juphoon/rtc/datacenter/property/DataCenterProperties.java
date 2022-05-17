@@ -1,18 +1,15 @@
 package com.juphoon.rtc.datacenter.property;
 
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
-import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
-import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-
-import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_20SEC;
-import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_30SEC;
 
 /**
  * <p>dataCenter默认配置</p>
@@ -21,24 +18,18 @@ import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEV
  * @author ajian.zheng
  * @date 2022-03-22
  */
+@Getter
+@Setter
 @Component
 @ConfigurationProperties(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX)
-@Data
 public class DataCenterProperties {
 
     private Agree agree = new Agree();
 
-    private AcdStat acdStat = new AcdStat();
-
-    private Mq mq = new Mq();
-
-    private MongoEvent mongoEvent = new MongoEvent();
-
-    private KafkaEvent kafkaEvent = new KafkaEvent();
-
-    private RedisEvent redisEvent = new RedisEvent();
-
-    private MdEvent mdEvent = new MdEvent();
+    /**
+     * processor 列表
+     */
+    private List<Processor> processors = new LinkedList<>();
 
     /**
      * 赞同
@@ -58,243 +49,28 @@ public class DataCenterProperties {
     // iron.datacenter.agree.enabled=true
     // iron.datacenter.
 
-    /**
-     * 客服报表统计
-     */
-    @Data
-    public static class AcdStat {
+    @Getter
+    @Setter
+    public static class Processor {
         /**
-         * 客服报表统计开关(默认打开)
+         * processor 名称
          */
-        private boolean enabled = true;
+        private String name;
 
         /**
-         * 15分钟话务统计
+         * eventlog 类型
          */
-        private boolean callInfo15minEnabled = false;
+        private String eventLog;
 
         /**
-         * 30分钟话务统计
+         * redoLog 类型
          */
-        private boolean callInfo30minEnabled = false;
+        private String redoLog;
 
         /**
-         * 小时话务统计
+         * 处理句柄集合
          */
-        private boolean callInfoHourEnabled = false;
-
-        /**
-         * 天话务统计
-         */
-        private boolean callInfoDailyEnabled = true;
-
-
-        /**
-         * 15分钟坐席统计
-         */
-        private boolean agentOp15minEnabled = false;
-
-        /**
-         * 30分钟坐席统计
-         */
-        private boolean agentOp30minEnabled = false;
-
-        /**
-         * 小时坐席统计
-         */
-        private boolean agentOpHourEnabled = false;
-
-        /**
-         * 天坐席统计
-         */
-        private boolean agentOpDailyEnabled = true;
-
-        /**
-         * 天坐席签入签出记录
-         */
-        private boolean agentOpCheckinDailyEnabled = true;
-
-        /**
-         * 天服务水平统计
-         */
-        private boolean extServiceLevelDailyEnabled = false;
-
-        /**
-         * 15分钟服务水平统计
-         */
-        private boolean extServiceLevel15minEnabled = false;
-
-        /**
-         * 30分钟服务水平统计
-         */
-        private boolean extServiceLevel30minEnabled = false;
-
-        /**
-         * 小时服务水平统计
-         */
-        private boolean extServiceLevelHourEnabled = false;
-
-        /**
-         * 天渠道平台统计
-         */
-        private boolean extTerminalDailyEnabled = false;
-
-        /**
-         * 15分钟渠道平台统计
-         */
-        private boolean extTerminal15minEnabled = false;
-
-        /**
-         * 30分钟渠道平台统计
-         */
-        private boolean extTerminal30minEnabled = false;
-
-        /**
-         * 小时渠道平台统计
-         */
-        private boolean extTerminalHourEnabled = false;
-
-        /**
-         * 默认20s,30s服务水平
-         */
-        private List<ServiceLevelTypeEnum> serviceLevelTypeEnums = Arrays.asList(SERVICE_LEVEL_20SEC, SERVICE_LEVEL_30SEC);
-
+        private List<String> handlers;
     }
-    //iron.datacenter.acd-stat.enabled=true
-
-
-    @Data
-    public static class Mq {
-        /**
-         * 类型
-         * simple | distuptor(default)
-         */
-        private String type = "simple";
-
-        /**
-         * 队列大小
-         */
-        private int capacity = 1024;
-
-        /**
-         * 数据库文件名
-         */
-        private String dbName = "datacenter.db";
-
-        /**
-         * 转化为内部类
-         *
-         * @return
-         */
-        public EventQueueConfig trans() {
-            EventQueueConfig config = new EventQueueConfig();
-
-            config.setType(type);
-            config.setQueueSize(capacity);
-            config.setDbName(dbName);
-
-            return config;
-        }
-    }
-
-    @Data
-    public static class MdEvent{
-        /**
-            埋点processor开关
-         */
-        private boolean enabled = true;
-
-        private boolean mdHandlerEnabled = true;
-    }
-
-    @Data
-    public static class MongoEvent {
-        /**
-         * MongoDB事件开关
-         */
-        private boolean enabled = true;
-
-        /**
-         * 客服事件开关
-         */
-        private boolean acdEventEnabled = true;
-
-        /**
-         * 话单事件开关
-         */
-        private boolean acdTicketEventEnabled = true;
-
-        /**
-         * 埋点事件开关
-         */
-        private boolean mdEventEnabled = true;
-
-        /**
-         * 日志事件开关
-         */
-        private boolean logEventEnabled = false;
-
-        /**
-         * 统计事件开关
-         */
-        private boolean concurrentEventEnabled = true;
-    }
-
-    @Data
-    public static class KafkaEvent {
-        /**
-         * kafka事件开关
-         */
-        private boolean enabled = true;
-
-        /**
-         * 客服事件开关
-         */
-        private boolean staffEnabled = true;
-
-        /**
-         * 话单事件开关
-         */
-        private boolean ticketEnabled = true;
-
-        /**
-         * 话单事件开关
-         */
-        private boolean queueEnabled = true;
-    }
-
-    @Data
-    public static class RedisEvent {
-        /**
-         * redis事件开关
-         */
-        private boolean enabled = true;
-
-        /**
-         * 客服事件开关
-         */
-        private boolean staffEnabled = true;
-
-        /**
-         * 话单事件开关
-         */
-        private boolean queueEnabled = true;
-
-        /**
-         * 同步事件开关
-         */
-        private boolean concurrentEnabled = true;
-
-        /**
-         * 坐席过期时间
-         */
-        private Duration staffExpireTime = Duration.ofHours(2);
-
-        /**
-         * 队列过期时间
-         */
-        private Duration queueExpireTime = Duration.ofSeconds(15);
-    }
-
 }
 

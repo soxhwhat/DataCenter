@@ -15,6 +15,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 
 /**
  * <p>终端埋点事件处理handler</p>
+ * todo 移植到产品
  *
  * @author ke.wang
  * @date 2022-04-21

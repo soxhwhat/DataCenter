@@ -2,21 +2,16 @@ package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.iron.component.utils.response.IronException;
 import com.juphoon.rtc.datacenter.api.*;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.event.storage.IRedoLogService;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
-import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
-import com.juphoon.rtc.datacenter.log.IEventLogService;
-import com.juphoon.rtc.datacenter.log.IRedoEventLogService;
-import com.juphoon.rtc.datacenter.mq.service.IEventQueueService;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,30 +22,22 @@ import java.util.Set;
  * @Date: 2022/2/9 10:39
  * @update:
  * <p>1. 2022-03-22. ajian.zheng 增加处理器名</p>
+ * <p>1. 2022-05-16. ajian.zheng 调整结构，eventLog/redoLog/eventQueueService改为设入，非自动装配</p>
  */
 @Slf4j
-@Setter
 @Getter
 public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
-    @Autowired
-    private BeanFactory beanFactory;
+    private IEventLogService eventLogService;
 
-    @PostConstruct
-    public void abstractEventProcessorInit() {
-        firstInnerEventHandler = beanFactory.getBean(FirstInnerEventHandler.class);
-        firstInnerEventHandler.setProcessor(this);
-
-        lastInnerEventHandler = beanFactory.getBean(LastInnerEventHandler.class);
-        lastInnerEventHandler.setProcessor(this);
-    }
+    private IRedoLogService redoLogService;
 
     /**
      * 注册需要关注的类型
      * 只有关注的类型才会被当前process消费
      * 由service模块注入
      */
-    private IEventQueueService queueService;
+    private IEventQueueService eventQueueService;
 
     /**
      * handler列表
@@ -68,62 +55,45 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     private Set<EventType> careEvents = new HashSet<>();
 
     /**
-     * 处理器名
+     * 内置首个事件处理器
      */
-    private ProcessorId processorId;
-
-    @Autowired
-    private IEventLogService eventLogService;
-
-    @Autowired
-    private IRedoEventLogService redoEventLogService;
-
-    private FirstInnerEventHandler firstInnerEventHandler;
-
-    private LastInnerEventHandler lastInnerEventHandler;
+    private FirstInnerEventHandler firstInnerEventHandler = new FirstInnerEventHandler(this);
 
     /**
-     * 是否启用
+     * 内置最后一个事件处理器
      */
-    private boolean enabled = true;
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    private LastInnerEventHandler lastInnerEventHandler = new LastInnerEventHandler(this);
 
     /**
      * 设置处理器名
-     *
-     * @param id
+     * @return 处理器id
      */
-    public void setProcessorId(ProcessorId id) {
-        this.processorId = id;
-    }
+    abstract ProcessorId processorId();
 
     @Override
     public String getName() {
-        assert null != processorId : "processorId 必须设置";
-        return processorId.getName();
+        return processorId().getName();
     }
 
     @Override
     public String getId() {
-        assert null != processorId : "processorId 未设置";
-
-        return processorId.getId();
+        return processorId().getId();
     }
 
-    /**
-     * 设置队列服务
-     *
-     * @param queueService
-     */
-    public void setQueueService(IEventQueueService queueService) {
-        this.queueService = queueService;
+    @Override
+    public void setEventQueueService(IEventQueueService queueService) {
+        this.eventQueueService = queueService;
+    }
+
+    @Override
+    public void setEventLogService(IEventLogService eventLogService) {
+        this.eventLogService = eventLogService;
+        this.lastInnerEventHandler.setEventLogService(eventLogService);
+    }
+
+    @Override
+    public void setRedoLogService(IRedoLogService redoLogService) {
+        this.redoLogService = redoLogService;
     }
 
     /**
@@ -139,9 +109,10 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 添加处理句柄
      *
-     * @param handler
+     * @param handler 处理器
      */
-    public synchronized void addEventHandler(IEventHandler handler) {
+    @Override
+    public void addEventHandler(IEventHandler handler) {
         assert null != handler : "handler 不能为空";
 
         this.eventHandlers.add(handler);
@@ -159,18 +130,18 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
     }
 
-    /**
-     * 添加处理句柄
-     *
-     * @param handlers
-     */
-    public void addEventHandlers(List<AbstractEventHandler> handlers) {
-        assert null != handlers : "handlers 不能为空";
-
-        for (IEventHandler handler : handlers) {
-            addEventHandler(handler);
-        }
-    }
+//    /**
+//     * 添加处理句柄
+//     *
+//     * @param handlers 处理器集合
+//     */
+//    public void addEventHandlers(List<AbstractEventHandler> handlers) {
+//        assert null != handlers : "handlers 不能为空";
+//
+//        for (IEventHandler handler : handlers) {
+//            addEventHandler(handler);
+//        }
+//    }
 
     @Override
     public boolean care(Event event) {
@@ -187,7 +158,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      * 2、如果判断成功需要 推送到消息队列中 遍历执行handle
      * 3、如果判断失败则直接返回
      *
-     * @param ec
+     * @param ec 事件
      */
     @Override
     public void process(EventContext ec) {
@@ -196,7 +167,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
         }
 
         try {
-            queueService.submit(ec);
+            eventQueueService.submit(ec);
         } catch (Exception ex) {
             // 入队失败
             ec.setQueued(false);
@@ -217,7 +188,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 重做回调入口(实际工作入口)
      *
-     * @param ec
+     * @param ec 事件
      */
     public void onProcess(EventContext ec) {
         /// first
@@ -244,9 +215,9 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 处理新鲜事件
      *
-     * @return
+     * @return void
      */
-    public void onFreshEvent(EventContext ec, IEventHandler handler) {
+    private void onFreshEvent(EventContext ec, IEventHandler handler) {
         long start = System.currentTimeMillis();
 
         try {
@@ -258,7 +229,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
             /// 处理失败
             else {
                 log.info("{} handle ec:{} 失败", handler.getName(), ec.getId());
-                redoEventLogService.saveRedoEvent(ec, handler);
+                redoLogService.saveRedoEvent(ec, handler);
             }
         } catch (Exception e) {
             log.warn("handler {} handle ec:{} 异常:", handler.getName(), ec.getId(), e);
@@ -268,11 +239,11 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     /**
      * 重做消息统一处理方法
      *
-     * @param ec
-     * @param handler
-     * @return
+     * @param ec 事件
+     * @param handler 处理器
+     * @return void
      */
-    public void onRedoEvent(EventContext ec, IEventHandler handler) {
+    private void onRedoEvent(EventContext ec, IEventHandler handler) {
         // 重做不包含当前handler
         if (!ec.getRedoHandlerIds().contains(handler.getId())) {
             return;
@@ -286,7 +257,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
                 log.info("{} reHandle ec:{} 成功", handler.getName(), ec);
 
-                redoEventLogService.removeRedoEvent(ec, handler);
+                redoLogService.removeRedoEvent(ec, handler);
             }
             /// 重做失败
             else {

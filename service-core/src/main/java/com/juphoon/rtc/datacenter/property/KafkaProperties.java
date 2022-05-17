@@ -1,17 +1,9 @@
 package com.juphoon.rtc.datacenter.property;
 
 import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
-import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
-import com.juphoon.rtc.datacenter.mq.EventQueueConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_20SEC;
-import static com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum.SERVICE_LEVEL_30SEC;
 
 /**
  * <p>dataCenter默认配置</p>

@@ -45,12 +45,12 @@ public enum ProcessorId {
     TEST("testProcessor", "测试处理器");
 
     /**
-     * 类型
+     * 名称
      */
     private final String name;
 
     /**
-     * 间隔
+     * id
      */
     private final String id;
 
