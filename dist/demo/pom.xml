@@ -10,13 +10,13 @@
     </parent>
 
     <artifactId>demo</artifactId>
-    <version>${iron-datacenter.version}</version>
+    <version>2202.5.9</version>
 
     <dependencies>
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>${iron-datacenter.version}</version>
+            <version>2202.5.9</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.httpcomponents</groupId>-->

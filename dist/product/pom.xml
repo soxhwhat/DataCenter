@@ -9,7 +9,7 @@
         <version>2202.5.9</version>
     </parent>
 
-    <version>${iron-datacenter.version}</version>
+    <version>2202.5.9</version>
     <artifactId>jrtcDataCollection-product</artifactId>
 
     <dependencies>
@@ -22,7 +22,7 @@
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>${iron-datacenter.version}</version>
+            <version>2202.5.9</version>
         </dependency>
 
     </dependencies>

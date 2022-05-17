@@ -14,13 +14,13 @@
         <dependency>
             <artifactId>data-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>${iron-datacenter.version}</version>
+            <version>2202.5.9</version>
         </dependency>
 
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>common-3.6</artifactId>
-            <version>${iron-datacenter.version}</version>
+            <version>2202.5.9</version>
             <scope>compile</scope>
         </dependency>
 
