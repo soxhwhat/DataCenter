@@ -2,6 +2,10 @@ package com.juphoon.rtc.datacenter.event.storage;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.handler.IEventHandler;
+import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+
+import java.util.List;
 
 /**
  * <p>mq日志服务</p>
@@ -21,33 +25,56 @@ public interface IEventLogService {
 
     /**
      * 保存新事件
-     *
+     * todo 删除
      * @param ec
      */
-    void saveEvent(EventContext ec);
+    void saveEventLog(EventContext ec, IEventProcessor processor);
+
+//    /**
+//     * 保存事件
+//     * todo 用这个
+//     * @param contexts
+//     */
+//    void saveEventLog(List<EventContext> contexts);
+
+    /**
+     * 删除事件
+     * todo 增加 processor
+     * @param ec
+     */
+    void removeEventLog(EventContext ec, IEventProcessor processor);
+
+    /**
+     * 保存重做日志
+     * todo, add processor
+     * @param ec
+     * @param handler
+     */
+    void saveRedoLog(EventContext ec, IEventHandler handler);
 
     /**
      * 删除事件
      *
      * @param ec
      */
-    void removeEvent(EventContext ec);
+    void removeRedoLog(EventContext ec);
 
-    /**
-     * 事件更新入队标记
-     * submit事件可能因为队列满无法入队，此时会将事件直接写DB，待扫描线程定时扫描获取插队
-     * 插队成功则更新标记，避免
-     *
-     * @param ec
-     */
-    void updateEventQueued(EventContext ec);
 
-    /**
-     * 分页查找未入队事件
-     *
-     * @return
-     */
-    IPage<EventContext> findUnqueuedEvents();
+//    /**
+//     * 事件更新入队标记
+//     * submit事件可能因为队列满无法入队，此时会将事件直接写DB，待扫描线程定时扫描获取插队
+//     * 插队成功则更新标记，避免
+//     *
+//     * @param ec
+//     */
+//    void updateEventQueued(EventContext ec);
+//
+//    /**
+//     * 分页查找未入队事件
+//     *
+//     * @return
+//     */
+//    IPage<EventContext> findUnqueuedEvents();
 
     /**
      * 启动时逻辑

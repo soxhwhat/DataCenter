@@ -3,12 +3,8 @@ package com.juphoon.rtc.datacenter.handler.inner;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
-import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>通用最后处理句柄</p>
@@ -22,14 +18,8 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 public class LastInnerEventHandler extends AbstractCareAllEventHandler {
-    private IEventLogService eventLogService;
-
     public LastInnerEventHandler(IEventProcessor processor) {
         setProcessor(processor);
-    }
-
-    public void setEventLogService(IEventLogService eventLogService) {
-        this.eventLogService = eventLogService;
     }
 
     @Override
@@ -49,8 +39,13 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
 
     @Override
     public boolean handle(EventContext ec) {
+        log.debug("ec:{}", ec);
+
+        /**
+         * 若处理成功，则删除事件
+         */
         if (ec.processOk()) {
-            eventLogService.removeEvent(ec);
+            getProcessor().eventLogService().removeEventLog(ec, getProcessor());
         }
 
         log.info("ec:{},{},{}", ec.getMagic(), ec.getEvent().getUuid(), ec.getFrom());

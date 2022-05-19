@@ -2,15 +2,22 @@ package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
 import com.juphoon.rtc.datacenter.handler.AbstractHttpEventHandler;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_RELIABLE;
 
 /**
  * <p>通用HTTP连接处理器</p>
@@ -21,18 +28,38 @@ import java.util.List;
 @Slf4j
 @Component
 public class AgreeNoticeProcessor extends AbstractHttpEventProcessor {
-    @Override
-    ProcessorId processorId() {
-        return ProcessorId.AGREE;
-    }
-
-    private AgreeNoticeProcessor.Config config;
-    private int counter = 0;
-
     @Autowired
     private RestTemplate restTemplate;
 
-    public AgreeNoticeProcessor() {
+    @Autowired
+    @Qualifier(EVENT_BIN_LOG_IMPL_RELIABLE)
+    private IEventLogService eventLogService;
+
+    @Autowired
+    private DataCenterProperties properties;
+
+    private AgreeNoticeProcessor.Config config;
+
+    private int counter = 0;
+
+    /**
+     * todo 修改为正确的 eventQueue
+     * @return
+     */
+    @Override
+    public IEventQueueService eventQueueService() {
+        // properties.getXxxConfig()
+        return new NoneEventQueueServiceImpl(this);
+    }
+
+    @Override
+    public IEventLogService eventLogService() {
+        return eventLogService;
+    }
+
+    @Override
+    public ProcessorId processorId() {
+        return ProcessorId.AGREE;
     }
 
     @Override

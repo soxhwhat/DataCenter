@@ -25,8 +25,8 @@ public class DataServiceConfigurationTest {
 
     private DataCenterProperties propertiesWithEmptyProcessors = new DataCenterProperties();
     private DataCenterProperties propertiesWithEmptyProcessorName = new DataCenterProperties();
-    private DataCenterProperties propertiesWithEmptyEventLog = new DataCenterProperties();
-    private DataCenterProperties propertiesWithEmptyRedoLog = new DataCenterProperties();
+//    private DataCenterProperties propertiesWithEmptyEventLog = new DataCenterProperties();
+//    private DataCenterProperties propertiesWithEmptyRedoLog = new DataCenterProperties();
     private DataCenterProperties propertiesWithEmptyHandlers = new DataCenterProperties();
 
     @Before
@@ -35,21 +35,21 @@ public class DataServiceConfigurationTest {
         propertiesWithEmptyProcessorName.getProcessors().add(new DataCenterProperties.Processor());
 
         //
-        DataCenterProperties.Processor processorWithEmptyEventLog = new DataCenterProperties.Processor();
-        processorWithEmptyEventLog.setName(ProcessorId.TEST.getId());
-        propertiesWithEmptyEventLog.getProcessors().add(processorWithEmptyEventLog);
-
-        //
-        DataCenterProperties.Processor processorWithEmptyRedoLog = new DataCenterProperties.Processor();
-        processorWithEmptyRedoLog.setName(ProcessorId.TEST.getId());
-        processorWithEmptyRedoLog.setEventLog("sqlite");
-        propertiesWithEmptyRedoLog.getProcessors().add(processorWithEmptyRedoLog);
+//        DataCenterProperties.Processor processorWithEmptyEventLog = new DataCenterProperties.Processor();
+//        processorWithEmptyEventLog.setName(ProcessorId.TEST.getId());
+//        propertiesWithEmptyEventLog.getProcessors().add(processorWithEmptyEventLog);
+//
+//        //
+//        DataCenterProperties.Processor processorWithEmptyRedoLog = new DataCenterProperties.Processor();
+//        processorWithEmptyRedoLog.setName(ProcessorId.TEST.getId());
+//        processorWithEmptyRedoLog.setEventLog("sqlite");
+//        propertiesWithEmptyRedoLog.getProcessors().add(processorWithEmptyRedoLog);
 
         //
         DataCenterProperties.Processor processorWithEmptyEmptyHandlers = new DataCenterProperties.Processor();
         processorWithEmptyEmptyHandlers.setName(ProcessorId.TEST.getId());
-        processorWithEmptyEmptyHandlers.setEventLog("sqlite");
-        processorWithEmptyEmptyHandlers.setRedoLog("sqlite");
+//        processorWithEmptyEmptyHandlers.setEventLog("sqlite");
+//        processorWithEmptyEmptyHandlers.setRedoLog("sqlite");
         propertiesWithEmptyHandlers.getProcessors().add(processorWithEmptyEmptyHandlers);
     }
 
@@ -68,27 +68,27 @@ public class DataServiceConfigurationTest {
         Assert.isTrue(false, "not here");
     }
 
-    @Test(expected = AssertionError.class)
-    public void testConfigWithEmptyEventLog() throws Exception {
-        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
-
-        when(test.getProperties()).thenReturn(propertiesWithEmptyEventLog);
-
-        test.config();
-
-        Assert.isTrue(false, "not here");
-    }
-
-    @Test(expected = AssertionError.class)
-    public void testConfigWithEmptyRedoLog() throws Exception {
-        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
-
-        when(test.getProperties()).thenReturn(propertiesWithEmptyRedoLog);
-
-        test.config();
-
-        Assert.isTrue(false, "not here");
-    }
+//    @Test(expected = AssertionError.class)
+//    public void testConfigWithEmptyEventLog() throws Exception {
+//        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
+//
+//        when(test.getProperties()).thenReturn(propertiesWithEmptyEventLog);
+//
+//        test.config();
+//
+//        Assert.isTrue(false, "not here");
+//    }
+//
+//    @Test(expected = AssertionError.class)
+//    public void testConfigWithEmptyRedoLog() throws Exception {
+//        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
+//
+//        when(test.getProperties()).thenReturn(propertiesWithEmptyRedoLog);
+//
+//        test.config();
+//
+//        Assert.isTrue(false, "not here");
+//    }
 
     @Test(expected = AssertionError.class)
     public void testConfigWithEmptyHandlers() throws Exception {

@@ -21,7 +21,7 @@ public class Yhandler extends AbstractCareAllEventHandler {
 
     @Override
     public boolean handle(EventContext ec) {
-        log.info("handley {}", ec);
+        log.info("{} handle {}", getId(), ec);
         return true;
     }
 }

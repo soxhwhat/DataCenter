@@ -69,6 +69,15 @@ public class EventContext {
     private boolean queued = true;
 
     /**
+     * 获取事件唯一ID
+     *
+     * @return
+     */
+    public String getEventId() {
+        return event.getUuid();
+    }
+
+    /**
      * 处理
      */
     public void handle() {

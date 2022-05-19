@@ -1,5 +1,6 @@
-package com.juphoon.rtc.datacenter.event.queue.service;
+package com.juphoon.rtc.datacenter.event.queue;
 
+import com.juphoon.rtc.datacenter.event.queue.AbstractEventQueueService;
 import com.juphoon.rtc.datacenter.event.queue.EventQueueConfig;
 
 /**

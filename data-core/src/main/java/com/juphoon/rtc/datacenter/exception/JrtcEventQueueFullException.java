@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.event.queue;
+package com.juphoon.rtc.datacenter.exception;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -9,5 +9,5 @@ package com.juphoon.rtc.datacenter.event.queue;
  * @date    3/24/22 8:04 PM
  * @update  [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */ 
-public class EventQueueFullException extends RuntimeException {
+public class JrtcEventQueueFullException extends RuntimeException {
 }

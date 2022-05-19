@@ -1,8 +1,17 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_FLASH;
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_RELIABLE;
 
 /**
  * @Author: Zhiwei.zhai
@@ -12,8 +21,31 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class MongoProcessor extends AbstractEventProcessor {
+    @Autowired
+    @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
+    private IEventLogService eventLogService;
+
+    @Autowired
+    private DataCenterProperties properties;
+
+    /**
+     * todo 修改为正确的 eventQueue
+     * @return
+     */
     @Override
-    ProcessorId processorId() {
+    public IEventQueueService eventQueueService() {
+        // properties.getXxxConfig()
+        return new NoneEventQueueServiceImpl(this);
+    }
+
+    @Override
+    public IEventLogService eventLogService() {
+        return eventLogService;
+    }
+
+    @Override
+    public ProcessorId processorId() {
         return ProcessorId.MONGO;
     }
+
 }

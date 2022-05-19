@@ -1,10 +1,16 @@
 package com.juphoon.rtc.datacenter.processor;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
 
 /**
  * @author ajian.zheng@juphoon.com
@@ -14,27 +20,31 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class TestProcessor extends AbstractEventProcessor {
+    @Autowired
+    @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
+    private IEventLogService eventLogService;
+
+    @Autowired
+    private DataCenterProperties properties;
+
+    /**
+     * todo 修改为正确的 eventQueue
+     * @return
+     */
     @Override
-    ProcessorId processorId() {
+    public IEventQueueService eventQueueService() {
+        // properties.getXxxConfig()
+        return new NoneEventQueueServiceImpl(this);
+    }
+
+    @Override
+    public IEventLogService eventLogService() {
+        return eventLogService;
+    }
+
+    @Override
+    public ProcessorId processorId() {
         return ProcessorId.TEST;
     }
-
-    @Value(value = "${demo.value:hi}")
-    private String value;
-
-    public TestProcessor() {
-    }
-
-    @Override
-    public void process(EventContext ec) {
-        log.info("process:{},{}", value, this);
-
-        getEventHandlers().forEach(h -> {
-            try {
-                h.handle(ec);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
 }
+

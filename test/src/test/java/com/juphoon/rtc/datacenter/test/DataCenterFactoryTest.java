@@ -3,8 +3,6 @@ package com.juphoon.rtc.datacenter.test;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
-import com.juphoon.rtc.datacenter.factory.EventQueueFactory;
-import com.juphoon.rtc.datacenter.factory.EventStorageFactory;
 import com.juphoon.rtc.datacenter.factory.HandlerFactory;
 import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +36,6 @@ public class DataCenterFactoryTest {
 
     @Autowired
     private ProcessorFactory processorFactory;
-
-    @Autowired
-    private EventStorageFactory eventStorageFactory;
-
-    @Autowired
-    private EventQueueFactory eventQueueFactory;
 
     @Before
     public void before() throws Exception {

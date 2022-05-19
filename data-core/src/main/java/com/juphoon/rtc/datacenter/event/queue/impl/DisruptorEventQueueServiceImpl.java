@@ -1,9 +1,10 @@
-package com.juphoon.rtc.datacenter.event.queue.service.impl;
+package com.juphoon.rtc.datacenter.event.queue.impl;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.event.queue.AbstractEventQueueService;
 import com.juphoon.rtc.datacenter.event.queue.EventQueueConfig;
-import com.juphoon.rtc.datacenter.event.queue.service.AbstractEventQueueService;
-import com.juphoon.rtc.datacenter.event.queue.service.IEventQueue;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueue;
+import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
@@ -25,8 +26,8 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
 
     private EventQueueConfig config;
 
-    public DisruptorEventQueueServiceImpl(EventQueueConfig config) {
-        this.config = config;
+    public DisruptorEventQueueServiceImpl(AbstractEventProcessor processor) {
+        super(processor);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
      * @throws Exception
      */
     @Override
-    public void submit(EventContext ec) {
+    public void onSubmit(EventContext ec) {
         try {
             disruptor.publishEvent((eventContext, l) -> {
                 eventContext.setEvent(ec.getEvent());

@@ -1,10 +1,17 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_RELIABLE;
 
 /**
  * @Author: Zhiwei.zhai
@@ -14,8 +21,30 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class KafkaProcessor extends AbstractEventProcessor {
+    @Autowired
+    @Qualifier(EVENT_BIN_LOG_IMPL_RELIABLE)
+    private IEventLogService eventLogService;
+
+    @Autowired
+    private DataCenterProperties properties;
+
     @Override
-    ProcessorId processorId() {
+    public IEventLogService eventLogService() {
+        return eventLogService;
+    }
+
+    @Override
+    public ProcessorId processorId() {
         return ProcessorId.KAFKA;
+    }
+
+    /**
+     * todo 修改为正确的 eventQueue
+     * @return
+     */
+    @Override
+    public IEventQueueService eventQueueService() {
+        // properties.getXxxConfig()
+        return new NoneEventQueueServiceImpl(this);
     }
 }

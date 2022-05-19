@@ -20,7 +20,7 @@ public class Xhandler extends AbstractCareAllEventHandler {
 
     @Override
     public boolean handle(EventContext ec) {
-        log.info("handle {}", ec);
+        log.info("{} handle {}", getId(), ec);
         return true;
     }
 }

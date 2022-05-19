@@ -27,18 +27,6 @@ import java.util.Set;
 @Slf4j
 @Getter
 public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
-
-    private IEventLogService eventLogService;
-
-    private IRedoLogService redoLogService;
-
-    /**
-     * 注册需要关注的类型
-     * 只有关注的类型才会被当前process消费
-     * 由service模块注入
-     */
-    private IEventQueueService eventQueueService;
-
     /**
      * handler列表
      */
@@ -64,11 +52,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     private LastInnerEventHandler lastInnerEventHandler = new LastInnerEventHandler(this);
 
-    /**
-     * 设置处理器名
-     * @return 处理器id
-     */
-    abstract ProcessorId processorId();
+
 
     @Override
     public String getName() {
@@ -78,22 +62,6 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     @Override
     public String getId() {
         return processorId().getId();
-    }
-
-    @Override
-    public void setEventQueueService(IEventQueueService queueService) {
-        this.eventQueueService = queueService;
-    }
-
-    @Override
-    public void setEventLogService(IEventLogService eventLogService) {
-        this.eventLogService = eventLogService;
-        this.lastInnerEventHandler.setEventLogService(eventLogService);
-    }
-
-    @Override
-    public void setRedoLogService(IRedoLogService redoLogService) {
-        this.redoLogService = redoLogService;
     }
 
     /**
@@ -162,12 +130,15 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      */
     @Override
     public void process(EventContext ec) {
+        log.debug("ec:{}", ec);
+
         if (!care(ec.getEvent())) {
+            log.debug("{} not care {}.{}", getId(), ec.getEvent().getType(), ec.getEvent().getNumber());
             return;
         }
 
         try {
-            eventQueueService.submit(ec);
+            eventQueueService().submit(ec);
         } catch (Exception ex) {
             // 入队失败
             ec.setQueued(false);
@@ -176,7 +147,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
         try {
             if (!ec.isRedoEvent()) {
-                eventLogService.saveEvent(ec);
+                eventLogService().saveEventLog(ec, this);
             }
         } catch (Exception ex) {
             log.warn("processor:{} 持久化 ec:{} 异常:", getName(), ec.getRequestId(), ex);
@@ -191,6 +162,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      * @param ec 事件
      */
     public void onProcess(EventContext ec) {
+        log.debug("ec:{}", ec);
+
         /// first
         firstInnerEventHandler.handle(ec);
 
@@ -229,7 +202,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
             /// 处理失败
             else {
                 log.info("{} handle ec:{} 失败", handler.getName(), ec.getId());
-                redoLogService.saveRedoEvent(ec, handler);
+                eventLogService().saveRedoLog(ec, handler);
             }
         } catch (Exception e) {
             log.warn("handler {} handle ec:{} 异常:", handler.getName(), ec.getId(), e);
@@ -257,7 +230,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
 
                 log.info("{} reHandle ec:{} 成功", handler.getName(), ec);
 
-                redoLogService.removeRedoEvent(ec, handler);
+                eventLogService().removeRedoLog(ec);
             }
             /// 重做失败
             else {

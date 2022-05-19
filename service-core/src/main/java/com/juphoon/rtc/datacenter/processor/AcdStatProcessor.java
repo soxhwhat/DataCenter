@@ -1,13 +1,15 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.api.StatType;
-import lombok.Getter;
-import org.springframework.context.annotation.Scope;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.property.DataCenterProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_RELIABLE;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -20,8 +22,32 @@ import java.util.Map;
  */
 @Component
 public class AcdStatProcessor extends AbstractEventProcessor {
+
+    @Autowired
+    @Qualifier(EVENT_BIN_LOG_IMPL_RELIABLE)
+    private IEventLogService eventLogService;
+
+    // todo, 队列参数可配
+    @Autowired
+    private DataCenterProperties properties;
+
+    /**
+     * todo 修改为正确的 eventQueue
+     * @return
+     */
     @Override
-    ProcessorId processorId() {
+    public IEventQueueService eventQueueService() {
+        // properties.getXxxConfig()
+        return new NoneEventQueueServiceImpl(this);
+    }
+
+    @Override
+    public IEventLogService eventLogService() {
+        return eventLogService;
+    }
+
+    @Override
+    public ProcessorId processorId() {
         return ProcessorId.ACD_STAT;
     }
 }

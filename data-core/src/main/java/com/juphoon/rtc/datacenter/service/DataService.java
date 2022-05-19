@@ -23,6 +23,7 @@ public class DataService {
     }
 
     public static final Integer LIMIT = 500;
+
     /**
      * 提交任务
      *
@@ -30,13 +31,13 @@ public class DataService {
      * @throws Exception
      */
     public void commit(EventContext ec) {
-        assert  null != ec : "ec为空";
+        assert null != ec : "ec为空";
+
         String body = ec.body();
         //防止输出日志太庞大
         if (body.length() > LIMIT) {
-            body = body.substring(0 , LIMIT);
+            body = body.substring(0, LIMIT);
         }
-        log.info("commit ec:{}",body);
 
         for (IEventProcessor processor : processors) {
             log.debug("{} process ec:{}", processor.getName(), body);
@@ -63,6 +64,7 @@ public class DataService {
      * @param contexts
      */
     public void commit(List<EventContext> contexts) {
+        log.debug("contexts:{}", contexts.size());
         contexts.forEach(this::commit);
     }
 

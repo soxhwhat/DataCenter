@@ -1,8 +1,6 @@
 package com.juphoon.rtc.datacenter.configuration;
 
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
-import com.juphoon.rtc.datacenter.factory.EventQueueFactory;
-import com.juphoon.rtc.datacenter.factory.EventStorageFactory;
 import com.juphoon.rtc.datacenter.factory.HandlerFactory;
 import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
@@ -35,12 +33,6 @@ public class DataServiceConfiguration {
     @Autowired
     private HandlerFactory handlerFactory;
 
-    @Autowired
-    private EventQueueFactory queueFactory;
-
-    @Autowired
-    private EventStorageFactory storageFactory;
-
     public DataCenterProperties getProperties() {
         return properties;
     }
@@ -54,16 +46,12 @@ public class DataServiceConfiguration {
 
         for (DataCenterProperties.Processor config : getProperties().getProcessors()) {
             assert !StringUtils.isEmpty(config.getName()) : "** processor name 不能为空，请检查配置! **";
-            assert !StringUtils.isEmpty(config.getEventLog()) : "** eventLog 不能为空，请检查配置! **";
-            assert !StringUtils.isEmpty(config.getRedoLog()) : "** redoLog 不能为空，请检查配置! **";
-            assert !StringUtils.isEmpty(config.getQueueService()) : "** queueService 不能为空，请检查配置! **";
+//            assert !StringUtils.isEmpty(config.getEventLog()) : "** eventLog 不能为空，请检查配置! **";
+//            assert !StringUtils.isEmpty(config.getRedoLog()) : "** redoLog 不能为空，请检查配置! **";
+//            assert !StringUtils.isEmpty(config.getQueueService()) : "** queueService 不能为空，请检查配置! **";
             assert !CollectionUtils.isEmpty(config.getHandlers()) : "** handlers 不能为空，请检查配置! **";
 
             IEventProcessor processor = processorFactory.getProcessor(config.getName());
-            processor.setEventLogService(storageFactory.getEventLogService(config.getEventLog()));
-            processor.setRedoLogService(storageFactory.getRedoLogService(config.getRedoLog()));
-            processor.setEventQueueService(queueFactory.getEventQueueService(config.getQueueService()));
-
             config.getHandlers().forEach(handlerName -> processor.addEventHandler(handlerFactory.getHandler(handlerName)));
 
             processors.add(processor);

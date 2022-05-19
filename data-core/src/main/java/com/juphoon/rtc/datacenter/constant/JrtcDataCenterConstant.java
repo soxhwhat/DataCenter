@@ -94,4 +94,19 @@ public class JrtcDataCenterConstant {
     public static final String RESOURCE_SCOPE_B03 = "b03";
     public static final String RESOURCE_SCOPE_E01 = "e01";
     public static final String RESOURCE_SCOPE_AGREE = "agree";
+
+
+    /**
+     * 可靠事件处理器
+     */
+    public static final String BIN_LOG_RELIABLE = "reliable";
+    public static final String BIN_LOG_FLASH = "flash";
+    public static final String BIN_LOG_NONE = "none";
+
+    public static final String EVENT_BIN_LOG_IMPL_RELIABLE = "reliableEventBinLogServiceImpl";
+    public static final String EVENT_BIN_LOG_IMPL_FLASH = "flashEventBinLogServiceImpl";
+    public static final String EVENT_BIN_LOG_IMPL_NONE = "noneEventBinLogServiceImpl";
+
+
+    public static final String EVENT_QUEUE_SERVICE_IMPL_NONE = "noneEventQueueServiceImpl";
 }
