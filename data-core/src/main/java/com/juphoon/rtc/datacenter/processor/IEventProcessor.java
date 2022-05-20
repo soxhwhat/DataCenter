@@ -29,8 +29,14 @@ public interface IEventProcessor extends INamed {
     IEventLogService eventLogService();
 
     /**
-     * 事件消费队列服务
+     * 构造事件消费队列服务
      *
+     * @return
+     */
+    IEventQueueService buildMyEventQueueService();
+
+    /**
+     * 获取事件消费队列服务
      * @return
      */
     IEventQueueService eventQueueService();
@@ -43,31 +49,9 @@ public interface IEventProcessor extends INamed {
      */
     void process(EventContext ec);
 
-
-//    /**
-//     * 组装 eventLogService
-//     *
-//     * @param eventLogService
-//     */
-//    void setEventLogService(IEventLogService eventLogService);
-//
-//    /**
-//     * 组装 redoLogService
-//     *
-//     * @param redoLogService
-//     */
-//    void setRedoLogService(IRedoLogService redoLogService);
-
-//    /**
-//     * 组装 queueService
-//     * @param queueService
-//     */
-//    void setEventQueueService(IEventQueueService queueService);
-
     /**
      * 组装 handler
      * @param handler
      */
     void addEventHandler(IEventHandler handler);
-
 }

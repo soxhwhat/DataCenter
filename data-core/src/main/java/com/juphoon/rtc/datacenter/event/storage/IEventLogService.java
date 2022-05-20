@@ -1,11 +1,9 @@
 package com.juphoon.rtc.datacenter.event.storage;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import com.juphoon.rtc.datacenter.processor.IEventProcessor;
-
-import java.util.List;
 
 /**
  * <p>mq日志服务</p>
@@ -22,11 +20,11 @@ import java.util.List;
  *
  */
 public interface IEventLogService {
-
     /**
      * 保存新事件
      * todo 删除
      * @param ec
+     * @param processor
      */
     void saveEventLog(EventContext ec, IEventProcessor processor);
 

@@ -36,7 +36,7 @@ public class AcdStatProcessor extends AbstractEventProcessor {
      * @return
      */
     @Override
-    public IEventQueueService eventQueueService() {
+    public IEventQueueService buildMyEventQueueService() {
         // properties.getXxxConfig()
         return new NoneEventQueueServiceImpl(this);
     }

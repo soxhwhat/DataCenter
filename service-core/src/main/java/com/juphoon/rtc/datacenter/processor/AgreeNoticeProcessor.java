@@ -47,7 +47,7 @@ public class AgreeNoticeProcessor extends AbstractHttpEventProcessor {
      * @return
      */
     @Override
-    public IEventQueueService eventQueueService() {
+    public IEventQueueService buildMyEventQueueService() {
         // properties.getXxxConfig()
         return new NoneEventQueueServiceImpl(this);
     }

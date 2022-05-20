@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.configuration;
 
+import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
 import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
 import com.juphoon.rtc.datacenter.event.storage.impl.NoneEventLogServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;

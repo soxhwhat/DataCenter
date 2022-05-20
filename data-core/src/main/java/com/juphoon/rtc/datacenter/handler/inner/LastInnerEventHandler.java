@@ -41,15 +41,16 @@ public class LastInnerEventHandler extends AbstractCareAllEventHandler {
     public boolean handle(EventContext ec) {
         log.debug("ec:{}", ec);
 
-        /**
+        /*
          * 若处理成功，则删除事件
          */
         if (ec.processOk()) {
             getProcessor().eventLogService().removeEventLog(ec, getProcessor());
+            getProcessor().eventQueueService().success(ec);
         }
 
-        log.info("ec:{},{},{}", ec.getMagic(), ec.getEvent().getUuid(), ec.getFrom());
-        log.info("{} process ec:{},{} ret:{},cost:{}",
+        log.debug("ec:{},{},{}", ec.getMagic(), ec.getEvent().getUuid(), ec.getFrom());
+        log.debug("{} process ec:{},{} ret:{},cost:{}",
                 ec.getProcessorId(),
                 ec.getEvent().eventType(),
                 ec.getEvent().eventNumber(),

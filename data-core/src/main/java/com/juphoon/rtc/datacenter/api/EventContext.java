@@ -63,10 +63,10 @@ public class EventContext {
      */
     private int retryCount = -1;
 
-    /**
-     * 是否入队，有可能队列满入队失败，该标记可辅助扫描线程从db中扫描此类事件，重新load到队列中
-     */
-    private boolean queued = true;
+//    /**
+//     * 是否入队，有可能队列满入队失败，该标记可辅助扫描线程从db中扫描此类事件，重新load到队列中
+//     */
+//    private boolean queued = true;
 
     /**
      * 获取事件唯一ID
@@ -154,7 +154,6 @@ public class EventContext {
                 .add("beginTimestamp=" + beginTimestamp)
                 .add("redoHandlerIds=" + redoHandlerIds)
                 .add("retryCount=" + retryCount)
-                .add("queued=" + queued)
                 .toString();
     }
 }

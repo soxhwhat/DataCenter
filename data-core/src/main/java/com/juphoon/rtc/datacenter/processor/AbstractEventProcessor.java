@@ -1,10 +1,11 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.iron.component.utils.response.IronException;
-import com.juphoon.rtc.datacenter.api.*;
+import com.juphoon.rtc.datacenter.api.Event;
+import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.EventType;
+import com.juphoon.rtc.datacenter.api.ICare;
 import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
-import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
-import com.juphoon.rtc.datacenter.event.storage.IRedoLogService;
 import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
@@ -43,6 +44,27 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     private Set<EventType> careEvents = new HashSet<>();
 
     /**
+     * 事件队列处理器
+     */
+    private IEventQueueService eventQueueService;
+
+    /**
+     * springboot 单线程启动
+     *
+     * @return
+     */
+    @Override
+    public IEventQueueService eventQueueService() {
+        if (null != eventQueueService) {
+            return eventQueueService;
+        }
+
+        eventQueueService = buildMyEventQueueService();
+
+        return eventQueueService;
+    }
+
+    /**
      * 内置首个事件处理器
      */
     private FirstInnerEventHandler firstInnerEventHandler = new FirstInnerEventHandler(this);
@@ -51,8 +73,6 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
      * 内置最后一个事件处理器
      */
     private LastInnerEventHandler lastInnerEventHandler = new LastInnerEventHandler(this);
-
-
 
     @Override
     public String getName() {
@@ -115,7 +135,7 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     public boolean care(Event event) {
         assert careEvents != null : "关注事件列表必须为非空";
         log.debug("careEvents:{},eventType:{},flag:{}"
-                ,careEvents,event.getEventType(),careEvents.contains(event.getEventType()));
+                , careEvents, event.getEventType(), careEvents.contains(event.getEventType()));
         return isAllCare || careEvents.contains(event.getEventType());
     }
 
@@ -141,10 +161,10 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
             eventQueueService().submit(ec);
         } catch (Exception ex) {
             // 入队失败
-            ec.setQueued(false);
             log.warn("processor:{} submit ec:{} 异常:e", getName(), ec.getRequestId(), ex);
         }
 
+        /// 先入库
         try {
             if (!ec.isRedoEvent()) {
                 eventLogService().saveEventLog(ec, this);
@@ -153,6 +173,14 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
             log.warn("processor:{} 持久化 ec:{} 异常:", getName(), ec.getRequestId(), ex);
             //感觉没啥用，暂时先这样
             throw new IronException();
+        }
+
+        /// 再提交队列
+        try {
+            eventQueueService().submit(ec);
+        } catch (Exception ex) {
+            // 入队失败
+            log.warn("processor:{} submit ec:{} 异常:e", getName(), ec.getRequestId(), ex);
         }
     }
 

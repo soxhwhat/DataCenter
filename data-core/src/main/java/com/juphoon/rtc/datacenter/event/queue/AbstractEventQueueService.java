@@ -54,7 +54,7 @@ public abstract class AbstractEventQueueService implements IEventQueueService {
 
     @Override
     public void success(EventContext ec) {
-        log.debug("ec:{}", ec);
+        log.debug("ec:{},{}", ec, eventIndex.size());
 
         eventIndex.remove(ec.getEventId());
     }

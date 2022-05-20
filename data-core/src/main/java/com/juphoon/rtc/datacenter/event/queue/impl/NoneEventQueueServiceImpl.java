@@ -21,7 +21,7 @@ public class NoneEventQueueServiceImpl extends AbstractEventQueueService {
 
     @Override
     public void onSubmit(EventContext ec) {
-        log.info("submit ec:{}", ec);
+        log.info("submit ec:{},{}", ec, this);
         getProcessor().onProcess(ec);
     }
 }
