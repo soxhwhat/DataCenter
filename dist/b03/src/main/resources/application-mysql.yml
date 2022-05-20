@@ -18,6 +18,12 @@ md:
     data:
       mongodb:
         uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+log:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+
 spring:
   kafka:
     bootstrap-servers: 192.168.9.99:9092

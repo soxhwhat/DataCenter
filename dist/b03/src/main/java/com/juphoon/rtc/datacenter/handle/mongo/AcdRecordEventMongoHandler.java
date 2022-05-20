@@ -20,7 +20,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
  */
 @Slf4j
 @Component
-public class AcdRecordEventMongoHandler extends AbstractMongoHandler {
+public class AcdRecordEventMongoHandler extends AbstractB03MongoHandler {
 
     @Autowired
     @Qualifier("eventMongoTemplate")

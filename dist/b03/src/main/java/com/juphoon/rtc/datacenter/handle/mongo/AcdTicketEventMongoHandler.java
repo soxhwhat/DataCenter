@@ -21,7 +21,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.TICKER_COMPLETE;
  */
 @Slf4j
 @Component
-public class AcdTicketEventMongoHandler extends AbstractMongoHandler {
+public class AcdTicketEventMongoHandler extends AbstractB03MongoHandler {
 
     @Autowired
     @Qualifier("recordMongoTemplate")

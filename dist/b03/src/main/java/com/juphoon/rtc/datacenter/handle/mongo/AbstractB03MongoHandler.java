@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * <li>2. 2022-03-31. ajian.zheng 支持多数据源，将数据源放到上层，公共handle逻辑放到抽象层mongoTemplate</li>
  */
 @Slf4j
-public abstract class AbstractMongoHandler extends AbstractEventHandler {
+public abstract class AbstractB03MongoHandler extends AbstractEventHandler {
 
     public final static String FIELD_PARAMS_BEGINTIMESTAMP="params.beginTimestamp";
     public final static String FIELD_PARAMS_CALLID="params.callId";
