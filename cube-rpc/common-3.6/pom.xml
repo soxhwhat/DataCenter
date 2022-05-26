@@ -6,10 +6,10 @@
     <parent>
         <artifactId>cube-rpc</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.10</version>
+        <version>2202.5.11</version>
     </parent>
 
-    <version>2202.5.10</version>
+    <version>2202.5.11</version>
     <artifactId>common-3.6</artifactId>
 
 </project>
