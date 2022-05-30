@@ -1,10 +1,8 @@
 package com.juphoon.rtc.datacenter.event.storage.impl;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
-import com.juphoon.rtc.datacenter.event.storage.AbstractEventLogService;
-import com.juphoon.rtc.datacenter.handler.IEventHandler;
-import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import com.juphoon.rtc.datacenter.binlog.BasicEventLogService;
+import com.juphoon.rtc.datacenter.handler.IHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,34 +13,25 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class NoneEventLogServiceImpl extends AbstractEventLogService {
+public class NoneEventLogServiceImpl extends BasicEventLogService {
     @Override
-    public void saveEventLog(EventContext ec, IEventProcessor processor) {
-        log.debug("ec:{}", ec);
+    public void save(EventContext eventContext) {
+        log.info("ec:{}", eventContext);
     }
 
     @Override
-    public void removeEventLog(EventContext ec, IEventProcessor processor) {
-        log.debug("ec:{}", ec);
+    public void remove(EventContext eventContext) {
+        log.info("ec:{}", eventContext);
     }
 
     @Override
-    public void saveRedoLog(EventContext ec, IEventHandler handler) {
-        log.debug("ec:{}", ec);
-    }
-
-    @Override
-    public void removeRedoLog(EventContext ec) {
-        log.debug("ec:{}", ec);
-    }
-
-    @Override
-    public void startup() {
+    public void saveRedo(EventContext eventContext, IHandler<EventContext> handler) {
+        log.info("ec:{},handler:{}", eventContext, handler.getId());
 
     }
 
     @Override
-    public void initTables() {
-
+    public void removeRedo(EventContext eventContext) {
+        log.info("ec:{}", eventContext);
     }
 }

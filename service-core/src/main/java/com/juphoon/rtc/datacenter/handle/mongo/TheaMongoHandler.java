@@ -13,7 +13,7 @@
 //import java.util.Set;
 //import java.util.concurrent.ConcurrentSkipListSet;
 //
-//import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
+//import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 //
 //
 ///**

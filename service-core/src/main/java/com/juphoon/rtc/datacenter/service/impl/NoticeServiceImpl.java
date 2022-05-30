@@ -21,7 +21,7 @@ import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.entity.notice.UserKeepAlive;
 import com.juphoon.rtc.datacenter.property.NoticeProperties;
 import com.juphoon.rtc.datacenter.service.CacheService;
-import com.juphoon.rtc.datacenter.service.DataService;
+import com.juphoon.rtc.datacenter.service.EventService;
 import com.juphoon.rtc.datacenter.service.NoticeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.KEY_AGREE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.KEY_AGREE;
 
 /**
  * <p>赞同通知实现类</p>
@@ -61,7 +61,7 @@ public class NoticeServiceImpl implements NoticeService {
     private CacheService cacheService;
 
     @Autowired
-    private DataService dataService;
+    private EventService eventService;
 
     @Autowired
     public NoticeServiceImpl(NoticeProperties noticeProperties) {
@@ -77,7 +77,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         params.put(APP_GUID, noticeProperties.getAppguid());
 
-        dataService.commit(buildContext(EventType.ROOM_NOTICE, params));
+        eventService.commit(buildContext(EventType.ROOM_NOTICE, params));
     }
 
     @Override
@@ -91,7 +91,7 @@ public class NoticeServiceImpl implements NoticeService {
             return;
         }
 
-        dataService.commit(buildContext(EventType.VERIFY_JOIN, params));
+        eventService.commit(buildContext(EventType.VERIFY_JOIN, params));
     }
 
     @Override
@@ -105,7 +105,7 @@ public class NoticeServiceImpl implements NoticeService {
             return;
         }
 
-        dataService.commit(buildContext(EventType.ROOM_NOTICE, params));
+        eventService.commit(buildContext(EventType.ROOM_NOTICE, params));
     }
 
     @Override
@@ -148,14 +148,14 @@ public class NoticeServiceImpl implements NoticeService {
                 userKeepAlive.setUsername(username);
                 cacheService.hPut(KEY_AGREE, uri, userKeepAlive);
 
-                dataService.commit(buildContext(EventType.LOGIN_EVENT, params));
+                eventService.commit(buildContext(EventType.LOGIN_EVENT, params));
             }
         } else if (type == 1) {
             cacheService.hRemove(KEY_AGREE, uri);
 
             params.put(ERROR_CODE, "0");
 
-            dataService.commit(buildContext(EventType.LOGOUT_EVENT, params));
+            eventService.commit(buildContext(EventType.LOGOUT_EVENT, params));
         }
     }
 

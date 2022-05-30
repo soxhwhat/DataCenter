@@ -26,7 +26,7 @@ public interface IEventProcessor extends INamed {
      *
      * @return
      */
-    IEventLogService eventLogService();
+//    IEventLogService eventLogService();
 
     /**
      * 构造事件消费队列服务

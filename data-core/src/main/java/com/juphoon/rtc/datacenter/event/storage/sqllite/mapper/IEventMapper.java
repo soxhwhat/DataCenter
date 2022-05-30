@@ -1,7 +1,7 @@
 //package com.juphoon.rtc.datacenter.event.storage.sqllite.mapper;
 //
 //import com.baomidou.dynamic.datasource.annotation.DS;
-//import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
+//import com.juphoon.rtc.datacenter.JrtcDataCenterConstant;
 //import org.apache.ibatis.annotations.Mapper;
 //
 ///**

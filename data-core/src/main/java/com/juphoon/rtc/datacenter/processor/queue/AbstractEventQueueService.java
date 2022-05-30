@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.event.queue;
+package com.juphoon.rtc.datacenter.processor.queue;
 
 import com.google.common.collect.Sets;
 import com.juphoon.rtc.datacenter.api.EventContext;
@@ -14,14 +14,19 @@ import java.util.Set;
  * @Description:
  */
 @Slf4j
-public abstract class AbstractEventQueueService implements IEventQueueService {
-    public AbstractEventQueueService(AbstractEventProcessor processor) {
+public abstract class AbstractEventQueueService implements IQueueService<EventContext> {
+    public AbstractEventQueueService(AbstractEventProcessor processor, QueueServiceConfig config) {
         this.processor = processor;
+        init(config);
     }
 
     private AbstractEventProcessor processor;
 
     private Set<String> eventIndex = Sets.newConcurrentHashSet();
+
+    @Override
+    public void init(QueueServiceConfig config) {
+    }
 
     /**
      * 获取处理器
@@ -43,11 +48,11 @@ public abstract class AbstractEventQueueService implements IEventQueueService {
         log.debug("ec:{}", ec);
 
         // 去重
-        if (eventIndex.contains(ec.getEventId())) {
-            throw new JrtcRepeatedSubmitEventException(ec.getEventId() + " 重复提交");
+        if (eventIndex.contains(ec.getId())) {
+            throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
         }
 
-        eventIndex.add(ec.getEventId());
+        eventIndex.add(ec.getId());
 
         onSubmit(ec);
     }
@@ -56,6 +61,6 @@ public abstract class AbstractEventQueueService implements IEventQueueService {
     public void success(EventContext ec) {
         log.debug("ec:{},{}", ec, eventIndex.size());
 
-        eventIndex.remove(ec.getEventId());
+        eventIndex.remove(ec.getId());
     }
 }

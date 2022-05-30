@@ -35,7 +35,7 @@ public class EventCollectionServerProcess extends AbstractServerProcess<DataColl
             ec.setRequestId(t.getUuid());
             ec.setEvent(t);
             ec.setFrom(host);
-            ec.setMagic(magic);
+//            ec.setMagic(magic);
             ret.add(ec);
         }
         return ret;

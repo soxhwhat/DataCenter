@@ -1,0 +1,61 @@
+server:
+  port: 8887
+
+iron:
+  cube:
+    enabled: false
+  datacenter:
+    event-processors:
+      - name: TEST
+        queue-service:
+          type: none
+        handlers:
+          - xhandler
+          - yhandler
+#    processors:
+#      - name: testProcessor
+#        event-log: sqlite
+#        redo-log: sqlite
+#        queue-service: disruptor
+#        handlers:
+#          - xhandler
+#          - yhandler
+
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        juphoon:
+          url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: kiwi
+          password: juphoon419708
+      primary: juphoon
+  redis:
+    host: 192.168.11.34
+    password: juphoon419708
+mybatis-plus:
+  mapper-locations: classpath*:mysql/*Mapper.xml
+
+event:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+record:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_record?authSource=admin
+md:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+storage:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+logging:
+  config: /Users/ajianzheng/Juphoon/Source/Iron/DataCenter/test/src/main/resources/logback-spring.xml

@@ -1,16 +1,15 @@
 package com.juphoon.rtc.datacenter.processor;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
-import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
-import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
-import com.juphoon.rtc.datacenter.property.DataCenterProperties;
+import com.juphoon.rtc.datacenter.binlog.ILogService;
+import com.juphoon.rtc.datacenter.handler.inner.FirstInnerHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
 
 /**
  * @author ajian.zheng@juphoon.com
@@ -22,29 +21,21 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.EVENT_B
 public class TestProcessor extends AbstractEventProcessor {
     @Autowired
     @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
-    private IEventLogService eventLogService;
-
-    @Autowired
-    private DataCenterProperties properties;
-
-    /**
-     * todo 修改为正确的 eventQueue
-     * @return
-     */
-    @Override
-    public IEventQueueService buildMyEventQueueService() {
-        // properties.getXxxConfig()
-        return new NoneEventQueueServiceImpl(this);
-    }
+    private ILogService<EventContext> eventLogService;
 
     @Override
-    public IEventLogService eventLogService() {
+    public ILogService<EventContext> logService() {
         return eventLogService;
     }
 
     @Override
     public ProcessorId processorId() {
         return ProcessorId.TEST;
+    }
+
+    @Override
+    public FirstInnerHandler<EventContext> firstInnerEventHandler() {
+        return new FirstInnerHandler<>(this);
     }
 }
 

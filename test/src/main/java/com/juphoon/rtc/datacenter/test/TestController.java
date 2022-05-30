@@ -2,8 +2,7 @@ package com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.service.DataService;
+import com.juphoon.rtc.datacenter.service.EventService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ import java.util.*;
 @Slf4j
 public class TestController {
     @Autowired
-    private DataService dataService;
+    private EventService eventService;
 
     @GetMapping("/test")
     public String test(@RequestParam("msg") String msg) throws InvalidParameterException {
@@ -38,8 +37,8 @@ public class TestController {
         Event event = Event.builder()
                 .domainId(100645)
                 .appId(0)
-                .type(9999)
-                .number(9999)
+                .type(-1)
+                .number(-1)
                 .timestamp(System.currentTimeMillis())
                 .params(params)
                 .uuid(UUID.randomUUID().toString())
@@ -49,12 +48,11 @@ public class TestController {
         ec.setRequestId(event.getUuid());
         ec.setEvent(event);
         ec.setFrom("test");
-        ec.setMagic("test");
 
         List<EventContext> data = new ArrayList<>();
         data.add(ec);
 
-        dataService.commit(data);
+        eventService.commit(data);
 
         return "OK";
     }

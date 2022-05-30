@@ -1,6 +1,9 @@
 package com.juphoon.rtc.datacenter.property;
 
-import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
+import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.JrtcDataCenterConstant;
+import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +32,12 @@ public class DataCenterProperties {
     /**
      * processor 列表
      */
-    private List<Processor> processors = new LinkedList<>();
+    private List<Processor> eventProcessors = new LinkedList<>();
+
+    /**
+     * processor 列表
+     */
+    private List<Processor> logProcessors = new LinkedList<>();
 
     /**
      * 赞同
@@ -49,28 +57,37 @@ public class DataCenterProperties {
     // iron.datacenter.agree.enabled=true
     // iron.datacenter.
 
+    @Data
+    public static class RedisEvent {
+        /**
+         * 坐席过期时间
+         */
+        private Duration staffExpireTime = Duration.ofHours(2);
+
+        /**
+         * 队列过期时间
+         */
+        private Duration queueExpireTime = Duration.ofSeconds(15);
+    }
+
     @Getter
     @Setter
     public static class Processor {
         /**
          * processor 名称
          */
-        private String name;
+        private ProcessorId name;
 
-        /**
-         * eventlog 类型
-         */
-        private String eventLog;
-
-        /**
-         * redoLog 类型
-         */
-        private String redoLog;
+        private QueueServiceConfig queueService = new QueueServiceConfig();
 
         /**
          * 处理句柄集合
          */
-        private List<String> handlers;
+        private List<HandlerId> handlers;
+
+        public String getName() {
+            return name.getId();
+        }
     }
 }
 

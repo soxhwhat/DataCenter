@@ -65,7 +65,7 @@ public class StatusCollectionServerProcess {
         ec.setRequestId(UUID.randomUUID().toString());
         ec.setEvent(t);
         ec.setFrom(host);
-        ec.setMagic(magic);
+//        ec.setMagic(magic);
         return ec;
     }
 
@@ -85,7 +85,7 @@ public class StatusCollectionServerProcess {
         for (FlowStatusJson f : from) {
             events.add(trans(f));
         }
-        ec.setEventList(events);
+//        ec.setEventList(events);
         return ec;
     }
 

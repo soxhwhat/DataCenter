@@ -2,7 +2,7 @@ package com.juphoon.rtc.datacenter;
 
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.service.DataService;
+import com.juphoon.rtc.datacenter.service.EventService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -29,7 +29,7 @@ public class DemoDataCenterApplication {
     }
 
     @Autowired
-    private DataService dataService;
+    private EventService eventService;
 
     @GetMapping("/event")
     public void event(@RequestParam(value = "value", required = false) int value) {
@@ -51,7 +51,7 @@ public class DemoDataCenterApplication {
 
         ec.setEvent(event);
 
-        dataService.commit(ec);
+        eventService.commit(ec);
     }
 
     @GetMapping("/record")
@@ -79,6 +79,6 @@ public class DemoDataCenterApplication {
 
         ec.setEvent(event);
 
-        dataService.commit(ec);
+        eventService.commit(ec);
     }
 }

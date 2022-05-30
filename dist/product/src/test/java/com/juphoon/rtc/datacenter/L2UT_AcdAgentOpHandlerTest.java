@@ -72,7 +72,6 @@ public class L2UT_AcdAgentOpHandlerTest {
         ec.setRequestId(event.getUuid());
         ec.setEvent(event);
         ec.setFrom("host3");
-        ec.setMagic("magic3");
         return event;
     }
 }

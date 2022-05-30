@@ -4,7 +4,7 @@
 //import com.juphoon.rtc.datacenter.api.Event;
 //import com.juphoon.rtc.datacenter.api.EventContext;
 //import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
-//import com.juphoon.rtc.datacenter.service.DataService;
+//import com.juphoon.rtc.datacenter.service.EventService;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +27,7 @@
 //    private IEventLogService logService;
 //
 //    @Autowired
-//    private DataService dataService;
+//    private EventService dataService;
 //
 //    @Scheduled(cron = "*/5 * * * * ?")
 //    public void scanRedo() {

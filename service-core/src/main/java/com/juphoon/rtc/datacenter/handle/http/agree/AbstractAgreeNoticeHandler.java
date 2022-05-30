@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.URL_PARAMS;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.URL_PARAMS;
 
 
 /**

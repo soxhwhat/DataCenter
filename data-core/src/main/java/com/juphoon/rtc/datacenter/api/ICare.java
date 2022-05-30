@@ -13,10 +13,10 @@ public interface ICare {
     /**
      * 是否关心
      *
-     * @param event
+     * @param eventType
      * @return
      */
-    boolean care(Event event);
+    boolean care(EventType eventType);
 
     /**
      * 关注事件列表

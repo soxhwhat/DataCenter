@@ -1,12 +1,13 @@
 package com.juphoon.rtc.datacenter.factory;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
-import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import com.juphoon.rtc.datacenter.processor.IProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
@@ -22,20 +23,29 @@ import java.util.Map;
 @Slf4j
 public class ProcessorFactory {
     @Autowired
-    private Map<String, IEventProcessor> processors;
+    private Map<String, IProcessor<EventContext>> eventProcessors;
 
-    @PostConstruct
-    public void init() {
-        assert null != processors : "** processor不能为空 **";
-    }
+    @Autowired
+    private Map<String, IProcessor<LogContext>> logProcessors;
 
     /**
      * 通过传入的processor名称获取对应的process实例
      * @param name
      * @return
      */
-    public IEventProcessor getProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
-        IEventProcessor processor = processors.get(name);
+    public IProcessor<EventContext> getEventProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
+        IProcessor<EventContext> processor = eventProcessors.get(name);
+
+        if (null == processor) {
+            log.warn("** 无效的 processor 名:" + name + " **");
+            throw new JrtcInvalidProcessorConfigurationException("** 无效的 processor 名:" + name + " **");
+        }
+
+        return processor;
+    }
+
+    public IProcessor<LogContext> getLogProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
+        IProcessor<LogContext> processor = logProcessors.get(name);
 
         if (null == processor) {
             log.warn("** 无效的 processor 名:" + name + " **");

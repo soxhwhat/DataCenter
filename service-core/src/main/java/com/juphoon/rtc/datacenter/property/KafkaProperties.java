@@ -1,6 +1,6 @@
 package com.juphoon.rtc.datacenter.property;
 
-import com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant;
+import com.juphoon.rtc.datacenter.JrtcDataCenterConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

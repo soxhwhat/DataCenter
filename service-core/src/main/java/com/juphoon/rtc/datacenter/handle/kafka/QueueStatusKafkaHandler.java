@@ -39,8 +39,9 @@ public class QueueStatusKafkaHandler extends AbstractKafkaHandler {
         return kafkaProperties.getTopic().getQueue();
     }
 
+    /// TODO TODO TODO 临时修改
     @Override
     Object getData(EventContext ec) {
-        return ec.getEventList();
+        return ec.getEvent();
     }
 }

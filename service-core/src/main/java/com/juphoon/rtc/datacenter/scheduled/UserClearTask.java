@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.KEY_AGREE;
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.URL_PARAMS;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.KEY_AGREE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.URL_PARAMS;
 
 /**
  * <p>定时清理过期用户缓存</p>
- *
+ * TODO TODO TODO 赞同通知，这里的逻辑需要重新考虑，这里只考虑异步通知
  * @author ke.wang@juphoon.com
  * @date 2022/3/24 18:06
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]

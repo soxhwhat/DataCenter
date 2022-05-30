@@ -5,12 +5,11 @@ import com.juphoon.rtc.datacenter.api.EventContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 import static com.juphoon.rtc.datacenter.api.EventType.LOG_EVENT;
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
 
 /**
  * @Author: Zhiwei.zhai
@@ -32,7 +31,6 @@ public class LogCollectionServerProcess extends AbstractServerProcess<String> {
         ec.setRequestId(t.getUuid());
         ec.setEvent(t);
         ec.setFrom(host);
-        ec.setMagic(magic);
         return Arrays.asList(ec);
     }
 

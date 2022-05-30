@@ -22,7 +22,7 @@ public abstract class AbstractRemoveRedisHandler extends AbstractRedisHandler {
 
     @Override
     public boolean handle(EventContext ec) {
-        log.info("AbstractRemoveRedisHandler,ec:{},keyName:{}", ec.body(), keyName());
+        log.info("AbstractRemoveRedisHandler,ec:{},keyName:{}", ec.getId(), keyName());
         try {
             redisTemplate().boundHashOps(keyName()).delete(ec.getEvent().agentId());
         } catch (DataAccessException e) {

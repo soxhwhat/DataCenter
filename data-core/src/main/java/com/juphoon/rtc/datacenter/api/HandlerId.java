@@ -1,6 +1,6 @@
 package com.juphoon.rtc.datacenter.api;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
 /**
  * <p>handler统一管理</p>

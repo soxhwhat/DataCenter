@@ -1,10 +1,9 @@
-package com.juphoon.rtc.datacenter.event.queue.impl;
+package com.juphoon.rtc.datacenter.processor.queue.impl;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.event.queue.AbstractEventQueueService;
-import com.juphoon.rtc.datacenter.event.queue.EventQueueConfig;
-import com.juphoon.rtc.datacenter.event.queue.IEventQueue;
 import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
+import com.juphoon.rtc.datacenter.processor.queue.AbstractEventQueueService;
+import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
@@ -20,18 +19,16 @@ import java.util.concurrent.ThreadFactory;
  * @Description:
  */
 @Slf4j
-public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService implements IEventQueue {
+public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService {
 
     private Disruptor<EventContext> disruptor;
 
-    private EventQueueConfig config;
-
-    public DisruptorEventQueueServiceImpl(AbstractEventProcessor processor) {
-        super(processor);
+    public DisruptorEventQueueServiceImpl(AbstractEventProcessor processor, QueueServiceConfig config) {
+        super(processor, config);
     }
 
     @Override
-    public void init(EventQueueConfig config, AbstractEventQueueService queueService) {
+    public void init(QueueServiceConfig config) {
         EventFactory<EventContext> eventFactory = EventContext::new;
 
         ThreadFactory threadFactory = new ThreadFactory() {
@@ -43,7 +40,7 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
             }
         };
 
-        EventHandler<EventContext> eventHandler = (ec, sequence, endOfBatch) -> getProcessor().onProcess(ec);
+        EventHandler<EventContext> eventHandler = (ec, sequence, endOfBatch) -> getProcessor().process(ec);
 
         disruptor = new Disruptor<>(eventFactory, config.getQueueSize(), threadFactory,
                 ProducerType.SINGLE, new BlockingWaitStrategy());
@@ -52,7 +49,6 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
 
         disruptor.start();
     }
-
 
     /**
      * 提交事件
@@ -66,7 +62,6 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
         try {
             disruptor.publishEvent((eventContext, l) -> {
                 eventContext.setEvent(ec.getEvent());
-                eventContext.setEventList(ec.getEventList());
                 eventContext.setBeginTimestamp(ec.getBeginTimestamp());
                 eventContext.setCreatedTimestamp(ec.getCreatedTimestamp());
                 eventContext.setRetryCount(ec.getRetryCount());
@@ -76,11 +71,5 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
             throw e;
         }
     }
-
-    @Override
-    public int getSize() {
-        return Long.valueOf(disruptor.getRingBuffer().remainingCapacity()).intValue();
-    }
-
 
 }

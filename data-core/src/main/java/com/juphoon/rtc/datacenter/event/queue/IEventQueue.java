@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.event.queue;
 
-import com.juphoon.rtc.datacenter.event.queue.AbstractEventQueueService;
-import com.juphoon.rtc.datacenter.event.queue.EventQueueConfig;
+import com.juphoon.rtc.datacenter.processor.queue.AbstractEventQueueService;
+import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 
 /**
  * @Author: Zhiwei.zhai
@@ -15,7 +15,7 @@ public interface IEventQueue {
      * @param config
      * @param queueService
      */
-    void init(EventQueueConfig config, AbstractEventQueueService queueService);
+    void init(QueueServiceConfig config, AbstractEventQueueService queueService);
 
     /**
      * 获取队列大小

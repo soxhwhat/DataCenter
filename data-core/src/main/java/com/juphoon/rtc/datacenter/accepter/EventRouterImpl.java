@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.accepter;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.service.DataService;
+import com.juphoon.rtc.datacenter.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class EventRouterImpl implements IEventRouter {
      * 由service模块注入
      */
     @Autowired
-    private DataService dataService;
+    private EventService dataService;
 
     /**
      * 把消息发送到各个process中 一条消息通过多个process

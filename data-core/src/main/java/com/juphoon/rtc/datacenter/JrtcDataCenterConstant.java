@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.constant;
+package com.juphoon.rtc.datacenter;
 
 /**
  * <p>常量定义</p>
@@ -107,6 +107,23 @@ public class JrtcDataCenterConstant {
     public static final String EVENT_BIN_LOG_IMPL_FLASH = "flashEventBinLogServiceImpl";
     public static final String EVENT_BIN_LOG_IMPL_NONE = "noneEventBinLogServiceImpl";
 
+    public static final String LOG_BIN_LOG_IMPL_FLASH = "flashLogBinLogServiceImpl";
+    public static final String LOG_BIN_LOG_IMPL_NONE = "noneLogBinLogServiceImpl";
 
-    public static final String EVENT_QUEUE_SERVICE_IMPL_NONE = "noneEventQueueServiceImpl";
+    public static final String STATE_BIN_LOG_IMPL_FLASH = "flashStateBinLogServiceImpl";
+    public static final String STATE_BIN_LOG_IMPL_NONE = "noneStateBinLogServiceImpl";
+
+
+
+
+    /**
+     * queue service config 参数
+     */
+    public static final String QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR = "disruptor";
+    public static final String QUEUE_SERVICE_CONFIG_TYPE_NONE = "none";
+    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_BLOCKING = "blocking";
+    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_SLEEPING = "sleeping";
+    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_YIELDING = "yielding";
+    public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_SINGLE = "single";
+    public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_MULTI = "multi";
 }

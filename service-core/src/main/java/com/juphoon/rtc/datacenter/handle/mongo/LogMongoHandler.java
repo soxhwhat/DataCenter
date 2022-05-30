@@ -10,18 +10,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.IndexInfo;
 import org.springframework.data.mongodb.core.index.IndexOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.UNDERLINE_TIMESTAMP;
 import static com.juphoon.rtc.datacenter.api.EventType.LOG_EVENT;
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.UNDERLINE_TIMESTAMP;
 
 /**
  * <p>客服事件处理handler</p>
@@ -62,7 +60,7 @@ public class LogMongoHandler extends AbstractMongoHandler {
     private static final String EXPIRE_NAME = "expire_timestamp";
 
     @PostConstruct
-    public void createIndex(){
+    public void createIndex() {
         IndexOperations ops = mongoTemplate().indexOps(collectionName(null));
         Index index = new Index();
         index.named(EXPIRE_NAME);
@@ -70,8 +68,8 @@ public class LogMongoHandler extends AbstractMongoHandler {
         index.on(UNDERLINE_TIMESTAMP, Sort.Direction.ASC);
         try {
             ops.ensureIndex(index);
-        } catch (Exception e){
-            log.info("索引已存在:{}",EXPIRE_NAME);
+        } catch (Exception e) {
+            log.info("索引已存在:{}", EXPIRE_NAME);
         }
     }
 

@@ -1,14 +1,13 @@
 package com.juphoon.rtc.datacenter.configuration;
 
-import com.juphoon.rtc.datacenter.event.queue.impl.NoneEventQueueServiceImpl;
-import com.juphoon.rtc.datacenter.event.storage.IEventLogService;
+import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.event.storage.impl.NoneEventLogServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.*;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
 /**
  * <p>产品默认构造器</p>
@@ -22,19 +21,19 @@ public class EventBinLogConfiguration {
     @Bean
     @Primary
     @Qualifier(EVENT_BIN_LOG_IMPL_RELIABLE)
-    public IEventLogService eventLogServiceReliable() {
+    public ILogService eventLogServiceReliable() {
         return new NoneEventLogServiceImpl();
     }
 
     @Bean
     @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
-    public IEventLogService eventLogServiceFlash() {
+    public ILogService eventLogServiceFlash() {
         return new NoneEventLogServiceImpl();
     }
 
     @Bean
-    @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
-    public IEventLogService eventLogServiceNone() {
+    @Qualifier(LOG_BIN_LOG_IMPL_FLASH)
+    public ILogService eventLogServiceNone() {
         return new NoneEventLogServiceImpl();
     }
 }

@@ -3,122 +3,48 @@ package com.juphoon.rtc.datacenter.processor;
 import com.juphoon.iron.component.utils.response.IronException;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.api.EventType;
-import com.juphoon.rtc.datacenter.api.ICare;
-import com.juphoon.rtc.datacenter.event.queue.IEventQueueService;
-import com.juphoon.rtc.datacenter.handler.AbstractCareAllEventHandler;
 import com.juphoon.rtc.datacenter.handler.IEventHandler;
-import com.juphoon.rtc.datacenter.handler.inner.FirstInnerEventHandler;
-import com.juphoon.rtc.datacenter.handler.inner.LastInnerEventHandler;
+import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
+import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
+import com.juphoon.rtc.datacenter.processor.queue.impl.DisruptorEventQueueServiceImpl;
+import com.juphoon.rtc.datacenter.processor.queue.impl.NoneEventQueueServiceImpl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.QUEUE_SERVICE_CONFIG_TYPE_NONE;
 
 /**
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/9 10:39
  * @update:
  * <p>1. 2022-03-22. ajian.zheng 增加处理器名</p>
- * <p>1. 2022-05-16. ajian.zheng 调整结构，eventLog/redoLog/eventQueueService改为设入，非自动装配</p>
+ * <p>2. 2022-05-16. ajian.zheng 调整结构，eventLog/redoLog/eventQueueService改为设入，非自动装配</p>
+ * <p>3. 2022-05-31. ajian.zheng 魔改</p>
  */
 @Slf4j
 @Getter
-public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
-    /**
-     * handler列表
-     */
-    private List<IEventHandler> eventHandlers = new ArrayList<>();
-
-    /**
-     * 是否关心全局标记
-     */
-    private boolean isAllCare = false;
-
-    /**
-     * 关心事件集合
-     */
-    private Set<EventType> careEvents = new HashSet<>();
-
-    /**
-     * 事件队列处理器
-     */
-    private IEventQueueService eventQueueService;
-
-    /**
-     * springboot 单线程启动
-     *
-     * @return
-     */
+public abstract class AbstractEventProcessor extends AbstractProcessor<EventContext> {
     @Override
-    public IEventQueueService eventQueueService() {
-        if (null != eventQueueService) {
-            return eventQueueService;
+    public LastInnerHandler<EventContext> lastInnerEventHandler() {
+        return new LastInnerHandler<>(this);
+    }
+
+    @Override
+    public void buildQueueService(QueueServiceConfig config) {
+        switch (config.getType()) {
+            case QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR:
+                setQueueService(new DisruptorEventQueueServiceImpl(this, config));
+                break;
+            case QUEUE_SERVICE_CONFIG_TYPE_NONE:
+                setQueueService(new NoneEventQueueServiceImpl(this, config));
+                break;
+            default:
+                throw new IllegalArgumentException("无效的 QueueService 类型:" + config.getType() + "," + getId());
         }
-
-        eventQueueService = buildMyEventQueueService();
-
-        return eventQueueService;
     }
 
-    /**
-     * 内置首个事件处理器
-     */
-    private FirstInnerEventHandler firstInnerEventHandler = new FirstInnerEventHandler(this);
-
-    /**
-     * 内置最后一个事件处理器
-     */
-    private LastInnerEventHandler lastInnerEventHandler = new LastInnerEventHandler(this);
-
-    @Override
-    public String getName() {
-        return processorId().getName();
-    }
-
-    @Override
-    public String getId() {
-        return processorId().getId();
-    }
-
-    /**
-     * processor不需要关心本方法
-     *
-     * @return 不关心
-     */
-    @Override
-    public List<EventType> careEvents() {
-        return null;
-    }
-
-    /**
-     * 添加处理句柄
-     *
-     * @param handler 处理器
-     */
-    @Override
-    public void addEventHandler(IEventHandler handler) {
-        assert null != handler : "handler 不能为空";
-
-        this.eventHandlers.add(handler);
-
-        if (!isAllCare) {
-            //非inner的handle才会影响isAllCare
-            if (!(handler instanceof FirstInnerEventHandler || handler instanceof LastInnerEventHandler)) {
-                isAllCare = handler instanceof AbstractCareAllEventHandler;
-            }
-        }
-
-        if (handler.careEvents() != null) {
-            careEvents.addAll(handler.careEvents());
-        }
-
-    }
-
-//    /**
+    //    /**
 //     * 添加处理句柄
 //     *
 //     * @param handlers 处理器集合
@@ -155,13 +81,6 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
         if (!care(ec.getEvent())) {
             log.debug("{} not care {}.{}", getId(), ec.getEvent().getType(), ec.getEvent().getNumber());
             return;
-        }
-
-        try {
-            eventQueueService().submit(ec);
-        } catch (Exception ex) {
-            // 入队失败
-            log.warn("processor:{} submit ec:{} 异常:e", getName(), ec.getRequestId(), ex);
         }
 
         /// 先入库

@@ -1,11 +1,13 @@
 package com.juphoon.rtc.datacenter.configuration;
 
+import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
 import com.juphoon.rtc.datacenter.factory.HandlerFactory;
 import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
-import com.juphoon.rtc.datacenter.processor.IEventProcessor;
+import com.juphoon.rtc.datacenter.processor.IProcessor;
+import com.juphoon.rtc.datacenter.processor.queue.IQueueService;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
-import com.juphoon.rtc.datacenter.service.DataService;
+import com.juphoon.rtc.datacenter.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,7 @@ import java.util.List;
  * @date 2/15/22 6:01 PM
  */
 @Configuration
-public class DataServiceConfiguration {
+public class LogServiceConfiguration {
 
     @Autowired
     private DataCenterProperties properties;
@@ -38,25 +40,25 @@ public class DataServiceConfiguration {
     }
 
     @Bean
-    public DataService config() throws JrtcInvalidProcessorConfigurationException {
+    public LogService logService() throws JrtcInvalidProcessorConfigurationException {
 
-        assert !CollectionUtils.isEmpty(getProperties().getProcessors()) : "** processors 不能为空，请检查配置! **";
+        assert !CollectionUtils.isEmpty(getProperties().getLogProcessors()) : "** processors 不能为空，请检查配置! **";
 
-        List<IEventProcessor> processors = new ArrayList<>(getProperties().getProcessors().size());
+        List<IProcessor<LogContext>> processors = new ArrayList<>(getProperties().getLogProcessors().size());
 
-        for (DataCenterProperties.Processor config : getProperties().getProcessors()) {
+        for (DataCenterProperties.Processor config : getProperties().getLogProcessors()) {
             assert !StringUtils.isEmpty(config.getName()) : "** processor name 不能为空，请检查配置! **";
-//            assert !StringUtils.isEmpty(config.getEventLog()) : "** eventLog 不能为空，请检查配置! **";
-//            assert !StringUtils.isEmpty(config.getRedoLog()) : "** redoLog 不能为空，请检查配置! **";
-//            assert !StringUtils.isEmpty(config.getQueueService()) : "** queueService 不能为空，请检查配置! **";
             assert !CollectionUtils.isEmpty(config.getHandlers()) : "** handlers 不能为空，请检查配置! **";
 
-            IEventProcessor processor = processorFactory.getProcessor(config.getName());
-            config.getHandlers().forEach(handlerName -> processor.addEventHandler(handlerFactory.getHandler(handlerName)));
+            IProcessor<LogContext> processor = processorFactory.getLogProcessor(config.getName());
+            /// 构造queueService
+            processor.buildQueueService(config.getQueueService());
+
+            config.getHandlers().forEach(handlerName -> processor.addHandler(handlerFactory.getLogHandler(handlerName.getId())));
 
             processors.add(processor);
         }
 
-        return new DataService(processors);
+        return new LogService(processors);
     }
 }

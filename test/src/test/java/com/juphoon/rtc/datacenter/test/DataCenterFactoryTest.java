@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.RESOURCE_SCOPE_GLOBAL;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.RESOURCE_SCOPE_GLOBAL;
 
 /**
  * TestApplication Tester.
@@ -62,14 +62,14 @@ public class DataCenterFactoryTest {
                 continue;
             }
 
-            Assert.notNull(handlerFactory.getHandler(HandlerId.values()[i].getId()),
+            Assert.notNull(handlerFactory.getEventHandler(HandlerId.values()[i].getId()),
                     HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
         }
     }
 
     @Test(expected = JrtcInvalidProcessorConfigurationException.class)
     public void requiredHandlerExceptionTest() throws Exception {
-        handlerFactory.getHandler("invalidHandler");
+        handlerFactory.getEventHandler("invalidHandler");
 
         Assert.isTrue(false, "not here");
     }
@@ -79,14 +79,14 @@ public class DataCenterFactoryTest {
         for (int i = 0; i < ProcessorId.values().length; i++) {
             log.info("check processor {}: {}", ProcessorId.values()[i].getId(), ProcessorId.values()[i].getName());
 
-            Assert.notNull(processorFactory.getProcessor(ProcessorId.values()[i].getId()),
+            Assert.notNull(processorFactory.getEventProcessor(ProcessorId.values()[i].getId()),
                     ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
         }
     }
 
     @Test(expected = JrtcInvalidProcessorConfigurationException.class)
     public void requiredProcessorExceptionTest() throws Exception {
-        processorFactory.getProcessor("invalidProcessor");
+        processorFactory.getEventProcessor("invalidProcessor");
 
         Assert.isTrue(false, "not here");
     }

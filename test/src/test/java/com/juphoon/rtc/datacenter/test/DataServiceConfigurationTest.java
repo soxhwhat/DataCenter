@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.configuration.DataServiceConfiguration;
+import com.juphoon.rtc.datacenter.configuration.EventServiceConfiguration;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class DataServiceConfigurationTest {
     @Before
     public void before() throws Exception {
         //
-        propertiesWithEmptyProcessorName.getProcessors().add(new DataCenterProperties.Processor());
+        propertiesWithEmptyProcessorName.getEventProcessors().add(new DataCenterProperties.Processor());
 
         //
 //        DataCenterProperties.Processor processorWithEmptyEventLog = new DataCenterProperties.Processor();
@@ -47,10 +47,10 @@ public class DataServiceConfigurationTest {
 
         //
         DataCenterProperties.Processor processorWithEmptyEmptyHandlers = new DataCenterProperties.Processor();
-        processorWithEmptyEmptyHandlers.setName(ProcessorId.TEST.getId());
+        processorWithEmptyEmptyHandlers.setName(ProcessorId.TEST);
 //        processorWithEmptyEmptyHandlers.setEventLog("sqlite");
 //        processorWithEmptyEmptyHandlers.setRedoLog("sqlite");
-        propertiesWithEmptyHandlers.getProcessors().add(processorWithEmptyEmptyHandlers);
+        propertiesWithEmptyHandlers.getEventProcessors().add(processorWithEmptyEmptyHandlers);
     }
 
     @After
@@ -59,11 +59,11 @@ public class DataServiceConfigurationTest {
 
     @Test(expected = AssertionError.class)
     public void testConfigWithEmptyProcessors() throws Exception {
-        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
+        EventServiceConfiguration test = Mockito.spy(EventServiceConfiguration.class);
 
         when(test.getProperties()).thenReturn(propertiesWithEmptyProcessors);
 
-        test.config();
+        test.eventService();
 
         Assert.isTrue(false, "not here");
     }
@@ -92,11 +92,11 @@ public class DataServiceConfigurationTest {
 
     @Test(expected = AssertionError.class)
     public void testConfigWithEmptyHandlers() throws Exception {
-        DataServiceConfiguration test = Mockito.spy(DataServiceConfiguration.class);
+        EventServiceConfiguration test = Mockito.spy(EventServiceConfiguration.class);
 
         when(test.getProperties()).thenReturn(propertiesWithEmptyHandlers);
 
-        test.config();
+        test.eventService();
 
         Assert.isTrue(false, "not here");
     }

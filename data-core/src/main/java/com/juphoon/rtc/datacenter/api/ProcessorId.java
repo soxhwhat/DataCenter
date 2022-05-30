@@ -12,7 +12,7 @@ public enum ProcessorId {
     /**
      * 赞同通知处理器
      */
-    AGREE("agreeNoticeProcessor", "赞同通知处理器"),
+    AGREE("agreeNotifyProcessor", "赞同通知处理器"),
 
     /**
      * 客服统计
@@ -38,6 +38,11 @@ public enum ProcessorId {
      * 终端埋点
      */
     MD("mdProcessor", "终端埋点处理器"),
+
+    /**
+     * 事件mongo入库
+     */
+    EXT_LOG("logProcessor", "兼容旧版本日志收集处理器"),
 
     /**
      * 测试

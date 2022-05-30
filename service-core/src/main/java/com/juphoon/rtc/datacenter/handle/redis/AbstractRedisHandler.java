@@ -28,7 +28,7 @@ public abstract class AbstractRedisHandler extends AbstractEventHandler {
     @Override
     public boolean handle(EventContext ec) {
         try {
-            log.info("ec:{},keyName:{}", ec.body(), keyName());
+            log.info("ec:{},keyName:{}", ec.getId(), keyName());
             redisTemplate().boundHashOps(keyName()).put(ec.getEvent().getUuid(), IronJsonUtils.objectToJson(ec.getEvent()));
             if (expireTime().toMillis() != 0) {
                 redisTemplate().boundHashOps(keyName()).expire(expireTime());

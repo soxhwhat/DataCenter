@@ -43,17 +43,18 @@ public class QueueStatusKafkaHandler extends AbstractKafkaHandler {
     @Override
     Object getData(EventContext ec) {
         List<FlowTicket> flows = new ArrayList<>();
-        for(Event event : ec.getEventList()){
-            FlowTicket flowTicket = new FlowTicket();
-            flowTicket.setStatus(event.eventNumber());
-            flowTicket.setAppId(String.valueOf(event.appId()));
-            flowTicket.setDomainId(String.valueOf(event.domainId()));
-            flowTicket.setParams(new Document(event.getParams()));
-            flowTicket.setType(event.eventType());
-            flowTicket.setUniqueId(event.getUuid());
-            flowTicket.setUpdateTime(System.currentTimeMillis());
-            flows.add(flowTicket);
-        }
+        // todo todo todo 临时修改
+//        for(Event event : ec.getEventList()){
+//            FlowTicket flowTicket = new FlowTicket();
+//            flowTicket.setStatus(event.eventNumber());
+//            flowTicket.setAppId(String.valueOf(event.appId()));
+//            flowTicket.setDomainId(String.valueOf(event.domainId()));
+//            flowTicket.setParams(new Document(event.getParams()));
+//            flowTicket.setType(event.eventType());
+//            flowTicket.setUniqueId(event.getUuid());
+//            flowTicket.setUpdateTime(System.currentTimeMillis());
+//            flows.add(flowTicket);
+//        }
         return flows;
     }
 }
