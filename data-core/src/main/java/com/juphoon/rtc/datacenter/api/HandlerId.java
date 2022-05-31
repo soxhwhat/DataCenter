@@ -190,6 +190,10 @@ public enum HandlerId {
      * log日志mongodb入库handler
      */
     LogMongoHandler("logMongoHandler", "日志mongodb入库handler"),
+    /**
+     * log日志mongodb入库handler
+     */
+    InfoMongoHandler("infoMongoHandler", "info记录mongodb入库handler"),
 
     /**
      * 队列状态kafka处理handler

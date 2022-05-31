@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Setter
 @ConditionalOnProperty(prefix = "iron.cube.entry", value = "enabled", havingValue = "true", matchIfMissing = true)
-@CubeEntry(serviceName = "EventCollectionEntryServer", endPointsKey = "EventCollectionEntryServer", endPointsValue = "sarc -p 110;")
+@CubeEntry(serviceName = "EventCollectionEntryServer", endPointsKey = "EventCollectionEntryServer", endPointsValue = "sarc -p 111;")
 @SuppressWarnings("PMD")
 public class EventCollectionEntryServiceServerImpl extends AbstractCubeEntry {
 

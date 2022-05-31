@@ -41,7 +41,6 @@ public abstract class AbstractBatchRedisHandler extends AbstractRedisHandler {
     public boolean handle(EventContext ec) {
 
         try {
-            log.info("ec:{},keyName:{}", ec.body(), keyName());
             Map<String, Event> data = ec.getEventList().stream().collect(Collectors.toMap(Event::getUuid, Function.identity()));
             //删除操作
             BoundHashOperations ops = redisTemplate().boundHashOps(keyName());
@@ -68,7 +67,6 @@ public abstract class AbstractBatchRedisHandler extends AbstractRedisHandler {
             log.error("{}", e);
             return true;
         }
-        log.info("执行{}结束", this.getClass().getName());
         return true;
     }
 }

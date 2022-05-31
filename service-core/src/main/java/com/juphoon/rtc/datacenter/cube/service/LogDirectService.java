@@ -29,13 +29,13 @@ public class LogDirectService extends AbstractCubeDirect {
         return new LogCollectionServiceServer() {
             @Override
             public void log_begin(ServerCall __call, List<String> logList) throws Exception {
-                log.info("日志上报:{}", logList.size());
+                log.info("终端日志上报:{}", logList.size());
                 logCollectionServerProcess.process(__call, logList);
             }
 
             @Override
             public void serverLog_begin(ServerCall __call, List<String> logList) throws Exception {
-                log.info("日志上报:{}", logList.size());
+                log.info("终端服务日志上报:{}", logList.size());
                 logCollectionServerProcess.process(__call, logList);
             }
         };

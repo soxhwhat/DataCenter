@@ -118,6 +118,9 @@ public class B03DataServiceConfiguration {
     private LogMongoHandler logMongoHandler;
 
     @Autowired
+    private InfoMongoHandler infoMongoHandler;
+
+    @Autowired
     private MdEventDatabaseHandler mdEventDatabaseHandler;
 
     @SuppressWarnings("PMD")
@@ -163,6 +166,7 @@ public class B03DataServiceConfiguration {
         acdRecordEventMongoHandler.setEnabled(true);
         mdEventMongoHandler.setEnabled(properties.getMongoEvent().isMdEventEnabled());
         logMongoHandler.setEnabled(properties.getMongoEvent().isLogEventEnabled());
+        infoMongoHandler.setEnabled(properties.getMongoEvent().isLogEventEnabled());
 
         mdEventDatabaseHandler.setEnabled(properties.getMdEvent().isMdHandlerEnabled());
         //事件写入kafka
@@ -214,6 +218,7 @@ public class B03DataServiceConfiguration {
                     .handler(acdRecordEventMongoHandler)
                     .handler(mdEventMongoHandler)
                     .handler(logMongoHandler)
+                    .handler(infoMongoHandler)
                     .end()
                 .processor(kafkaProcessor)
                     .mq(kafkaConfig)

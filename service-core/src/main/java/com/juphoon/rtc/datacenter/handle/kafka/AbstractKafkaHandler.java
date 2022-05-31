@@ -38,7 +38,6 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
         try {
             String topic = getTopic(ec);
             String json = IronJsonUtils.objectToJson(getData(ec));
-            log.info("ec:{},topic:{},json:{}", ec.body(), topic,json);
             kafkaTemplate.send(topic, json).get();
         } catch (KafkaException kafkaException) {
             return false;
@@ -48,7 +47,6 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
         } catch (InterruptedException e) {
             return false;
         }
-        log.info("执行kafkaHandle结束");
         return true;
     }
 

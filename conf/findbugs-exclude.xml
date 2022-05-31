@@ -15,4 +15,7 @@
     <Match>
         <Package name="Event"/>
     </Match>
+    <Match>
+        <Package name="Config"/>
+    </Match>
 </FindBugsFilter>

@@ -17,6 +17,8 @@ public class JrtcDataCenterConstant {
 
     public static final String THEA_SERVER_COLLECTION = "thea_server_collection";
     public static final String THEA_CLIENT_COLLECTION = "thea_client_collection";
+    public static final String COLLECTION_LOG_ENDPOINT = "collection.logEndpoint";
+    public static final String COLLECTION_INFO_ENDPOINT = "collection.infoEndpoint";
     public static final int THEA_SERVER_CODE = 901;
     public static final int THEA_CLIENT_CODE = 900;
     public static final String UNDER_LINE = "_";
@@ -72,7 +74,12 @@ public class JrtcDataCenterConstant {
      * log日志收集
      */
     public static final String TIMESTAMP = "timestamp";
+    public static final String VERSION_KEY = "_ver";
+    public static final String ID_KEY = "_id";
+    public static final Integer VERSION_VALUE = 1;
     public static final String UNDERLINE_TIMESTAMP = "_timestamp";
     public static final String UNDERLINE_VERSION_KEY = "_ver";
     public static final Integer UNDERLINE_VERSION_VALUE = 1;
+    public static final String SOURCE_INFO_KEY = "info";
+    public static final String TYPE = "_type";
 }
