@@ -21,22 +21,22 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
 @Component(EVENT_BIN_LOG_IMPL_RELIABLE)
 public class ReliableEventLogServiceImpl implements ILogService<EventContext> {
     @Override
-    public void save(EventContext eventContext) {
-
+    public void save(EventContext context) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void remove(EventContext eventContext) {
-
+    public void remove(EventContext context) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void saveRedo(EventContext eventContext, IHandler<EventContext> handler) {
-
+    public void saveRedo(EventContext context, IHandler<EventContext> handler) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void removeRedo(EventContext eventContext) {
-
+    public void removeRedo(EventContext context) {
+        log.info("context:{}", context);
     }
 }

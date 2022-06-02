@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.factory;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.LogContext;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,9 @@ public class ProcessorFactory {
     @Autowired
     private Map<String, IProcessor<LogContext>> logProcessors;
 
+    @Autowired
+    private Map<String, IProcessor<StateContext>> stateProcessors;
+
     /**
      * 通过传入的processor名称获取对应的process实例
      * @param name
@@ -46,6 +50,17 @@ public class ProcessorFactory {
 
     public IProcessor<LogContext> getLogProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
         IProcessor<LogContext> processor = logProcessors.get(name);
+
+        if (null == processor) {
+            log.warn("** 无效的 processor 名:" + name + " **");
+            throw new JrtcInvalidProcessorConfigurationException("** 无效的 processor 名:" + name + " **");
+        }
+
+        return processor;
+    }
+
+    public IProcessor<StateContext> getStateProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
+        IProcessor<StateContext> processor = stateProcessors.get(name);
 
         if (null == processor) {
             log.warn("** 无效的 processor 名:" + name + " **");

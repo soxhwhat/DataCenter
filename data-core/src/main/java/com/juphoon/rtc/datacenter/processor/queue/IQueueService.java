@@ -7,12 +7,6 @@ package com.juphoon.rtc.datacenter.processor.queue;
  */
 public interface IQueueService<T> {
     /**
-     * 初始化
-     * @param config
-     */
-    void init(QueueServiceConfig config);
-
-    /**
      * 提交事件
      *         // TODO
      *         // 1. 数据落地
@@ -30,6 +24,14 @@ public interface IQueueService<T> {
      * @param t 事件
      */
     void success(T t);
+
+    /**
+     * 初始化
+     * @param config
+     */
+    default void init(QueueServiceConfig config){
+    }
+
 
     // todo 增加延迟消费的submit
     // 重做事件最好加下延迟

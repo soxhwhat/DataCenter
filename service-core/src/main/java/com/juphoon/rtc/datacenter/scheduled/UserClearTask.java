@@ -26,8 +26,8 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.URL_PARAMS;
  * @date 2022/3/24 18:06
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
-@EnableScheduling
-@Component
+//@EnableScheduling
+//@Component
 @Slf4j
 public class UserClearTask {
     @Autowired

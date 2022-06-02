@@ -36,18 +36,18 @@ public class DataServiceConfigurationTest {
 
         //
 //        DataCenterProperties.Processor processorWithEmptyEventLog = new DataCenterProperties.Processor();
-//        processorWithEmptyEventLog.setName(ProcessorId.TEST.getId());
+//        processorWithEmptyEventLog.setName(ProcessorId.TEST_STATE.getId());
 //        propertiesWithEmptyEventLog.getProcessors().add(processorWithEmptyEventLog);
 //
 //        //
 //        DataCenterProperties.Processor processorWithEmptyRedoLog = new DataCenterProperties.Processor();
-//        processorWithEmptyRedoLog.setName(ProcessorId.TEST.getId());
+//        processorWithEmptyRedoLog.setName(ProcessorId.TEST_STATE.getId());
 //        processorWithEmptyRedoLog.setEventLog("sqlite");
 //        propertiesWithEmptyRedoLog.getProcessors().add(processorWithEmptyRedoLog);
 
         //
         DataCenterProperties.Processor processorWithEmptyEmptyHandlers = new DataCenterProperties.Processor();
-        processorWithEmptyEmptyHandlers.setName(ProcessorId.TEST);
+        processorWithEmptyEmptyHandlers.setName(ProcessorId.TEST_STATE);
 //        processorWithEmptyEmptyHandlers.setEventLog("sqlite");
 //        processorWithEmptyEmptyHandlers.setRedoLog("sqlite");
         propertiesWithEmptyHandlers.getEventProcessors().add(processorWithEmptyEmptyHandlers);

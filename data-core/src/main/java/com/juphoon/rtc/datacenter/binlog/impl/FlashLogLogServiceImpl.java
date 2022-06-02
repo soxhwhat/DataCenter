@@ -19,24 +19,24 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.LOG_BIN_LOG_IMPL
  */
 @Slf4j
 @Component(LOG_BIN_LOG_IMPL_FLASH)
-public class FlashLogServiceImpl implements ILogService<LogContext> {
+public class FlashLogLogServiceImpl implements ILogService<LogContext> {
     @Override
-    public void save(LogContext eventContext) {
-
+    public void save(LogContext context) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void remove(LogContext eventContext) {
-
+    public void remove(LogContext context) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void saveRedo(LogContext eventContext, IHandler<LogContext> handler) {
-
+    public void saveRedo(LogContext context, IHandler<LogContext> handler) {
+        log.info("context:{}", context);
     }
 
     @Override
-    public void removeRedo(LogContext eventContext) {
-
+    public void removeRedo(LogContext context) {
+        log.info("context:{}", context);
     }
 }

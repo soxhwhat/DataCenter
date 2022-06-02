@@ -16,14 +16,19 @@ public enum HandlerId {
 //    TestHttpEventHandler("testHttpEventHandler", "testHttpEventHandler"),
 
     /**
-     * Xhandler 测试用
+     * testEventHandler 测试用
      */
-    Xhandler("xhandler", "xhandler", RESOURCE_SCOPE_TEST),
+    TestEventHandler("testEventHandler", "testEventHandler", RESOURCE_SCOPE_TEST),
 
     /**
-     * yhandler 测试用
+     * testLogHandler 测试用
      */
-    Yhandler("yhandler", "yhandler", RESOURCE_SCOPE_TEST),
+    TestLogHandler("testLogHandler", "testLogHandler", RESOURCE_SCOPE_TEST),
+
+    /**
+     * testStateHandler 测试用
+     */
+    TestStateHandler("testStateHandler", "testStateHandler", RESOURCE_SCOPE_TEST),
 
     /**
      * 15分钟话务汇总handler

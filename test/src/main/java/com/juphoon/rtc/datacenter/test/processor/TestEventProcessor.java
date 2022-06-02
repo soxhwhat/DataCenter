@@ -1,12 +1,14 @@
-package com.juphoon.rtc.datacenter.processor;
+package com.juphoon.rtc.datacenter.test.processor;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerHandler;
+import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
@@ -18,7 +20,8 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
  */
 @Slf4j
 @Component
-public class TestProcessor extends AbstractEventProcessor {
+@ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
+public class TestEventProcessor extends AbstractEventProcessor {
     @Autowired
     @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
     private ILogService<EventContext> eventLogService;
@@ -30,7 +33,7 @@ public class TestProcessor extends AbstractEventProcessor {
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.TEST;
+        return ProcessorId.TEST_EVENT;
     }
 
     @Override

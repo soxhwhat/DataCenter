@@ -25,7 +25,7 @@ public class AcdStatProcessor extends AbstractEventProcessor {
     private ILogService<EventContext> eventLogService;
 
     @Override
-    public ILogService logService() {
+    public ILogService<EventContext> logService() {
         return eventLogService;
     }
 

@@ -21,8 +21,8 @@ public class NoneLogQueueServiceImpl extends AbstractLogQueueService {
     }
 
     @Override
-    public void onSubmit(LogContext ec) {
-        log.info("submit ec:{},{}", ec, this);
-        getProcessor().process(ec);
+    public void onSubmit(LogContext context) {
+        log.info("submit context:{},{}", context, this);
+        getProcessor().process(context);
     }
 }

@@ -27,8 +27,68 @@ public class TestController {
     @Autowired
     private EventService eventService;
 
-    @GetMapping("/test")
-    public String test(@RequestParam("msg") String msg) throws InvalidParameterException {
+    @GetMapping("/event")
+    public String event(@RequestParam("msg") String msg) throws InvalidParameterException {
+        log.info("get msg:{}", msg);
+
+        Map<String, Object> params = new HashMap<>(1);
+        params.put("k", "v");
+
+        Event event = Event.builder()
+                .domainId(100645)
+                .appId(0)
+                .type(-1)
+                .number(-1)
+                .timestamp(System.currentTimeMillis())
+                .params(params)
+                .uuid(UUID.randomUUID().toString())
+                .build();
+
+        EventContext ec = new EventContext();
+        ec.setRequestId(event.getUuid());
+        ec.setEvent(event);
+        ec.setFrom("test");
+
+        List<EventContext> data = new ArrayList<>();
+        data.add(ec);
+
+        eventService.commit(data);
+
+        return "OK";
+    }
+
+    @GetMapping("/log")
+    public String logTest(@RequestParam("msg") String msg) throws InvalidParameterException {
+        log.info("get msg:{}", msg);
+
+        Map<String, Object> params = new HashMap<>(1);
+        params.put("k", "v");
+
+        Event event = Event.builder()
+                .domainId(100645)
+                .appId(0)
+                .type(-1)
+                .number(-1)
+                .timestamp(System.currentTimeMillis())
+                .params(params)
+                .uuid(UUID.randomUUID().toString())
+                .build();
+
+        EventContext ec = new EventContext();
+        ec.setRequestId(event.getUuid());
+        ec.setEvent(event);
+        ec.setFrom("test");
+
+        List<EventContext> data = new ArrayList<>();
+        data.add(ec);
+
+        eventService.commit(data);
+
+        return "OK";
+    }
+
+    @GetMapping("/state")
+    public String state(@RequestParam("msg") String msg) throws InvalidParameterException {
         log.info("get msg:{}", msg);
 
         Map<String, Object> params = new HashMap<>(1);

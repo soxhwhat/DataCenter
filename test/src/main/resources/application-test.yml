@@ -6,20 +6,23 @@ iron:
     enabled: false
   datacenter:
     event-processors:
-      - name: TEST
+      - name: TEST_EVENT
         queue-service:
           type: none
         handlers:
-          - xhandler
-          - yhandler
-#    processors:
-#      - name: testProcessor
-#        event-log: sqlite
-#        redo-log: sqlite
-#        queue-service: disruptor
-#        handlers:
-#          - xhandler
-#          - yhandler
+          - testEventHandler
+    log-processors:
+      - name: TEST_LOG
+        queue-service:
+          type: none
+        handlers:
+          - testLogHandler
+    state-processors:
+      - name: TEST_STATE
+        queue-service:
+          type: none
+        handlers:
+          - testStateHandler
 
 spring:
   datasource:

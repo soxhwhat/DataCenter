@@ -1,10 +1,9 @@
 package com.juphoon.rtc.datacenter.processor.queue;
 
 import com.google.common.collect.Sets;
-import com.juphoon.rtc.datacenter.api.LogContext;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.exception.JrtcRepeatedSubmitEventException;
-import com.juphoon.rtc.datacenter.processor.AbstractEventProcessor;
-import com.juphoon.rtc.datacenter.processor.AbstractLogProcessor;
+import com.juphoon.rtc.datacenter.processor.AbstractStateProcessor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
@@ -15,20 +14,20 @@ import java.util.Set;
  * @Description:
  */
 @Slf4j
-public abstract class AbstractLogQueueService implements IQueueService<LogContext> {
-    public AbstractLogQueueService(AbstractLogProcessor processor, QueueServiceConfig config) {
+public abstract class AbstractStateQueueService implements IQueueService<StateContext> {
+    public AbstractStateQueueService(AbstractStateProcessor processor, QueueServiceConfig config) {
         this.processor = processor;
         init(config);
     }
 
-    private AbstractLogProcessor processor;
+    private AbstractStateProcessor processor;
 
     private Set<String> eventIndex = Sets.newConcurrentHashSet();
 
     /**
      * 获取处理器
      */
-    public AbstractLogProcessor getProcessor() {
+    public AbstractStateProcessor getProcessor() {
         return processor;
     }
 
@@ -38,10 +37,10 @@ public abstract class AbstractLogQueueService implements IQueueService<LogContex
      * @param ec
      * @throws Exception
      */
-    public abstract void onSubmit(LogContext ec) throws Exception;
+    public abstract void onSubmit(StateContext ec) throws Exception;
 
     @Override
-    public void submit(LogContext ec) throws Exception {
+    public void submit(StateContext ec) throws Exception {
         log.debug("ec:{}", ec);
 
         // 去重
@@ -54,8 +53,9 @@ public abstract class AbstractLogQueueService implements IQueueService<LogContex
         onSubmit(ec);
     }
 
+    /// TODO 可以收敛到抽象类中
     @Override
-    public void success(LogContext ec) {
+    public void success(StateContext ec) {
         log.debug("ec:{},{}", ec, eventIndex.size());
 
         eventIndex.remove(ec.getId());

@@ -1,9 +1,10 @@
 package com.juphoon.rtc.datacenter.processor.queue;
 
 import com.juphoon.rtc.datacenter.api.IConfig;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -21,7 +22,7 @@ public class QueueServiceConfig implements IConfig {
      * 队列类型
      * disruptor/none
      */
-    private String type = "disruptor";
+    private String type = QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR;
 
     /**
      * 队列大小
@@ -31,10 +32,10 @@ public class QueueServiceConfig implements IConfig {
     /**
      * blocking、sleeping、yielding
      */
-    private String waitStrategy = "blocking";
+    private String waitStrategy = QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_BLOCKING;
 
     /**
      * single/multi
      */
-    private String producerType = "single";
+    private String producerType = QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_SINGLE;
 }

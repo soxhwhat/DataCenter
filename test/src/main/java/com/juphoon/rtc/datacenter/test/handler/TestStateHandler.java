@@ -1,10 +1,11 @@
-package com.juphoon.rtc.datacenter.handle.test;
+package com.juphoon.rtc.datacenter.test.handler;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
-import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
+import com.juphoon.rtc.datacenter.api.StateContext;
+import com.juphoon.rtc.datacenter.handler.AbstractStateHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -17,10 +18,11 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class Yhandler extends AbstractEventHandler {
+@ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
+public class TestStateHandler extends AbstractStateHandler {
     @Override
     public HandlerId handlerId() {
-        return HandlerId.Yhandler;
+        return HandlerId.TestStateHandler;
     }
 
     @Override
@@ -29,8 +31,8 @@ public class Yhandler extends AbstractEventHandler {
     }
 
     @Override
-    public boolean handle(EventContext ec) {
-        log.info("{} handle {}", getId(), ec);
+    public boolean handle(StateContext context) {
+        log.info("{} handle {}", getId(), context);
         return true;
     }
 }

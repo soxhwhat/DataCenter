@@ -45,9 +45,29 @@ public enum ProcessorId {
     EXT_LOG("logProcessor", "兼容旧版本日志收集处理器"),
 
     /**
+     * 实时状态Redis处理器
+     */
+    STATE_REDIS("stateRedisProcessor", "实时状态Redis处理器"),
+
+    /**
+     * 实时状态 MongoDB 持久化处理器
+     */
+    STATE_MONGO("stateMongoProcessor", "实时状态Mongo处理器"),
+
+    /**
      * 测试
      */
-    TEST("testProcessor", "测试处理器");
+    TEST_EVENT("testEventProcessor", "事件测试处理器"),
+
+    /**
+     * 测试
+     */
+    TEST_LOG("testLogProcessor", "日志测试处理器"),
+
+    /**
+     * 测试
+     */
+    TEST_STATE("testStateProcessor", "状态测试处理器");
 
     /**
      * 名称

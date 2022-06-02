@@ -24,10 +24,6 @@ public abstract class AbstractEventQueueService implements IQueueService<EventCo
 
     private Set<String> eventIndex = Sets.newConcurrentHashSet();
 
-    @Override
-    public void init(QueueServiceConfig config) {
-    }
-
     /**
      * 获取处理器
      */

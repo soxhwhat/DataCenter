@@ -40,6 +40,11 @@ public class DataCenterProperties {
     private List<Processor> logProcessors = new LinkedList<>();
 
     /**
+     * processor 列表
+     */
+    private List<Processor> stateProcessors = new LinkedList<>();
+
+    /**
      * 赞同
      */
     @Data
