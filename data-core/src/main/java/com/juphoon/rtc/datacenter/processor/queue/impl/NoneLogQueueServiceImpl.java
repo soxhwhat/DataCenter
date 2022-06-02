@@ -22,7 +22,7 @@ public class NoneLogQueueServiceImpl extends AbstractLogQueueService {
 
     @Override
     public void onSubmit(LogContext context) {
-        log.info("submit context:{},{}", context, this);
+        log.info("submit context:{},{}", context, this.getProcessor().getId());
         getProcessor().process(context);
     }
 }

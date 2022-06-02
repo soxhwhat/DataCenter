@@ -32,7 +32,7 @@ public class TestLogHandler extends AbstractLogHandler {
 
     @Override
     public boolean handle(LogContext context) {
-        log.info("{} handle {}", getId(), context);
+        log.info("{} handle {}:{}", getId(), context.getRequestId(), context.getLogs().size());
         return true;
     }
 }

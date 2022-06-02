@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.processor.queue.impl;
 
-import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.processor.AbstractStateProcessor;
 import com.juphoon.rtc.datacenter.processor.queue.AbstractStateQueueService;
@@ -63,7 +62,7 @@ public class DisruptorStateQueueServiceImpl extends AbstractStateQueueService {
     public void onSubmit(StateContext ec) {
         try {
             disruptor.publishEvent((eventContext, l) -> {
-                eventContext.setLogs(ec.getLogs());
+                eventContext.setParams(ec.getParams());
                 eventContext.setBeginTimestamp(ec.getBeginTimestamp());
                 eventContext.setCreatedTimestamp(ec.getBeginTimestamp());
                 eventContext.setRetryCount(ec.getRetryCount());

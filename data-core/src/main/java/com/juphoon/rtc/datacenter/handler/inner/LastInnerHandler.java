@@ -48,7 +48,7 @@ public class LastInnerHandler<T extends BasicContext> extends AbstractHandler<T>
 
     @Override
     public boolean handle(T t) {
-        log.debug("ec:{}", t);
+        log.debug("t:{}", t);
 
         /*
          * 若处理成功，则删除事件
@@ -58,7 +58,7 @@ public class LastInnerHandler<T extends BasicContext> extends AbstractHandler<T>
             getProcessor().queueService().success(t);
         }
 
-        log.debug("{} process ec:{},{} ret:{},cost:{}",
+        log.debug("{} process t:{},{} ret:{},cost:{}",
                 t.getProcessorId(),
                 t.getEventType(),
                 t,

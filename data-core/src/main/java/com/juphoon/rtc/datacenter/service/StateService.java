@@ -31,7 +31,7 @@ public class StateService {
         assert null != context : "ec为空";
 
         for (IProcessor<StateContext> processor : processors) {
-            log.debug("{} process ec:{}", processor.getName(), context.getRequestId());
+            log.debug("{} process ec:{}", processor.getId(), context.getRequestId());
 
             processor.commit(context);
         }

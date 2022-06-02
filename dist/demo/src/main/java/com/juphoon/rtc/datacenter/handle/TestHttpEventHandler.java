@@ -29,7 +29,7 @@ public class TestHttpEventHandler extends AbstractHttpEventHandler {
 
     @Override
     public List<EventType> careEvents() {
-        return Collections.singletonList(EventType.TEST);
+        return Collections.singletonList(EventType.TEST_EVENT);
     }
 
     @Override

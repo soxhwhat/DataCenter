@@ -69,9 +69,11 @@
     </appender>
 
     <springProfile name="mysql,oracle,default,dev,test">
-        <root level="debug">
+        <root level="INFO">
             <appender-ref ref="stdout"/>
         </root>
+
+        <logger name="com.juphoon" level="debug"/>
     </springProfile>
 
     <springProfile name="pro">

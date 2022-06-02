@@ -365,7 +365,7 @@ public enum EventType {
      * 测试事件
      */
 
-    TEST(-1, -1);
+    TEST_EVENT(-1, -1);
 
     /**
      * 事件类型

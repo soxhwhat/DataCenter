@@ -15,6 +15,16 @@ import java.util.List;
 @Getter
 @Setter
 public class LogContext extends BasicContext {
+    public LogContext() {
+    }
+
+    public LogContext(EventType eventType, @NotNull List<String> logs) {
+        this.eventType = eventType;
+        this.logs = logs;
+    }
+
+    private EventType eventType;
+
     /**
      * 内容
      */
@@ -23,6 +33,6 @@ public class LogContext extends BasicContext {
 
     @Override
     public EventType getEventType() {
-        return EventType.LOG_EVENT;
+        return eventType;
     }
 }

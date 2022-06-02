@@ -156,11 +156,15 @@ public abstract class AbstractProcessor<T extends BasicContext> implements IProc
             throw new IronException();
         }
 
+        /// todo 异步提交
         submit(t);
     }
 
     /**
      * 提交到队列(重做不走 commit，直接走submit)
+     *
+     * todo 队列满异常测试
+     *
      * @param t
      */
     @Override
@@ -181,7 +185,7 @@ public abstract class AbstractProcessor<T extends BasicContext> implements IProc
      */
     @Override
     public void process(T t) {
-        log.debug("content:{}", t);
+        log.debug("t:{}", t);
 
         // first
         if (null != getFirstInnerEventHandler()) {

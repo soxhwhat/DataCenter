@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  *
@@ -15,14 +14,24 @@ import java.util.List;
 @Getter
 @Setter
 public class StateContext extends BasicContext {
+    public StateContext() {
+    }
+
+    public StateContext(EventType eventType, String params) {
+        this.eventType = eventType;
+        this.params = params;
+    }
+
+    private EventType eventType;
+
     /**
-     * 内容
+     * 内容 json
      */
     @NotNull
-    private List<String> logs;
+    private String params;
 
     @Override
     public EventType getEventType() {
-        return EventType.LOG_EVENT;
+        return eventType;
     }
 }
