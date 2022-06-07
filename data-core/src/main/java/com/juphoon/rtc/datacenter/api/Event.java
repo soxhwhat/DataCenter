@@ -53,11 +53,6 @@ public class Event {
     private final Long timestamp;
 
     /**
-     * 更新时间
-     */
-//    private final Long updateTime = System.currentTimeMillis();
-
-    /**
      * 其他参数
      */
     private final Map<String, Object> params;

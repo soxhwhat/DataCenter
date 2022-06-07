@@ -62,7 +62,7 @@ public class DisruptorStateQueueServiceImpl extends AbstractStateQueueService {
     public void onSubmit(StateContext ec) {
         try {
             disruptor.publishEvent((eventContext, l) -> {
-                eventContext.setParams(ec.getParams());
+                eventContext.setState(ec.getState());
                 eventContext.setBeginTimestamp(ec.getBeginTimestamp());
                 eventContext.setCreatedTimestamp(ec.getBeginTimestamp());
                 eventContext.setRetryCount(ec.getRetryCount());

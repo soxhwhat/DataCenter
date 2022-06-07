@@ -4,16 +4,23 @@ import com.juphoon.rtc.datacenter.TestApplication;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.binlog.mapper.EventLogMapper;
+import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashEventLogMapper;
+import com.juphoon.rtc.datacenter.binlog.mapper.reliable.ReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -27,7 +34,7 @@ import java.util.stream.Collectors;
 @SpringBootTest(classes = TestApplication.class)
 @ActiveProfiles("test")
 @Slf4j
-public class EventLogMapperTest {
+public class ReliableEventLogMapperTest {
 
 
     public static EventContext randomEventContext() {
@@ -51,8 +58,7 @@ public class EventLogMapperTest {
     }
 
     @Autowired
-    private EventLogMapper logMapper;
-
+    private ReliableEventLogMapper logMapper;
 
     @Before
     public void before() throws Exception {

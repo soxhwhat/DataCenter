@@ -165,7 +165,6 @@ public class EventBinLogPO {
     public String dump() {
         return new StringJoiner(", ", EventBinLogPO.class.getSimpleName() + "[", "]")
                 .add("id='" + id + "'")
-//                .add("contextId='" + contextId + "'")
                 .add("requestId='" + requestId + "'")
                 .add("from='" + from + "'")
                 .add("processorId='" + processorId + "'")

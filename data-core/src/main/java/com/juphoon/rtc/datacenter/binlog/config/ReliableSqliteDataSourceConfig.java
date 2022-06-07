@@ -22,7 +22,7 @@ import java.sql.SQLException;
  * @date 5/9/22 8:25 PM
  */
 @Configuration
-@MapperScan(basePackages = {"com.juphoon.rtc.datacenter.log.sqlite.mapper"},
+@MapperScan(basePackages = {"com.juphoon.rtc.datacenter.binlog.mapper.reliable"},
         sqlSessionTemplateRef = "reliableSqliteSessionTemplate")
 public class ReliableSqliteDataSourceConfig {
     @Primary
@@ -47,7 +47,7 @@ public class ReliableSqliteDataSourceConfig {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(resolver.getResources("classpath:sqlite/acdstat/*.xml"));
+        bean.setMapperLocations(resolver.getResources("classpath:sqlite/*.xml"));
 
         assert bean.getObject() != null;
 

@@ -1,6 +1,6 @@
-package com.juphoon.rtc.datacenter.binlog.mapper;
+package com.juphoon.rtc.datacenter.binlog.mapper.flash;
 
-import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
+import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Mapper
 @Component
-public interface EventLogMapper {
+public interface FlashStateLogMapper {
     /**
      * 初始化表
      */
@@ -26,10 +26,10 @@ public interface EventLogMapper {
     /**
      * 保存新事件
      *
-     * @param event
+     * @param po
      * @return lines
      */
-    int save(EventBinLogPO event);
+    int save(StateBinLogPO po);
 
     /**
      * 批量保存新事件
@@ -37,7 +37,7 @@ public interface EventLogMapper {
      * @param list
      * @return lines
      */
-    int saveList(List<EventBinLogPO> list);
+    int saveList(List<StateBinLogPO> list);
 
     /**
      * 删除事件
@@ -48,8 +48,8 @@ public interface EventLogMapper {
 
     /**
      * 通过 contentId 查询
-     * @param contentId
+     * @param id
      * @return
      */
-    EventBinLogPO findById(long contentId);
+    StateBinLogPO findById(long id);
 }

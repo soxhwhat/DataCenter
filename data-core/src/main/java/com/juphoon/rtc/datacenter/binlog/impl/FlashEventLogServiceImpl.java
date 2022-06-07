@@ -3,7 +3,7 @@ package com.juphoon.rtc.datacenter.binlog.impl;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.binlog.mapper.EventLogMapper;
+import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
 @Component(EVENT_BIN_LOG_IMPL_FLASH)
 public class FlashEventLogServiceImpl implements ILogService<EventContext> {
     @Autowired
-    private EventLogMapper logMapper;
+    private FlashEventLogMapper logMapper;
 
     @Override
     public void save(EventContext context) {

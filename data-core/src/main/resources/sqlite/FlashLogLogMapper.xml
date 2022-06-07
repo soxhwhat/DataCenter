@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashLogLogMapper">
+
+    <resultMap id="logPoResultMap" type="com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="requestId" property="requestId" jdbcType="VARCHAR"/>
+        <result column="from" property="from" jdbcType="VARCHAR"/>
+        <result column="processorId" property="processorId" jdbcType="VARCHAR"/>
+        <result column="receivedTimestamp" property="receivedTimestamp" jdbcType="INTEGER"/>
+        <result column="redoHandler" property="redoHandler" jdbcType="VARCHAR"/>
+        <result column="retryCount" property="retryCount" jdbcType="INTEGER"/>
+
+        <result column="logs" property="logs" jdbcType="LONGVARCHAR"/>
+
+    </resultMap>
+
+    <update id="dropTable">
+        DROP TABLE IF EXISTS log_binlog;
+    </update>
+
+    <update id="createTable">
+        create table IF NOT EXISTS `log_binlog`
+        (
+            `id`          integer not null constraint log_log_pk primary key,
+            `requestId`   varchar(32) not null,
+            `from`        varchar(64) not null,
+            `processorId` varchar(32) not null,
+            `receivedTimestamp`   integer not null,
+            `redoHandler` varchar(32),
+            `retryCount`  int not null,
+            `logs`    text
+        );
+    </update>
+
+    <insert id="save"
+            parameterType="com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO"
+            statementType="PREPARED">
+        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        `retryCount`, `logs`)
+        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{redoHandler},
+        #{retryCount}, #{logs});
+    </insert>
+
+    <insert id="saveList">
+        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        `retryCount`, `logs`) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.requestId}, #{item.from}, #{item.processorId}, #{item.receivedTimestamp},
+            #{item.redoHandler},
+            #{item.retryCount}, #{item.logs})
+        </foreach>
+    </insert>
+
+    <delete id="remove">
+        DELETE FROM `log_binlog` WHERE `id`=#{id};
+    </delete>
+
+    <select id="findById" resultMap="logPoResultMap">
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `logs`
+        FROM `log_binlog`
+        WHERE `id`=#{id};
+    </select>
+</mapper>

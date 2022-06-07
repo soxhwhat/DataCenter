@@ -22,7 +22,7 @@ import java.sql.SQLException;
  * @date 5/9/22 8:25 PM
  */
 @Configuration
-@MapperScan(basePackages = {"com.juphoon.rtc.datacenter.binlog.mapper"},
+@MapperScan(basePackages = {"com.juphoon.rtc.datacenter.binlog.mapper.flash"},
         sqlSessionTemplateRef = "flashSqliteSessionTemplate")
 public class FlashSqliteDataSourceConfig {
     @Primary
