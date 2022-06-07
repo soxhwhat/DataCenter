@@ -8,38 +8,37 @@
 //
 package DataCollection;
 
-public abstract class LogCollectionServiceServer extends Common.ObjectServer {
-    public abstract void log_begin(Common.ServerCall __call,java.util.List<String > logList) throws Common.Exception;
+public abstract class GetOidCollectionServiceServer extends Common.ObjectServer {
+    public abstract void gteOid_begin(Common.ServerCall __call) throws Common.Exception;
 
     public final boolean __ex(Common.ServerCall __call,String __cmd,Common.IputStream __iput) throws Common.Exception {
-        if (__cmd.compareTo("log.LogCollectionService.DataCollection") == 0) { __cmd_log(__call,__iput);return true;}
+        if (__cmd.compareTo("gteOid.GetOidCollectionService.DataCollection") == 0) { __cmd_gteOid(__call,__iput);return true;}
         return false;
     }
 
-    public static void log_end(Common.ServerCall __call,boolean __ret) {
+    public static void gteOid_end(Common.ServerCall __call,boolean __ret,String oid) {
         Common.VerList __vers = __call.verList();
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
         switch (__ver) {
         case 0:
             __oput.write(__ret);
+            __oput.write(oid);
             break;
         }
         __call.cmdResult(__ver,__oput);
     }
 
-    private void __cmd_log(Common.ServerCall __call,Common.IputStream __iput) throws Common.Exception {
+    private void __cmd_gteOid(Common.ServerCall __call,Common.IputStream __iput) throws Common.Exception {
         __outer: {
             Common.VerList __vers = __call.verList();
-            java.util.List<String > logList;
             switch (__vers.ver(false)) {
             case 0:
-                logList = Common.StrVec.__read(__iput);
                 break;
             default: break __outer;
             }
             __start(false);
-            log_begin(__call,logList);
+            gteOid_begin(__call);
             return;
         }
         Common.OputStream __oput = new Common.OputStream();

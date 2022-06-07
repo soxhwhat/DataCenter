@@ -8,15 +8,15 @@
 //
 package DataCollection;
 
-public abstract class LogCollectionServiceServer extends Common.ObjectServer {
-    public abstract void log_begin(Common.ServerCall __call,java.util.List<String > logList) throws Common.Exception;
+public abstract class MetricCollectionServiceServer extends Common.ObjectServer {
+    public abstract void metric_begin(Common.ServerCall __call, Metric metricInfo) throws Common.Exception;
 
     public final boolean __ex(Common.ServerCall __call,String __cmd,Common.IputStream __iput) throws Common.Exception {
-        if (__cmd.compareTo("log.LogCollectionService.DataCollection") == 0) { __cmd_log(__call,__iput);return true;}
+        if (__cmd.compareTo("metric.MetricCollectionService.DataCollection") == 0) { __cmd_metric(__call,__iput);return true;}
         return false;
     }
 
-    public static void log_end(Common.ServerCall __call,boolean __ret) {
+    public static void metric_end(Common.ServerCall __call,boolean __ret) {
         Common.VerList __vers = __call.verList();
         Common.OputStream __oput = new Common.OputStream();
         short __ver = (__vers != null)?__vers.ver(true):0;
@@ -28,18 +28,18 @@ public abstract class LogCollectionServiceServer extends Common.ObjectServer {
         __call.cmdResult(__ver,__oput);
     }
 
-    private void __cmd_log(Common.ServerCall __call,Common.IputStream __iput) throws Common.Exception {
+    private void __cmd_metric(Common.ServerCall __call,Common.IputStream __iput) throws Common.Exception {
         __outer: {
             Common.VerList __vers = __call.verList();
-            java.util.List<String > logList;
+            Metric metricInfo;
             switch (__vers.ver(false)) {
             case 0:
-                logList = Common.StrVec.__read(__iput);
+                metricInfo = Metric.__read(__iput);
                 break;
             default: break __outer;
             }
             __start(false);
-            log_begin(__call,logList);
+            metric_begin(__call,metricInfo);
             return;
         }
         Common.OputStream __oput = new Common.OputStream();
