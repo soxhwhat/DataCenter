@@ -14,11 +14,15 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class StateContext extends BaseContext {
+    public StateContext(@NotNull State state) {
+        this.state = state;
+    }
+
     /**
      * 内容 json
      */
     @NotNull
-    private State state;
+    private final State state;
 
     @Override
     public EventType getEventType() {

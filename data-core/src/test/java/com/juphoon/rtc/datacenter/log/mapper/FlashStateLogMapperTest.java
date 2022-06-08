@@ -33,13 +33,12 @@ public class FlashStateLogMapperTest {
 
 
     public static StateContext randomContext() {
-        StateContext context = new StateContext();
+        StateContext context = new StateContext(randomState());
         String random = UUID.randomUUID().toString();
 
         context.setFrom(random);
         context.setRequestId(random);
         context.setProcessorId("test");
-        context.setState(randomState());
 
         return context;
     }

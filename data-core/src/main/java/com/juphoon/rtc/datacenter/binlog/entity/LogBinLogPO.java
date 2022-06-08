@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.LogContext;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,6 +61,16 @@ public class LogBinLogPO {
     private int retryCount = 0;
 
     /**
+     * 日志事件 type
+     */
+    private int type;
+
+    /**
+     * 日志事件 number
+     */
+    private int number;
+
+    /**
      * 其他参数
      */
     private String logs;
@@ -83,6 +94,8 @@ public class LogBinLogPO {
         po.setReceivedTimestamp(context.getCreatedTimestamp());
         po.setRedoHandler(context.getRedoHandler());
         po.setRetryCount(context.getRetryCount());
+        po.setType(context.getType());
+        po.setNumber(context.getNumber());
 
         String json = new ObjectMapper().writeValueAsString(context.getLogs());
 
@@ -93,7 +106,13 @@ public class LogBinLogPO {
 
     @SneakyThrows
     public static LogContext toContext(LogBinLogPO po) {
-        LogContext context = new LogContext();
+
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {
+        };
+        List<String> logs = mapper.readValue(po.getLogs(), typeRef);
+
+        LogContext context = new LogContext(logs);
 
         context.setId(po.getId());
         context.setRequestId(po.getRequestId());
@@ -102,13 +121,8 @@ public class LogBinLogPO {
         context.setCreatedTimestamp(po.getReceivedTimestamp());
         context.setRedoHandler(po.getRedoHandler());
         context.setRetryCount(po.getRetryCount());
-
-        ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {
-        };
-        List<String> logs = mapper.readValue(po.getLogs(), typeRef);
-
-        context.setLogs(logs);
+        context.setType(po.getType());
+        context.setNumber(po.getNumber());
 
         return context;
     }
@@ -122,6 +136,8 @@ public class LogBinLogPO {
                 .add("receivedTimestamp=" + receivedTimestamp)
                 .add("redoHandler='" + redoHandler + "'")
                 .add("retryCount=" + retryCount)
+                .add("type=" + type)
+                .add("number=" + number)
                 .add("logs='" + logs + "'")
                 .toString();
     }

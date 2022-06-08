@@ -11,6 +11,8 @@
         <result column="redoHandler" property="redoHandler" jdbcType="VARCHAR"/>
         <result column="retryCount" property="retryCount" jdbcType="INTEGER"/>
 
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
         <result column="logs" property="logs" jdbcType="LONGVARCHAR"/>
 
     </resultMap>
@@ -28,8 +30,10 @@
             `processorId` varchar(32) not null,
             `receivedTimestamp`   integer not null,
             `redoHandler` varchar(32),
-            `retryCount`  int not null,
-            `logs`    text
+            `retryCount`  integer not null,
+            `type`        integer not null,
+            `number`      integer not null,
+            `logs`        text
         );
     </update>
 
@@ -37,18 +41,18 @@
             parameterType="com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO"
             statementType="PREPARED">
         INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
-        `retryCount`, `logs`)
+        `retryCount`, `type`, `number`, `logs`)
         VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{redoHandler},
-        #{retryCount}, #{logs});
+        #{retryCount}, #{type}, #{number}, #{logs});
     </insert>
 
     <insert id="saveList">
         INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
-        `retryCount`, `logs`) VALUES
+        `retryCount`, `type`, `number`, `logs`) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.requestId}, #{item.from}, #{item.processorId}, #{item.receivedTimestamp},
             #{item.redoHandler},
-            #{item.retryCount}, #{item.logs})
+            #{item.retryCount}, #{item.type}, #{item.number}, #{item.logs})
         </foreach>
     </insert>
 
@@ -57,7 +61,7 @@
     </delete>
 
     <select id="findById" resultMap="logPoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `logs`
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `type`, `number`, `logs`
         FROM `log_binlog`
         WHERE `id`=#{id};
     </select>

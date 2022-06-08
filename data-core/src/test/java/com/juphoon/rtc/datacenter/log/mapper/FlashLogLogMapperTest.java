@@ -32,13 +32,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FlashLogLogMapperTest {
     public static LogContext randomContext() {
-        LogContext context = new LogContext();
-        String random = UUID.randomUUID().toString();
-
-        context.setFrom(random);
-        context.setRequestId(random);
-        context.setProcessorId("test");
-
         List<String> logs = new ArrayList<>();
         logs.add("1");
         logs.add("2");
@@ -48,7 +41,12 @@ public class FlashLogLogMapperTest {
         logs.add("6");
         logs.add("7");
 
-        context.setLogs(logs);
+        LogContext context = new LogContext(logs);
+        String random = UUID.randomUUID().toString();
+
+        context.setFrom(random);
+        context.setRequestId(random);
+        context.setProcessorId("test");
 
         return context;
     }

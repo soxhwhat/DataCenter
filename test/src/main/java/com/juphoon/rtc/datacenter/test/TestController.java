@@ -51,10 +51,9 @@ public class TestController {
                 .uuid(UUID.randomUUID().toString())
                 .build();
 
-        EventContext ec = new EventContext();
+        EventContext ec = new EventContext(event);
         ec.setRequestId(event.getUuid());
-        ec.setEvent(event);
-        ec.setFrom("test");
+        ec.setFrom(msg);
 
         List<EventContext> data = new ArrayList<>();
         data.add(ec);
@@ -69,9 +68,10 @@ public class TestController {
         log.info("get msg:{}", msg);
 
         List<String> logs = new ArrayList<>(1);
-        logs.add("test");
+        logs.add(msg);
 
-        LogContext context = new LogContext(EventType.TEST_EVENT, logs);
+        LogContext context = new LogContext(logs);
+        context.setEventType(EventType.TEST_EVENT);
         context.setRequestId(msg);
         context.setFrom(msg);
 
@@ -94,13 +94,12 @@ public class TestController {
     }
 
     public static StateContext randomContext(EventType eventType, String msg) {
-        StateContext context = new StateContext();
+        StateContext context = new StateContext(randomState(eventType, msg));
         String random = UUID.randomUUID().toString();
 
         context.setFrom(random);
         context.setRequestId(random);
         context.setProcessorId("test");
-        context.setState(randomState(eventType, msg));
 
         return context;
     }

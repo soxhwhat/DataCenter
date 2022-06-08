@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.binlog;
 
+import com.juphoon.rtc.datacenter.api.IService;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 
 import java.util.List;
@@ -16,9 +17,8 @@ import java.util.List;
  * @date 20222-03-16
  * @author zhiwei.zhai
  *
- *
  */
-public interface ILogService<T> {
+public interface ILogService<T> extends IService {
     /**
      * 保存新事件
      *

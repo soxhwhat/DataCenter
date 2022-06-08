@@ -80,11 +80,10 @@ public class EventCollectionServiceServerImpl extends AbstractCubeService {
 
         List<EventContext> ret = new ArrayList<>();
         for (DataCollection.Event event : events) {
-            EventContext ec = new EventContext();
+            EventContext ec = new EventContext(trans(event));
 
             ec.setRequestId(magic);
             ec.setFrom(host);
-            ec.setEvent(trans(event));
 
             ret.add(ec);
         }

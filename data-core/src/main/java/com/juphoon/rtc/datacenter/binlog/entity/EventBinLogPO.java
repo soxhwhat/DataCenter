@@ -132,16 +132,6 @@ public class EventBinLogPO {
 
     @SneakyThrows
     public static EventContext toEventContext(EventBinLogPO po) {
-        EventContext ec = new EventContext();
-
-        ec.setId(po.getId());
-        ec.setRequestId(po.getRequestId());
-        ec.setFrom(po.getFrom());
-        ec.setProcessorId(po.getProcessorId());
-        ec.setCreatedTimestamp(po.getReceivedTimestamp());
-        ec.setRedoHandler(po.getRedoHandler());
-        ec.setRetryCount(po.getRetryCount());
-
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
         };
@@ -157,7 +147,15 @@ public class EventBinLogPO {
                 .uuid(po.getUuid())
                 .build();
 
-        ec.setEvent(event);
+        EventContext ec = new EventContext(event);
+
+        ec.setId(po.getId());
+        ec.setRequestId(po.getRequestId());
+        ec.setFrom(po.getFrom());
+        ec.setProcessorId(po.getProcessorId());
+        ec.setCreatedTimestamp(po.getReceivedTimestamp());
+        ec.setRedoHandler(po.getRedoHandler());
+        ec.setRetryCount(po.getRetryCount());
 
         return ec;
     }

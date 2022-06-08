@@ -15,11 +15,11 @@ import java.util.Set;
  */
 @Slf4j
 public abstract class AbstractQueueService<T extends BaseContext> implements IQueueService<T> {
-    private AbstractProcessor processor;
+    private AbstractProcessor<T> processor;
 
     private Set<Long> eventIndex = Sets.newConcurrentHashSet();
 
-    public AbstractQueueService(AbstractProcessor processor, QueueServiceConfig config) {
+    public AbstractQueueService(AbstractProcessor<T> processor, QueueServiceConfig config) {
         this.processor = processor;
         init(config);
     }
@@ -27,7 +27,7 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
     /**
      * 获取处理器
      */
-    public AbstractProcessor getProcessor() {
+    public AbstractProcessor<T> getProcessor() {
         return processor;
     }
 

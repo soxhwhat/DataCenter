@@ -120,15 +120,7 @@ public class StateBinLogPO {
 
     @SneakyThrows
     public static StateContext toContext(StateBinLogPO po) {
-        StateContext context = new StateContext();
 
-        context.setId(po.getId());
-        context.setRequestId(po.getRequestId());
-        context.setFrom(po.getFrom());
-        context.setProcessorId(po.getProcessorId());
-        context.setCreatedTimestamp(po.getReceivedTimestamp());
-        context.setRedoHandler(po.getRedoHandler());
-        context.setRetryCount(po.getRetryCount());
 
         State state = State.builder()
                 .domainId(po.getDomainId())
@@ -139,7 +131,15 @@ public class StateBinLogPO {
                 .uuid(po.getUuid())
                 .build();
 
-        context.setState(state);
+        StateContext context = new StateContext(state);
+
+        context.setId(po.getId());
+        context.setRequestId(po.getRequestId());
+        context.setFrom(po.getFrom());
+        context.setProcessorId(po.getProcessorId());
+        context.setCreatedTimestamp(po.getReceivedTimestamp());
+        context.setRedoHandler(po.getRedoHandler());
+        context.setRetryCount(po.getRetryCount());
 
         return context;
     }

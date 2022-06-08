@@ -72,4 +72,9 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
 
         getEventLogMapper().remove(context.getId());
     }
+
+    @Override
+    public void start() {
+        getEventLogMapper().createTable();
+    }
 }

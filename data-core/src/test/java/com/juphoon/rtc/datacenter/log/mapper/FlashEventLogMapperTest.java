@@ -31,13 +31,12 @@ public class FlashEventLogMapperTest {
 
 
     public static EventContext randomEventContext() {
-        EventContext ec = new EventContext();
+        EventContext ec = new EventContext(randomEvent());
         String random = UUID.randomUUID().toString();
 
         ec.setFrom(random);
         ec.setRequestId(random);
         ec.setProcessorId("test");
-        ec.setEvent(randomEvent());
 
         return ec;
     }

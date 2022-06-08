@@ -266,5 +266,8 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
         }
     }
 
-
+    @Override
+    public void start() {
+        logService().start();
+    }
 }

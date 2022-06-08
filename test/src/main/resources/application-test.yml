@@ -8,7 +8,7 @@ iron:
     event-processors:
       - name: TEST_EVENT
         queue-service:
-          type: none
+          type: disruptor
         handlers:
           - testEventHandler
     log-processors:

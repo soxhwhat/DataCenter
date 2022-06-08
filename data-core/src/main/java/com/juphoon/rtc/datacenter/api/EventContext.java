@@ -14,11 +14,15 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class EventContext extends BaseContext {
+    public EventContext(@NotNull Event event) {
+        this.event = event;
+    }
+
     /**
      * 消息体
      */
     @NotNull
-    private Event event;
+    private final Event event;
 
     @Override
     public EventType getEventType() {

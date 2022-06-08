@@ -55,6 +55,7 @@ public class EventServiceConfiguration {
             IProcessor<EventContext> processor = processorFactory.getEventProcessor(config.getName());
             /// 构造queueService
             processor.buildQueueService(config.getQueueService());
+            processor.start();
 
             config.getHandlers().forEach(handlerName -> processor.addHandler(handlerFactory.getEventHandler(handlerName.getId())));
 

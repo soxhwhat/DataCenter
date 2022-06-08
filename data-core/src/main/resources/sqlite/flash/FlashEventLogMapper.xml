@@ -34,13 +34,13 @@
             `processorId` varchar(32) not null,
             `receivedTimestamp`   integer not null,
             `redoHandler` varchar(32),
-            `retryCount`  int not null,
+            `retryCount`  integer not null,
 
             `uuid`      varchar(64) not null,
-            `domainId`  int         not null,
-            `appId`     int         not null,
-            `type`      int         not null,
-            `number`    int         not null,
+            `domainId`  integer     not null,
+            `appId`     integer     not null,
+            `type`      integer     not null,
+            `number`    integer     not null,
             `timestamp` integer     not null,
             `params`    text
         );

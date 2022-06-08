@@ -163,8 +163,7 @@ public class NoticeServiceImpl implements NoticeService {
         Event event = Event.builder().type(eventType.getType()).number(eventType.getNumber())
                 .params(convert(params)).build();
 
-        EventContext eventContext = new EventContext();
-        eventContext.setEvent(event);
+        EventContext eventContext = new EventContext(event);
         return eventContext;
     }
 

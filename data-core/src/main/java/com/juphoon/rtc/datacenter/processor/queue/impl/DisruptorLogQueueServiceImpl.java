@@ -1,9 +1,10 @@
 package com.juphoon.rtc.datacenter.processor.queue.impl;
 
 import com.juphoon.rtc.datacenter.api.LogContext;
-import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import com.juphoon.rtc.datacenter.processor.AbstractLogProcessor;
 import com.juphoon.rtc.datacenter.processor.queue.AbstractLogQueueService;
+import com.juphoon.rtc.datacenter.processor.queue.ContextHolder;
+import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
@@ -11,6 +12,7 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -21,7 +23,7 @@ import java.util.concurrent.ThreadFactory;
 @Slf4j
 public class DisruptorLogQueueServiceImpl extends AbstractLogQueueService {
 
-    private Disruptor<LogContext> disruptor;
+    private Disruptor<ContextHolder<LogContext>> disruptor;
 
     public DisruptorLogQueueServiceImpl(AbstractLogProcessor processor, QueueServiceConfig config) {
         super(processor, config);
@@ -29,21 +31,17 @@ public class DisruptorLogQueueServiceImpl extends AbstractLogQueueService {
 
     @Override
     public void init(QueueServiceConfig config) {
-        EventFactory<LogContext> eventFactory = LogContext::new;
+        EventFactory<ContextHolder<LogContext>> eventFactory = ContextHolder::new;
 
-        ThreadFactory threadFactory = new ThreadFactory() {
-            private int counter = 0;
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
 
-            @Override
-            public Thread newThread(Runnable r) {
-                return new Thread(r, "disruptor-" + counter++);
-            }
-        };
+        EventHandler<ContextHolder<LogContext>> eventHandler = (holder, sequence, endOfBatch) -> getProcessor().process(holder.getContext());
 
-        EventHandler<LogContext> eventHandler = (ec, sequence, endOfBatch) -> getProcessor().process(ec);
-
-        disruptor = new Disruptor<>(eventFactory, config.getQueueSize(), threadFactory,
-                ProducerType.SINGLE, new BlockingWaitStrategy());
+        disruptor = new Disruptor<>(eventFactory,
+                config.getQueueSize(),
+                threadFactory,
+                ProducerType.SINGLE,
+                new BlockingWaitStrategy());
 
         disruptor.handleEventsWith(eventHandler);
 
@@ -54,19 +52,14 @@ public class DisruptorLogQueueServiceImpl extends AbstractLogQueueService {
     /**
      * 提交事件
      *
-     * @param ec
+     * @param context
      * @return
      * @throws Exception
      */
     @Override
-    public void onSubmit(LogContext ec) {
+    public void onSubmit(LogContext context) {
         try {
-            disruptor.publishEvent((eventContext, l) -> {
-                eventContext.setLogs(ec.getLogs());
-                eventContext.setBeginTimestamp(ec.getBeginTimestamp());
-                eventContext.setCreatedTimestamp(ec.getBeginTimestamp());
-                eventContext.setRetryCount(ec.getRetryCount());
-            });
+            disruptor.publishEvent((holder, l) -> holder.setContext(context));
         } catch (Exception e) {
             log.error("push内存队列失败:", e);
             throw e;

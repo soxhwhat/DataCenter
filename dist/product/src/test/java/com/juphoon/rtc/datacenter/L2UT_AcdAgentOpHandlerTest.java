@@ -68,9 +68,8 @@ public class L2UT_AcdAgentOpHandlerTest {
                 .params(map)
                 .uuid(UUID.randomUUID().toString())
                 .build();
-        EventContext ec = new EventContext();
+        EventContext ec = new EventContext(event);
         ec.setRequestId(event.getUuid());
-        ec.setEvent(event);
         ec.setFrom("host3");
         return event;
     }

@@ -83,11 +83,10 @@ public class StatusCollectionServiceServerImpl extends AbstractCubeService {
 
             String host = serverCall.getParam("host");
 
-            StateContext context = new StateContext();
+            StateContext context = new StateContext(trans(statusJson));
 
             context.setRequestId(magic);
             context.setFrom(host);
-            context.setState(trans(statusJson));
 
             service.commit(context);
         } catch (java.lang.Exception e) {
@@ -110,11 +109,10 @@ public class StatusCollectionServiceServerImpl extends AbstractCubeService {
 
             List<StateContext> contexts = new ArrayList<>();
             for (FlowStatusJson statusJson : statusJsons) {
-                StateContext context = new StateContext();
+                StateContext context = new StateContext(trans(statusJson));
 
                 context.setRequestId(magic);
                 context.setFrom(host);
-                context.setState(trans(statusJson));
 
                 contexts.add(context);
             }

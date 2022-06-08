@@ -77,4 +77,8 @@ public class FlashStateLogServiceImpl implements ILogService<StateContext> {
         logMapper.remove(context.getId());
     }
 
+    @Override
+    public void start() {
+        logMapper.createTable();
+    }
 }

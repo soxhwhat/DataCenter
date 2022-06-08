@@ -34,7 +34,6 @@ public class DemoDataCenterApplication {
     @GetMapping("/event")
     public void event(@RequestParam(value = "value", required = false) int value) {
         log.info("value:{}", value);
-        EventContext ec = new EventContext();
 
         Map<String, Object> params = new HashMap<>(9);
         params.put("callId", "123456789");
@@ -48,8 +47,7 @@ public class DemoDataCenterApplication {
         params.put("queue", "10087");
 
         Event event = Event.builder().type(10).number(0).params(params).build();
-
-        ec.setEvent(event);
+        EventContext ec = new EventContext(event);
 
         eventService.commit(ec);
     }
@@ -57,7 +55,6 @@ public class DemoDataCenterApplication {
     @GetMapping("/record")
     public void record(@RequestParam(value = "value", required = false) int value) {
         log.info("value:{}", value);
-        EventContext ec = new EventContext();
 
         Map<String, Object> params = new HashMap<>(13);
 
@@ -77,7 +74,7 @@ public class DemoDataCenterApplication {
 
         Event event = Event.builder().type(11).number(1).params(params).build();
 
-        ec.setEvent(event);
+        EventContext ec = new EventContext(event);
 
         eventService.commit(ec);
     }

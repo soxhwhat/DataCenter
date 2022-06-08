@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_FLASH;
 
 /**
  * @author ajian.zheng@juphoon.com
@@ -23,7 +23,7 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
 @ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
 public class TestEventProcessor extends AbstractEventProcessor {
     @Autowired
-    @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
+    @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
     private ILogService<EventContext> eventLogService;
 
     @Override

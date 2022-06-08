@@ -25,7 +25,6 @@ public class EventService {
      * 提交任务
      *
      * @param context
-     * @throws Exception
      */
     public void commit(EventContext context) {
         assert null != context : "context 为空";

@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.processor;
 
 
 import com.juphoon.rtc.datacenter.api.INamed;
+import com.juphoon.rtc.datacenter.api.IService;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.IHandler;
@@ -14,7 +15,7 @@ import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
  * @update:
  * <p>1. 2022-03-24. ajian.zheng 增加可命名接口</p>
  */
-public interface IProcessor<T> extends INamed {
+public interface IProcessor<T> extends INamed, IService {
     /**
      * 设置处理器名
      * @return 处理器id
