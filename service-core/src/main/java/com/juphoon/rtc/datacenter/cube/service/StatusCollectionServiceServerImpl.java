@@ -9,6 +9,8 @@ import DataCollection.StatusCollectionServiceServer;
 import com.juphoon.iron.cube.starter.AbstractCubeService;
 import com.juphoon.iron.cube.starter.CubeUtils;
 import com.juphoon.iron.cube.starter.annotation.CubeService;
+import com.juphoon.iron.cube.starter.log.RootCauseException;
+import com.juphoon.iron.cube.starter.log.ServiceEvent;
 import com.juphoon.rtc.datacenter.api.State;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.service.StateService;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterEventCode.RC_CODE_INTERFACE_DEPRECATED;
 
 /**
  * @Author: Zhiwei.zhai
@@ -38,22 +42,22 @@ public class StatusCollectionServiceServerImpl extends AbstractCubeService {
         return new StatusCollectionServiceServer() {
             @Override
             public void putStatus_begin(ServerCall serverCall, FlowStatus statusJson) throws Exception {
-                log.error("不该调用 putStatus_begin");
-                serverCall.setReason("Deprecated");
+                log.error("不该调用 from {}", serverCall.getParam("host"));
+                ServiceEvent.setError(serverCall, new RootCauseException(RC_CODE_INTERFACE_DEPRECATED));
                 putStatus_end(serverCall, false);
             }
 
             @Override
             public void endStatus_begin(ServerCall serverCall, FlowStatus statusJson) throws Exception {
-                log.error("不该调用 endStatus_begin");
-                serverCall.setReason("Deprecated");
+                log.error("不该调用 from {}", serverCall.getParam("host"));
+                ServiceEvent.setError(serverCall, new RootCauseException(RC_CODE_INTERFACE_DEPRECATED));
                 endStatus_end(serverCall, false);
             }
 
             @Override
             public void endStatusJson_begin(ServerCall serverCall, FlowStatusJson statusJson) throws Exception {
-                log.error("不该调用 endStatusJson_begin");
-                serverCall.setReason("Deprecated");
+                log.error("不该调用 from {}", serverCall.getParam("host"));
+                ServiceEvent.setError(serverCall, new RootCauseException(RC_CODE_INTERFACE_DEPRECATED));
                 endStatusJson_end(serverCall, false);
             }
 

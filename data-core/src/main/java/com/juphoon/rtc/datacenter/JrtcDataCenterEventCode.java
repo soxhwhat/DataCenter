@@ -9,6 +9,8 @@ import org.slf4j.event.Level;
  * @Description:
  */
 public class JrtcDataCenterEventCode {
+    public final static ServiceEvent RC_CODE_INVALID_PARAMETER = new ServiceEvent(Level.WARN, 23, "无效参数");
+    public final static ServiceEvent RC_CODE_INTERFACE_DEPRECATED = new ServiceEvent(Level.WARN, 14, "接口已废弃");
 
     /**
      * NoticeEventService

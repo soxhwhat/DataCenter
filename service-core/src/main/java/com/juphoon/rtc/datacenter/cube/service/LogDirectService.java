@@ -65,7 +65,7 @@ public class LogDirectService extends AbstractCubeDirect {
 
             String host = serverCall.getParam("host");
 
-            LogContext context = new LogContext(logs);
+            LogContext context = new LogContext(parseLog(logs));
 
             context.setEventType(eventType);
             context.setRequestId(magic);

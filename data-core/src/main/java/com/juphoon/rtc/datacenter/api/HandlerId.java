@@ -132,6 +132,11 @@ public enum HandlerId {
     AcdExtTerminalPartHourHandler("acdExtTerminalPartHourHandler",
             "渠道平台小时汇总handler", RESOURCE_SCOPE_GLOBAL),
 
+    /**
+     * 终端埋点事件统计handler
+     */
+    MdEventDatabaseHandler("MdEventDatabaseHandler","终端埋点事件mysql统计handler", RESOURCE_SCOPE_GLOBAL),
+
     /// 赞同
 
     /**

@@ -1,17 +1,12 @@
 package com.juphoon.rtc.datacenter.cube.service;
 
-import Common.Exception;
 import Common.ObjectServer;
-import Common.ServerCall;
-import DataCollection.EventCollectionServiceServer;
 import com.juphoon.iron.cube.starter.AbstractCubeEntry;
 import com.juphoon.iron.cube.starter.annotation.CubeEntry;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-
-import java.util.List;
 
 /**
  * <p>EventCollectionServer RPC服务实现</p>
@@ -26,28 +21,11 @@ import java.util.List;
 @SuppressWarnings("PMD")
 public class EventCollectionEntryServiceServerImpl extends AbstractCubeEntry {
 
-//    @Autowired
-//    EventCollectionServerProcess eventCollectionServer;
+    @Autowired
+    private EventCollectionServer eventCollectionServer;
 
     @Override
     public ObjectServer buildServiceServer() {
-        return new EventCollectionServiceServer() {
-            @Override
-            public void event_begin(ServerCall serverCall, List<DataCollection.Event> eventList) throws Exception {
-                log.info("event_begin:{}", eventList);
-//                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
-            }
-
-            @Override
-            public void event2_begin(ServerCall serverCall, String topic, List<DataCollection.Event> eventList) throws Exception {
-                log.info("event2_begin:{}", eventList);
-//                event_end(serverCall, eventCollectionServer.process(serverCall, eventList));
-            }
-
-            @Override
-            public boolean subEvent(ServerCall serverCall) throws Exception {
-                return false;
-            }
-        };
+        return eventCollectionServer;
     }
 }

@@ -26,8 +26,9 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = JrtcDataCenterConstant.DATA_CENTER_CONFIG_PREFIX)
 public class DataCenterProperties {
-
     private Agree agree = new Agree();
+
+    private RedisEvent redisEvent = new RedisEvent();
 
     /**
      * processor 列表
