@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public abstract class AbstractEventLogService implements ILogService<EventContext> {
+    /**
+     * 获取 binlog mapper
+     * @return
+     */
     public abstract EventLogMapper getEventLogMapper();
 
     @Override

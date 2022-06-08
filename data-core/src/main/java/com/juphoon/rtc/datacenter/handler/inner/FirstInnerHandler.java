@@ -1,6 +1,6 @@
 package com.juphoon.rtc.datacenter.handler.inner;
 
-import com.juphoon.rtc.datacenter.api.BasicContext;
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Setter
-public class FirstInnerHandler<T extends BasicContext> extends AbstractHandler<T> {
+public class FirstInnerHandler<T extends BaseContext> extends AbstractHandler<T> {
 
     public FirstInnerHandler(IProcessor<T> processor) {
         setProcessor(processor);

@@ -1,6 +1,6 @@
 package com.juphoon.rtc.datacenter.handler.inner;
 
-import com.juphoon.rtc.datacenter.api.BasicContext;
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
@@ -21,7 +21,7 @@ import java.util.List;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
-public class LastInnerHandler<T extends BasicContext> extends AbstractHandler<T> {
+public class LastInnerHandler<T extends BaseContext> extends AbstractHandler<T> {
     public LastInnerHandler(IProcessor<T> processor) {
         setProcessor(processor);
     }

@@ -1,14 +1,13 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.iron.component.utils.response.IronException;
-import com.juphoon.rtc.datacenter.api.BasicContext;
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.ICare;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
 import com.juphoon.rtc.datacenter.processor.queue.IQueueService;
-import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @Getter
-public abstract class AbstractProcessor<T extends BasicContext> implements IProcessor<T>, ICare {
+public abstract class AbstractProcessor<T extends BaseContext> implements IProcessor<T>, ICare {
     /**
      * handler列表
      */

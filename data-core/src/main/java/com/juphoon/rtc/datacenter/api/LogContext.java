@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class LogContext extends BasicContext {
+public class LogContext extends BaseContext {
     public LogContext() {
     }
 

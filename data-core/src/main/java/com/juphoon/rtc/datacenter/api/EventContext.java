@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class EventContext extends BasicContext {
+public class EventContext extends BaseContext {
     /**
      * 消息体
      */

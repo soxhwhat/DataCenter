@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public abstract class BasicContext {
+public abstract class BaseContext {
 
     /**
      * context唯一id
@@ -76,6 +76,11 @@ public abstract class BasicContext {
         return retryCount > 0;
     }
 
+    /**
+     * 获取事件类型枚举值
+     *
+     * @return
+     */
     public abstract EventType getEventType();
 
     @Override

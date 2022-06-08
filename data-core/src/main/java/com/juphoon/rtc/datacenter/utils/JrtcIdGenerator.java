@@ -134,6 +134,7 @@ public class JrtcIdGenerator {
         return ret;
     }
 
+    @SuppressWarnings("PMD")
     public static void main(String[] args) {
         JrtcIdGenerator snowFlake = new JrtcIdGenerator(2, 3);
 

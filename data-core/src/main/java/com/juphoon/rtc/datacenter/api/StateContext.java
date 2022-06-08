@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 /**
  *
@@ -14,7 +13,7 @@ import java.util.UUID;
  */
 @Getter
 @Setter
-public class StateContext extends BasicContext {
+public class StateContext extends BaseContext {
     /**
      * 内容 json
      */
