@@ -84,12 +84,29 @@ public class TestController {
     public String state(@RequestParam("msg") String msg) throws InvalidParameterException {
         log.info("get msg:{}", msg);
 
-        StateContext context = new StateContext(EventType.TEST_EVENT, msg);
+        StateContext context = randomContext(EventType.TEST_EVENT, msg);
         context.setRequestId(msg);
         context.setFrom(msg);
 
         stateService.commit(context);
 
         return "state";
+    }
+
+    public static StateContext randomContext(EventType eventType, String msg) {
+        StateContext context = new StateContext();
+        String random = UUID.randomUUID().toString();
+
+        context.setFrom(random);
+        context.setRequestId(random);
+        context.setProcessorId("test");
+        context.setState(randomState(eventType, msg));
+
+        return context;
+    }
+
+    public static State randomState(EventType eventType, String msg) {
+        return State.builder().domainId(100645).appId(0).type(eventType.getType()).state(eventType.getNumber()).uuid(UUID.randomUUID().toString())
+                .params(msg).build();
     }
 }

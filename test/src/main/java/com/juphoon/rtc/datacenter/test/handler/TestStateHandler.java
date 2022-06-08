@@ -32,7 +32,7 @@ public class TestStateHandler extends AbstractStateHandler {
 
     @Override
     public boolean handle(StateContext context) {
-        log.info("{} handle {}:{}", getId(), context.getRequestId(), context.getParams());
+        log.info("{} handle {}:{}", getId(), context.getRequestId(), context.getState());
         return true;
     }
 }

@@ -5,6 +5,7 @@ import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.exception.JrtcInvalidProcessorConfigurationException;
 import com.juphoon.rtc.datacenter.handler.IHandler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@Getter
 public class HandlerFactory {
     @Autowired
     private Map<String, IHandler<EventContext>> eventHandlers;

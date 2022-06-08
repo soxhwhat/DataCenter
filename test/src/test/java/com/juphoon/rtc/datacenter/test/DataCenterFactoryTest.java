@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.RESOURCE_SCOPE_GLOBAL;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
 /**
  * TestApplication Tester.
@@ -65,6 +65,10 @@ public class DataCenterFactoryTest {
             Assert.notNull(handlerFactory.getEventHandler(HandlerId.values()[i].getId()),
                     HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
         }
+
+        //
+//        Assert.isTrue(handlerFactory.getEventHandlers().size() == 10, "");
+
     }
 
     @Test(expected = JrtcInvalidProcessorConfigurationException.class)
@@ -79,8 +83,27 @@ public class DataCenterFactoryTest {
         for (int i = 0; i < ProcessorId.values().length; i++) {
             log.info("check processor {}: {}", ProcessorId.values()[i].getId(), ProcessorId.values()[i].getName());
 
-            Assert.notNull(processorFactory.getEventProcessor(ProcessorId.values()[i].getId()),
-                    ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+            switch (ProcessorId.values()[i].getType()) {
+                case PROCESSOR_TYPE_TEST:
+                    log.info("ignore {}", ProcessorId.values()[i].getId());
+                    break;
+                case PROCESSOR_TYPE_EVENT:
+                    Assert.notNull(processorFactory.getEventProcessor(ProcessorId.values()[i].getId()),
+                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    break;
+                case PROCESSOR_TYPE_LOG:
+                    Assert.notNull(processorFactory.getLogProcessor(ProcessorId.values()[i].getId()),
+                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    break;
+                case PROCESSOR_TYPE_STATE:
+                    Assert.notNull(processorFactory.getStateProcessor(ProcessorId.values()[i].getId()),
+                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    break;
+                default:
+                    Assert.isTrue(false, "未知 Processor " + ProcessorId.values()[i].getId());
+            }
+
+
         }
     }
 

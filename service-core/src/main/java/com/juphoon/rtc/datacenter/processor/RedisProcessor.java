@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.processor;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_NONE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IMPL_NONE;
 
 /**
  * @Author: Zhiwei.zhai
@@ -19,17 +19,17 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
  */
 @Getter
 @Component
-public class RedisProcessor extends AbstractEventProcessor {
+public class RedisProcessor extends AbstractStateProcessor {
     @Autowired
-    @Qualifier(EVENT_BIN_LOG_IMPL_NONE)
-    private ILogService<EventContext> eventLogService;
+    @Qualifier(STATE_BIN_LOG_IMPL_NONE)
+    private ILogService<StateContext> logService;
 
     @Autowired
     private DataCenterProperties properties;
 
     @Override
-    public ILogService<EventContext> logService() {
-        return eventLogService;
+    public ILogService<StateContext> logService() {
+        return logService;
     }
 
     @Override

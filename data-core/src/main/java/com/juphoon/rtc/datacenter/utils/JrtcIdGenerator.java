@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter;
+package com.juphoon.rtc.datacenter.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

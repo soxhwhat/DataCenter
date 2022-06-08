@@ -9,10 +9,7 @@ import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashLogLogMapper;
 import com.juphoon.rtc.datacenter.binlog.mapper.reliable.ReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,7 +77,7 @@ public class FlashLogLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-//    @Ignore
+    @Ignore
     @Test
     public void testInsertBatch() {
         int max = 100;

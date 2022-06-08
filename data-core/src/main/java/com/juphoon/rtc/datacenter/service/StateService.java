@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.service;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,17 @@ public class StateService {
      * @throws Exception
      */
     public void commit(StateContext context) {
-        assert null != context : "ec为空";
+        assert null != context : "context 为空";
 
         for (IProcessor<StateContext> processor : processors) {
             log.debug("{} process ec:{}", processor.getId(), context.getRequestId());
 
             processor.commit(context);
         }
+    }
+
+    public void commit(List<StateContext> contexts) {
+        log.debug("contexts:{}", contexts.size());
+        contexts.forEach(this::commit);
     }
 }

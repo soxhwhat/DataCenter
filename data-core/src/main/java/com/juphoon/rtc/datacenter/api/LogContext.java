@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.api;
 
+import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,10 @@ public class LogContext extends BasicContext {
 
     private EventType eventType;
 
+    private int type;
+
+    private int number;
+
     /**
      * 内容
      */
@@ -33,6 +38,22 @@ public class LogContext extends BasicContext {
 
     @Override
     public EventType getEventType() {
+        if (null == eventType) {
+            if (EventType.CLIENT_LOG_EVENT.getType().equals(type) && EventType.CLIENT_LOG_EVENT.getNumber().equals(number)) {
+                eventType = EventType.CLIENT_LOG_EVENT;
+            } else if (EventType.SERVER_LOG_EVENT.getType().equals(type) && EventType.SERVER_LOG_EVENT.getNumber().equals(number)) {
+                eventType = EventType.SERVER_LOG_EVENT;
+            } else {
+                throw new JrtcUnknownEventException(type + ":" + number);
+            }
+        }
+
         return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+        this.type = eventType.getType();
+        this.number = eventType.getNumber();
     }
 }

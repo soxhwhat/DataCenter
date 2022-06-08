@@ -74,7 +74,7 @@ public class FlashEventLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-//    @Ignore
+    @Ignore
     @Test
     public void testInsertEventBatch() {
         int max = 100;

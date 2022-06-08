@@ -126,4 +126,13 @@ public class JrtcDataCenterConstant {
     public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_YIELDING = "yielding";
     public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_SINGLE = "single";
     public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_MULTI = "multi";
+
+    /**
+     * processor type
+     */
+    public static final String PROCESSOR_TYPE_EVENT = "event";
+    public static final String PROCESSOR_TYPE_LOG = "log";
+    public static final String PROCESSOR_TYPE_STATE = "state";
+    public static final String PROCESSOR_TYPE_TEST = "test";
+
 }

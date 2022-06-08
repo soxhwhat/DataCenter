@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.UNDERLINE_TIMESTAMP;
-import static com.juphoon.rtc.datacenter.api.EventType.LOG_EVENT;
+import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_EVENT;
 
 /**
  * <p>客服事件处理handler</p>
@@ -43,7 +43,7 @@ public class LogMongoHandler extends AbstractMongoHandler {
     @Override
     public List<EventType> careEvents() {
         return Arrays.asList(
-                LOG_EVENT
+                CLIENT_LOG_EVENT
         );
     }
 

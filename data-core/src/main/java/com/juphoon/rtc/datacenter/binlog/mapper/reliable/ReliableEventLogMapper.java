@@ -1,10 +1,8 @@
 package com.juphoon.rtc.datacenter.binlog.mapper.reliable;
 
-import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
+import com.juphoon.rtc.datacenter.binlog.mapper.EventLogMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author ajian.zheng
@@ -12,44 +10,5 @@ import java.util.List;
  */
 @Mapper
 @Component
-public interface ReliableEventLogMapper {
-    /**
-     * 初始化表
-     */
-    void createTable();
-
-    /**
-     * 删除表
-     */
-    void dropTable();
-
-    /**
-     * 保存新事件
-     *
-     * @param event
-     * @return lines
-     */
-    int save(EventBinLogPO event);
-
-    /**
-     * 批量保存新事件
-     *
-     * @param list
-     * @return lines
-     */
-    int saveList(List<EventBinLogPO> list);
-
-    /**
-     * 删除事件
-     * todo 增加 processor
-     * @param id
-     */
-    void remove(long id);
-
-    /**
-     * 通过 contentId 查询
-     * @param contentId
-     * @return
-     */
-    EventBinLogPO findById(long contentId);
+public interface ReliableEventLogMapper extends EventLogMapper {
 }

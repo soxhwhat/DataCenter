@@ -23,7 +23,8 @@ iron:
           type: none
         handlers:
           - testStateHandler
-
+  debug:
+    enabled: true
 spring:
   datasource:
     dynamic:

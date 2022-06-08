@@ -7,11 +7,10 @@ import com.juphoon.rtc.datacenter.handler.AbstractHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.api.EventType.LOG_EVENT;
+import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_EVENT;
 
 /**
  * <p>mongodb操作handler抽象类</p>
@@ -34,7 +33,7 @@ public class LogHandler extends AbstractHandler<LogContext> {
     @Override
     public List<EventType> careEvents() {
         return Collections.singletonList(
-                LOG_EVENT
+                CLIENT_LOG_EVENT
         );
     }
 

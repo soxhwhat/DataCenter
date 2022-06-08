@@ -1,17 +1,12 @@
 package com.juphoon.rtc.datacenter.log.mapper;
 
 import com.juphoon.rtc.datacenter.TestApplication;
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.State;
 import com.juphoon.rtc.datacenter.api.StateContext;
-import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashStateLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,7 +72,7 @@ public class FlashStateLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-    //    @Ignore
+    @Ignore
     @Test
     public void testInsertBatch() {
         int max = 100;

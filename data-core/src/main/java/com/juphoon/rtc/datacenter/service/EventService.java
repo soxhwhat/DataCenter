@@ -24,16 +24,16 @@ public class EventService {
     /**
      * 提交任务
      *
-     * @param ec
+     * @param context
      * @throws Exception
      */
-    public void commit(EventContext ec) {
-        assert null != ec : "ec为空";
+    public void commit(EventContext context) {
+        assert null != context : "context 为空";
 
         for (IProcessor<EventContext> processor : processors) {
-            log.debug("{} process ec:{},{}", processor.getId(), ec.getEventType(), ec.getRequestId());
+            log.debug("{} process ec:{},{}", processor.getId(), context.getEventType(), context.getRequestId());
 
-            processor.commit(ec);
+            processor.commit(context);
         }
     }
 

@@ -25,7 +25,7 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
  */
 @Slf4j
 @Component
-public class AgreeNoticeProcessor extends AbstractHttpEventProcessor {
+public class AgreeNotifyProcessor extends AbstractHttpEventProcessor {
     @Autowired
     private RestTemplate restTemplate;
 
@@ -36,7 +36,7 @@ public class AgreeNoticeProcessor extends AbstractHttpEventProcessor {
     @Autowired
     private DataCenterProperties properties;
 
-    private AgreeNoticeProcessor.Config config;
+    private AgreeNotifyProcessor.Config config;
 
     private int counter = 0;
 
