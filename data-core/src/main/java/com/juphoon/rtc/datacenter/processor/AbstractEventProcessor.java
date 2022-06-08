@@ -175,6 +175,8 @@ public abstract class AbstractEventProcessor implements IEventProcessor, ICare {
     @Override
     public boolean care(Event event) {
         assert careEvents != null : "关注事件列表必须为非空";
+        log.debug("careEvents:{},eventType:{},flag:{}"
+                ,careEvents,event.getEventType(),careEvents.contains(event.getEventType()));
         return isAllCare || careEvents.contains(event.getEventType());
     }
 

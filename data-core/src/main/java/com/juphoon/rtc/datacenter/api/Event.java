@@ -204,8 +204,8 @@ public class Event {
      *
      * @return
      */
-    public long beginTimestamp() {
-        return (long) params.get("beginTimestamp");
+    public Long beginTimestamp() {
+        return ((Number) params.getOrDefault("beginTimestamp",0L)).longValue();
     }
 
     public Long timestamp() {
@@ -218,7 +218,7 @@ public class Event {
      * @return
      */
     public long endTimestamp() {
-        return (long) params.get("endTimestamp");
+        return ((Number) params.getOrDefault("endTimestamp",0L)).longValue();
     }
 
     /**

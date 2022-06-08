@@ -233,6 +233,11 @@ public class DataCenterProperties {
          * 日志事件开关
          */
         private boolean logEventEnabled = false;
+
+        /**
+         * 统计事件开关
+         */
+        private boolean concurrentEventEnabled = true;
     }
 
     @Data
@@ -274,6 +279,11 @@ public class DataCenterProperties {
          * 话单事件开关
          */
         private boolean queueEnabled = true;
+
+        /**
+         * 同步事件开关
+         */
+        private boolean concurrentEnabled = true;
 
         /**
          * 坐席过期时间

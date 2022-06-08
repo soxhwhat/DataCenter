@@ -191,9 +191,21 @@ public enum HandlerId {
      */
     LogMongoHandler("logMongoHandler", "日志mongodb入库handler"),
     /**
-     * log日志mongodb入库handler
+     * info记录mongodb入库handler
      */
     InfoMongoHandler("infoMongoHandler", "info记录mongodb入库handler"),
+    /**
+     * concurrentMongo记录mongodb入库handler
+     */
+    ConcurrentMongoHandler("concurrentMongoHandler", "concurrentMongo记录mongodb入库handler"),
+    /**
+     * concurrentMongo记录mongodb入库handler
+     */
+    ConcurrentStaffMongoHandler("concurrentStaffMongoHandler", "concurrentStaffMongo记录mongodb入库handler"),
+    /**
+     * concurrentMongo记录mongodb入库handler
+     */
+    ConcurrentQueueMongoHandler("concurrentQueueMongoHandler", "concurrentQueueMongo记录mongodb入库handler"),
 
     /**
      * 队列状态kafka处理handler
@@ -211,6 +223,10 @@ public enum HandlerId {
      * 坐席状态redis处理handler
      */
     StaffRedisHandler("staffRedisHandler", "坐席状态redis处理handler"),
+    /**
+     * 并发redis处理handler
+     */
+    ConcurrentRedisHandler("concurrentRedisHandler", "并发redis处理handler"),
     /**
      * 删除坐席状态redis处理handler
      */

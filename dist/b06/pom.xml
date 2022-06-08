@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>dist</artifactId>
+        <groupId>com.juphoon.rtc.datacenter</groupId>
+        <version>2202.5.13</version>
+    </parent>
+    <version>2202.5.13</version>
+    <artifactId>jrtcDataCollection-b06</artifactId>
+
+    <properties>
+        <nms.script>nms_3.5</nms.script>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>common-3.5</artifactId>
+            <version>2202.5.13</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <artifactId>service-core</artifactId>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <version>2202.5.13</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.juphoon.rtc.datacenter</groupId>
+                    <artifactId>common-3.6</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>5.3.15</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.juphoon.rtc.datacenter.B06DataCenterApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <version>${spring-boot.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>
+                        ${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.tags</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.time</includeOnlyProperty>
+                    </includeOnlyProperties>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--                <excludes>-->
+                <!--                    <exclude>*</exclude>-->
+                <!--                </excludes>-->
+                <includes>
+                    <include>application.yml</include>
+                    <include>git.properties</include>
+                </includes>
+
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

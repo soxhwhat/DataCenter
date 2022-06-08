@@ -18,6 +18,7 @@
         <module>demo</module>
         <module>b03</module>
         <module>c09</module>
+        <module>b06</module>
     </modules>
 
 </project>
