@@ -28,7 +28,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 public abstract class AbstractKafkaHandler extends AbstractEventHandler {
 
     @Autowired
-    protected KafkaTemplate kafkaTemplate;
+    protected KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     protected KafkaProperties kafkaProperties;

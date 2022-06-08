@@ -19,8 +19,8 @@
 
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>common-3.6</artifactId>
             <version>2202.5.16</version>
+            <artifactId>cube-rpc</artifactId>
             <scope>compile</scope>
         </dependency>
 
@@ -29,28 +29,32 @@
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <!--        TODO TODO TODO TODO-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.76</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.juphoon.iron.component</groupId>
-            <artifactId>iron-threadpool-spring-boot-starter</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${ojdbc6.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <!--<version>2.6.1</version>-->
         </dependency>
 
     </dependencies>

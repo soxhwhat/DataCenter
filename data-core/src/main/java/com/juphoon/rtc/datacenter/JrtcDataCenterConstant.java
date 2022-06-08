@@ -5,9 +5,9 @@ package com.juphoon.rtc.datacenter;
  *
  * @author ke.wang@juphoon.com
  * @date 2022/3/2 16:38
- * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 public class JrtcDataCenterConstant {
+    public final static String DOMAIN_CODE = "J61";
 
     public final static String URL_PARAMS = "?name=Juphoon";
     public final static String KEY_AGREE = "AGREE";
@@ -28,47 +28,11 @@ public class JrtcDataCenterConstant {
     public static final String FROM = "from";
     public static final String TAGS = "tags";
 
-    //***************** 数据库模块 bean-name ***********************************
-    /**
-     * DatabaseEventProcessor bean name
-     */
-    public static final String DATABASE_EVENT_PROCESSOR = "databaseEventProcessor";
-    /**
-     * JrtcAcdCallinfoStatDailyHandler bean name
-     */
-    public static final String CALLINFO_STAT_DAILY = "callinfoStatDaily";
-    /**
-     * JrtcAcdCallinfoStatPartHandler bean name
-     */
-    public static final String CALLINFO_STAT_PART = "callinfoStatPart";
-
-
-    /**
-     http 模块
-     */
-    public static final String NOTICE_HANDLER = "noticeHandler";
-    public static final String NOTICE_PROCESSOR = "noticeHttpProcessor";
-    public static final String SEND_ONLINE_HANDLER = "sendOnlineHandler";
-
-
-    /**
-     http mongo kafka 模块
-     */
-    public static final String EVENT_MONGO_HANDLER = "acdTicketEventMongoHandler";
-    public static final String THEA_MONGO_HANDLER = "theaMongoHandler";
-    public static final String MONGO_PROCESSOR = "mongoProcessor";
-    public static final String EVENT_KAFKA_HANDLER = "eventKafkaHandler";
-    public static final String KAFKA_PROCESSOR = "kafkaProcessor";
-
     /**
      * datacenter配置前缀
      */
     public static final String DATA_CENTER_CONFIG_PREFIX = "iron.datacenter";
     public static final String KAFKA_PREFIX = "kafka";
-    public static final String DATA_CENTER_QUEUE_MODE = "queue";
-    public static final String DATA_CENTER_QUEUE_MODE_SIMPLE = "simple";
-    public static final String DATA_CENTER_QUEUE_MODE_DISRUPTOR = "disruptor";
-
 
     /**
      * log日志收集
@@ -95,14 +59,9 @@ public class JrtcDataCenterConstant {
     public static final String RESOURCE_SCOPE_E01 = "e01";
     public static final String RESOURCE_SCOPE_AGREE = "agree";
 
-
     /**
      * 可靠事件处理器
      */
-    public static final String BIN_LOG_RELIABLE = "reliable";
-    public static final String BIN_LOG_FLASH = "flash";
-    public static final String BIN_LOG_NONE = "none";
-
     public static final String EVENT_BIN_LOG_IMPL_RELIABLE = "reliableEventBinLogServiceImpl";
     public static final String EVENT_BIN_LOG_IMPL_FLASH = "flashEventBinLogServiceImpl";
     public static final String EVENT_BIN_LOG_IMPL_NONE = "noneEventBinLogServiceImpl";

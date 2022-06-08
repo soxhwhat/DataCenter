@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
  */
 @Slf4j
 @Component
-public class MdEventMongoHandler extends AbstractB03MongoHandler {
+public class MdEventMongoHandler extends AbstractMongoHandler {
 
     @Autowired
     @Qualifier("mdMongoTemplate")
@@ -74,7 +75,8 @@ public class MdEventMongoHandler extends AbstractB03MongoHandler {
     }
 
     @Override
-    public String collectionName() {
+    public String collectionName(EventContext ec) {
+        // TODO 常量
         return "jrtc.md.events";
     }
 }

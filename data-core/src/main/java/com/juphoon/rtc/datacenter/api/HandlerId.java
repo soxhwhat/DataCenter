@@ -132,13 +132,7 @@ public enum HandlerId {
     AcdExtTerminalPartHourHandler("acdExtTerminalPartHourHandler",
             "渠道平台小时汇总handler", RESOURCE_SCOPE_GLOBAL),
 
-    /**
-     * 终端埋点事件统计handler
-     */
-    MdEventDatabaseHandler("MdEventDatabaseHandler","终端埋点事件mysql统计handler", RESOURCE_SCOPE_GLOBAL),
-
-    /// 赞同
-
+    ///////////////// 赞同开始 ////////////////////////////////////////
     /**
      * 1.1 客户端用户登录认证
      * <p>userlogin_request</p>
@@ -187,8 +181,7 @@ public enum HandlerId {
     AgreeUserLogoutNotifyHandler("agreeUserLogoutNotifyHandler",
             "赞同客户端用户签退通知handler", RESOURCE_SCOPE_AGREE),
 
-
-    /// 赞同 end
+    ///////////////// 赞同结束 ////////////////////////////////////////
 
 
     /**
@@ -217,17 +210,18 @@ public enum HandlerId {
      */
     InfoMongoHandler("infoMongoHandler", "info记录mongodb入库handler", RESOURCE_SCOPE_GLOBAL),
 
-    /**
-     * 录制事件mongodb入库handler
-     */
-    AcdRecordEventMongoHandler("acdRecordEventMongoHandler",
-            "录制事件mongodb入库handler", RESOURCE_SCOPE_B03),
 
     /**
      * 终端埋点事件mongodb入库handler
      */
     MdEventMongoHandler("mdEventMongoHandler",
-            "终端埋点事件mongodb入库handler", RESOURCE_SCOPE_B03),
+            "终端埋点事件mongodb入库handler", RESOURCE_SCOPE_GLOBAL),
+
+    /**
+     * 录制事件mongodb入库handler
+     */
+    AcdRecordEventMongoHandler("acdRecordEventMongoHandler",
+            "录制事件mongodb入库handler", RESOURCE_SCOPE_B03),
 
 
     /**
@@ -276,6 +270,7 @@ public enum HandlerId {
      * 队列通话redis处理handler
      */
     QueueCallRedisHandler("queueCallRedisHandler", "队列通话redis处理handler", RESOURCE_SCOPE_B03),
+
     /**
      * 队列振铃redis处理handler
      */

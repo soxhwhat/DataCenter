@@ -1,14 +1,50 @@
 server:
   port: 19986
+
+iron:
+  datacenter:
+    event-processors:
+      - name: ACD_STAT # rdb
+        queue-service:
+          type: disruptor
+        handlers:
+          - acdCallInfoStatPart15MinHandler
+          - acdCallInfoStatPart30MinHandler
+          - acdCallInfoStatPartHourHandler
+          - acdCallInfoStatDailyHandler
+          - acdAgentOpStatPart15MinHandler
+          - acdAgentOpStatPart30MinHandler
+          - acdAgentOpStatPartHourHandler
+          - acdAgentOpStatDailyHandler
+          - acdAgentOpCheckinDailyByShiftHandler
+          - acdExtServiceLevelDailyHandler
+          - acdExtServiceLevelPart15MinHandler
+          - acdExtServiceLevelPart30MinHandler
+          - acdExtServiceLevelPartHourHandler
+          - acdExtTerminalDailyHandler
+      - name: MONGO # mongodb
+        queue-service:
+          type: disruptor
+        handlers:
+          - acdTicketEventMongoHandler
+          - acdEventMongoHandler
+          - mdEventMongoHandler
+          - acdRecordEventMongoHandler
+          - mdEventMongoHandler
+    state-processors:
+      - name: STATE_REDIS # redis
+        queue-service:
+          type: none
+        handlers:
+          - staffRedisHandler
+          - StaffRemoveRedisHandler
+          - queueWaitRedisHandler
+          - queueCallRedisHandler
+          - queueRingRedisHandler
+
 spring:
   datasource:
     dynamic:
-      datasource:
-        sqllite:
-          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
-          driver-class-name: org.sqlite.JDBC
-          username:
-          password:
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000

@@ -93,7 +93,7 @@ public enum EventType {
      */
     AGENT_OP_EVENT_KEEP(10, 12),
     /**
-     * 坐席签入
+     * 坐席登录
      */
     AGENT_OP_EVENT_LOGIN(10, 13),
 

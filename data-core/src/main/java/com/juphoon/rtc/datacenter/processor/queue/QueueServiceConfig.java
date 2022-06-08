@@ -27,7 +27,7 @@ public class QueueServiceConfig implements IConfig {
     /**
      * 队列大小
      */
-    private int queueSize = 1024;
+    private int queueSize = 4096;
 
     /**
      * blocking、sleeping、yielding
