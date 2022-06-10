@@ -68,7 +68,22 @@ public class MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
                 MD_RENDER_ERROR,
                 MD_MEDIA_ERROR,
                 MD_AUDIO_ERROR,
-                MD_MICROPHONE_PERMISSION_ERROR
+                MD_MICROPHONE_PERMISSION_ERROR,
+                SIP_MEDIA_EVENT,
+                SIP_INVITE_EVENT,
+                SIP_BYE_EVENT,
+                SIP_ACK_EVENT,
+                SIP_UPDATE_EVENT,
+                SIP_OPTION_EVENT,
+                SIP_OTHER_REQUEST_EVENT,
+                SIP_100_EVENT,
+                SIP_183_EVENT,
+                SIP_200_EVENT,
+                SIP_300_EVENT,
+                SIP_400_EVENT,
+                SIP_500_EVENT,
+                SIP_600_EVENT,
+                SIP_OTHER_RESPONSE_EVENT
         );
     }
 }

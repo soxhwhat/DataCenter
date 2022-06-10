@@ -67,7 +67,7 @@ public class DisruptorEventQueueServiceImpl extends AbstractEventQueueService im
                 eventContext.setEvent(ec.getEvent());
                 eventContext.setEventList(ec.getEventList());
                 eventContext.setBeginTimestamp(ec.getBeginTimestamp());
-                eventContext.setCreatedTimestamp(ec.getBeginTimestamp());
+                eventContext.setCreatedTimestamp(ec.getCreatedTimestamp());
                 eventContext.setRetryCount(ec.getRetryCount());
             });
         } catch (Exception e) {
