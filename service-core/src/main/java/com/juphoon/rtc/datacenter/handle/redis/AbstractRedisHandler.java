@@ -2,7 +2,9 @@ package com.juphoon.rtc.datacenter.handle.redis;
 
 import com.juphoon.iron.component.utils.IronJsonUtils;
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
+import com.juphoon.rtc.datacenter.handler.AbstractStateHandler;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +22,16 @@ import java.time.Duration;
  * @update
  */
 @Slf4j
-public abstract class AbstractRedisHandler extends AbstractEventHandler {
+public abstract class AbstractRedisHandler extends AbstractStateHandler {
 
     @Autowired
     DataCenterProperties properties;
 
     @Override
-    public boolean handle(EventContext ec) {
+    public boolean handle(StateContext ec) {
         try {
             log.info("ec:{},keyName:{}", ec.getId(), keyName());
-            redisTemplate().boundHashOps(keyName()).put(ec.getEvent().getUuid(), IronJsonUtils.objectToJson(ec.getEvent()));
+            redisTemplate().boundHashOps(keyName()).put(ec.getState().getUniqueId(), IronJsonUtils.objectToJson(ec.getState()));
             if (expireTime().toMillis() != 0) {
                 redisTemplate().boundHashOps(keyName()).expire(expireTime());
             }

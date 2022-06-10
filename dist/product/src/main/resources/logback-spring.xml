@@ -73,6 +73,7 @@
             <appender-ref ref="cube"/>
             <appender-ref ref="stdout"/>
         </root>
+        <logger name="com.juphoon" level="debug"/>
     </springProfile>
 
     <springProfile name="pro">

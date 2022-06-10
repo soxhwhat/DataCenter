@@ -27,7 +27,7 @@ public class HandlerFactory {
     @Autowired
     private Map<String, IHandler<EventContext>> eventHandlers;
 
-    @Autowired
+    @Autowired(required = false)
     private Map<String, IHandler<LogContext>> logHandlers;
 
     @Autowired

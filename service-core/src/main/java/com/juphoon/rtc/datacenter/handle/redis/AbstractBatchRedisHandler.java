@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.handle.redis;
 import com.juphoon.iron.component.utils.IronJsonUtils;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -33,7 +34,7 @@ public abstract class AbstractBatchRedisHandler extends AbstractRedisHandler {
      * @return
      */
     @Override
-    public boolean handle(EventContext ec) {
+    public boolean handle(StateContext ec) {
 
         try {
             //删除操作

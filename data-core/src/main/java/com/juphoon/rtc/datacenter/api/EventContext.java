@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.StringJoiner;
 
 /**
  *
@@ -27,5 +28,13 @@ public class EventContext extends BaseContext {
     @Override
     public EventType getEventType() {
         return event.getEventType();
+    }
+
+    @Override
+    public String dump() {
+        return new StringJoiner(", ", EventContext.class.getSimpleName() + "[", "]")
+                .add(super.dump())
+                .add(event.toString())
+                .toString();
     }
 }

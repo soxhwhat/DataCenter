@@ -68,6 +68,8 @@ public class EventCollectionServer extends EventCollectionServiceServer {
                 ec.setFrom(host);
 
                 contexts.add(ec);
+
+                log.debug("ec:{}", ec.dump());
             }
 
             eventService.commit(contexts);

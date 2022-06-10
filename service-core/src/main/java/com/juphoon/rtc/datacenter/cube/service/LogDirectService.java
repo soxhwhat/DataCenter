@@ -13,6 +13,7 @@ import com.juphoon.rtc.datacenter.service.LogService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 @Component
 @CubeDirect(serviceName = "LogDirectServer", endPointsValue = "sarc;")
 @SuppressWarnings("PMD")
+@ConditionalOnProperty(prefix = DATA_CENTER_CONFIG_PREFIX, value = "log.enabled", havingValue = "true")
 public class LogDirectService extends AbstractCubeDirect {
 
     @Autowired

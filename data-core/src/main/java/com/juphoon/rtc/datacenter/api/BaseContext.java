@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.StringJoiner;
 
 /**
  *
@@ -86,5 +87,18 @@ public abstract class BaseContext {
     @Override
     public String toString() {
         return requestId;
+    }
+
+    public String dump() {
+        return new StringJoiner(", ")
+                .add("id=" + id)
+                .add("requestId='" + requestId + "'")
+                .add("from='" + from + "'")
+                .add("processorId='" + processorId + "'")
+                .add("createdTimestamp=" + createdTimestamp)
+                .add("beginTimestamp=" + beginTimestamp)
+                .add("redoHandler='" + redoHandler + "'")
+                .add("retryCount=" + retryCount)
+                .toString();
     }
 }

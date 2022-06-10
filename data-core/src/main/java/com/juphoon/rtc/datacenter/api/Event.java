@@ -5,13 +5,11 @@ import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Author: Zhiwei.zhai
@@ -56,6 +54,21 @@ public class Event {
      * 其他参数
      */
     private final Map<String, Object> params;
+
+    @Override
+    public String toString() {
+        String params = CollectionUtils.isEmpty(getParams()) ? "" : StringUtils.join(getParams());
+
+        return new StringJoiner(", ", "event:{", "}")
+                .add("domainId=" + domainId)
+                .add("appId=" + appId)
+                .add("uuid='" + uuid + "'")
+                .add("type=" + type)
+                .add("number=" + number)
+                .add("timestamp=" + timestamp)
+                .add("params=" + params)
+                .toString();
+    }
 
     /**
      * 构造器
@@ -267,7 +280,7 @@ public class Event {
     }
 
     public String shift() {
-        return (String) (StringUtils.isEmpty(params.get("shift")) ? defaultShirt() : params.get("shift"));
+        return (String) (StringUtils.isEmpty((String) params.get("shift")) ? defaultShirt() : params.get("shift"));
     }
 
     public String agentId() {

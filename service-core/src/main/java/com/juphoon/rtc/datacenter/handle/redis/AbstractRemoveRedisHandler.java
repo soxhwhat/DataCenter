@@ -1,14 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.redis;
 
-import com.juphoon.iron.component.utils.IronJsonUtils;
-import com.juphoon.rtc.datacenter.api.EventContext;
-import com.juphoon.rtc.datacenter.handler.AbstractEventHandler;
+import com.juphoon.rtc.datacenter.api.StateContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.core.RedisTemplate;
-
-import java.time.Duration;
-
 
 /**
  * <p>mongodb操作handler抽象类</p>
@@ -21,10 +15,15 @@ import java.time.Duration;
 public abstract class AbstractRemoveRedisHandler extends AbstractRedisHandler {
 
     @Override
-    public boolean handle(EventContext ec) {
+    public boolean handle(StateContext ec) {
         log.info("AbstractRemoveRedisHandler,ec:{},keyName:{}", ec.getId(), keyName());
         try {
-            redisTemplate().boundHashOps(keyName()).delete(ec.getEvent().agentId());
+            /// TODO
+            /// TODO
+            /// TODO
+            /// TODO
+//            redisTemplate().boundHashOps(keyName()).delete(ec.getState().agentId());
+            redisTemplate().boundHashOps(keyName()).delete(ec.getState().getUniqueId());
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);
             return false;

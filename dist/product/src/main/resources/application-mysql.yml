@@ -16,6 +16,11 @@ md:
     data:
       mongodb:
         uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+log:
+  spring:
+    data:
+      mongodb:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
 
 spring:
   kafka:
@@ -43,25 +48,6 @@ spring:
       connect-timeout: 800
   datasource:
     dynamic:
-      datasource:
-        log:
-          url: jdbc:sqlite:a.db?synchronous=normal  #设置写同步
-          #    url: jdbc:sqlite:a.db
-          driver-class-name: org.sqlite.JDBC
-          username:
-          password:
-        mysql:
-#          url: jdbc:mysql://192.168.4.74:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-          url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: kiwi
-          password: juphoon419708
-        kiwi:
-          url: jdbc:mysql://192.168.4.171:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: kiwi
-          password: 123456
-      primary: mysql
       druid:
         filters: stat
         connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
@@ -72,28 +58,59 @@ mybatis-plus:
   global-config:
     db-config:
       column-format: '`%s`'
-  mapper-locations: classpath*:mysql/*Mapper.xml
+#  mapper-locations: classpath*:mysql/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+
 iron:
-  debug:
-    enabled: true
-  event:
-    mongo:
-      0: ticket_event
-    kafka:
-      0: ticket_event
   cube:
     enabled: true
-    serverCfg: /Users/ajianzheng/Juphoon/Source/Iron/ApiGateway/conf/server.cfg
+    serverCfg: /Users/ajianzheng/Juphoon/Source/Iron/DataCenter/conf/server-13.138.cfg
     debugMode: true
     libraryName: CommonJNI-3.6
-
   datacenter:
-    agree:
-      hosts:
-        - http://127.0.0.1:10099
-      enabled: true
-  threadpool:
-    enabled: true
+    event-processors:
+      - name: ACD_STAT # rdb
+        queue-service:
+          type: disruptor
+        handlers:
+          - acdCallInfoStatPart15MinHandler
+          - acdCallInfoStatPart30MinHandler
+          - acdCallInfoStatPartHourHandler
+          - acdCallInfoStatDailyHandler
+          - acdAgentOpStatPart15MinHandler
+          - acdAgentOpStatPart30MinHandler
+          - acdAgentOpStatPartHourHandler
+          - acdAgentOpStatDailyHandler
+          - acdAgentOpCheckinDailyByShiftHandler
+          - acdExtServiceLevelDailyHandler
+          - acdExtServiceLevelPart15MinHandler
+          - acdExtServiceLevelPart30MinHandler
+          - acdExtServiceLevelPartHourHandler
+          - acdExtTerminalDailyHandler
+      - name: MONGO # mongodb
+        queue-service:
+          type: disruptor
+        handlers:
+          - acdTicketEventMongoHandler
+          - acdEventMongoHandler
+          - mdEventMongoHandler
+          - acdRecordEventMongoHandler
+          - mdEventMongoHandler
+    state-processors:
+      - name: STATE_REDIS # redis
+        queue-service:
+          type: none
+        handlers:
+          - staffRedisHandler
+          - StaffRemoveRedisHandler
+          - queueWaitRedisHandler
+          - queueCallRedisHandler
+          - queueRingRedisHandler
+    data-source:
+      url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+      username: kiwi
+      password: juphoon419708
+logging:
+  config: classpath:logback-spring.xml
 

@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.DOMAIN_CODE;
+
 /**
  * <p>示例工程</p>
  *
@@ -14,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
 @EnableScheduling
-@CubeStarterApplication(domainCode = "J61")
+@CubeStarterApplication(domainCode = DOMAIN_CODE)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter.mapper")
 public class TestApplication {
     public static void main(String[] args) {

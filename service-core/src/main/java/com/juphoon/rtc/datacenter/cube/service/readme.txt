@@ -1,1 +1,4 @@
-原noticeService的rpc接口以及dataCollection接口
+1. 终端上报event（埋点）
+2. 服务端上报event
+3. 终端日志收集(兼容老版本，默认关闭)
+4. 状态收集
