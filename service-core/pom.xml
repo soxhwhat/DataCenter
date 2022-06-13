@@ -5,7 +5,7 @@
     <parent>
         <artifactId>jrtcDataCenter-Parent</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.13</version>
+        <version>2202.5.14</version>
     </parent>
 
     <artifactId>service-core</artifactId>
@@ -14,13 +14,13 @@
         <dependency>
             <artifactId>data-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.13</version>
+            <version>2202.5.14</version>
         </dependency>
 
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>common-3.6</artifactId>
-            <version>2202.5.13</version>
+            <version>2202.5.14</version>
             <scope>compile</scope>
         </dependency>
 

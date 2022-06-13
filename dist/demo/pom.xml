@@ -6,17 +6,17 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.13</version>
+        <version>2202.5.14</version>
     </parent>
 
     <artifactId>demo</artifactId>
-    <version>2202.5.13</version>
+    <version>2202.5.14</version>
 
     <dependencies>
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.13</version>
+            <version>2202.5.14</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.httpcomponents</groupId>-->
