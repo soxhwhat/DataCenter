@@ -3,18 +3,10 @@ package com.juphoon.rtc.datacenter.handle.kafka;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
-import com.juphoon.rtc.datacenter.handle.mongo.AbstractMongoHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static com.juphoon.rtc.datacenter.api.EventType.*;

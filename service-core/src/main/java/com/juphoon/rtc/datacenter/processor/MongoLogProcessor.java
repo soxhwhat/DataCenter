@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.processor;
 
+import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
 import lombok.Getter;
@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IMPL_FLASH;
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IMPL_NONE;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.LOG_BIN_LOG_IMPL_FLASH;
 
 /**
  * @Author: Zhiwei.zhai
@@ -23,26 +22,18 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IM
 @Slf4j
 @Getter
 @Component
-public class StateMongoProcessor extends AbstractStateProcessor {
+public class MongoLogProcessor extends AbstractLogProcessor {
     @Autowired
-    @Qualifier(STATE_BIN_LOG_IMPL_FLASH)
-    private ILogService<StateContext> logService;
+    @Qualifier(LOG_BIN_LOG_IMPL_FLASH)
+    private ILogService<LogContext> logService;
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.STATE_MONGO;
+        return ProcessorId.EXT_LOG;
     }
 
     @Override
-    public ILogService<StateContext> logService() {
+    public ILogService<LogContext> logService() {
         return logService;
-    }
-
-    /**
-     * 内置最后一个事件处理器
-     */
-    @Override
-    public LastInnerHandler<StateContext> lastInnerEventHandler() {
-        return new LastInnerHandler<>(this);
     }
 }

@@ -23,7 +23,7 @@
 // */
 //@Component
 //@Slf4j
-//public class TheaMongoHandler extends AbstractMongoHandler {
+//public class TheaMongoHandler extends AbstractMongoEventHandler {
 //    @Override
 //    public HandlerId handlerId() {
 //        return HandlerId.TheaMongoHandler;

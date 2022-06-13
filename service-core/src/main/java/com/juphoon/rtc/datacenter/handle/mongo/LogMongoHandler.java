@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_LOG;
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.UNDERLINE_TIMESTAMP;
 import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_EVENT;
 
@@ -29,10 +30,10 @@ import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_EVENT;
  */
 @Slf4j
 @Component
-public class LogMongoHandler extends AbstractMongoHandler {
+public class LogMongoHandler extends AbstractMongoEventHandler {
 
     @Autowired
-    @Qualifier("logMongoTemplate")
+    @Qualifier(MONGO_TEMPLATE_LOG)
     private MongoTemplate mongoTemplate;
 
     @Override

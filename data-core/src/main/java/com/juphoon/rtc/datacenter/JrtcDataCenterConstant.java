@@ -97,4 +97,22 @@ public class JrtcDataCenterConstant {
     public static final String PROCESSOR_TYPE_STATE = "state";
     public static final String PROCESSOR_TYPE_TEST = "test";
 
+
+    /**
+     * mongodb template names - 事件
+      */
+    public static final String MONGO_TEMPLATE_EVENT = "eventMongoTemplate";
+    /**
+     * mongodb template names - 话单
+     */
+    public static final String MONGO_TEMPLATE_RECORD = "recordMongoTemplate";
+    /**
+     * mongodb template names - 埋点
+     */
+    public static final String MONGO_TEMPLATE_MD = "mdMongoTemplate";
+    /**
+     * mongodb template names - 日志
+     */
+    public static final String MONGO_TEMPLATE_LOG = "logMongoTemplate";
+
 }

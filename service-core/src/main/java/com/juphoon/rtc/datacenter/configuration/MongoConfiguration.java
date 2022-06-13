@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
+
 /**
  * <p>Mongodb数据源配置</p>
  *
@@ -20,7 +22,7 @@ public class MongoConfiguration {
 
     @Primary
     @Bean("eventMongoProperties")
-    @ConfigurationProperties(prefix = "event.spring.data.mongodb")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.event")
     public MongoProperties getEventProperties() {
         return new MongoProperties();
     }
@@ -32,13 +34,13 @@ public class MongoConfiguration {
     }
 
     @Primary
-    @Bean("eventMongoTemplate")
+    @Bean(MONGO_TEMPLATE_EVENT)
     public MongoTemplate eventMongoTemplate() {
         return new MongoTemplate(eventMongodbFactory(getEventProperties()));
     }
 
     @Bean("recordMongoProperties")
-    @ConfigurationProperties(prefix = "record.spring.data.mongodb")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.record")
     public MongoProperties getRecordProperties() {
         return new MongoProperties();
     }
@@ -48,13 +50,13 @@ public class MongoConfiguration {
         return new SimpleMongoClientDatabaseFactory(properties.getUri());
     }
 
-    @Bean("recordMongoTemplate")
+    @Bean(MONGO_TEMPLATE_RECORD)
     public MongoTemplate recordMongoTemplate() {
         return new MongoTemplate(recordMongodbFactory(getRecordProperties()));
     }
 
     @Bean("mdEventMongoProperties")
-    @ConfigurationProperties(prefix = "md.spring.data.mongodb")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.md")
     public MongoProperties getMdEventProperties() {
         return new MongoProperties();
     }
@@ -64,13 +66,13 @@ public class MongoConfiguration {
         return new SimpleMongoClientDatabaseFactory(properties.getUri());
     }
 
-    @Bean("mdMongoTemplate")
+    @Bean(MONGO_TEMPLATE_MD)
     public MongoTemplate mdEventMongoTemplate() {
         return new MongoTemplate(mdEventMongodbFactory(getMdEventProperties()));
     }
 
     @Bean("logEventMongoProperties")
-    @ConfigurationProperties(prefix = "storage.spring.data.mongodb")
+    @ConfigurationProperties(prefix = "spring.data.mongodb.log")
     public MongoProperties getLogEventProperties() {
         return new MongoProperties();
     }
@@ -80,7 +82,7 @@ public class MongoConfiguration {
         return new SimpleMongoClientDatabaseFactory(properties.getUri());
     }
 
-    @Bean("logMongoTemplate")
+    @Bean(MONGO_TEMPLATE_LOG)
     public MongoTemplate logEventMongoTemplate() {
         return new MongoTemplate(logEventMongodbFactory(getLogEventProperties()));
     }

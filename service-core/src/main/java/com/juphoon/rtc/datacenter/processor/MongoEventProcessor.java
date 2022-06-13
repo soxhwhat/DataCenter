@@ -18,13 +18,10 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.EVENT_BIN_LOG_IM
  */
 @Getter
 @Component
-public class MongoProcessor extends AbstractEventProcessor {
+public class MongoEventProcessor extends AbstractEventProcessor {
     @Autowired
     @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
     private ILogService<EventContext> eventLogService;
-
-    @Autowired
-    private DataCenterProperties properties;
 
     @Override
     public ILogService<EventContext> logService() {
@@ -35,6 +32,4 @@ public class MongoProcessor extends AbstractEventProcessor {
     public ProcessorId processorId() {
         return ProcessorId.MONGO;
     }
-
-
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_RECORD;
 import static com.juphoon.rtc.datacenter.api.EventType.*;
 
 /**
@@ -22,10 +24,10 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
  */
 @Slf4j
 @Component
-public class AcdRecordEventMongoHandler extends AbstractMongoHandler {
+public class AcdRecordEventMongoHandler extends AbstractMongoEventHandler {
 
     @Autowired
-    @Qualifier("eventMongoTemplate")
+    @Qualifier(MONGO_TEMPLATE_EVENT)
     private MongoTemplate mongoTemplate;
 
     @Override

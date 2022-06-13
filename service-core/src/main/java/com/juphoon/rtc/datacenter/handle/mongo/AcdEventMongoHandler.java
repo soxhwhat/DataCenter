@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 import static com.juphoon.rtc.datacenter.api.EventType.*;
 
 /**
@@ -24,10 +25,10 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
  */
 @Slf4j
 @Component
-public class AcdEventMongoHandler extends AbstractMongoHandler {
+public class AcdEventMongoHandler extends AbstractMongoEventHandler {
 
     @Autowired
-    @Qualifier("eventMongoTemplate")
+    @Qualifier(MONGO_TEMPLATE_EVENT)
     private MongoTemplate mongoTemplate;
 
     @Override
