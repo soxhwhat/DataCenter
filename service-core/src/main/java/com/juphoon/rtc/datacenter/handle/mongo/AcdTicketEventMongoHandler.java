@@ -1,8 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_RECORD;
 import static com.juphoon.rtc.datacenter.api.EventType.TICKER_COMPLETE;
+import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_B03_TICKETS;
 
 /**
  * <p>客服话单事件处理handler</p>
@@ -39,12 +40,13 @@ public class AcdTicketEventMongoHandler extends AbstractMongoEventHandler {
     }
 
     @Override
-    public String collectionName(EventContext ec) {
-        return "jrtc.records";
+    public MongoTemplate mongoTemplate() {
+        return mongoTemplate;
     }
 
     @Override
-    public MongoTemplate mongoTemplate() {
-        return mongoTemplate;
+    public MongoCollectionEnum collectionName() {
+        /// TODO 产品考虑重新规划
+        return COLLECTION_B03_TICKETS;
     }
 }

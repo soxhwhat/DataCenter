@@ -19,6 +19,8 @@ public enum HandlerId {
      * testEventHandler 测试用
      */
     TestEventHandler("testEventHandler", "testEventHandler", RESOURCE_SCOPE_TEST),
+    TestEventOneHandler("testEventOneHandler", "testEventOneHandler", RESOURCE_SCOPE_TEST),
+    TestEventTwoHandler("testEventTwoHandler", "testEventTwoHandler", RESOURCE_SCOPE_TEST),
 
     /**
      * testLogHandler 测试用

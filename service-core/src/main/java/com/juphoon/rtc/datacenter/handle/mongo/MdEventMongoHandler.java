@@ -1,8 +1,8 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_MD;
 import static com.juphoon.rtc.datacenter.api.EventType.*;
+import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_MD;
 
 /**
  * <p>终端埋点事件处理handler</p>
@@ -76,8 +77,7 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler {
     }
 
     @Override
-    public String collectionName(EventContext ec) {
-        // TODO 常量
-        return "jrtc.md.events";
+    public MongoCollectionEnum collectionName() {
+        return COLLECTION_MD;
     }
 }

@@ -1,21 +1,20 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
-import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
+import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 import static com.juphoon.rtc.datacenter.api.EventType.*;
+import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_EVENT_PREFIX;
 
 /**
  * <p>客服事件处理handler</p>
@@ -25,7 +24,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
  */
 @Slf4j
 @Component
-public class AcdEventMongoHandler extends AbstractMongoEventHandler {
+public class AcdEventMongoHandler extends AbstractMongoEventHandler implements IMongoCollectionManager {
 
     @Autowired
     @Qualifier(MONGO_TEMPLATE_EVENT)
@@ -63,12 +62,17 @@ public class AcdEventMongoHandler extends AbstractMongoEventHandler {
     }
 
     @Override
-    public String collectionName(EventContext ec) {
-        return "jrtc.events_" + DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
+    public MongoTemplate mongoTemplate() {
+        return mongoTemplate;
     }
 
     @Override
-    public MongoTemplate mongoTemplate() {
-        return mongoTemplate;
+    public MongoCollectionEnum collectionName() {
+        return COLLECTION_EVENT_PREFIX;
+    }
+
+    @Override
+    public boolean collectionStorageDaily() {
+        return true;
     }
 }

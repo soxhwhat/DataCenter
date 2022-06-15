@@ -1,17 +1,24 @@
 package com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.rtc.datacenter.api.*;
+import com.juphoon.rtc.datacenter.handle.mongo.entity.MongoEventPO;
 import com.juphoon.rtc.datacenter.service.EventService;
 import com.juphoon.rtc.datacenter.service.LogService;
 import com.juphoon.rtc.datacenter.service.StateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.InvalidParameterException;
 import java.util.*;
+
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 
 /**
  * <p>在开始处详细描述该类的作用</p>
@@ -33,6 +40,10 @@ public class TestController {
 
     @Autowired
     private StateService stateService;
+
+    @Autowired
+//    @Qualifier(MONGO_TEMPLATE_EVENT)
+    private MongoTemplate mongoTemplate;
 
     @GetMapping("/event")
     public String event(@RequestParam("msg") String msg) throws InvalidParameterException {
@@ -68,10 +79,13 @@ public class TestController {
         log.info("get msg:{}", msg);
 
         List<String> logs = new ArrayList<>(1);
-        logs.add(msg);
+
+        String data = "{\"_timestamp\":1653980556507,\"_ver\":1,\"_source\":{\"tags\":[\"f9b9e526-da7d-474c-89d2-857841e225bd\"],\"type\":\"JC\",\"info\":{\"log\":\"20220531T15:02:36.477+0800  MAIN(513738299816)  JCSDK:  INFO:          0 B03_V1.0.37:JCGuest call Number:10086\"}}}\n";
+
+        logs.add(data);
 
         LogContext context = new LogContext(logs);
-        context.setEventType(EventType.TEST_EVENT);
+        context.setEventType(EventType.CLIENT_LOG_EVENT);
         context.setRequestId(msg);
         context.setFrom(msg);
 
@@ -89,6 +103,19 @@ public class TestController {
         context.setFrom(msg);
 
         stateService.commit(context);
+
+        return "state";
+    }
+
+    @GetMapping("/getEvent")
+    public String getEvent(@RequestParam("msg") String msg) throws InvalidParameterException {
+        log.info("get msg:{}", msg);
+
+        Query query = new Query(Criteria.where("timestamp").gt(0));
+
+        List<MongoEventPO> list = mongoTemplate.find(query, MongoEventPO.class);
+
+        list.forEach(po -> log.info("{}", po));
 
         return "state";
     }
