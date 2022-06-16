@@ -8,7 +8,9 @@ import com.juphoon.rtc.datacenter.entity.MdEventPO;
 import com.juphoon.rtc.datacenter.mapper.MdEventMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +32,8 @@ public class MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
     @Autowired
     private MdEventMapper mdEventMapper;
 
+    @Value("${md.browserLength:200}")
+    private int browserLength;
 
     @Override
     public MdEventPO preData(Event event) {
@@ -39,6 +43,9 @@ public class MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
         MdEventPO mdEvent = objectMapper.convertValue(params, MdEventPO.class);
         mdEvent.setEventTime(event.getTimestamp());
         mdEvent.setEventNumber(event.getNumber());
+        if (!StringUtils.isEmpty(mdEvent.getBrowser()) && mdEvent.getBrowser().length() > browserLength) {
+            mdEvent.setBrowser(mdEvent.getBrowser().substring(0, browserLength));
+        }
         return mdEvent;
     }
 
