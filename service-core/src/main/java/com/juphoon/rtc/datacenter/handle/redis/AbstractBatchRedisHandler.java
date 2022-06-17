@@ -41,20 +41,22 @@ public abstract class AbstractBatchRedisHandler extends AbstractRedisHandler {
     public boolean handle(EventContext ec) {
 
         try {
-            Map<String, Event> data = ec.getEventList().stream().collect(Collectors.toMap(Event::getUuid, Function.identity()));
             //删除操作
             BoundHashOperations ops = redisTemplate().boundHashOps(keyName());
-            Set keys = ops.keys();
+            Set<String> keys = ops.keys();
             if (!CollectionUtils.isEmpty(keys)) {
-                for (Object key : keys) {
-                    ops.delete(key);
+                keys = keys.stream().filter(c -> c.equals(ec.getEvent().getParams().get(FROM))).collect(Collectors.toSet());
+                if (!CollectionUtils.isEmpty(keys)) {
+                    for (String key : keys) {
+                        ops.delete(key);
+                    }
                 }
             }
             //插入操作
-            data.entrySet().stream().forEach(entry -> {
-                //key = 队列号 + serviceId
-                String key = entry.getKey() + ":" + entry.getValue().getParams().getOrDefault(FROM, "");
-                ops.put(key, IronJsonUtils.objectToJson(entry.getValue()));
+            ec.getEventList().stream().forEach(event -> {
+                String key = event.getUuid() + ":" + event.getParams().getOrDefault(FROM, "")
+                        + ":" + event.getDomainId() + ":" + event.getAppId();
+                ops.put(key, IronJsonUtils.objectToJson(event));
             });
             //过时操作
             if (expireTime().toMillis() != 0) {
