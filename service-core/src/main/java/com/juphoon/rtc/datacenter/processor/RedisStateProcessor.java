@@ -19,13 +19,10 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IM
  */
 @Getter
 @Component
-public class RedisProcessor extends AbstractStateProcessor {
+public class RedisStateProcessor extends AbstractStateProcessor {
     @Autowired
     @Qualifier(STATE_BIN_LOG_IMPL_NONE)
     private ILogService<StateContext> logService;
-
-    @Autowired
-    private DataCenterProperties properties;
 
     @Override
     public ILogService<StateContext> logService() {
