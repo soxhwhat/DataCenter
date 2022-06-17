@@ -11,9 +11,6 @@
     <version>2202.5.16</version>
     <artifactId>jrtcDataCollection-c09</artifactId>
 
-    <properties>
-        <nms.script>nms_3.5</nms.script>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -28,22 +25,9 @@
 
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>common-3.5</artifactId>
             <version>2202.5.16</version>
-            <scope>compile</scope>
+            <artifactId>cube-rpc</artifactId>
         </dependency>
-        <dependency>
-            <artifactId>service-core</artifactId>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.16</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.juphoon.rtc.datacenter</groupId>
-                    <artifactId>common-3.6</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
     </dependencies>
 
     <build>

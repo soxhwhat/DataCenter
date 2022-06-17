@@ -7,8 +7,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.iron.cube.starter.CubeUtils;
-import com.juphoon.iron.cube.starter.log.RootCauseException;
-import com.juphoon.iron.cube.starter.log.ServiceEvent;
 import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.service.EventService;
@@ -17,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterEventCode.RC_CODE_INTERFACE_DEPRECATED;
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterEventCode.RC_CODE_INVALID_PARAMETER;
 
 /**
  * @Author: Zhiwei.zhai
@@ -47,7 +42,6 @@ public class EventCollectionServer extends EventCollectionServiceServer {
     @Override
     public boolean subEvent(ServerCall serverCall) throws Exception {
         log.error("不该调用 from {}", serverCall.getParam("host"));
-        ServiceEvent.setError(serverCall, new RootCauseException(RC_CODE_INTERFACE_DEPRECATED));
         return false;
     }
 
@@ -75,11 +69,9 @@ public class EventCollectionServer extends EventCollectionServiceServer {
             eventService.commit(contexts);
         } catch (JsonProcessingException e) {
             log.warn("process fail", e);
-            ServiceEvent.setError(serverCall, new RootCauseException(RC_CODE_INVALID_PARAMETER));
             ret = false;
         } catch (java.lang.Exception e) {
             log.warn("process fail", e);
-            ServiceEvent.setError(serverCall, e);
             ret = false;
         }
 

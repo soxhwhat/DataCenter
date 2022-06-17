@@ -29,7 +29,7 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>6.2.5</cube-starter.version>
+        <cube-starter.version>5.3.15</cube-starter.version>
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
         <ironCommon.version>1.1.1</ironCommon.version>
@@ -75,11 +75,11 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.juphoon.iron.common</groupId>
-            <artifactId>iron-common</artifactId>
-            <version>${ironCommon.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.juphoon.iron.common</groupId>-->
+<!--            <artifactId>iron-common</artifactId>-->
+<!--            <version>${ironCommon.version}</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>org.mybatis</groupId>-->
 <!--            <artifactId>mybatis</artifactId>-->
@@ -110,11 +110,7 @@
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>${cube-starter.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>

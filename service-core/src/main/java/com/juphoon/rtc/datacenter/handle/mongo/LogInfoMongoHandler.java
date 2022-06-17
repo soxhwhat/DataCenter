@@ -4,7 +4,7 @@ import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
-import com.juphoon.rtc.datacenter.handle.mongo.entity.MongoLogPO;
+import com.juphoon.rtc.datacenter.handle.mongo.entity.MongoLogInfoPO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,43 +14,40 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_LOG;
-import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_EVENT;
-import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_LOG;
+import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_INFO_EVENT;
+import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_LOG_INFO;
 
 /**
- * <p>mongodb操作handler抽象类</p>
+ * info事件数据处理
  *
- * @Author: Zhiwei.zhai
- * @Date: 2022/3/8 17:37
- * @update
- * <li>1. 2022-03-29. ajian.zheng 抽象公共逻辑，将集合名放到上层，公共handle逻辑放到抽象层collectionName</li>
- * <li>2. 2022-03-31. ajian.zheng 支持多数据源，将数据源放到上层，公共handle逻辑放到抽象层mongoTemplate</li>
+ * @author zhiwei.zhai
+ * @date 2022-05-31
  */
 @Slf4j
 @Component
-public class LogMongoHandler extends AbstractMongoHandler<LogContext> {
+public class LogInfoMongoHandler extends AbstractMongoHandler<LogContext> {
+
     @Autowired
     @Qualifier(MONGO_TEMPLATE_LOG)
     private MongoTemplate mongoTemplate;
 
     @Override
     public HandlerId handlerId() {
-        return HandlerId.LogMongoHandler;
+        return HandlerId.LogInfoMongoHandler;
     }
 
     @Override
     public List<EventType> careEvents() {
         return Collections.singletonList(
-                CLIENT_LOG_EVENT
+                CLIENT_LOG_INFO_EVENT
         );
     }
 
     @Override
     public MongoCollectionEnum collectionName() {
-        return COLLECTION_LOG;
+        return COLLECTION_LOG_INFO;
     }
 
     @Override
@@ -59,28 +56,22 @@ public class LogMongoHandler extends AbstractMongoHandler<LogContext> {
     }
 
     @Override
-    public boolean collectionStorageDaily() {
-        return true;
-    }
-
-    @Override
     public boolean handle(LogContext context) {
         String collectionName = IMongoCollectionManager.getCollectionName(this, context);
 
         log.debug("context:{},collectionName:{}", context, collectionName);
 
-        List<MongoLogPO> list = context.getLogs().stream().map(MongoLogPO::fromString).collect(Collectors.toList());
+        MongoLogInfoPO po = MongoLogInfoPO.fromString(context.getLogs().get(0));
 
         try {
-            mongoTemplate().insert(list, collectionName);
+            mongoTemplate().insert(po);
         } catch (DataAccessException e) {
+            log.error("DataAccessException:{}", e);
             return false;
         } catch (Exception e) {
+            log.error("{}", e);
             return true;
         }
-
         return true;
     }
-
-
 }

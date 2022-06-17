@@ -1,0 +1,13 @@
+#include "Types.def"
+module Config {
+
+
+
+     interface Configuration{
+         bool config(Common.StrVec logList) async onexception(false);
+     }
+
+
+
+
+}

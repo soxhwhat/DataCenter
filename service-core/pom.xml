@@ -21,7 +21,13 @@
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <version>2202.5.16</version>
             <artifactId>cube-rpc</artifactId>
-            <scope>compile</scope>
+            <version>2202.5.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>${cube-starter.version}</version>
         </dependency>
 
         <dependency>

@@ -5,8 +5,6 @@ import Common.ObjectServer;
 import Common.ServerCall;
 import Config.ConfigInfo;
 import Config.ConfigurationServer;
-import com.juphoon.iron.component.threadpool.AbstractIronTask;
-import com.juphoon.iron.component.threadpool.IronThreadPool;
 import com.juphoon.iron.cube.starter.AbstractCubeEntry;
 import com.juphoon.iron.cube.starter.annotation.CubeEntry;
 import lombok.Setter;
@@ -20,10 +18,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.COLLECTION_INFO_ENDPOINT;
-import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.COLLECTION_LOG_ENDPOINT;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.COLLECTION_INFO_ENDPOINT;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.COLLECTION_LOG_ENDPOINT;
 
-
+/**
+ * /data/nms/nms1.0/update/Domains.cfg 需要添加配置
+ * ConfigurationServerEntry:2
+ */
 @Setter
 @Slf4j
 @Component
@@ -31,19 +32,11 @@ import static com.juphoon.rtc.datacenter.constant.JrtcDataCenterConstant.COLLECT
 @CubeEntry(serviceName = "ConfigurationServerEntry", endPointsKey = "ConfigurationServerEntry", endPointsValue = "sarc -p 110;")
 @SuppressWarnings("PMD")
 public class ConfigurationServerImpl extends AbstractCubeEntry {
-    /**
-     * /data/nms/nms1.0/update/Domains.cfg 需要添加配置
-     * ConfigurationServerEntry:2
-     */
-
     @Autowired
     private LogDirectService logDirectService;
-    @Autowired
-    private InfoDirectService infoDirectService;
 
-    public ConfigurationServerImpl(){
-        log.info("ConfigurationServerEntry加载");
-    }
+    @Autowired
+    private LogInfoDirectServiceImpl infoDirectService;
 
     @Override
     public ObjectServer buildServiceServer() {
@@ -51,7 +44,7 @@ public class ConfigurationServerImpl extends AbstractCubeEntry {
             @Override
             public void getClientConfig_begin(ServerCall __call, ConfigInfo info) throws Exception {
                 try {
-                    log.info("获取客户端配置:{}",info);
+                    log.info("获取客户端配置:{}", info);
                     Map<String, String> clientConfig = getClientConfig(__call, info);
                     getClientConfig_end(__call, true, clientConfig, System.currentTimeMillis());
                 } catch (java.lang.Exception e) {

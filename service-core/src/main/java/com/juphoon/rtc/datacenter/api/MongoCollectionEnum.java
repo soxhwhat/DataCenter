@@ -33,9 +33,19 @@ public enum MongoCollectionEnum {
     COLLECTION_LOG("log_collection", "兼容老平台终端日志收集数据集合"),
 
     /**
+     * 兼容老平台终端日志收集数据集合
+     */
+    COLLECTION_LOG_INFO("info_collection", "兼容老平台终端日志收集数据集合"),
+
+    /**
      * 测试按天拆分
      */
     COLLECTION_EVENT_TEST_DAILY("test_daily_", "测试按天拆分"),
+
+    /**
+     * 并发记录
+     */
+    COLLECTION_CONCURRENT_ITEM_ROOM("jrtc_concurrent_room", "房间并发信息"),
 
     /**
      * 测试全局一份

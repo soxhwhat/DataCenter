@@ -17,8 +17,8 @@
     <dependencies>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>common-3.5</artifactId>
             <version>2202.5.16</version>
+            <artifactId>cube-rpc</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -1,27 +1,6 @@
 server:
   port: 8081
 
-event:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
-record:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
-md:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
-log:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
-
 spring:
   kafka:
     bootstrap-servers: 192.168.9.99:9092
@@ -39,13 +18,15 @@ spring:
         sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username=kafka password=kafkapswd;
   data:
     mongodb:
-      #      uri: mongodb://root:123456@121.196.205.39:27017/test1?authSource=admin
-      #      uri: mongodb://192.168.4.74:27017/admin
-      host: 192.168.4.74
-      database: test
-      port: 27017
-      server-selection-timeout: 600
-      connect-timeout: 800
+      event:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+      record:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
+      md:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+      log:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
+
   datasource:
     dynamic:
       druid:

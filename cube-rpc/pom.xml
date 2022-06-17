@@ -11,4 +11,11 @@
 
     <artifactId>cube-rpc</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>${cube-starter.version}</version>
+        </dependency>
+    </dependencies>
 </project>

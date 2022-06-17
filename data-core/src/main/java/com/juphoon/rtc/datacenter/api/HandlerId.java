@@ -210,8 +210,7 @@ public enum HandlerId {
     /**
      * info记录mongodb入库handler
      */
-    InfoMongoHandler("infoMongoHandler", "info记录mongodb入库handler", RESOURCE_SCOPE_GLOBAL),
-
+    LogInfoMongoHandler("logInfoMongoHandler", "info记录mongodb入库handler", RESOURCE_SCOPE_GLOBAL),
 
     /**
      * 终端埋点事件mongodb入库handler
