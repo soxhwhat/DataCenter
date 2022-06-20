@@ -22,7 +22,7 @@ iron:
           - acdExtServiceLevelPart30MinHandler
           - acdExtServiceLevelPartHourHandler
           - acdExtTerminalDailyHandler
-      - name: MONGO # mongodb
+      - name: MONGO_EVENT_PROCESSOR # mongodb
         queue-service:
           type: disruptor
         handlers:

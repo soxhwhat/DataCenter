@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8887
 
 iron:
   cube:
@@ -8,15 +8,18 @@ iron:
     event-processors:
       - name: TEST_EVENT
         queue-service:
-          type: none
+          type: disruptor
         handlers:
           - testEventHandler
+          - testEventOneHandler
+          - testEventTwoHandler
     log-processors:
       - name: TEST_LOG
         queue-service:
           type: none
         handlers:
           - testLogHandler
+          - logMongoHandler
     state-processors:
       - name: TEST_STATE
         queue-service:
@@ -25,8 +28,18 @@ iron:
           - testStateHandler
   debug:
     enabled: true
-
 spring:
+  data:
+    mongodb:
+      uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      event:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      record:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      md:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      log:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
   datasource:
     dynamic:
       datasource:
@@ -36,27 +49,8 @@ spring:
           username: kiwi
           password: juphoon419708
       primary: juphoon
+  redis:
+    host: 192.168.11.34
+    password: juphoon419708
 mybatis-plus:
   mapper-locations: classpath*:mysql/*Mapper.xml
-
-event:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_event?authSource=admin
-record:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_record?authSource=admin
-md:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
-storage:
-  spring:
-    data:
-      mongodb:
-        uri: mongodb://juphoon:Juphoon419708*@192.168.19.33:27017/jrtc_md_event?authSource=admin
-

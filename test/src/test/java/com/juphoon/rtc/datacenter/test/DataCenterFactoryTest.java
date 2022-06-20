@@ -52,17 +52,37 @@ public class DataCenterFactoryTest {
      *
      */
     @Test
-    public void requiredHandlerTest() throws Exception {
+    public void requiredEventHandlerTest() throws Exception {
         log.info("");
         for (int i = 0; i < HandlerId.values().length; i++) {
             log.info("check handler {}: {}", HandlerId.values()[i].getId(), HandlerId.values()[i].getName());
 
             // 忽略内置
-            if (!HandlerId.values()[i].getScope().equals(RESOURCE_SCOPE_GLOBAL)) {
+            if (!HandlerId.values()[i].getScope().equals(RESOURCE_SCOPE_GLOBAL_EVENT)) {
                 continue;
             }
 
             Assert.notNull(handlerFactory.getEventHandler(HandlerId.values()[i].getId()),
+                    HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
+        }
+
+        //
+//        Assert.isTrue(handlerFactory.getEventHandlers().size() == 10, "");
+
+    }
+
+    @Test
+    public void requiredStateHandlerTest() throws Exception {
+        log.info("");
+        for (int i = 0; i < HandlerId.values().length; i++) {
+            log.info("check handler {}: {}", HandlerId.values()[i].getId(), HandlerId.values()[i].getName());
+
+            // 忽略内置
+            if (!HandlerId.values()[i].getScope().equals(RESOURCE_SCOPE_GLOBAL_STATE)) {
+                continue;
+            }
+
+            Assert.notNull(handlerFactory.getStateHandler(HandlerId.values()[i].getId()),
                     HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
         }
 

@@ -18,7 +18,7 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.DOMAIN_CODE;
  */
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
 @EnableScheduling
-@CubeStarterApplication(domainCode = DOMAIN_CODE)
+@CubeStarterApplication
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter.mapper")
 @EnableMongoRepositories(basePackages = "com.juphoon.rtc.datacenter.handle.mongo.entity")
 public class TestApplication {

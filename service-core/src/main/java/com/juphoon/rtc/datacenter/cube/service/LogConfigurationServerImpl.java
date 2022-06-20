@@ -18,8 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.COLLECTION_INFO_ENDPOINT;
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.COLLECTION_LOG_ENDPOINT;
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
 /**
  * /data/nms/nms1.0/update/Domains.cfg 需要添加配置
@@ -28,10 +27,11 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.COLLECTION_LOG_E
 @Setter
 @Slf4j
 @Component
-@ConditionalOnProperty(prefix = "iron.cube.entry", value = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = DATA_CENTER_CONFIG_PREFIX, value = "log.enabled", havingValue = "true")
+//@ConditionalOnProperty(prefix = "iron.cube.entry", value = "enabled", havingValue = "true", matchIfMissing = true)
 @CubeEntry(serviceName = "ConfigurationServerEntry", endPointsKey = "ConfigurationServerEntry", endPointsValue = "sarc -p 110;")
 @SuppressWarnings("PMD")
-public class ConfigurationServerImpl extends AbstractCubeEntry {
+public class LogConfigurationServerImpl extends AbstractCubeEntry {
     @Autowired
     private LogDirectService logDirectService;
 

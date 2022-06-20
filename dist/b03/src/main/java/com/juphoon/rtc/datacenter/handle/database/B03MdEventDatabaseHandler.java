@@ -20,14 +20,15 @@ import static com.juphoon.rtc.datacenter.api.EventType.*;
 
 /**
  * <p>埋点数据handler</p>
- *
+ * 广发埋点对接ODS
+ *  TODO TODO
  * @author ke.wang@juphoon.com
  * @date 2022/5/10 9:52
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Component
 @Slf4j
-public class MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
+public class B03MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
 
     @Autowired
     private MdEventMapper mdEventMapper;
@@ -56,7 +57,7 @@ public class MdEventDatabaseHandler extends AbstractDatabaseHandler<MdEventPO> {
 
     @Override
     public HandlerId handlerId() {
-        return HandlerId.MdEventDatabaseHandler;
+        return HandlerId.B03MdOdsHandler;
     }
 
     @Override

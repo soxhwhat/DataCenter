@@ -3,7 +3,6 @@ package com.juphoon.rtc.datacenter.processor;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
-import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +29,6 @@ public class MongoEventProcessor extends AbstractEventProcessor {
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.MONGO;
+        return ProcessorId.MONGO_EVENT_PROCESSOR;
     }
 }

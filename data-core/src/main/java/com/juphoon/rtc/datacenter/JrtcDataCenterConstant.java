@@ -54,7 +54,9 @@ public class JrtcDataCenterConstant {
     /**
      * scope
      */
-    public static final String RESOURCE_SCOPE_GLOBAL = "global";
+    public static final String RESOURCE_SCOPE_GLOBAL_EVENT = "globalEvent";
+    public static final String RESOURCE_SCOPE_GLOBAL_LOG = "globalLog";
+    public static final String RESOURCE_SCOPE_GLOBAL_STATE = "globalState";
     public static final String RESOURCE_SCOPE_INNER = "inner";
     public static final String RESOURCE_SCOPE_TEST = "test";
     public static final String RESOURCE_SCOPE_B01 = "b01";

@@ -3,7 +3,6 @@ package com.juphoon.rtc.datacenter.processor;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
-import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +30,6 @@ public class RedisStateProcessor extends AbstractStateProcessor {
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.REDIS;
+        return ProcessorId.REDIS_STATE_PROCESSOR;
     }
 }

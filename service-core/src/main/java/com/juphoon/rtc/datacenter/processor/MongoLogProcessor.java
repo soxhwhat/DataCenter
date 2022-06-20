@@ -3,7 +3,6 @@ package com.juphoon.rtc.datacenter.processor;
 import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
-import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class MongoLogProcessor extends AbstractLogProcessor {
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.EXT_LOG;
+        return ProcessorId.MONGO_LOG_PROCESSOR;
     }
 
     @Override

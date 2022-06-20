@@ -24,7 +24,7 @@ public enum ProcessorId {
     /**
      * 事件mongo入库
      */
-    MONGO("mongoProcessor", "Mongo事件入库", PROCESSOR_TYPE_EVENT),
+    MONGO_EVENT_PROCESSOR("mongoEventProcessor", "Mongo事件入库", PROCESSOR_TYPE_EVENT),
 
     /**
      * 事件mongo入库
@@ -35,17 +35,17 @@ public enum ProcessorId {
     /**
      * 状态redis入库
      */
-    REDIS("redisProcessor", "Redis状态记录", PROCESSOR_TYPE_STATE),
+    REDIS_STATE_PROCESSOR("redisStateProcessor", "Redis状态记录", PROCESSOR_TYPE_STATE),
 
     /**
      * 终端埋点
      */
-    MD("mdProcessor", "终端埋点处理器", PROCESSOR_TYPE_EVENT),
+//    MD("mdProcessor", "终端埋点处理器", PROCESSOR_TYPE_EVENT),
 
     /**
      * 日志mongo入库
      */
-    EXT_LOG("logProcessor", "兼容旧版本日志收集处理器", PROCESSOR_TYPE_LOG),
+    MONGO_LOG_PROCESSOR("mongoLogProcessor", "兼容旧版本日志收集处理器", PROCESSOR_TYPE_LOG),
 
     /**
      * 实时状态Redis处理器
@@ -55,7 +55,7 @@ public enum ProcessorId {
     /**
      * 实时状态 MongoDB 持久化处理器
      */
-    STATE_MONGO("stateMongoProcessor", "实时状态Mongo处理器", PROCESSOR_TYPE_STATE),
+    STATE_MONGO("mongoStateProcessor", "实时状态Mongo处理器", PROCESSOR_TYPE_STATE),
 
     /**
      * 测试

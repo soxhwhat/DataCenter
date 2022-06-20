@@ -42,7 +42,7 @@ public class TestController {
     private StateService stateService;
 
     @Autowired
-//    @Qualifier(MONGO_TEMPLATE_EVENT)
+    @Qualifier(MONGO_TEMPLATE_EVENT)
     private MongoTemplate mongoTemplate;
 
     @GetMapping("/event")

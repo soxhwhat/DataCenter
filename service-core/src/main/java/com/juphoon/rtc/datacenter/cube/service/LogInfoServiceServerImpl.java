@@ -13,6 +13,7 @@ import org.bson.Document;
 import org.bson.codecs.IdGenerator;
 import org.bson.codecs.ObjectIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -27,6 +28,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.CLIENT_LOG_INFO_EVENT;
  */
 @Slf4j
 @Component
+@ConditionalOnProperty(prefix = DATA_CENTER_CONFIG_PREFIX, value = "log.enabled", havingValue = "true")
 @SuppressWarnings("PMD")
 public class LogInfoServiceServerImpl extends InfoIdCollectionServiceServer {
 
