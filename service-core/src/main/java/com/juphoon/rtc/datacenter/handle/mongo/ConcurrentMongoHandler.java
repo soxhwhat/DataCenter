@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.api.EventType.CONCURRENT_BEAT;
+import static com.juphoon.rtc.datacenter.api.EventType.ROOM_BEAT;
 import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_CONCURRENT_ITEM_ROOM;
 
 /**
@@ -35,7 +35,7 @@ public class ConcurrentMongoHandler extends AbstractMongoHandler<StateContext> {
     @Override
     public List<EventType> careEvents() {
         return Arrays.asList(
-                CONCURRENT_BEAT
+                ROOM_BEAT
         );
     }
 

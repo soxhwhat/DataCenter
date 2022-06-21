@@ -117,4 +117,37 @@ public class JrtcDataCenterConstant {
      */
     public static final String MONGO_TEMPLATE_LOG = "logMongoTemplate";
 
+
+    //***************************************************************************************************
+    //********************************** 视频客服 坐席状态常量**********************************************
+    //***************************************************************************************************
+    // 参考事件登记簿 https://juphoon.yuque.com/videoproducts/wboebb/rc884g#kCrl
+    /**
+     * 示闲=1
+     */
+    public static final Integer ACD_AGENT_STATE_FREE = 1;
+    /**
+     * 分配中=2
+     */
+    public static final Integer ACD_AGENT_STATE_ALLOC = 6;
+    /**
+     * 振铃=3
+     */
+    public static final Integer ACD_AGENT_STATE_RINGING = 6;
+    /**
+     * 通话=4
+     */
+    public static final Integer ACD_AGENT_STATE_TALKING = 6;
+    /**
+     * 示忙=5
+     */
+    public static final Integer ACD_AGENT_STATE_BUSY = 6;
+    /**
+     * 签出=6
+     */
+    public static final Integer ACD_AGENT_STATE_CHECK_OUT = 6;
+    /**
+     * 掉线=7
+     */
+    public static final Integer ACD_AGENT_STATE_OFFLINE = 6;
 }

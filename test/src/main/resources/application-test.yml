@@ -31,7 +31,6 @@ iron:
 spring:
   data:
     mongodb:
-      uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
       event:
         uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
       record:

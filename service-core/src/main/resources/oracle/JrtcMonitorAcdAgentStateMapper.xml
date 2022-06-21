@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdAgentStateMapper">
+    <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO">
+        <result column="DOMAIN_ID" jdbcType="DECIMAL" property="domainId"/>
+        <result column="APP_ID" jdbcType="DECIMAL" property="appId"/>
+        <result column="AGENT_ID" jdbcType="VARCHAR" property="agentId"/>
+        <result column="CHECK_IN_TIMESTAMP" jdbcType="DECIMAL" property="checkInTimestamp"/>
+        <result column="UPDATE_TIMESTAMP" jdbcType="DECIMAL" property="updateTimestamp"/>
+        <result column="CHECK_OUT_TIMESTAMP" jdbcType="DECIMAL" property="checkOutTimestamp"/>
+        <result column="STATE_BEGIN_TIMESTAMP" jdbcType="DECIMAL" property="stateBeginTimestamp"/>
+        <result column="STATE" jdbcType="DECIMAL" property="state"/>
+        <result column="SUB_STATE" jdbcType="DECIMAL" property="subState"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        DOMAIN_ID, APP_ID, AGENT_ID, CHECK_IN_TIMESTAMP, UPDATE_TIMESTAMP, CHECK_OUT_TIMESTAMP,
+        STATE_BEGIN_TIMESTAMP, `STATE`, SUB_STATE
+    </sql>
+
+    <select id="selectByAgentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from JRTC_MONITOR_ACD_AGENT_STATE
+        where AGENT_ID = #{agentId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO" useGeneratedKeys="true">
+        insert into JRTC_MONITOR_ACD_AGENT_STATE (DOMAIN_ID, APP_ID, AGENT_ID, CHECK_IN_TIMESTAMP, UPDATE_TIMESTAMP,
+        STATE_BEGIN_TIMESTAMP, `STATE`, SUB_STATE)
+        values (#{domainId,jdbcType=DECIMAL},  #{appId,jdbcType=DECIMAL}, #{agentId,jdbcType=VARCHAR},
+        #{checkInTimestamp,jdbcType=DECIMAL}, #{updateTimestamp,jdbcType=DECIMAL}, #{stateBeginTimestamp,jdbcType=DECIMAL},
+        #{STATE,jdbcType=DECIMAL}, #{subState,jdbcType=DECIMAL})
+    </insert>
+
+    <update id="updateStateByAgentId"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO">
+        update JRTC_MONITOR_ACD_AGENT_STATE
+        <set>
+            <if test="checkInTimestamp != null">
+                CHECK_IN_TIMESTAMP = #{checkInTimestamp,jdbcType=DECIMAL},
+            </if>
+            <if test="updateTimestamp != null">
+                UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=DECIMAL},
+            </if>
+            <if test="stateBeginTimestamp != null">
+                STATE_BEGIN_TIMESTAMP = #{stateBeginTimestamp,jdbcType=DECIMAL},
+            </if>
+            <if test="state != null">
+                `STATE` = #{state,jdbcType=DECIMAL},
+            </if>
+            <if test="subState != null">
+                SUB_STATE = #{subState,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where AGENT_ID = #{agentId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateCheckOutByAgentId"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO">
+        update JRTC_MONITOR_ACD_AGENT_STATE
+        set
+          CHECK_OUT_TIMESTAMP = #{checkOutTimestamp,jdbcType=DECIMAL},
+          UPDATE_TIMESTAMP = #{checkOutTimestamp,jdbcType=DECIMAL},
+          STATE_BEGIN_TIMESTAMP = #{checkOutTimestamp,jdbcType=DECIMAL},
+          `STATE` = #{state,jdbcType=DECIMAL},
+          SUB_STATE = #{subState,jdbcType=DECIMAL},
+          where AGENT_ID = #{agentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

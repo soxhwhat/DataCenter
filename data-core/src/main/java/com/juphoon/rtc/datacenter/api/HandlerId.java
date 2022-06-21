@@ -222,13 +222,13 @@ public enum HandlerId {
      * 录制事件mongodb入库handler
      */
     AcdRecordEventMongoHandler("acdRecordEventMongoHandler",
-                                       "录制事件mongodb入库handler",RESOURCE_SCOPE_B03),
+            "录制事件mongodb入库handler", RESOURCE_SCOPE_B03),
 
 
     /**
      * concurrentMongo记录mongodb入库handler
      */
-    ConcurrentMongoHandler("concurrentMongoHandler","concurrentMongo记录mongodb入库handler",RESOURCE_SCOPE_GLOBAL_STATE),
+    ConcurrentMongoHandler("concurrentMongoHandler", "concurrentMongo记录mongodb入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
 //    /**
 //     * concurrentMongo记录mongodb入库handler
 //     */
@@ -243,62 +243,57 @@ public enum HandlerId {
      * 队列状态kafka处理handler
      */
     QueueStatusKafkaHandler("queueStatusKafkaHandler",
-                                    "队列状态kafka事件Handler",RESOURCE_SCOPE_B03),
+            "队列状态kafka事件Handler", RESOURCE_SCOPE_B03),
 
     /**
      * 坐席状态kafka处理handler
      */
-    StaffStatusKafkaHandler("staffStatusKafkaHandler","坐席状态kafka事件Handler",RESOURCE_SCOPE_B03),
+    StaffStatusKafkaHandler("staffStatusKafkaHandler", "坐席状态kafka事件Handler", RESOURCE_SCOPE_B03),
 
     /**
      * 话单kafka处理handler
      */
-    TicketKafkaHandler("ticketKafkaHandler","话单kafka事件Handler",RESOURCE_SCOPE_B03),
-//    /**
-//     * 坐席状态redis处理handler
-//     */
-//    StaffRedisHandler("staffRedisHandler", "坐席状态redis处理handler", RESOURCE_SCOPE_B03),
-//    /**
-//     * 并发redis处理handler
-//     */
-//    ConcurrentRedisHandler("concurrentRedisHandler", "并发redis处理handler", RESOURCE_SCOPE_GLOBAL_EVENT),
-//    /**
-//     * 删除坐席状态redis处理handler
-//     */
-//    StaffRemoveRedisHandler("staffRemoveRedisHandler", "删除坐席状态redis处理handler", RESOURCE_SCOPE_B03),
-//    /**
-//     * 队列排队redis处理handler
-//     */
-//    QueueWaitRedisHandler("queueWaitRedisHandler", "队列排队redis处理handler", RESOURCE_SCOPE_B03),
-//    /**
-//     * 队列通话redis处理handler
-//     */
-//    QueueCallRedisHandler("queueCallRedisHandler", "队列通话redis处理handler", RESOURCE_SCOPE_B03),
-//
-//    /**
-//     * 队列振铃redis处理handler
-//     */
-//    QueueRingRedisHandler("queueRingRedisHandler", "队列振铃redis处理handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+    TicketKafkaHandler("ticketKafkaHandler", "话单kafka事件Handler", RESOURCE_SCOPE_B03),
 
-    // ***************************** B03 *******************
-    // ***************************** B03 *******************
 
+    //***************************************************************************************************
+    //********************************** 视频客服 队列状态/心跳 ***************************************************
+    //***************************************************************************************************
+    MonitorAcdQueueHandler("monitorAcdQueueHandler", "客服排队机队列监控Handler", RESOURCE_SCOPE_GLOBAL_STATE),
+
+
+    //***************************************************************************************************
+    //********************************** 视频客服 坐席状态/心跳 ***************************************************
+    //***************************************************************************************************
+    MonitorAcdAgentStateHandler("monitorAcdAgentStateHandler", "客服坐席状态监控 Handler",
+            RESOURCE_SCOPE_GLOBAL_STATE),
+
+    MonitorAcdAgentCheckoutHandler("monitorAcdAgentCheckoutHandler", "客服坐席状态签出监控 Handler",
+            RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    //***************************************************************************************************
+    //********************************** 能力平台 房间并发统计***************************************************
+    //***************************************************************************************************
+    MonitorRoomConcurrentHandler("monitorRoomConcurrentHandler", "房间并发统计 Handler",
+            RESOURCE_SCOPE_GLOBAL_STATE),
+
+    //***************************************************************************************************
+    //********************************** 能力平台 房间并发统计***************************************************
+    //***************************************************************************************************
     /**
-     * 终端埋点事件mongodb入库handler
+     * 广发埋点对接ODS处理句柄
      */
     B03MdOdsHandler("b03MdOdsHandler", "对接ODS定制处理器", RESOURCE_SCOPE_B03),
 
-    // ***************************** B03 *******************
+    /**
+     * 内部处理handler
+     */
+    FIRST("innerFirstHandler", "内部处理handlerFirst", RESOURCE_SCOPE_INNER),
 
     /**
      * 内部处理handler
      */
-    FIRST("innerFirstHandler","内部处理handlerFirst",RESOURCE_SCOPE_INNER),
-
-    /**
-     * 内部处理handler
-     */
-    LAST("innerLastHandler","内部处理handlerLast",RESOURCE_SCOPE_INNER);
+    LAST("innerLastHandler", "内部处理handlerLast", RESOURCE_SCOPE_INNER);
 
     /**
      * 类型
@@ -347,4 +342,4 @@ public enum HandlerId {
         return scope;
     }
 
-    }
+}

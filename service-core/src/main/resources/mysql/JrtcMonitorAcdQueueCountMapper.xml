@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdQueueCountMapper">
+    <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdQueueCountPO">
+        <result column="domainId" jdbcType="INTEGER" property="domainId"/>
+        <result column="appId" jdbcType="INTEGER" property="appId"/>
+        <result column="queue" jdbcType="VARCHAR" property="queue"/>
+        <result column="from" jdbcType="VARCHAR" property="from"/>
+        <result column="timestamp" jdbcType="BIGINT" property="timestamp"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    domainId, appId, queue, `from`, `timestamp`, `count`, `type`, `number`
+  </sql>
+
+    <select id="selectCountByQueue" parameterType="java.lang.String">
+        select count(*)
+        from jrtc_monitor_acd_queue_count
+        where queue = #{queue, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdQueueCountPO" useGeneratedKeys="true">
+    insert into jrtc_monitor_acd_queue_count (domainId, appId, queue, `from`, `timestamp`, `count`, `type`, `number`)
+    values (#{domainId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{queue,jdbcType=VARCHAR}, #{from,jdbcType=VARCHAR},
+      #{timestamp,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{number,jdbcType=INTEGER})
+  </insert>
+
+    <update id="updateByQueueAndFrom" parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdQueueCountPO">
+    update jrtc_monitor_acd_queue_count
+    set
+      `timestamp` = #{timestamp,jdbcType=BIGINT},
+      `count` = #{count,jdbcType=INTEGER}
+    where
+    queue = #{queue,jdbcType=VARCHAR} and
+    `from` = #{from,jdbcType=VARCHAR} and
+    `type` = #{id,jdbcType=INTEGER} and
+    `number` = #{id,jdbcType=INTEGER};
+  </update>
+
+</mapper>
