@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.configuration;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,14 +51,14 @@ public class RdbDataSourceConfig {
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         bean.setDataSource(dataSource);
 
         // 默认mysql, 否则oracle，只支持2种
         if (properties.getDataSource().getDriverClassName().toLowerCase().contains(DATABASE_TYPE_MYSQL)) {
-            bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mysql/*Mapper.xml"));
+            bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mysql/*Mapper.xml"));
         } else {
-            bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:oracle/*Mapper.xml"));
+            bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:oracle/*Mapper.xml"));
         }
 
         return bean.getObject();

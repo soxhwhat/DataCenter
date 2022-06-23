@@ -66,6 +66,16 @@ public class MonitorRoomConcurrentPO implements Serializable {
 
     /**
      * 转换
+     * 态数据上报:FlowStatusJson(uniqueId=JSMS@JSMS.Main0.Main01.Main, type=22, status=0, params={
+     *    "appId" : 4,
+     *    "concurrentNumber" : 1,
+     *    "concurrentPerson" : 2,
+     *    "domainId" : 100645,
+     *    "from" : "JSMS@JSMS.Main0.Main01.Main",
+     *    "resourceType" : 0,
+     *    "updateTimeStamp" : "1655773334312"
+     * }
+     * , domainId=100645, appId=4)
      * @param context
      * @return
      * @throws JsonProcessingException
@@ -76,11 +86,11 @@ public class MonitorRoomConcurrentPO implements Serializable {
         };
         Map<String, Object> params = mapper.readValue(context.getState().getParams(), typeRef);
 
-        Long timestamp = (Long) params.get("updateTimeStamp");
+        Long timestamp = Long.valueOf((String.valueOf(params.get("updateTimeStamp"))));
         Integer concurrentNumber = (Integer) params.get("concurrentNumber");
         Integer concurrentPerson = (Integer) params.get("concurrentPerson");
 
-        assert null != timestamp : "坐席队列参数 timestamp 为空";
+        assert timestamp > 0: "坐席队列参数 timestamp 为空";
         assert null != concurrentNumber : "坐席队列参数 concurrentNumber 为空";
         assert null != concurrentPerson : "坐席队列参数 concurrentPerson 为空";
 

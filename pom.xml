@@ -32,7 +32,6 @@
         <cube-starter.version>5.3.15</cube-starter.version>
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
-        <ironCommon.version>1.1.1</ironCommon.version>
         <disruptor.version>3.4.2</disruptor.version>
         <alibaba.druid.version>1.1.9</alibaba.druid.version>
         <p6spy.version>3.8.7</p6spy.version>
@@ -49,6 +48,7 @@
         <commons-collections4.version>4.1</commons-collections4.version>
         <slf4j.version>1.7.30</slf4j.version>
         <easymock.version>3.4</easymock.version>
+        <powermock.version>2.0.9</powermock.version>
         <jasypt.version>3.0.2</jasypt.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
 
@@ -100,21 +100,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.4.2</version>
         </dependency>
 
         <dependency>
@@ -156,11 +146,7 @@
             <artifactId>commons-collections4</artifactId>
             <version>${commons-collections4.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>${easymock.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -173,6 +159,31 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>${easymock.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco-maven-plugin.version}</version>
@@ -182,6 +193,8 @@
             <artifactId>findbugs</artifactId>
             <version>${findbugs.version}</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

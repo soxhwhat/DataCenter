@@ -106,11 +106,11 @@ public class MonitorAcdQueueCountPO implements Serializable {
         Map<String, Object> params = mapper.readValue(context.getState().getParams(), typeRef);
 
         String from = (String) params.get("from");
-        Long timestamp = (Long) params.get("timestamp");
+        Long timestamp = Long.valueOf((String.valueOf(params.get("timestamp"))));
         Integer waitCount = (Integer) params.get("waitCount");
 
         assert null != from : "坐席队列参数 from 为空";
-        assert null != timestamp : "坐席队列参数 timestamp 为空";
+        assert timestamp > 0 : "坐席队列参数 timestamp 为空";
         assert null != waitCount : "坐席队列参数 waitCount 为空";
 
         MonitorAcdQueueCountPO po = new MonitorAcdQueueCountPO();

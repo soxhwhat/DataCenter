@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.factory.HandlerFactory;
 import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.*;
 
@@ -62,8 +62,8 @@ public class DataCenterFactoryTest {
                 continue;
             }
 
-            Assert.notNull(handlerFactory.getEventHandler(HandlerId.values()[i].getId()),
-                    HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
+            Assert.assertNotNull(HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到",
+                    handlerFactory.getEventHandler(HandlerId.values()[i].getId()));
         }
 
         //
@@ -82,20 +82,17 @@ public class DataCenterFactoryTest {
                 continue;
             }
 
-            Assert.notNull(handlerFactory.getStateHandler(HandlerId.values()[i].getId()),
-                    HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到");
+            Assert.assertNotNull(
+                    HandlerId.values()[i].getId() + ":" + HandlerId.values()[i].getName() + " 未加载到",
+                    handlerFactory.getStateHandler(HandlerId.values()[i].getId()));
         }
-
-        //
-//        Assert.isTrue(handlerFactory.getEventHandlers().size() == 10, "");
-
     }
 
     @Test(expected = JrtcInvalidProcessorConfigurationException.class)
     public void requiredHandlerExceptionTest() throws Exception {
         handlerFactory.getEventHandler("invalidHandler");
 
-        Assert.isTrue(false, "not here");
+        Assert.fail("not here");
     }
 
     @Test
@@ -108,22 +105,20 @@ public class DataCenterFactoryTest {
                     log.info("ignore {}", ProcessorId.values()[i].getId());
                     break;
                 case PROCESSOR_TYPE_EVENT:
-                    Assert.notNull(processorFactory.getEventProcessor(ProcessorId.values()[i].getId()),
-                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
+                            processorFactory.getEventProcessor(ProcessorId.values()[i].getId()));
                     break;
                 case PROCESSOR_TYPE_LOG:
-                    Assert.notNull(processorFactory.getLogProcessor(ProcessorId.values()[i].getId()),
-                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
+                            processorFactory.getLogProcessor(ProcessorId.values()[i].getId()));
                     break;
                 case PROCESSOR_TYPE_STATE:
-                    Assert.notNull(processorFactory.getStateProcessor(ProcessorId.values()[i].getId()),
-                            ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到");
+                    Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
+                            processorFactory.getStateProcessor(ProcessorId.values()[i].getId()));
                     break;
                 default:
-                    Assert.isTrue(false, "未知 Processor " + ProcessorId.values()[i].getId());
+                    Assert.fail("未知 Processor " + ProcessorId.values()[i].getId());
             }
-
-
         }
     }
 
@@ -131,6 +126,6 @@ public class DataCenterFactoryTest {
     public void requiredProcessorExceptionTest() throws Exception {
         processorFactory.getEventProcessor("invalidProcessor");
 
-        Assert.isTrue(false, "not here");
+        Assert.fail("not here");
     }
 } 

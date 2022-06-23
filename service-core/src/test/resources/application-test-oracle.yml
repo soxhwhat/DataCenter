@@ -1,0 +1,43 @@
+server:
+  port: 0
+
+iron:
+  cube:
+    enabled: false
+  datacenter:
+    log-processors:
+      - name: ACD_STAT
+        queue-service:
+          type: none
+        handlers:
+          - monitorAcdAgentCheckoutHandler
+    state-processors:
+      - name: STATE_RDB
+        queue-service:
+          type: none
+        handlers:
+          - monitorAcdAgentStateHandler
+          - monitorRoomConcurrentHandler
+          - monitorAcdQueueCountHandler
+    data-source:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@//192.168.2.110:1521/ORCL
+      username: activiti
+      password: activiti
+spring:
+  data:
+    mongodb:
+      uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      event:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      record:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      md:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+      log:
+        uri: mongodb://juphoon:Juphoon419708*@192.168.11.34:27017/test?authSource=admin&auto-index-creation=true
+  redis:
+    host: 192.168.11.34
+    password: juphoon419708
+#mybatis-plus:
+#  mapper-locations: classpath*:oracle/*Mapper.xml

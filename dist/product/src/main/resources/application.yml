@@ -32,7 +32,7 @@ iron:
           - acdRecordEventMongoHandler
           - mdEventMongoHandler
     state-processors:
-      - name: STATE_REDIS # redis
+      - name: STATE_RDB # redis
         queue-service:
           type: none
         handlers:

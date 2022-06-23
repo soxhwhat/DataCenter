@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdAgentStateMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.MonitorAcdAgentStateMapper">
     <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO">
         <result column="domainId" jdbcType="INTEGER" property="domainId"/>
         <result column="appId" jdbcType="INTEGER" property="appId"/>
         <result column="agentId" jdbcType="VARCHAR" property="agentId"/>
         <result column="checkInTimestamp" jdbcType="BIGINT" property="checkInTimestamp"/>
         <result column="updateTimestamp" jdbcType="BIGINT" property="updateTimestamp"/>
-        <result column="checkOutTimestamp" jdbcType="BIGINT" property="updateTimestamp"/>
+        <result column="checkOutTimestamp" jdbcType="BIGINT" property="checkOutTimestamp"/>
         <result column="stateBeginTimestamp" jdbcType="BIGINT" property="stateBeginTimestamp"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
         <result column="subState" jdbcType="INTEGER" property="subState"/>
@@ -25,8 +25,7 @@
         where agentId = #{agentId,jdbcType=VARCHAR}
     </select>
 
-    <insert id="insert" keyColumn="id" keyProperty="id"
-            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO" useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO">
         insert into jrtc_monitor_acd_agent_state (domainId, appId, agentId, checkInTimestamp, updateTimestamp,
         stateBeginTimestamp, `state`, subState)
         values (#{domainId,jdbcType=INTEGER},  #{appId,jdbcType=INTEGER}, #{agentId,jdbcType=VARCHAR},
@@ -65,7 +64,7 @@
           updateTimestamp = #{checkOutTimestamp,jdbcType=BIGINT},
           stateBeginTimestamp = #{checkOutTimestamp,jdbcType=BIGINT},
           `state` = #{state,jdbcType=INTEGER},
-          subState = #{subState,jdbcType=INTEGER},
+          subState = #{subState,jdbcType=INTEGER}
           where agentId = #{agentId,jdbcType=VARCHAR}
   </update>
 </mapper>

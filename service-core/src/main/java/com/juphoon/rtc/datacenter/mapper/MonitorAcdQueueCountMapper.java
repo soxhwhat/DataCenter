@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface JrtcMonitorAcdQueueCountMapper {
+public interface MonitorAcdQueueCountMapper {
     /**
      * 查询队列吸吸
      * @param queue
      * @return
      */
-    int selectCountByQueue(String queue);
+    Integer selectSumCountByQueue(String queue);
 
     /**
      * 插入记录

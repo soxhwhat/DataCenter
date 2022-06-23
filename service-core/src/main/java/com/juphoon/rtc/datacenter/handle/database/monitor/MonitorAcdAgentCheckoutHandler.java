@@ -3,16 +3,17 @@ package com.juphoon.rtc.datacenter.handle.database.monitor;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
-import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
-import com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdAgentStateMapper;
+import com.juphoon.rtc.datacenter.mapper.MonitorAcdAgentStateMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.ACD_AGENT_STATE_CHECK_OUT;
 
 /**
  * @author ajian.zheng@juphoon.com
@@ -45,7 +46,7 @@ import java.util.List;
 public class MonitorAcdAgentCheckoutHandler extends AbstractHandler<EventContext> {
 
     @Autowired
-    private JrtcMonitorAcdAgentStateMapper agentStateMapper;
+    private MonitorAcdAgentStateMapper agentStateMapper;
 
     @Override
     public List<EventType> careEvents() {
@@ -61,7 +62,7 @@ public class MonitorAcdAgentCheckoutHandler extends AbstractHandler<EventContext
     public boolean handle(EventContext context) throws Exception {
         log.debug("context:{}", context);
 
-        MonitorAcdAgentStatePO po = MonitorAcdAgentStatePO.fromEvent(context);
+        MonitorAcdAgentStatePO po = MonitorAcdAgentStatePO.fromEvent(context, ACD_AGENT_STATE_CHECK_OUT, 0);
 
         log.debug("po:{}", po);
 

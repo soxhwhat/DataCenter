@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.service;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @Description:
  */
 @Slf4j
+@Getter
 public class EventService {
     private List<IProcessor<EventContext>> processors;
 

@@ -5,7 +5,7 @@ import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdQueueCountPO;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
-import com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdQueueCountMapper;
+import com.juphoon.rtc.datacenter.mapper.MonitorAcdQueueCountMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,10 +52,10 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class MonitorAcdQueueHandler extends AbstractHandler<StateContext> {
+public class MonitorAcdQueueCountHandler extends AbstractHandler<StateContext> {
 
     @Autowired
-    private JrtcMonitorAcdQueueCountMapper monitorAcdQueueMapper;
+    private MonitorAcdQueueCountMapper monitorAcdQueueMapper;
 
     @Override
     public List<EventType> careEvents() {
@@ -64,7 +64,7 @@ public class MonitorAcdQueueHandler extends AbstractHandler<StateContext> {
 
     @Override
     public HandlerId handlerId() {
-        return HandlerId.MonitorAcdQueueHandler;
+        return HandlerId.MonitorAcdQueueCountHandler;
     }
 
     @Override

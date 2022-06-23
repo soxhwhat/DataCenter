@@ -3,13 +3,14 @@ package com.juphoon.rtc.datacenter.test;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.configuration.EventServiceConfiguration;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
+import com.juphoon.rtc.datacenter.service.EventService;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.util.Assert;
 
 import static org.mockito.Mockito.when;
 
@@ -25,7 +26,7 @@ public class DataServiceConfigurationTest {
 
     private DataCenterProperties propertiesWithEmptyProcessors = new DataCenterProperties();
     private DataCenterProperties propertiesWithEmptyProcessorName = new DataCenterProperties();
-//    private DataCenterProperties propertiesWithEmptyEventLog = new DataCenterProperties();
+    //    private DataCenterProperties propertiesWithEmptyEventLog = new DataCenterProperties();
 //    private DataCenterProperties propertiesWithEmptyRedoLog = new DataCenterProperties();
     private DataCenterProperties propertiesWithEmptyHandlers = new DataCenterProperties();
 
@@ -57,15 +58,15 @@ public class DataServiceConfigurationTest {
     public void after() throws Exception {
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void testConfigWithEmptyProcessors() throws Exception {
         EventServiceConfiguration test = Mockito.spy(EventServiceConfiguration.class);
 
         when(test.getProperties()).thenReturn(propertiesWithEmptyProcessors);
 
-        test.eventService();
+        EventService eventService = test.eventService();
 
-        Assert.isTrue(false, "not here");
+        Assert.assertTrue(eventService.getProcessors().isEmpty());
     }
 
 //    @Test(expected = AssertionError.class)
@@ -98,6 +99,6 @@ public class DataServiceConfigurationTest {
 
         test.eventService();
 
-        Assert.isTrue(false, "not here");
+        Assert.fail("我应该在车底不应该在车里");
     }
 } 

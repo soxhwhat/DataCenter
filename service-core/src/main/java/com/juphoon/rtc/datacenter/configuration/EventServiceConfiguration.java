@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.service.EventService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ import java.util.List;
  * @author ajian.zheng@juphoon.com
  * @date 2/15/22 6:01 PM
  */
+@Slf4j
 @Configuration
 public class EventServiceConfiguration {
 
@@ -41,7 +44,13 @@ public class EventServiceConfiguration {
     @Bean
     public EventService eventService() throws JrtcInvalidProcessorConfigurationException {
 
-        assert !CollectionUtils.isEmpty(getProperties().getEventProcessors()) : "** processors 不能为空，请检查配置! **";
+        if (CollectionUtils.isEmpty(getProperties().getEventProcessors())) {
+            log.warn("** event processors 功能关闭 **");
+            log.warn("** event processors 功能关闭 **");
+            return new EventService(new LinkedList<>());
+        }
+
+//        assert !CollectionUtils.isEmpty(getProperties().getEventProcessors()) : "** processors 不能为空，请检查配置! **";
 
         List<IProcessor<EventContext>> processors = new ArrayList<>(getProperties().getEventProcessors().size());
 

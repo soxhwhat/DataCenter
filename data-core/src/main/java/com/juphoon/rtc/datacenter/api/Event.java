@@ -18,7 +18,6 @@ import java.util.*;
  */
 @Setter
 @Getter
-@ToString
 public class Event {
     /**
      * 域ID

@@ -6,11 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.ACD_AGENT_STATE_CHECK_OUT;
 
 /**
  * <p>视频客服排队机「坐席状态」监控</p>
@@ -98,14 +97,15 @@ public class MonitorAcdAgentStatePO {
         Map<String, Object> params = mapper.readValue(context.getState().getParams(), typeRef);
 
         String from = (String) params.get("acdId");
-        Long checkInTimestamp = (Long) params.get("checkInTimestamp");
-        Long updateTimestamp = (Long) params.get("updateTimestamp");
-        Long stateBeginTimestamp = (Long) params.get("stateBeginTimestamp");
+        Long checkInTimestamp = Long.valueOf((String.valueOf(params.get("checkInTimestamp"))));
+        Long updateTimestamp = Long.valueOf((String.valueOf(params.get("updateTimestamp"))));
+        Long stateBeginTimestamp = Long.valueOf((String.valueOf(params.get("stateBeginTimestamp"))));
         Integer state = (Integer) params.get("agentStatus");
 
-        assert null != from : "坐席队列参数 from 为空";
-        assert null != checkInTimestamp : "坐席队列参数 checkInTimestamp 为空";
-        assert null != updateTimestamp : "坐席队列参数 updateTimestamp 为空";
+        assert !StringUtils.isEmpty(from) : "坐席队列参数 from 为空";
+        assert checkInTimestamp > 0 : "坐席队列参数 checkInTimestamp 为空";
+        assert updateTimestamp > 0 : "坐席队列参数 updateTimestamp 为空";
+        assert stateBeginTimestamp > 0 : "坐席队列参数 stateBeginTimestamp 为空";
         assert null != state : "坐席队列参数 state 为空";
 
         MonitorAcdAgentStatePO po = new MonitorAcdAgentStatePO();
@@ -145,12 +145,12 @@ public class MonitorAcdAgentStatePO {
      * @return
      * @throws JsonProcessingException
      */
-    public static MonitorAcdAgentStatePO fromEvent(EventContext context) throws JsonProcessingException {
+    public static MonitorAcdAgentStatePO fromEvent(EventContext context, int state, int subState) throws JsonProcessingException {
         Map<String, Object> params = context.getEvent().getParams();
 
         String agentId = (String) params.get("agentId");
 
-        assert null != agentId : "坐席队列参数 agentId 为空";
+        assert !StringUtils.isEmpty(agentId) : "坐席队列参数 from 为空";
 
         MonitorAcdAgentStatePO po = new MonitorAcdAgentStatePO();
 
@@ -160,8 +160,8 @@ public class MonitorAcdAgentStatePO {
         po.setCheckOutTimestamp(context.getEvent().getTimestamp());
         po.setUpdateTimestamp(context.getEvent().getTimestamp());
         po.setStateBeginTimestamp(context.getEvent().getTimestamp());
-        po.setState(ACD_AGENT_STATE_CHECK_OUT);
-        po.setSubState(0);
+        po.setState(state);
+        po.setSubState(subState);
 
         return po;
     }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface JrtcMonitorRoomConcurrentMapper {
+public interface MonitorRoomConcurrentMapper {
     /**
      * 查询总并发量
      * @param timestamp 有效时间范围
      * @return
      */
-    int selectCount(long timestamp);
+    MonitorRoomConcurrentPO selectConcurrent(long timestamp);
 
     /**
      * 插入记录

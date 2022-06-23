@@ -5,7 +5,7 @@ import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
-import com.juphoon.rtc.datacenter.mapper.JrtcMonitorRoomConcurrentMapper;
+import com.juphoon.rtc.datacenter.mapper.MonitorRoomConcurrentMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ import java.util.List;
 @Component
 public class MonitorRoomConcurrentHandler extends AbstractHandler<StateContext> {
     @Autowired
-    private JrtcMonitorRoomConcurrentMapper roomConcurrentMapper;
+    private MonitorRoomConcurrentMapper roomConcurrentMapper;
 
     @Override
     public List<EventType> careEvents() {

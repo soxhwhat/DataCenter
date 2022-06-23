@@ -50,7 +50,7 @@ public enum ProcessorId {
     /**
      * 实时状态Redis处理器
      */
-    STATE_REDIS("stateRedisProcessor", "实时状态Redis处理器", PROCESSOR_TYPE_STATE),
+    STATE_RDB("stateRdbProcessor", "实时状态Rdb处理器", PROCESSOR_TYPE_STATE),
 
     /**
      * 实时状态 MongoDB 持久化处理器

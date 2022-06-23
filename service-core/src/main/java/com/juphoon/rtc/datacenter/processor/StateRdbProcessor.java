@@ -22,14 +22,14 @@ import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.STATE_BIN_LOG_IM
 @Slf4j
 @Getter
 @Component
-public class StateRedisProcessor extends AbstractStateProcessor {
+public class StateRdbProcessor extends AbstractStateProcessor {
     @Autowired
     @Qualifier(STATE_BIN_LOG_IMPL_NONE)
     private ILogService<StateContext> logService;
 
     @Override
     public ProcessorId processorId() {
-        return ProcessorId.STATE_REDIS;
+        return ProcessorId.STATE_RDB;
     }
 
     @Override

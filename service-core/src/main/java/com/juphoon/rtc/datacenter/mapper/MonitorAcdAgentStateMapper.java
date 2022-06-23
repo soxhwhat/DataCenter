@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface JrtcMonitorAcdAgentStateMapper {
+public interface MonitorAcdAgentStateMapper {
     /**
      * 查询坐席状态
      * @param agent
      * @return
      */
-    int selectByAgentId(String agent);
+    MonitorAcdAgentStatePO selectByAgentId(String agent);
 
     /**
      * 插入记录

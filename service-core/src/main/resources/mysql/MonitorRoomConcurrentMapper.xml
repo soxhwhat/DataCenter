@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juphoon.rtc.datacenter.mapper.MonitorRoomConcurrentMapper">
+    <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+        <result column="domainId" jdbcType="INTEGER" property="domainId"/>
+        <result column="appId" jdbcType="INTEGER" property="appId"/>
+        <result column="fromServer" jdbcType="VARCHAR" property="from"/>
+        <result column="updateTimestamp" jdbcType="BIGINT" property="timestamp"/>
+        <result column="roomCnt" jdbcType="INTEGER" property="room"/>
+        <result column="actorCnt" jdbcType="INTEGER" property="actor"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        domainId, appId, fromServer, updateTimestamp, roomCnt, actorCnt
+    </sql>
+
+    <select id="selectConcurrent" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select sum(roomCnt) as roomCnt, sum(actorCnt) as actorCnt
+        from jrtc_monitor_room_concurrent
+        where updateTimestamp > #{timestamp,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+        insert into jrtc_monitor_room_concurrent (domainId, appId, fromServer, updateTimestamp, roomCnt, actorCnt)
+        values (#{domainId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{from,jdbcType=VARCHAR},
+        #{timestamp,jdbcType=BIGINT}, #{room,jdbcType=INTEGER}, #{actor,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateByFromAndDomainIdAndAppId"
+            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+        update jrtc_monitor_room_concurrent
+        <set>
+            <if test="timestamp != null">
+                updateTimestamp = #{timestamp,jdbcType=BIGINT},
+            </if>
+            <if test="room != null">
+                roomCnt = #{room,jdbcType=INTEGER},
+            </if>
+            <if test="actor != null">
+                actorCnt = #{actor,jdbcType=INTEGER},
+            </if>
+        </set>
+        where
+        fromServer = #{from,jdbcType=VARCHAR} and
+        domainId = #{domainId,jdbcType=INTEGER} and
+        appId = #{appId,jdbcType=INTEGER};
+    </update>
+</mapper>

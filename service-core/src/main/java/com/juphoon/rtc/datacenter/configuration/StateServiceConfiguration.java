@@ -6,7 +6,9 @@ import com.juphoon.rtc.datacenter.factory.HandlerFactory;
 import com.juphoon.rtc.datacenter.factory.ProcessorFactory;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
+import com.juphoon.rtc.datacenter.service.LogService;
 import com.juphoon.rtc.datacenter.service.StateService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,6 +25,7 @@ import java.util.List;
  * @author ajian.zheng@juphoon.com
  * @date 2/15/22 6:01 PM
  */
+@Slf4j
 @Configuration
 public class StateServiceConfiguration {
 
@@ -40,8 +44,12 @@ public class StateServiceConfiguration {
 
     @Bean
     public StateService stateService() throws JrtcInvalidProcessorConfigurationException {
-
-        assert !CollectionUtils.isEmpty(getProperties().getStateProcessors()) : "** processors 不能为空，请检查配置! **";
+        if (CollectionUtils.isEmpty(getProperties().getEventProcessors())) {
+            log.warn("** state processors 功能关闭 **");
+            log.warn("** state processors 功能关闭 **");
+            return new StateService(new LinkedList<>());
+        }
+//        assert !CollectionUtils.isEmpty(getProperties().getStateProcessors()) : "** processors 不能为空，请检查配置! **";
 
         List<IProcessor<StateContext>> processors = new ArrayList<>(getProperties().getLogProcessors().size());
 

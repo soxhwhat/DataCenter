@@ -5,7 +5,7 @@ import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.entity.po.monitor.MonitorAcdAgentStatePO;
 import com.juphoon.rtc.datacenter.handler.AbstractHandler;
-import com.juphoon.rtc.datacenter.mapper.JrtcMonitorAcdAgentStateMapper;
+import com.juphoon.rtc.datacenter.mapper.MonitorAcdAgentStateMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ import java.util.List;
 public class MonitorAcdAgentStateHandler extends AbstractHandler<StateContext> {
 
     @Autowired
-    private JrtcMonitorAcdAgentStateMapper agentStateMapper;
+    private MonitorAcdAgentStateMapper agentStateMapper;
 
     @Override
     public List<EventType> careEvents() {
