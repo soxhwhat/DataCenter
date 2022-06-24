@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.binlog.impl;
 
 import com.juphoon.rtc.datacenter.api.EventContext;
+import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -42,4 +43,9 @@ public class NoneEventLogServiceImpl implements ILogService<EventContext> {
         log.info("context:{}", context);
     }
 
+    @Override
+    public List<EventContext> find(int size) {
+        log.info("size:{}", size);
+        return null;
+    }
 }

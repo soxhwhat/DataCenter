@@ -56,7 +56,7 @@ public class FlashLogLogMapperTest {
     private FlashLogLogMapper logMapper;
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         logMapper.dropTable();
         logMapper.createTable();
     }
@@ -122,5 +122,38 @@ public class FlashLogLogMapperTest {
         LogContext after = LogBinLogPO.toContext(po);
 
         Assert.assertEquals(before.getId(), after.getId());
+    }
+
+    @Test
+    public void testFind() {
+        before();
+
+        LogBinLogPO p1 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p2 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p3 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p4 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p5 = LogBinLogPO.fromContext(randomContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+        logMapper.save(p4);
+        logMapper.save(p5);
+
+        List<LogBinLogPO> ret = logMapper.find(1);
+        Assert.assertEquals(1, ret.size());
+        Assert.assertEquals(p1.getId(), ret.get(0).getId());
+
+        ret = logMapper.find(2);
+        Assert.assertEquals(2, ret.size());
+        Assert.assertEquals(p2.getId(), ret.get(1).getId());
+
+        ret = logMapper.find(5);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
+
+        ret = logMapper.find(10);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
 }

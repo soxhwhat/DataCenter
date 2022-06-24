@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.log.mapper;
 import com.juphoon.rtc.datacenter.TestApplication;
 import com.juphoon.rtc.datacenter.api.State;
 import com.juphoon.rtc.datacenter.api.StateContext;
+import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashStateLogMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class FlashStateLogMapperTest {
     private FlashStateLogMapper logMapper;
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         logMapper.dropTable();
         logMapper.createTable();
     }
@@ -118,5 +119,38 @@ public class FlashStateLogMapperTest {
         StateContext after = StateBinLogPO.toContext(po);
 
         Assert.assertEquals(before.getId(), after.getId());
+    }
+
+    @Test
+    public void testFind() {
+        before();
+
+        StateBinLogPO p1 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p2 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p3 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p4 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p5 = StateBinLogPO.fromContext(randomContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+        logMapper.save(p4);
+        logMapper.save(p5);
+
+        List<StateBinLogPO> ret = logMapper.find(1);
+        Assert.assertEquals(1, ret.size());
+        Assert.assertEquals(p1.getId(), ret.get(0).getId());
+
+        ret = logMapper.find(2);
+        Assert.assertEquals(2, ret.size());
+        Assert.assertEquals(p2.getId(), ret.get(1).getId());
+
+        ret = logMapper.find(5);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
+
+        ret = logMapper.find(10);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
 }

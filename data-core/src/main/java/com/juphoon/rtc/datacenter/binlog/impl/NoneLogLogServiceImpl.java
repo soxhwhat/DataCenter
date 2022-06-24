@@ -41,4 +41,10 @@ public class NoneLogLogServiceImpl implements ILogService<LogContext> {
     public void remove(LogContext context) {
         log.info("context:{}", context);
     }
+
+    @Override
+    public List<LogContext> find(int size) {
+        log.info("size:{}", size);
+        return null;
+    }
 }

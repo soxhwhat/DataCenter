@@ -2,9 +2,7 @@ package com.juphoon.rtc.datacenter.binlog.impl;
 
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
-import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
-import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashLogLogMapper;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashStateLogMapper;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +74,16 @@ public class FlashStateLogServiceImpl implements ILogService<StateContext> {
         log.debug("context:{}", context);
 
         logMapper.remove(context.getId());
+    }
+
+    @Override
+    public List<StateContext> find(int size) {
+        List<StateBinLogPO> list = logMapper.find(size);
+        if (CollectionUtils.isEmpty(list)) {
+            return new LinkedList<>();
+        }
+
+        return list.stream().map(StateBinLogPO::toContext).collect(Collectors.toList());
     }
 
     @Override

@@ -57,7 +57,7 @@ public class ReliableEventLogMapperTest {
     private ReliableEventLogMapper logMapper;
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         logMapper.dropTable();
         logMapper.createTable();
     }
@@ -123,5 +123,38 @@ public class ReliableEventLogMapperTest {
         EventContext after = EventBinLogPO.toEventContext(po);
 
         Assert.assertEquals(before.getId(), after.getId());
+    }
+
+    @Test
+    public void testFind() {
+        before();
+
+        EventBinLogPO p1 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p2 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p3 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p4 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p5 = EventBinLogPO.fromEventContext(randomEventContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+        logMapper.save(p4);
+        logMapper.save(p5);
+
+        List<EventBinLogPO> ret = logMapper.find(1);
+        Assert.assertEquals(1, ret.size());
+        Assert.assertEquals(p1.getId(), ret.get(0).getId());
+
+        ret = logMapper.find(2);
+        Assert.assertEquals(2, ret.size());
+        Assert.assertEquals(p2.getId(), ret.get(1).getId());
+
+        ret = logMapper.find(5);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
+
+        ret = logMapper.find(10);
+        Assert.assertEquals(5, ret.size());
+        Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
 }

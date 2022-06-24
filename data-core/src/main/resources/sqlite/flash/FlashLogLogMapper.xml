@@ -65,4 +65,11 @@
         FROM `log_binlog`
         WHERE `id`=#{id};
     </select>
+
+    <select id="find" resultMap="logPoResultMap">
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `type`, `number`, `logs`
+        FROM `log_binlog`
+        ORDER BY `receivedTimestamp`
+        LIMIT #{size};
+    </select>
 </mapper>

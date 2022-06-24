@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.binlog.impl;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +77,16 @@ public class FlashLogLogServiceImpl implements ILogService<LogContext> {
         log.debug("context:{}", context);
 
         logMapper.remove(context.getId());
+    }
+
+    @Override
+    public List<LogContext> find(int size) {
+        List<LogBinLogPO> list = logMapper.find(size);
+        if (CollectionUtils.isEmpty(list)) {
+            return new LinkedList<>();
+        }
+
+        return list.stream().map(LogBinLogPO::toContext).collect(Collectors.toList());
     }
 
     @Override

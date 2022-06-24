@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.binlog.impl;
 
+import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.StateContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.IHandler;
@@ -42,4 +43,9 @@ public class NoneStateLogServiceImpl implements ILogService<StateContext> {
         log.info("context:{}", context);
     }
 
+    @Override
+    public List<StateContext> find(int size) {
+        log.info("size:{}", size);
+        return null;
+    }
 }

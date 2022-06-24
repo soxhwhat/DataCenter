@@ -47,4 +47,12 @@ public interface ILogService<T> extends IService {
      * @param t
      */
     void remove(T t);
+
+    /**
+     * 查询指定条目记录
+     *
+     * @param size
+     * @return
+     */
+    List<T> find(int size);
 }

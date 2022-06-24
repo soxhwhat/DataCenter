@@ -75,4 +75,12 @@
         FROM `event_binlog`
         WHERE `id`=#{id};
     </select>
+
+    <select id="find" resultMap="eventPoResultMap">
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`,
+        `appId`, `uuid`, `type`, `number`, `timestamp`, `params`
+        FROM `event_binlog`
+        ORDER BY `timestamp`
+        LIMIT #{size};
+    </select>
 </mapper>

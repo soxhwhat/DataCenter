@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.binlog.mapper.flash;
 
+import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -52,4 +53,12 @@ public interface FlashLogLogMapper {
      * @return
      */
     LogBinLogPO findById(long id);
+
+    /**
+     * 查询指定数量记录
+     *
+     * @param size
+     * @return
+     */
+    List<LogBinLogPO> find(int size);
 }

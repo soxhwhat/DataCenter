@@ -73,4 +73,12 @@
         FROM `state_binlog`
         WHERE `id`=#{id};
     </select>
+
+    <select id="find" resultMap="statePoResultMap">
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`,
+        `appId`, `uuid`, `type`, `state`, `params`
+        FROM `state_binlog`
+        ORDER BY `receivedTimestamp`
+        LIMIT #{size};
+    </select>
 </mapper>

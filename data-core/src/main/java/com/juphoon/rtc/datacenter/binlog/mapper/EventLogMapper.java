@@ -50,4 +50,12 @@ public interface EventLogMapper {
      * @return
      */
     EventBinLogPO findById(long contentId);
+
+    /**
+     * 查询指定数量记录
+     *
+     * @param size
+     * @return
+     */
+    List<EventBinLogPO> find(int size);
 }

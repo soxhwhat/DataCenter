@@ -8,6 +8,7 @@ import com.juphoon.rtc.datacenter.handler.IHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,16 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
         log.debug("context:{}", context);
 
         getEventLogMapper().remove(context.getId());
+    }
+
+    @Override
+    public List<EventContext> find(int size) {
+        List<EventBinLogPO> list = getEventLogMapper().find(size);
+        if (CollectionUtils.isEmpty(list)) {
+            return new LinkedList<>();
+        }
+
+        return list.stream().map(EventBinLogPO::toEventContext).collect(Collectors.toList());
     }
 
     @Override
