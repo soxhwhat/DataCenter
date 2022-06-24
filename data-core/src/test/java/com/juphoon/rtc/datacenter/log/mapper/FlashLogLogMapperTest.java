@@ -6,6 +6,7 @@ import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.LogContext;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
+import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashLogLogMapper;
 import com.juphoon.rtc.datacenter.binlog.mapper.reliable.ReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -155,5 +156,21 @@ public class FlashLogLogMapperTest {
         ret = logMapper.find(10);
         Assert.assertEquals(5, ret.size());
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
+    }
+
+    @Test
+    public void testUpdateRetryCount() {
+        LogBinLogPO po = LogBinLogPO.fromContext(randomContext());
+
+        logMapper.save(po);
+
+        po.setLastUpdateTimestamp(100L);
+
+        logMapper.updateRetryCount(po);
+
+        LogBinLogPO ret = logMapper.findById(po.getId());
+
+        Assert.assertEquals(po.getLastUpdateTimestamp(), ret.getLastUpdateTimestamp());
+        Assert.assertEquals(po.getRetryCount() + 1, ret.getRetryCount());
     }
 }

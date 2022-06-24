@@ -52,9 +52,6 @@ public class FirstInnerHandler<T extends BaseContext> extends AbstractHandler<T>
     @Override
     public boolean handle(T t) {
         log.debug("ec:{}", t);
-
-        t.handle();
-
         return true;
     }
 }

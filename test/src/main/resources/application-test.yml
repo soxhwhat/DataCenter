@@ -13,19 +13,19 @@ iron:
           - testEventHandler
           - testEventOneHandler
           - testEventTwoHandler
-    log-processors:
-      - name: TEST_LOG
-        queue-service:
-          type: none
-        handlers:
-          - testLogHandler
-          - logMongoHandler
-    state-processors:
-      - name: TEST_STATE
-        queue-service:
-          type: none
-        handlers:
-          - testStateHandler
+#    log-processors:
+#      - name: TEST_LOG
+#        queue-service:
+#          type: none
+#        handlers:
+#          - testLogHandler
+#          - logMongoHandler
+#    state-processors:
+#      - name: TEST_STATE
+#        queue-service:
+#          type: none
+#        handlers:
+#          - testStateHandler
     data-source:
       url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
       username: kiwi

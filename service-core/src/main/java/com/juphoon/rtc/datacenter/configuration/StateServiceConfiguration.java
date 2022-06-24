@@ -60,6 +60,7 @@ public class StateServiceConfiguration {
             IProcessor<StateContext> processor = processorFactory.getStateProcessor(config.getName());
             /// 构造queueService
             processor.buildQueueService(config.getQueueService());
+            processor.buildContextLoader(config.getContextLoader());
             processor.start();
 
             config.getHandlers().forEach(handlerName -> processor.addHandler(handlerFactory.getStateHandler(handlerName.getId())));

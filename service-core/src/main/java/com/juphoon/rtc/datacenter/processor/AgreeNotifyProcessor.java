@@ -4,9 +4,9 @@ import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.AbstractHttpEventHandler;
+import com.juphoon.rtc.datacenter.processor.loader.AbstractContextLoader;
+import com.juphoon.rtc.datacenter.processor.loader.ContextLoaderConfig;
 import com.juphoon.rtc.datacenter.property.DataCenterProperties;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,8 +36,6 @@ public class AgreeNotifyProcessor extends AbstractHttpEventProcessor {
     @Autowired
     private DataCenterProperties properties;
 
-    private AgreeNotifyProcessor.Config config;
-
     private int counter = 0;
 
     @Override
@@ -56,31 +54,11 @@ public class AgreeNotifyProcessor extends AbstractHttpEventProcessor {
     }
 
     /**
-     * 设置配置文件
-     *
-     * @param config
-     */
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
-    /**
      * 轮询获取host
      *
      * @return
      */
     private String getUrl() {
-        return config.getHosts().get(counter++ % config.getHosts().size());
-    }
-
-    @Getter
-    @Setter
-    public static class Config {
-        /**
-         * 目标地址
-         * target = http(s)://ip:port/target,http(s)://ip:port/target,
-         * target = http(s)://domain/target
-         */
-        private List<String> hosts;
+        return properties.getAgree().getHosts().get(counter++ % properties.getAgree().getHosts().size());
     }
 }

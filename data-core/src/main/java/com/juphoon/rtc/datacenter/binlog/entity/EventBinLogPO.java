@@ -51,6 +51,11 @@ public class EventBinLogPO {
     private long receivedTimestamp;
 
     /**
+     * 上次更新时间，用于排序，防止历史数据捞不出来
+     */
+    private long lastUpdateTimestamp;
+
+    /**
      * 重做handler
      * <b>每次重做都需要重新生成</b>
      */
@@ -154,6 +159,7 @@ public class EventBinLogPO {
         ec.setFrom(po.getFrom());
         ec.setProcessorId(po.getProcessorId());
         ec.setCreatedTimestamp(po.getReceivedTimestamp());
+        ec.setBeginTimestamp(po.getLastUpdateTimestamp());
         ec.setRedoHandler(po.getRedoHandler());
         ec.setRetryCount(po.getRetryCount());
 
@@ -167,6 +173,7 @@ public class EventBinLogPO {
                 .add("from='" + from + "'")
                 .add("processorId='" + processorId + "'")
                 .add("receivedTimestamp=" + receivedTimestamp)
+                .add("lastUpdateTimestamp=" + lastUpdateTimestamp)
                 .add("redoHandler='" + redoHandler + "'")
                 .add("retryCount=" + retryCount)
                 .add("domainId=" + domainId)

@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.api.ICare;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 import com.juphoon.rtc.datacenter.handler.inner.FirstInnerHandler;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
+import com.juphoon.rtc.datacenter.processor.loader.AbstractContextLoader;
 import com.juphoon.rtc.datacenter.processor.queue.IQueueService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +41,17 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
      */
     private IQueueService<T> queueService;
 
+    /**
+     * 事件加载器
+     */
+    private AbstractContextLoader<T> contextLoader;
+
     public void setQueueService(IQueueService<T> queueService) {
         this.queueService = queueService;
+    }
+
+    public void setContextLoader(AbstractContextLoader<T> contextLoader) {
+        this.contextLoader = contextLoader;
     }
 
     @Override
@@ -186,6 +196,9 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
     public void process(T t) {
         log.debug("t:{}", t);
 
+        // 开始处理
+        t.handle();
+
         // first
         if (null != getFirstInnerEventHandler()) {
             getFirstInnerEventHandler().handle(t);
@@ -198,15 +211,22 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
                 continue;
             }
 
+            /// 重做句柄ID匹配才执行重做
+            /// 重做消息只针对一个handler，无需继续传递
             if (t.isRedoEvent()) {
-                onRedoEvent(t, handler);
+                if (handler.getId().equals(t.getRedoHandler())) {
+                    onRedoEvent(t, handler);
+                    break;
+                }
             } else {
                 onFreshEvent(t, handler);
             }
         }
 
         /// last todo 异常处理（可能死循环）
-        getLastInnerEventHandler().handle(t);
+        if (!t.isRedoEvent()) {
+            getLastInnerEventHandler().handle(t);
+        }
     }
 
     /**
@@ -226,9 +246,13 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
             /// 处理失败
             else {
                 log.info("{} handle ec:{} 失败", handler.getName(), t.getId());
-                logService().save(t, handler);
+
+                logService().saveRedo(t, handler);
             }
         } catch (Exception e) {
+            logService().saveRedo(t, handler);
+
+            /// TODO 严重
             log.warn("handler {} handle ec:{} 异常:", handler.getName(), t.getId(), e);
         }
     }
@@ -241,24 +265,35 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
      * @return void
      */
     private void onRedoEvent(T t, IHandler<T> handler) {
-        // 重做不包含当前handler
-        if (!t.getRedoHandler().equals(handler.getId())) {
-            return;
-        }
-
         try {
             /// 重做成功
             if (handler.handle(t)) {
                 log.info("{} reHandle ec:{} 成功", handler.getName(), t);
 
+                /*
+                 * 若处理成功，则删除事件
+                 * 重做事件独立处理
+                 */
+                // 顺序保证，先删库
                 logService().remove(t);
+
+                // 再清理set
+                queueService().success(t);
             }
             /// 重做失败
             else {
+                // 清理set 否则下次会被去重提交
+                logService().updateRetryCount(t);
+                queueService().redoFail(t);
+
                 /// 打印日志，啥也不做
                 log.warn("{} redo ec:{} 失败", handler.getName(), t.getId());
             }
         } catch (Exception e) {
+            // 清理set 否则下次会被去重提交
+            logService().updateRetryCount(t);
+            queueService().redoFail(t);
+
             log.debug("handler {} reHandle ec:{} 异常:", handler.getName(), t.getId(), e);
             if (log.isDebugEnabled()) {
                 e.printStackTrace();
@@ -269,5 +304,11 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
     @Override
     public void start() {
         logService().start();
+
+        queueService().start();
+
+        if (null != contextLoader) {
+            contextLoader.start();
+        }
     }
 }

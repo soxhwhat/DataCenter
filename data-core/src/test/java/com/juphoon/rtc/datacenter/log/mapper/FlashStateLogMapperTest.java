@@ -3,6 +3,7 @@ package com.juphoon.rtc.datacenter.log.mapper;
 import com.juphoon.rtc.datacenter.TestApplication;
 import com.juphoon.rtc.datacenter.api.State;
 import com.juphoon.rtc.datacenter.api.StateContext;
+import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashStateLogMapper;
@@ -152,5 +153,21 @@ public class FlashStateLogMapperTest {
         ret = logMapper.find(10);
         Assert.assertEquals(5, ret.size());
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
+    }
+
+    @Test
+    public void testUpdateRetryCount() {
+        StateBinLogPO po = StateBinLogPO.fromContext(randomContext());
+
+        logMapper.save(po);
+
+        po.setLastUpdateTimestamp(100L);
+
+        logMapper.updateRetryCount(po);
+
+        StateBinLogPO ret = logMapper.findById(po.getId());
+
+        Assert.assertEquals(po.getLastUpdateTimestamp(), ret.getLastUpdateTimestamp());
+        Assert.assertEquals(po.getRetryCount() + 1, ret.getRetryCount());
     }
 }

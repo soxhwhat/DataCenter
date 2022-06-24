@@ -1,12 +1,19 @@
 package com.juphoon.rtc.datacenter.processor;
 
 import com.juphoon.rtc.datacenter.api.LogContext;
+import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.inner.LastInnerHandler;
+import com.juphoon.rtc.datacenter.processor.loader.AbstractContextLoader;
+import com.juphoon.rtc.datacenter.processor.loader.ContextLoaderConfig;
 import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import com.juphoon.rtc.datacenter.processor.queue.impl.DisruptorLogQueueServiceImpl;
 import com.juphoon.rtc.datacenter.processor.queue.impl.NoneLogQueueServiceImpl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.ContextLoader;
+
+import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR;
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.QUEUE_SERVICE_CONFIG_TYPE_NONE;
@@ -38,5 +45,19 @@ public abstract class AbstractLogProcessor extends AbstractProcessor<LogContext>
             default:
                 throw new IllegalArgumentException("无效的 QueueService 类型:" + config.getType() + "," + getId());
         }
+    }
+
+    @Override
+    public void buildContextLoader(ContextLoaderConfig config) {
+        if (!config.isEnabled()) {
+            return;
+        }
+
+        setContextLoader(new AbstractContextLoader<LogContext>(logService(), this, config) {
+            @Override
+            public List<LogContext> loadContexts(ILogService<LogContext> logService) {
+                return logService.find(config.getLoadSize());
+            }
+        });
     }
 }

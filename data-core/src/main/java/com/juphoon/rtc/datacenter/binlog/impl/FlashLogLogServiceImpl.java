@@ -8,6 +8,7 @@ import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashLogLogMapper;
 import com.juphoon.rtc.datacenter.handler.IHandler;
+import com.juphoon.rtc.datacenter.utils.JrtcIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,7 +47,7 @@ public class FlashLogLogServiceImpl implements ILogService<LogContext> {
     }
 
     @Override
-    public void save(LogContext context, IHandler handler) {
+    public void saveRedo(LogContext context, IHandler handler) {
         assert null != context : "context 参数为空";
         assert null != handler : "handler 参数为空";
 
@@ -55,6 +56,9 @@ public class FlashLogLogServiceImpl implements ILogService<LogContext> {
         context.setRedoHandler(handler.getId());
 
         LogBinLogPO po = LogBinLogPO.fromContext(context);
+
+        /// redo 更新 id，作为一个新的事件
+        po.setId(JrtcIdGenerator.newId());
 
         logMapper.save(po);
     }
@@ -87,6 +91,11 @@ public class FlashLogLogServiceImpl implements ILogService<LogContext> {
         }
 
         return list.stream().map(LogBinLogPO::toContext).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateRetryCount(LogContext context) {
+        logMapper.updateRetryCount(LogBinLogPO.fromContext(context));
     }
 
     @Override

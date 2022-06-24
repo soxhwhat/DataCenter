@@ -50,6 +50,11 @@ public class LogBinLogPO {
     private long receivedTimestamp;
 
     /**
+     * 上次更新时间，用于排序，防止历史数据捞不出来
+     */
+    private long lastUpdateTimestamp;
+
+    /**
      * 重做handler
      * <b>每次重做都需要重新生成</b>
      */
@@ -92,6 +97,7 @@ public class LogBinLogPO {
         po.setFrom(context.getFrom());
         po.setProcessorId(context.getProcessorId());
         po.setReceivedTimestamp(context.getCreatedTimestamp());
+        po.setLastUpdateTimestamp(context.getBeginTimestamp());
         po.setRedoHandler(context.getRedoHandler());
         po.setRetryCount(context.getRetryCount());
         po.setType(context.getType());
@@ -121,6 +127,7 @@ public class LogBinLogPO {
         context.setCreatedTimestamp(po.getReceivedTimestamp());
         context.setRedoHandler(po.getRedoHandler());
         context.setRetryCount(po.getRetryCount());
+        context.setBeginTimestamp(po.getLastUpdateTimestamp());
         context.setType(po.getType());
         context.setNumber(po.getNumber());
 

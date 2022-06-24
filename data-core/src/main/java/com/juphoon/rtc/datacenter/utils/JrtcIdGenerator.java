@@ -130,7 +130,7 @@ public class JrtcIdGenerator {
      */
     public static long newId() {
         long ret = idGenerator.nextId();
-        log.debug("newId:{}", ret);
+//        log.debug("newId:{}", ret);
         return ret;
     }
 

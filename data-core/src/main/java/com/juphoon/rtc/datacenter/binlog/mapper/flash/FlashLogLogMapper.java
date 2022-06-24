@@ -61,4 +61,10 @@ public interface FlashLogLogMapper {
      * @return
      */
     List<LogBinLogPO> find(int size);
+
+    /**
+     * 更新失败计数
+     * @param po
+     */
+    void updateRetryCount(LogBinLogPO po);
 }

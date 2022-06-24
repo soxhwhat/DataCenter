@@ -61,4 +61,10 @@ public interface FlashStateLogMapper {
      * @return
      */
     StateBinLogPO findById(long id);
+
+    /**
+     * 更新失败计数
+     * @param po
+     */
+    void updateRetryCount(StateBinLogPO po);
 }

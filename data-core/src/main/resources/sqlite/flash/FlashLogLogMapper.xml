@@ -8,6 +8,7 @@
         <result column="from" property="from" jdbcType="VARCHAR"/>
         <result column="processorId" property="processorId" jdbcType="VARCHAR"/>
         <result column="receivedTimestamp" property="receivedTimestamp" jdbcType="INTEGER"/>
+        <result column="lastUpdateTimestamp" property="lastUpdateTimestamp" jdbcType="INTEGER"/>
         <result column="redoHandler" property="redoHandler" jdbcType="VARCHAR"/>
         <result column="retryCount" property="retryCount" jdbcType="INTEGER"/>
 
@@ -29,6 +30,7 @@
             `from`        varchar(64) not null,
             `processorId` varchar(32) not null,
             `receivedTimestamp`   integer not null,
+            `lastUpdateTimestamp`   integer not null,
             `redoHandler` varchar(32),
             `retryCount`  integer not null,
             `type`        integer not null,
@@ -37,17 +39,29 @@
         );
     </update>
 
+    <update id="updateRetryCount">
+        UPDATE `log_binlog`
+        <set>
+            `retryCount` = `retryCount` + 1,
+            `lastUpdateTimestamp` = #{lastUpdateTimestamp}
+        </set>
+        WHERE `id`=#{id};
+    </update>
+
     <insert id="save"
             parameterType="com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO"
             statementType="PREPARED">
-        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `type`, `number`, `logs`)
-        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{redoHandler},
+        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{lastUpdateTimestamp},
+        #{redoHandler},
         #{retryCount}, #{type}, #{number}, #{logs});
     </insert>
 
     <insert id="saveList">
-        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `log_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `type`, `number`, `logs`) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.requestId}, #{item.from}, #{item.processorId}, #{item.receivedTimestamp},
@@ -61,15 +75,17 @@
     </delete>
 
     <select id="findById" resultMap="logPoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `type`, `number`, `logs`
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `type`, `number`, `logs`
         FROM `log_binlog`
         WHERE `id`=#{id};
     </select>
 
     <select id="find" resultMap="logPoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `type`, `number`, `logs`
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `type`, `number`, `logs`
         FROM `log_binlog`
-        ORDER BY `receivedTimestamp`
+        ORDER BY `lastUpdateTimestamp`
         LIMIT #{size};
     </select>
 </mapper>

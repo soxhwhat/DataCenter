@@ -33,11 +33,6 @@ public enum ProcessorId {
     KAFKA("kafkaProcessor", "Kafka事件推送", PROCESSOR_TYPE_EVENT),
 
     /**
-     * 状态redis入库
-     */
-    REDIS_STATE_PROCESSOR("redisStateProcessor", "Redis状态记录", PROCESSOR_TYPE_STATE),
-
-    /**
      * 终端埋点
      */
 //    MD("mdProcessor", "终端埋点处理器", PROCESSOR_TYPE_EVENT),

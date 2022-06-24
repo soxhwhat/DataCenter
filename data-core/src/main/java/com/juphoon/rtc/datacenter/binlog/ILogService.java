@@ -1,6 +1,8 @@
 package com.juphoon.rtc.datacenter.binlog;
 
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.IService;
+import com.juphoon.rtc.datacenter.binlog.entity.LogBinLogPO;
 import com.juphoon.rtc.datacenter.handler.IHandler;
 
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
  * @author zhiwei.zhai
  *
  */
-public interface ILogService<T> extends IService {
+public interface ILogService<T extends BaseContext> extends IService {
     /**
      * 保存新事件
      *
@@ -32,7 +34,7 @@ public interface ILogService<T> extends IService {
      * @param t
      * @param handler
      */
-    void save(T t, IHandler handler);
+    void saveRedo(T t, IHandler handler);
 
     /**
      * 批量保存新事件
@@ -55,4 +57,10 @@ public interface ILogService<T> extends IService {
      * @return
      */
     List<T> find(int size);
+
+    /**
+     * 更新失败计数
+     * @param t
+     */
+    void updateRetryCount(T t);
 }

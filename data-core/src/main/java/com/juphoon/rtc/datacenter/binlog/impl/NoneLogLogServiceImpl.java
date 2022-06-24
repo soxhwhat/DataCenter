@@ -28,7 +28,7 @@ public class NoneLogLogServiceImpl implements ILogService<LogContext> {
     }
 
     @Override
-    public void save(LogContext context, IHandler handler) {
+    public void saveRedo(LogContext context, IHandler handler) {
         log.info("context:{},{}", context, handler.getId());
     }
 
@@ -46,5 +46,10 @@ public class NoneLogLogServiceImpl implements ILogService<LogContext> {
     public List<LogContext> find(int size) {
         log.info("size:{}", size);
         return null;
+    }
+
+    @Override
+    public void updateRetryCount(LogContext context) {
+        log.info("context:{}", context);
     }
 }

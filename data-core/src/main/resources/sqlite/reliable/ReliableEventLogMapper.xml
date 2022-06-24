@@ -8,6 +8,7 @@
         <result column="from" property="from" jdbcType="VARCHAR"/>
         <result column="processorId" property="processorId" jdbcType="VARCHAR"/>
         <result column="receivedTimestamp" property="receivedTimestamp" jdbcType="INTEGER"/>
+        <result column="lastUpdateTimestamp" property="lastUpdateTimestamp" jdbcType="INTEGER"/>
         <result column="redoHandler" property="redoHandler" jdbcType="VARCHAR"/>
         <result column="retryCount" property="retryCount" jdbcType="INTEGER"/>
 
@@ -33,6 +34,7 @@
             `from`        varchar(64) not null,
             `processorId` varchar(32) not null,
             `receivedTimestamp`   integer not null,
+            `lastUpdateTimestamp`   integer not null,
             `redoHandler` varchar(32),
             `retryCount`  int not null,
 
@@ -46,20 +48,33 @@
         );
     </update>
 
+    <update id="updateRetryCount">
+        UPDATE `event_binlog`
+        <set>
+            `retryCount` = `retryCount` + 1,
+            `lastUpdateTimestamp` = #{lastUpdateTimestamp}
+        </set>
+        WHERE `id`=#{id};
+    </update>
+
     <insert id="save"
             parameterType="com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO"
             statementType="PREPARED">
-        INSERT INTO `event_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `event_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)
-        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{redoHandler},
+        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{lastUpdateTimestamp},
+        #{redoHandler},
         #{retryCount}, #{domainId}, #{appId}, #{uuid}, #{type}, #{number}, #{timestamp}, #{params});
     </insert>
 
     <insert id="saveList">
-        INSERT INTO `event_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `event_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.requestId}, #{item.from}, #{item.processorId}, #{item.receivedTimestamp},
+            #{item.lastUpdateTimestamp},
             #{item.redoHandler},
             #{item.retryCount}, #{item.domainId}, #{item.appId}, #{item.uuid}, #{item.type}, #{item.number},
             #{item.timestamp}, #{item.params})
@@ -71,13 +86,15 @@
     </delete>
 
     <select id="findById" resultMap="eventPoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`
         FROM `event_binlog`
         WHERE `id`=#{id};
     </select>
 
     <select id="find" resultMap="eventPoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`,
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `domainId`,
         `appId`, `uuid`, `type`, `number`, `timestamp`, `params`
         FROM `event_binlog`
         ORDER BY `timestamp`

@@ -29,7 +29,7 @@ public class NoneEventLogServiceImpl implements ILogService<EventContext> {
     }
 
     @Override
-    public void save(EventContext context, IHandler handler) {
+    public void saveRedo(EventContext context, IHandler handler) {
         log.info("context:{},{}", context, handler.getId());
     }
 
@@ -47,5 +47,10 @@ public class NoneEventLogServiceImpl implements ILogService<EventContext> {
     public List<EventContext> find(int size) {
         log.info("size:{}", size);
         return null;
+    }
+
+    @Override
+    public void updateRetryCount(EventContext context) {
+        log.info("context:{}", context);
     }
 }

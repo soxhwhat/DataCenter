@@ -1,11 +1,13 @@
 package com.juphoon.rtc.datacenter.processor;
 
 
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.INamed;
 import com.juphoon.rtc.datacenter.api.IService;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.handler.IHandler;
+import com.juphoon.rtc.datacenter.processor.loader.ContextLoaderConfig;
 import com.juphoon.rtc.datacenter.processor.queue.IQueueService;
 import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 
@@ -15,7 +17,7 @@ import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
  * @update:
  * <p>1. 2022-03-24. ajian.zheng 增加可命名接口</p>
  */
-public interface IProcessor<T> extends INamed, IService {
+public interface IProcessor<T extends BaseContext> extends INamed, IService {
     /**
      * 设置处理器名
      * @return 处理器id
@@ -45,6 +47,12 @@ public interface IProcessor<T> extends INamed, IService {
     void buildQueueService(QueueServiceConfig config);
 
     /**
+     * 创建 ContextLoader
+     * @param config
+     */
+    void buildContextLoader(ContextLoaderConfig config);
+
+    /**
      * 处理事件
      *
      * @param t
@@ -66,7 +74,7 @@ public interface IProcessor<T> extends INamed, IService {
      * @param t
      * @throws Exception
      */
-    void process(T t);
+    void process(final T t);
 
     /**
      * 组装 handler

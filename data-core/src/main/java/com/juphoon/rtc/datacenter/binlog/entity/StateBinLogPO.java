@@ -47,6 +47,11 @@ public class StateBinLogPO {
     private long receivedTimestamp;
 
     /**
+     * 上次更新时间，用于排序，防止历史数据捞不出来
+     */
+    private long lastUpdateTimestamp;
+
+    /**
      * 重做handler
      * <b>每次重做都需要重新生成</b>
      */
@@ -107,6 +112,7 @@ public class StateBinLogPO {
         po.setReceivedTimestamp(context.getCreatedTimestamp());
         po.setRedoHandler(context.getRedoHandler());
         po.setRetryCount(context.getRetryCount());
+        po.setLastUpdateTimestamp(context.getBeginTimestamp());
 
         po.setDomainId(context.getState().getDomainId());
         po.setAppId(context.getState().getAppId());
@@ -140,6 +146,7 @@ public class StateBinLogPO {
         context.setCreatedTimestamp(po.getReceivedTimestamp());
         context.setRedoHandler(po.getRedoHandler());
         context.setRetryCount(po.getRetryCount());
+        context.setBeginTimestamp(po.getLastUpdateTimestamp());
 
         return context;
     }
@@ -151,6 +158,7 @@ public class StateBinLogPO {
                 .add("from='" + from + "'")
                 .add("processorId='" + processorId + "'")
                 .add("receivedTimestamp=" + receivedTimestamp)
+                .add("lastUpdateTimestamp=" + lastUpdateTimestamp)
                 .add("redoHandler='" + redoHandler + "'")
                 .add("retryCount=" + retryCount)
                 .add("domainId=" + domainId)

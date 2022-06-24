@@ -157,4 +157,20 @@ public class ReliableEventLogMapperTest {
         Assert.assertEquals(5, ret.size());
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
+
+    @Test
+    public void testUpdateRetryCount() {
+        EventBinLogPO po = EventBinLogPO.fromEventContext(randomEventContext());
+
+        logMapper.save(po);
+
+        po.setLastUpdateTimestamp(100L);
+
+        logMapper.updateRetryCount(po);
+
+        EventBinLogPO ret = logMapper.findById(po.getId());
+
+        Assert.assertEquals(po.getLastUpdateTimestamp(), ret.getLastUpdateTimestamp());
+        Assert.assertEquals(po.getRetryCount() + 1, ret.getRetryCount());
+    }
 }

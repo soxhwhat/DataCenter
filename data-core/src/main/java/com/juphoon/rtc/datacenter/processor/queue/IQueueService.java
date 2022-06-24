@@ -1,11 +1,13 @@
 package com.juphoon.rtc.datacenter.processor.queue;
 
+import com.juphoon.rtc.datacenter.api.IService;
+
 /**
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/16 19:23
  * @Description:
  */
-public interface IQueueService<T> {
+public interface IQueueService<T> extends IService {
     /**
      * 提交事件
      *         // TODO
@@ -24,6 +26,15 @@ public interface IQueueService<T> {
      * @param t 事件
      */
     void success(T t);
+
+    /**
+     * 重做失败，清理标记，为了接口可读性
+     *
+     * @param t
+     */
+    default void redoFail(T t) {
+        success(t);
+    }
 
     /**
      * 初始化

@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidAbstractDataSource;
 import com.juphoon.rtc.datacenter.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.ProcessorId;
+import com.juphoon.rtc.datacenter.processor.loader.ContextLoaderConfig;
 import com.juphoon.rtc.datacenter.processor.queue.QueueServiceConfig;
 import lombok.Data;
 import lombok.Getter;
@@ -68,8 +69,6 @@ public class DataCenterProperties {
          */
         private List<String> hosts;
     }
-    // iron.datacenter.agree.enabled=true
-    // iron.datacenter.
 
     @Getter
     @Setter
@@ -92,11 +91,6 @@ public class DataCenterProperties {
         private boolean testOnBorrow = DruidAbstractDataSource.DEFAULT_TEST_ON_BORROW;
 
         private boolean testWhileIdle = DruidAbstractDataSource.DEFAULT_WHILE_IDLE;
-
-//        /**
-//         * mapper 路径 mysql/oracle/...
-//         */
-//        private String type = DATABASE_TYPE_MYSQL;
     }
 
     @Data
@@ -126,6 +120,11 @@ public class DataCenterProperties {
          * 处理句柄集合
          */
         private List<HandlerId> handlers;
+
+        /**
+         * contextLoader 配置
+         */
+        private ContextLoaderConfig contextLoader = new ContextLoaderConfig();
 
         public String getName() {
             return name.getId();

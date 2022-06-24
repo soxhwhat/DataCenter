@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.handler;
 
+import com.juphoon.rtc.datacenter.api.BaseContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.processor.IProcessor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Setter
 @Getter
-public abstract class AbstractHandler<T> implements IHandler<T> {
+public abstract class AbstractHandler<T extends BaseContext> implements IHandler<T> {
     protected IProcessor<T> processor;
 
     /**

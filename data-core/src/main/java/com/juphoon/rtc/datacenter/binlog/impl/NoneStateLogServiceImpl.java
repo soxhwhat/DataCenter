@@ -29,7 +29,7 @@ public class NoneStateLogServiceImpl implements ILogService<StateContext> {
     }
 
     @Override
-    public void save(StateContext context, IHandler handler) {
+    public void saveRedo(StateContext context, IHandler handler) {
         log.info("context:{},{}", context, handler.getId());
     }
 
@@ -47,5 +47,10 @@ public class NoneStateLogServiceImpl implements ILogService<StateContext> {
     public List<StateContext> find(int size) {
         log.info("size:{}", size);
         return null;
+    }
+
+    @Override
+    public void updateRetryCount(StateContext context) {
+        log.info("context:{}", context);
     }
 }

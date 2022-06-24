@@ -45,6 +45,12 @@ public interface EventLogMapper {
     void remove(long id);
 
     /**
+     * 更新失败计数
+     * @param po
+     */
+    void updateRetryCount(EventBinLogPO po);
+
+    /**
      * 通过 contentId 查询
      * @param contentId
      * @return

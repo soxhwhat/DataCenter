@@ -5,6 +5,7 @@ import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.binlog.mapper.EventLogMapper;
 import com.juphoon.rtc.datacenter.handler.IHandler;
+import com.juphoon.rtc.datacenter.utils.JrtcIdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
@@ -41,7 +42,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public void save(EventContext context, IHandler handler) {
+    public void saveRedo(EventContext context, IHandler handler) {
         assert null != context : "context 参数为空";
         assert null != handler : "handler 参数为空";
 
@@ -50,6 +51,9 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
         context.setRedoHandler(handler.getId());
 
         EventBinLogPO po = EventBinLogPO.fromEventContext(context);
+
+        /// redo 更新 id，作为一个新的事件
+        po.setId(JrtcIdGenerator.newId());
 
         getEventLogMapper().save(po);
     }
@@ -82,6 +86,11 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
         }
 
         return list.stream().map(EventBinLogPO::toEventContext).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateRetryCount(EventContext context) {
+        getEventLogMapper().updateRetryCount(EventBinLogPO.fromEventContext(context));
     }
 
     @Override

@@ -8,6 +8,7 @@
         <result column="from" property="from" jdbcType="VARCHAR"/>
         <result column="processorId" property="processorId" jdbcType="VARCHAR"/>
         <result column="receivedTimestamp" property="receivedTimestamp" jdbcType="INTEGER"/>
+        <result column="lastUpdateTimestamp" property="lastUpdateTimestamp" jdbcType="INTEGER"/>
         <result column="redoHandler" property="redoHandler" jdbcType="VARCHAR"/>
         <result column="retryCount" property="retryCount" jdbcType="INTEGER"/>
 
@@ -31,6 +32,7 @@
             `from`        varchar(64) not null,
             `processorId` varchar(32) not null,
             `receivedTimestamp`   integer not null,
+            `lastUpdateTimestamp` integer not null,
             `redoHandler` varchar(32),
             `retryCount`  integer not null,
 
@@ -43,20 +45,33 @@
         );
     </update>
 
+    <update id="updateRetryCount">
+        UPDATE `state_binlog`
+        <set>
+            `retryCount` = `retryCount` + 1,
+            `lastUpdateTimestamp` = #{lastUpdateTimestamp}
+        </set>
+        WHERE `id`=#{id};
+    </update>
+
     <insert id="save"
             parameterType="com.juphoon.rtc.datacenter.binlog.entity.StateBinLogPO"
             statementType="PREPARED">
-        INSERT INTO `state_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `state_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `domainId`, `appId`, `uuid`, `type`, `state`, `params`)
-        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{redoHandler},
+        VALUES (#{id}, #{requestId}, #{from}, #{processorId}, #{receivedTimestamp}, #{lastUpdateTimestamp},
+        #{redoHandler},
         #{retryCount}, #{domainId}, #{appId}, #{uuid}, #{type}, #{state}, #{params});
     </insert>
 
     <insert id="saveList">
-        INSERT INTO `state_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`,
+        INSERT INTO `state_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`,
         `retryCount`, `domainId`, `appId`, `uuid`, `type`, `state`, `params`) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.requestId}, #{item.from}, #{item.processorId}, #{item.receivedTimestamp},
+            #{item.lastUpdateTimestamp},
             #{item.redoHandler},
             #{item.retryCount}, #{item.domainId}, #{item.appId}, #{item.uuid}, #{item.type}, #{item.state},
             #{item.params})
@@ -68,17 +83,19 @@
     </delete>
 
     <select id="findById" resultMap="statePoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`,
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `domainId`,
         `appId`, `uuid`, `type`, `state`, `params`
         FROM `state_binlog`
         WHERE `id`=#{id};
     </select>
 
     <select id="find" resultMap="statePoResultMap">
-        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `redoHandler`, `retryCount`, `domainId`,
+        SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
+        `redoHandler`, `retryCount`, `domainId`,
         `appId`, `uuid`, `type`, `state`, `params`
         FROM `state_binlog`
-        ORDER BY `receivedTimestamp`
+        ORDER BY `lastUpdateTimestamp`
         LIMIT #{size};
     </select>
 </mapper>

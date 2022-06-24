@@ -40,6 +40,8 @@ public class FlashEventLogMapperTest {
         ec.setFrom(random);
         ec.setRequestId(random);
         ec.setProcessorId("test");
+        ec.setBeginTimestamp(0L);
+        ec.setRetryCount(0);
 
         return ec;
     }
@@ -157,4 +159,19 @@ public class FlashEventLogMapperTest {
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
 
+    @Test
+    public void testUpdateRetryCount() {
+        EventBinLogPO po = EventBinLogPO.fromEventContext(randomEventContext());
+
+        logMapper.save(po);
+
+        po.setLastUpdateTimestamp(100L);
+
+        logMapper.updateRetryCount(po);
+
+        EventBinLogPO ret = logMapper.findById(po.getId());
+
+        Assert.assertEquals(po.getLastUpdateTimestamp(), ret.getLastUpdateTimestamp());
+        Assert.assertEquals(po.getRetryCount() + 1, ret.getRetryCount());
+    }
 }
