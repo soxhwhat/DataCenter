@@ -39,8 +39,19 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
      */
     public abstract void onSubmit(T ec) throws Exception;
 
+    /**
+     * 1. 线程1 数据被消费但是还没来得及从本地缓存中删除，以及从Queue中清除index
+     * 2. 线程2 数据被loader加载
+     * 3. 线程1 删除缓存、清除index
+     * 4. 线程2 submit到queue
+     *
+     * 这时候数据有可能被重复消费，因此这里加锁，锁住队列
+     *
+     * @param ec
+     * @throws Exception
+     */
     @Override
-    public void submit(T ec) throws Exception {
+    public synchronized void submit(T ec) throws Exception {
         log.debug("ec:{}", ec);
 
         // 去重
@@ -53,8 +64,18 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
         onSubmit(ec);
     }
 
+    /**
+     * 1. 线程1 数据被消费但是还没来得及从本地缓存中删除，以及从Queue中清除index
+     * 2. 线程2 数据被loader加载
+     * 3. 线程1 删除缓存、清除index
+     * 4. 线程2 submit到queue
+     *
+     * 这时候数据有可能被重复消费，因此这里加锁，锁住队列
+     * 
+     * @param ec
+     */
     @Override
-    public void success(T ec) {
+    public synchronized void success(T ec) {
         log.debug("ec:{},{}", ec, eventIndex.size());
 
         eventIndex.remove(ec.getId());
