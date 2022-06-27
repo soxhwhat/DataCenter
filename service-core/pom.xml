@@ -21,7 +21,6 @@
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <version>2202.5.16</version>
             <artifactId>cube-rpc</artifactId>
-            <version>2202.5.15</version>
         </dependency>
 
         <dependency>
