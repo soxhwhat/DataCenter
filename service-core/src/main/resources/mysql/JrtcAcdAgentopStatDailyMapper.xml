@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+<mapper namespace="com.juphoon.rtc.datacenter.servicecore.mapper.AcdAgentOpStatDailyMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     <!--@Table jrtc_acd_agentop_stat_daily-->
     <id column="id" jdbcType="BIGINT" property="id" />
@@ -34,7 +34,7 @@
     from jrtc_acd_agentop_stat_daily
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_agentop_stat_daily (gmt_created, gmt_modified, domain_id,
       app_id, stat_time, agent_id,
@@ -49,7 +49,7 @@
       #{duration,jdbcType=BIGINT}, #{cnt,jdbcType=INTEGER}, #{subState,jdbcType=INTEGER},
       #{uniqueKey,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into jrtc_acd_agentop_stat_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -153,7 +153,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     update jrtc_acd_agentop_stat_daily
     <set>
@@ -208,7 +208,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     update jrtc_acd_agentop_stat_daily
     set gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},

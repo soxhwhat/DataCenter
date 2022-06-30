@@ -46,7 +46,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.juphoon.rtc.datacenter.B06DataCenterApplication</mainClass>
+                    <mainClass>com.juphoon.rtc.datacenter.dist.b06.B06DataCenterApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

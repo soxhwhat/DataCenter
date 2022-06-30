@@ -4,6 +4,8 @@ server:
 iron:
   cube:
     enabled: false
+    debugMode: true
+    serverCfg:
   datacenter:
     event-processors:
       - name: TEST_EVENT

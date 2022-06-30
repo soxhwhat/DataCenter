@@ -13,6 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>data-core</artifactId>
+            <version>2202.5.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>service-core</artifactId>
             <version>2202.5.17</version>
         </dependency>
@@ -33,7 +38,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.juphoon.rtc.datacenter.test.TestApplication</mainClass>
+                    <mainClass>com.juphoon.rtc.datacenter.servicecore.test.TestApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

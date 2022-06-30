@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashEventLogMapper">
+<mapper namespace="com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper">
 
-    <resultMap id="eventPoResultMap" type="com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO">
+    <resultMap id="eventPoResultMap" type="com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="requestId" property="requestId" jdbcType="VARCHAR"/>
         <result column="from" property="from" jdbcType="VARCHAR"/>
@@ -58,7 +58,7 @@
     </update>
 
     <insert id="save"
-            parameterType="com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO"
+            parameterType="com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO"
             statementType="PREPARED">
         INSERT INTO `event_binlog`(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,
         `redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)

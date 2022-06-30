@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.juphoon.rtc.datacenter</groupId>
+        <version>2202.5.17</version>
+        <artifactId>jrtcDataCenter-Parent</artifactId>
+    </parent>
+
+    <artifactId>report-aggregate</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>data-core</artifactId>
+            <version>2202.5.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>service-core</artifactId>
+            <version>2202.5.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>test</artifactId>
+            <version>2202.5.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <version>1.3.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                    </execution>
+
+                    <!--                    <execution>-->
+                    <!--                        <id>report</id>-->
+                    <!--                        <goals>-->
+                    <!--                            <goal>report-aggregate</goal>-->
+                    <!--                        </goals>-->
+                    <!--                        <phase>verify</phase>-->
+                    <!--                    </execution>-->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

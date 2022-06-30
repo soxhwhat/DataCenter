@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.MonitorRoomConcurrentMapper">
-    <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+<mapper namespace="com.juphoon.rtc.datacenter.servicecore.mapper.MonitorRoomConcurrentMapper">
+    <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.servicecore.entity.po.monitor.MonitorRoomConcurrentPO">
         <result column="domainId" jdbcType="INTEGER" property="domainId"/>
         <result column="appId" jdbcType="INTEGER" property="appId"/>
         <result column="fromServer" jdbcType="VARCHAR" property="from"/>
@@ -20,14 +20,14 @@
     </select>
 
     <insert id="insert"
-            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+            parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.monitor.MonitorRoomConcurrentPO">
         insert into jrtc_monitor_room_concurrent (domainId, appId, fromServer, updateTimestamp, roomCnt, actorCnt)
         values (#{domainId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{from,jdbcType=VARCHAR},
         #{timestamp,jdbcType=BIGINT}, #{room,jdbcType=INTEGER}, #{actor,jdbcType=INTEGER})
     </insert>
 
     <update id="updateByFromAndDomainIdAndAppId"
-            parameterType="com.juphoon.rtc.datacenter.entity.po.monitor.MonitorRoomConcurrentPO">
+            parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.monitor.MonitorRoomConcurrentPO">
         update jrtc_monitor_room_concurrent
         <set>
             <if test="timestamp != null">

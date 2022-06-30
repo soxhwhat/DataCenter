@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.juphoon.rtc.datacenter.mapper.AcdAgentOpStatDailyMapper">
-  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+<mapper namespace="com.juphoon.rtc.datacenter.servicecore.mapper.AcdAgentOpStatDailyMapper">
+  <resultMap id="BaseResultMap" type="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     <!--@Table JRTC_ACD_AGENTOP_STAT_DAILY-->
     <id column="ID" jdbcType="VARCHAR" property="id" />
@@ -34,7 +34,7 @@
     from JRTC_ACD_AGENTOP_STAT_DAILY
     where ID = #{id,jdbcType=VARCHAR}
   </select>
-  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <insert id="insert" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     insert into JRTC_ACD_AGENTOP_STAT_DAILY (ID, GMT_CREATED, GMT_MODIFIED, 
       DOMAIN_ID, APP_ID, STAT_TIME, 
@@ -49,7 +49,7 @@
       #{endType,jdbcType=DECIMAL}, #{duration,jdbcType=DECIMAL}, #{cnt,jdbcType=DECIMAL}, 
       #{subState,jdbcType=DECIMAL}, #{uniqueKey,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <insert id="insertSelective" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     insert into JRTC_ACD_AGENTOP_STAT_DAILY
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -159,7 +159,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     update JRTC_ACD_AGENTOP_STAT_DAILY
     <set>
@@ -214,7 +214,7 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.entity.po.acdstat.AcdAgentOpStatDailyPO">
+  <update id="updateByPrimaryKey" parameterType="com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdAgentOpStatDailyPO">
     <!--@mbg.generated-->
     update JRTC_ACD_AGENTOP_STAT_DAILY
     set GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},

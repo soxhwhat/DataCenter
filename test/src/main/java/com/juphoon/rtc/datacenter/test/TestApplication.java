@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-
 /**
  * <p>示例工程</p>
  *
@@ -17,8 +16,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
 @EnableScheduling
 @CubeStarterApplication
-@MapperScan(basePackages = "com.juphoon.rtc.datacenter.mapper")
-@EnableMongoRepositories(basePackages = "com.juphoon.rtc.datacenter.handle.mongo.entity")
+@MapperScan(basePackages = "com.juphoon.rtc.datacenter")
+@EnableMongoRepositories(basePackages = "com.juphoon.rtc.datacenter.servicecore.handle.mongo.entity")
 public class TestApplication {
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);

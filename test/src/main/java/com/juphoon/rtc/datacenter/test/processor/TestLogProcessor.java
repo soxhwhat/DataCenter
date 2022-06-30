@@ -1,17 +1,17 @@
 package com.juphoon.rtc.datacenter.test.processor;
 
-import com.juphoon.rtc.datacenter.api.LogContext;
-import com.juphoon.rtc.datacenter.api.ProcessorId;
-import com.juphoon.rtc.datacenter.binlog.ILogService;
-import com.juphoon.rtc.datacenter.handler.inner.FirstInnerHandler;
-import com.juphoon.rtc.datacenter.processor.AbstractLogProcessor;
+import com.juphoon.rtc.datacenter.datacore.api.LogContext;
+import com.juphoon.rtc.datacenter.datacore.api.ProcessorId;
+import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
+import com.juphoon.rtc.datacenter.datacore.handler.inner.FirstInnerHandler;
+import com.juphoon.rtc.datacenter.datacore.processor.AbstractLogProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.LOG_BIN_LOG_IMPL_NONE;
+import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.LOG_BIN_LOG_IMPL_NONE;
 
 /**
  * @author ajian.zheng@juphoon.com
