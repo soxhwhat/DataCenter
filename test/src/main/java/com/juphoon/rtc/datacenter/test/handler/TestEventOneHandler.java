@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
-import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_EVENT_PREFIX;
 import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_EVENT_TEST_DAILY;
 
 /**

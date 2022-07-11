@@ -62,6 +62,8 @@ public class FlashSqliteDataSourceConfig {
         // 文件锁
         config.setLockingMode(SQLiteConfig.LockingMode.EXCLUSIVE);
 
+        config.setBusyTimeout(500);
+
         sqLiteDataSource.setConfig(config);
         return sqLiteDataSource;
     }

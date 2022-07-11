@@ -22,7 +22,7 @@ public class QueueServiceConfig implements IConfig {
      * 队列类型
      * disruptor/none
      */
-    private String type = QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR;
+    private String type = QUEUE_SERVICE_CONFIG_TYPE_EXECUTOR;
 
     /**
      * 队列大小
@@ -30,12 +30,20 @@ public class QueueServiceConfig implements IConfig {
     private int queueSize = 4096;
 
     /**
-     * blocking、sleeping、yielding
+     * 核心线程数:Runtime.getRuntime().availableProcessors()
+     * IO密集型任务最佳线程数大于CPU核心数很多倍，故设置为CPU核心数的2n + 1
      */
-    private String waitStrategy = QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_BLOCKING;
+    private int corePoolSize = Runtime.getRuntime().availableProcessors() * 2 + 1;
 
     /**
-     * single/multi
+     * 最大线程数设置为核心核心线程数相同
+     * 1.避免内存交换
+     * 2.创建固定大小的线程池
      */
-    private String producerType = QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_SINGLE;
+    private int maxPoolSize = corePoolSize;
+
+    /**
+     * 最大空闲时间
+     */
+    private long keepAliveTime = 60L;
 }

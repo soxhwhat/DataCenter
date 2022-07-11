@@ -4,6 +4,7 @@ import com.juphoon.rtc.datacenter.TestApplication;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.binlog.ILogService;
 import com.juphoon.rtc.datacenter.binlog.entity.EventBinLogPO;
+import com.juphoon.rtc.datacenter.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.log.mapper.FlashEventLogMapperTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
@@ -34,8 +35,13 @@ public class FlashEventLogServiceImplTest {
     @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
     private ILogService<EventContext> eventLogService;
 
+    @Autowired
+    private FlashEventLogMapper logMapper;
+
     @Before
     public void before() throws Exception {
+        logMapper.dropTable();
+        logMapper.createTable();
     }
 
     @After

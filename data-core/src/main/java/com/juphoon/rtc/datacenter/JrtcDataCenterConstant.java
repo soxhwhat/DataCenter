@@ -83,13 +83,8 @@ public class JrtcDataCenterConstant {
     /**
      * queue service config 参数
      */
-    public static final String QUEUE_SERVICE_CONFIG_TYPE_DISRUPTOR = "disruptor";
     public static final String QUEUE_SERVICE_CONFIG_TYPE_NONE = "none";
-    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_BLOCKING = "blocking";
-    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_SLEEPING = "sleeping";
-    public static final String QUEUE_SERVICE_CONFIG_WAIT_STRATEGY_YIELDING = "yielding";
-    public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_SINGLE = "single";
-    public static final String QUEUE_SERVICE_CONFIG_PRODUCER_TYPE_MULTI = "multi";
+    public static final String QUEUE_SERVICE_CONFIG_TYPE_EXECUTOR = "executor";
 
     /**
      * processor type

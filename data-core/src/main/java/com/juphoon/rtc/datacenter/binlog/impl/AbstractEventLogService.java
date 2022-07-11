@@ -59,7 +59,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public void save(List<EventContext> list) {
+    public synchronized void save(List<EventContext> list) {
         assert !CollectionUtils.isEmpty(list) : "参数为空";
 
         log.debug("context:{}", list.size());
@@ -70,7 +70,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public void remove(EventContext context) {
+    public synchronized void remove(EventContext context) {
         assert null != context : "参数为空";
 
         log.debug("context:{}", context);
@@ -79,7 +79,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public List<EventContext> find(int size) {
+    public synchronized List<EventContext> find(int size) {
         List<EventBinLogPO> list = getEventLogMapper().find(size);
         if (CollectionUtils.isEmpty(list)) {
             return new LinkedList<>();

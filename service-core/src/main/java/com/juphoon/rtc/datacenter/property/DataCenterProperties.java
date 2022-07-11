@@ -16,8 +16,6 @@ import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.DATABASE_TYPE_MYSQL;
-
 /**
  * <p>dataCenter默认配置</p>
  * java配置的优先级低于yml配置；如果yml配置不存在，会采用java配置

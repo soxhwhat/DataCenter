@@ -59,6 +59,8 @@ public class ReliableSqliteDataSourceConfig {
         // 文件锁
         config.setLockingMode(SQLiteConfig.LockingMode.NORMAL);
 
+        config.setBusyTimeout(500);
+
         sqLiteDataSource.setConfig(config);
         return sqLiteDataSource;
     }

@@ -32,7 +32,6 @@
         <cube-starter.version>5.3.15</cube-starter.version>
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
-        <disruptor.version>3.4.2</disruptor.version>
         <alibaba.druid.version>1.1.9</alibaba.druid.version>
         <p6spy.version>3.8.7</p6spy.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
@@ -105,6 +104,11 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>${cube-starter.version}</version>
         </dependency>
 
         <dependency>

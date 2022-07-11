@@ -4,11 +4,9 @@ import com.juphoon.iron.cube.starter.annotation.CubeStarterApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import static com.juphoon.rtc.datacenter.JrtcDataCenterConstant.DOMAIN_CODE;
 
 /**
  * <p>示例工程</p>

@@ -7,8 +7,6 @@ iron:
   datacenter:
     event-processors:
       - name: TEST_EVENT
-        queue-service:
-          type: disruptor
         handlers:
           - testEventHandler
           - testEventOneHandler
