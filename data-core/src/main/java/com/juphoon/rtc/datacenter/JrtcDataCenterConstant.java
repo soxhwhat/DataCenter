@@ -32,6 +32,10 @@ public class JrtcDataCenterConstant {
      * datacenter配置前缀
      */
     public static final String DATA_CENTER_CONFIG_PREFIX = "iron.datacenter";
+    /**
+     * 服务水平配置前缀
+     */
+    public static final String DATA_CENTER_SERVICE_LEVEL_CONFIG_PREFIX = DATA_CENTER_CONFIG_PREFIX + ".servicelevel";
     public static final String KAFKA_PREFIX = "kafka";
 
     public static final String DATABASE_TYPE_MYSQL = "mysql";

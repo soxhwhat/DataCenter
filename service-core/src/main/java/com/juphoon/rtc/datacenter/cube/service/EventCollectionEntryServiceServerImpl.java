@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 @Slf4j
 @Setter
 @ConditionalOnProperty(prefix = "iron.cube.entry", value = "enabled", havingValue = "true", matchIfMissing = true)
-@CubeEntry(serviceName = "EventCollectionEntryServer", endPointsKey = "EventCollectionEntryServer", endPointsValue = "sarc -p 111;")
+@CubeEntry(serviceName = "EventCollectionEntryServer", endPointsKey = "EventCollectionEntryServer", endPointsValue = "sarc -p 110;")
 @SuppressWarnings("PMD")
 public class EventCollectionEntryServiceServerImpl extends AbstractCubeEntry {
 

@@ -5,6 +5,10 @@ iron:
   cube:
     enabled: false
   datacenter:
+    servicelevel:
+      serviceLevelTypeEnums:
+        - service_level_20sec
+        - service_level_30sec
     log-processors:
       - name: ACD_STAT
         queue-service:

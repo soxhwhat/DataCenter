@@ -1,11 +1,13 @@
 package com.juphoon.rtc.datacenter.handle.database.acdstat;
 
+import com.juphoon.rtc.datacenter.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.StatType;
 import com.juphoon.rtc.datacenter.entity.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.entity.po.acdstat.AcdExtServiceLevelPO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
@@ -27,6 +29,7 @@ import static com.juphoon.rtc.datacenter.api.EventType.TICKER_EVENT_RING;
  */
 @Slf4j
 @Component
+@ConfigurationProperties(prefix = JrtcDataCenterConstant.DATA_CENTER_SERVICE_LEVEL_CONFIG_PREFIX)
 public abstract class AbstractAcdExtServiceLevelHandler<T extends AcdExtServiceLevelPO> extends AbstractAcdStatHandler<T> {
 
     /**

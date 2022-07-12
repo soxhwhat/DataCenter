@@ -18,7 +18,6 @@ import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_MD;
 
 /**
  * <p>终端埋点事件处理handler</p>
- * todo 移植到产品
  *
  * @author ke.wang
  * @date 2022-04-21
@@ -67,8 +66,17 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler {
                 SIP_400_EVENT,
                 SIP_500_EVENT,
                 SIP_600_EVENT,
-                SIP_OTHER_RESPONSE_EVENT
-        );
+                SIP_OTHER_RESPONSE_EVENT,
+                CD_JOIN_ROOM_EVENT,
+                CD_RECEIVE_START_SIGNAL_EVENT,
+                CD_START_EVENT,
+                CD_RECEIVE_END_SIGNAL_EVENT,
+                CD_END_EVENT,
+                CD_ABNORMAL_EVENT,
+                CD_HEARTBEAT_EVENT,
+                CD_RECEIVE_FIRST_FRAME_OF_MEDIA_DATA_EVENT,
+                CD_LEAVE_ROOM_EVENT
+                );
     }
 
     @Override

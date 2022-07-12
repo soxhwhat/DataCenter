@@ -1,46 +1,44 @@
 server:
   port: 19986
-
 iron:
   datacenter:
+    servicelevel:
+        serviceLevelTypeEnums:
+          - service_level_20sec
+          - service_level_30sec
     event-processors:
       - name: ACD_STAT # rdb
         queue-service:
-          type: disruptor
+          type: none
         handlers:
-          - acdCallInfoStatPart15MinHandler
-          - acdCallInfoStatPart30MinHandler
-          - acdCallInfoStatPartHourHandler
-          - acdCallInfoStatDailyHandler
-          - acdAgentOpStatPart15MinHandler
-          - acdAgentOpStatPart30MinHandler
-          - acdAgentOpStatPartHourHandler
-          - acdAgentOpStatDailyHandler
-          - acdAgentOpCheckinDailyByShiftHandler
-          - acdExtServiceLevelDailyHandler
-          - acdExtServiceLevelPart15MinHandler
-          - acdExtServiceLevelPart30MinHandler
-          - acdExtServiceLevelPartHourHandler
-          - acdExtTerminalDailyHandler
+          - AcdCallInfoStatPart15MinHandler
+          - AcdCallInfoStatPart30MinHandler
+          - AcdCallInfoStatPartHourHandler
+          - AcdCallInfoStatDailyHandler
+          - AcdAgentOpStatPart15MinHandler
+          - AcdAgentOpStatPart30MinHandler
+          - AcdAgentOpStatPartHourHandler
+          - AcdAgentOpStatDailyHandler
+          - AcdAgentOpCheckinDailyByShiftHandler
+          - AcdExtServiceLevelDailyHandler
+          - AcdExtServiceLevelPart15MinHandler
+          - AcdExtServiceLevelPart30MinHandler
+          - AcdExtServiceLevelPartHourHandler
+          - AcdExtTerminalDailyHandler
       - name: MONGO_EVENT_PROCESSOR # mongodb
         queue-service:
-          type: disruptor
+          type: none
         handlers:
-          - acdTicketEventMongoHandler
-          - acdEventMongoHandler
-          - mdEventMongoHandler
-          - acdRecordEventMongoHandler
-          - mdEventMongoHandler
+          - AcdTicketEventMongoHandler
+          - AcdEventMongoHandler
+          - MdEventMongoHandler
+          - AcdRecordEventMongoHandler
     state-processors:
       - name: STATE_RDB # redis
         queue-service:
           type: none
         handlers:
-          - staffRedisHandler
-          - StaffRemoveRedisHandler
-          - queueWaitRedisHandler
-          - queueCallRedisHandler
-          - queueRingRedisHandler
+          - MonitorAcdAgentStateHandler
 
 spring:
   datasource:
