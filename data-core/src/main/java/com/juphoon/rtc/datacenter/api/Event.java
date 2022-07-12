@@ -1,15 +1,19 @@
 package com.juphoon.rtc.datacenter.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.exception.JrtcUnknownEventException;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Zhiwei.zhai
@@ -294,11 +298,53 @@ public class Event {
         return DateFormatUtils.format(new Date(System.currentTimeMillis()), "yyyyMMdd");
     }
 
+    /**
+     * 天赛全量监控数据
+     *
+     */
+    public Map<String, Object> getBody() {
+        Map<String, Object> body = (Map<String, Object>) params.get("body");
+        return params.get("body") == null ? Collections.EMPTY_MAP : body;
+    }
+
+
+    public Map<String, Object> getGeneral() {
+        Map<String, Object> general = (Map<String, Object>) getBody().get("general");
+        return getBody().get("general") == null ? Collections.EMPTY_MAP : general;
+    }
+
+
+    public Map<String, Object> getZmf() {
+        Map<String, Object> zmf = (Map<String, Object>) getBody().get("zmf");
+        return getBody().get("zmf") == null ? Collections.EMPTY_MAP : zmf;
+    }
+
+    public Map<String, Object> getJsm() {
+        Map<String, Object> jsm = (Map<String, Object>) getBody().get("jsm");
+        return getBody().get("jsm") == null ? Collections.EMPTY_MAP : jsm;
+    }
+
+
+    public List getRecvActors() {
+//        List recvActors = Collections.singletonList(getJsm().get("recv_actor"));
+        List recvActors = (List) getJsm().get("recv_actor");
+        return getJsm().get("recv_actor") == null ? Collections.EMPTY_LIST : recvActors;
+    }
+
+    @SneakyThrows
+    public List getCeEventAuds() {
+        List<Map<String, Object>> ceEventAuds = new ArrayList<>();
+        getRecvActors().forEach(o -> {
+            Map<String, Object> map = (Map<String, Object>) o;
+            ceEventAuds.add(map);
+        });
+        return ceEventAuds;
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(defaultShirt());
 
-        String ret = defaultShirt();
-        System.out.println(ret);
 
 //        long begin = System.currentTimeMillis();
 //        for (int i = 0; i < 1000000; i++) {

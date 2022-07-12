@@ -51,6 +51,26 @@ public enum MongoCollectionEnum {
      * 测试全局一份
      */
     COLLECTION_EVENT_TEST_ONE("test_one", "测试全局一份"),
+
+    /**
+     * 天赛上行通话质量检测
+     */
+    COLLECTION_EVENT_THEA_SEND("jrtc_thea_send_", "天赛上行通话质量检测"),
+
+    /**
+     * 天赛下行通话质量检测
+     */
+    COLLECTION_EVENT_THEA_RECV("jrtc_thea_recv_", "天赛下行通话质量检测"),
+
+    /**
+     * 天赛通话质量检测
+     */
+    COLLECTION_EVENT_THEA("jrtc_thea_", "天赛通话质量检测"),
+
+    /**
+     * 天赛音视频质量监测
+     */
+    COLLECTION_EVENT_THEA_QUALITY("jrtc_thea_quality", "天赛音视频质量监测"),
     ;
 
     private final String name;
