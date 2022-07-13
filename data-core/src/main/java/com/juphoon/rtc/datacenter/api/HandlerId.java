@@ -301,11 +301,11 @@ public enum HandlerId {
     /**
      * 天赛音视频通话质量检测,用于统计上下行通话质量指标
      */
-    TheaMonitorEventMongoHandler("theaMonitorEventMongoHandler", "天赛上下行通话质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
+    TheaMonitorEventMongoHandler("theaMonitorEventMongoHandler", "天赛上下行通话质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
     /**
      * 天赛音视频质量检测,用于统计卡顿率、优质传输率等指标
      */
-//    TheaQualityEventMongoHandler("theaQualityEventMongoHandler", "天赛音视频质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
+    TheaQualityEventMongoHandler("theaQualityEventMongoHandler", "天赛音视频质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
     /**
      * 类型
      */
