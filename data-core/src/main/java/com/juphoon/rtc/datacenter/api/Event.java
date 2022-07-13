@@ -298,48 +298,6 @@ public class Event {
         return DateFormatUtils.format(new Date(System.currentTimeMillis()), "yyyyMMdd");
     }
 
-    /**
-     * 天赛全量监控数据
-     *
-     */
-    public Map<String, Object> getBody() {
-        Map<String, Object> body = (Map<String, Object>) params.get("body");
-        return params.get("body") == null ? Collections.EMPTY_MAP : body;
-    }
-
-
-    public Map<String, Object> getGeneral() {
-        Map<String, Object> general = (Map<String, Object>) getBody().get("general");
-        return getBody().get("general") == null ? Collections.EMPTY_MAP : general;
-    }
-
-
-    public Map<String, Object> getZmf() {
-        Map<String, Object> zmf = (Map<String, Object>) getBody().get("zmf");
-        return getBody().get("zmf") == null ? Collections.EMPTY_MAP : zmf;
-    }
-
-    public Map<String, Object> getJsm() {
-        Map<String, Object> jsm = (Map<String, Object>) getBody().get("jsm");
-        return getBody().get("jsm") == null ? Collections.EMPTY_MAP : jsm;
-    }
-
-
-    public List getRecvActors() {
-//        List recvActors = Collections.singletonList(getJsm().get("recv_actor"));
-        List recvActors = (List) getJsm().get("recv_actor");
-        return getJsm().get("recv_actor") == null ? Collections.EMPTY_LIST : recvActors;
-    }
-
-    @SneakyThrows
-    public List getCeEventAuds() {
-        List<Map<String, Object>> ceEventAuds = new ArrayList<>();
-        getRecvActors().forEach(o -> {
-            Map<String, Object> map = (Map<String, Object>) o;
-            ceEventAuds.add(map);
-        });
-        return ceEventAuds;
-    }
 
 
     public static void main(String[] args) {

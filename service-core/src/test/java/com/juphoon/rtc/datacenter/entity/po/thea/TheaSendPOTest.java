@@ -20,14 +20,14 @@ public class TheaSendPOTest {
         TheaSendPO po = TheaSendPO.fromEvent(ec);
 
         Assert.assertNotNull(po);
-        Assert.assertTrue(po.getCbAccountid().equals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]"));
-        Assert.assertTrue(po.getCsAVol() == 100);
-        Assert.assertTrue(po.getCsVBr() == -1);
-        Assert.assertTrue(po.getSuLoss() == 0);
-        Assert.assertTrue(po.getCsVFps() == -1);
-        Assert.assertTrue(po.getCsVCapFps() == -1);
-        Assert.assertTrue(po.getCsABr() == -1);
-        Assert.assertTrue(po.getCsSFps() == -1);
-        Assert.assertTrue(po.getCsSCapFps() == -1);
+        Assert.assertEquals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]", po.getCbAccountid());
+        Assert.assertEquals(100, (int) po.getCsAVol());
+        Assert.assertEquals(-1, (int) po.getCsVBr());
+        Assert.assertEquals(0, (int) po.getSuLoss());
+        Assert.assertEquals(-1, (int) po.getCsVFps());
+        Assert.assertEquals(-1, (int) po.getCsVCapFps());
+        Assert.assertEquals(-1, (int) po.getCsABr());
+        Assert.assertEquals(-1, (int) po.getCsSFps());
+        Assert.assertEquals(-1, (int) po.getCsSCapFps());
     }
 }

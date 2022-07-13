@@ -1,6 +1,5 @@
 package com.juphoon.rtc.datacenter.entity.po.thea;
 
-import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -25,10 +24,10 @@ public class TheaRecvPOTest {
 
 
         Assert.assertNotNull(theaRecvPOS);
-        Assert.assertTrue(theaRecvPOS.size() == 2);
-        Assert.assertTrue(theaRecvPOS.get(0).getCallId().equals("103451680701174926"));
-        Assert.assertTrue(theaRecvPOS.get(0).getCbAccountid().equals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]"));
-        Assert.assertTrue(theaRecvPOS.get(0).getCrRecvActorid() != null);
+        Assert.assertEquals(2, theaRecvPOS.size());
+        Assert.assertEquals("103451680701174926", theaRecvPOS.get(0).getCallId());
+        Assert.assertEquals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]", theaRecvPOS.get(0).getCbAccountid());
+        Assert.assertNotNull(theaRecvPOS.get(0).getCrRecvActorid());
 
     }
 }

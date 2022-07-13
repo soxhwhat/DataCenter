@@ -6,12 +6,14 @@ import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
 import com.juphoon.rtc.datacenter.entity.po.thea.TheaRecvPO;
 import com.juphoon.rtc.datacenter.entity.po.thea.TheaSendPO;
+import com.mongodb.bulk.BulkWriteResult;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
@@ -63,22 +65,19 @@ public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler impl
         String recvCollection = COLLECTION_EVENT_THEA_RECV.getName() + DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
         String sendCollection = COLLECTION_EVENT_THEA_SEND.getName() + DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
 
-        log.info("recvCollection={}", recvCollection);
-        log.info("sendCollection={}", sendCollection);
         try {
-            List<TheaRecvPO> theaRecvPOS = TheaRecvPO.fromEvent(ec);
-            TheaSendPO theaSendPO = TheaSendPO.fromEvent(ec);
-
+            List<TheaRecvPO> theaRecvPos = TheaRecvPO.fromEvent(ec);
+            TheaSendPO theaSendPo = TheaSendPO.fromEvent(ec);
             //遍历每个对象，插入到对应的集合中
-            theaRecvPOS.forEach(theaRecvPO -> {
-                mongoTemplate.insert(theaRecvPO, recvCollection);
-            });
-            mongoTemplate().insert(theaSendPO, sendCollection);
+            BulkOperations operations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, recvCollection);
+            operations.insert(theaRecvPos);
+            BulkWriteResult result = operations.execute();
+            mongoTemplate().insert(theaSendPo, sendCollection);
         } catch (DataAccessException e) {
-            log.error("DataAccessException:{}", e);
+            log.error("DataAccessException={}", e.getMessage());
             return false;
         } catch (Exception e) {
-            log.error("{}", e);
+            log.error("Exception={}", e.getMessage());
             return false;
         }
         return true;

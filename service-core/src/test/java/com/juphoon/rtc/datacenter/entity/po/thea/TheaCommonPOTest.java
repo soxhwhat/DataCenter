@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -33,10 +32,10 @@ public class TheaCommonPOTest {
         log.info("ec: {}", ec);
     }
 
-    @Test(expected = InvalidParameterException.class)
-    public void commonCheckParamException() {
-        TheaCommonPO.commonCheckParam(event);
-    }
+//    @Test(expected = InvalidParameterException.class)
+//    public void commonCheckParamException() {
+//        TheaCommonPO.commonCheckParam(event);
+//    }
 
     @Test
     public void commonCheckParam() {

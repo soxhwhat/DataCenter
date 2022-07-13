@@ -1,13 +1,8 @@
 package com.juphoon.rtc.datacenter.entity.po.thea;
 
-import com.juphoon.rtc.datacenter.api.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.collections.MapUtils;
-import org.springframework.util.StringUtils;
-
-import java.util.Map;
 
 /**
  * <p>天赛音视频通话质量检测</p>
