@@ -72,6 +72,21 @@ public class TheaSendPO extends TheaMonitorPO {
     private Integer csSCapFps;
 
     /**
+     * rtt往返时延
+     */
+    private Integer suRtt;
+
+    /**
+     * 上行抖动
+     */
+    private Integer suJitter;
+
+    /**
+     * 下行抖动
+     */
+    private Integer sdJitter;
+
+    /**
      * 将EventContext转换为TheaSendPO
      *  数据源为天赛全量数据（type=900, number=0)
      *  转换结果为：
@@ -85,6 +100,9 @@ public class TheaSendPO extends TheaMonitorPO {
      *       "csAVol": "100",
      *       "csSFps": "-1",
      *       "csSCapFps": "-1",
+     *       "suRtt": "0",
+     *       "suJitter": "0",
+     *       "sdJitter": "0",
      *       "timestamp": "1657623860079",
      *       "callId": "103451680701174926",
      *       "cbAccountid": "[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]",
@@ -118,6 +136,9 @@ public class TheaSendPO extends TheaMonitorPO {
         po.setCsVCapFps((Integer) jsm.getOrDefault(CS_V_CAP_FPS, -1));
         po.setCsVFps((Integer) jsm.getOrDefault(CS_V_FPS, -1));
         po.setSuLoss((Integer) jsm.getOrDefault(SU_LOSS, -1));
+        po.setSuRtt((Integer) jsm.getOrDefault(SU_RTT, -1));
+        po.setSuJitter((Integer) jsm.getOrDefault(SU_JITTER, -1));
+        po.setSdJitter((Integer) jsm.getOrDefault(SD_JITTER, -1));
 
         return po;
     }
