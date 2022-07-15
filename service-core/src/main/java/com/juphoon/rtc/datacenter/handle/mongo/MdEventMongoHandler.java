@@ -1,8 +1,10 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
+import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventType;
 import com.juphoon.rtc.datacenter.api.HandlerId;
 import com.juphoon.rtc.datacenter.api.MongoCollectionEnum;
+import com.juphoon.rtc.datacenter.handle.mongo.entity.MongoMdEventPO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +26,7 @@ import static com.juphoon.rtc.datacenter.api.MongoCollectionEnum.COLLECTION_MD;
  */
 @Slf4j
 @Component
-public class MdEventMongoHandler extends AbstractMongoEventHandler {
+public class MdEventMongoHandler extends AbstractMongoEventHandler<MongoMdEventPO> {
 
     @Autowired
     @Qualifier(MONGO_TEMPLATE_MD)
@@ -33,6 +35,13 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler {
     @Override
     public HandlerId handlerId() {
         return HandlerId.MdEventMongoHandler;
+    }
+
+    @Override
+    public MongoMdEventPO poFromEvent(Event event) {
+        MongoMdEventPO md = new MongoMdEventPO();
+        md.fromEvent(event);
+        return md;
     }
 
     @Override

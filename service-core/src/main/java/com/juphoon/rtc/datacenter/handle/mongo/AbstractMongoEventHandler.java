@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.handle.mongo;
 
+import com.juphoon.rtc.datacenter.api.Event;
 import com.juphoon.rtc.datacenter.api.EventContext;
 import com.juphoon.rtc.datacenter.handle.mongo.entity.MongoEventPO;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import org.springframework.dao.DataAccessException;
  * <li>2. 2022-03-31. ajian.zheng 支持多数据源，将数据源放到上层，公共handle逻辑放到抽象层mongoTemplate</li>
  */
 @Slf4j
-public abstract class AbstractMongoEventHandler extends AbstractMongoHandler<EventContext> {
+public abstract class AbstractMongoEventHandler<T extends MongoEventPO> extends AbstractMongoHandler<EventContext> {
     @Override
     public boolean handle(EventContext ec) {
         String collectionName = IMongoCollectionManager.getCollectionName(this, ec);
@@ -23,7 +24,7 @@ public abstract class AbstractMongoEventHandler extends AbstractMongoHandler<Eve
         log.info("ec:{},collectionName:{}", ec, collectionName);
 
         try {
-            MongoEventPO po = MongoEventPO.fromEvent(ec.getEvent());
+            T po = poFromEvent(ec.getEvent());
 //            mongoTemplate().insert(po, collectionName);
             mongoTemplate().insert(po);
         } catch (DataAccessException e) {
@@ -34,5 +35,17 @@ public abstract class AbstractMongoEventHandler extends AbstractMongoHandler<Eve
             return true;
         }
         return true;
+    }
+
+    /**
+     * 构建对应具体的po
+     *
+     * @param event
+     * @return
+     */
+    public T poFromEvent(Event event) {
+        T t = (T) new MongoEventPO();
+        t.fromEvent(event);
+        return t;
     }
 }

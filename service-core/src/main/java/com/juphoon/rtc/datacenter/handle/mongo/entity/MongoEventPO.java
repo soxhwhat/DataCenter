@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
@@ -55,6 +56,7 @@ public class MongoEventPO {
     /**
      * 时间戳
      */
+    @Indexed
     private Long timestamp;
 
     /**
@@ -62,16 +64,14 @@ public class MongoEventPO {
      */
     private Map<String, Object> params;
 
-    public static MongoEventPO fromEvent(Event event) {
-        MongoEventPO po = new MongoEventPO();
-        po.setDomainId(event.getDomainId());
-        po.setAppId(event.getAppId());
-        po.setUuid(event.getUuid());
-        po.setType(event.getType());
-        po.setNumber(event.getNumber());
-        po.setTimestamp(event.getTimestamp());
-        po.setParams(event.getParams());
-        return po;
+    public void fromEvent(Event event) {
+        this.setDomainId(event.getDomainId());
+        this.setAppId(event.getAppId());
+        this.setUuid(event.getUuid());
+        this.setType(event.getType());
+        this.setNumber(event.getNumber());
+        this.setTimestamp(event.getTimestamp());
+        this.setParams(event.getParams());
     }
 
     @Override
