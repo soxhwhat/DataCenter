@@ -6,10 +6,10 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.16</version>
+        <version>2202.5.17</version>
     </parent>
 
-    <version>2202.5.16</version>
+    <version>2202.5.17</version>
     <artifactId>jrtcDataCollection-e01</artifactId>
 
     <properties>
@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.16</version>
+            <version>2202.5.17</version>
             <artifactId>cube-rpc</artifactId>
             <scope>compile</scope>
         </dependency>
