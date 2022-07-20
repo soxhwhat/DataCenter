@@ -23,12 +23,6 @@
             <version>4.5.7</version>
         </dependency>
         <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.17</version>
-            <artifactId>cube-rpc</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <version>2202.5.17</version>

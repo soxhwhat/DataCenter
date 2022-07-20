@@ -22,12 +22,6 @@
             <artifactId>cube-spring-boot-starter</artifactId>
             <version>3.6.12</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.17</version>
-            <artifactId>cube-rpc</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

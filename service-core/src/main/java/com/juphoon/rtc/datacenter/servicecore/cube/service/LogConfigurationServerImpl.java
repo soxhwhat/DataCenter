@@ -56,7 +56,7 @@ public class LogConfigurationServerImpl extends AbstractCubeEntry {
     }
 
     private Map<String, String> getClientConfig(ServerCall call, ConfigInfo info) {
-        List<String> keys = info.getKeys();
+        List<String> keys = info.keys;
         Map<String, String> configMap = new HashMap<>();
         if (CollectionUtils.isEmpty(keys)) {
             configMap.put(COLLECTION_LOG_ENDPOINT, logDirectService.getDirectObjectId(call));

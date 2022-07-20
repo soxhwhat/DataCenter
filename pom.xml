@@ -14,7 +14,6 @@
     <version>2202.5.17</version>
     <packaging>pom</packaging>
     <modules>
-        <module>cube-rpc</module>
         <module>data-core</module>
         <module>service-core</module>
         <module>dist</module>
@@ -30,7 +29,9 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>5.3.15</cube-starter.version>
+        <cube-starter.version>3.7.17</cube-starter.version>
+        <cube-def.version>2203.0.7</cube-def.version>
+
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
         <alibaba.druid.version>1.1.9</alibaba.druid.version>
@@ -65,6 +66,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.juphoon.cube.def</groupId>
+            <artifactId>cube-def-35</artifactId>
+            <version>${cube-def.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -74,17 +81,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.juphoon.iron.common</groupId>-->
-<!--            <artifactId>iron-common</artifactId>-->
-<!--            <version>${ironCommon.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis</groupId>-->
-<!--            <artifactId>mybatis</artifactId>-->
-<!--            <version>${mybatis.version}</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>com.juphoon.iron.component</groupId>
@@ -110,6 +106,12 @@
             <groupId>com.juphoon.iron.cube</groupId>
             <artifactId>cube-spring-boot-starter</artifactId>
             <version>${cube-starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>cube-def-35</artifactId>
+                    <groupId>com.juphoon.cube.def</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

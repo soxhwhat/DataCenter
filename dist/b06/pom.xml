@@ -16,27 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.17</version>
-            <artifactId>cube-rpc</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <version>2202.5.17</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.juphoon.rtc.datacenter</groupId>
-                    <artifactId>common-3.6</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>5.3.15</version>
         </dependency>
     </dependencies>
 

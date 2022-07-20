@@ -1,6 +1,5 @@
 packages:
   - dist/product
-  - dist/demo
   - dist/e01
   - dist/b03
   - dist/c09
