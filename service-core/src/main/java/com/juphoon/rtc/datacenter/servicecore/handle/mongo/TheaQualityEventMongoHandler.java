@@ -1,9 +1,11 @@
 package com.juphoon.rtc.datacenter.servicecore.handle.mongo;
 
+
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
 import com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum;
+import com.juphoon.rtc.datacenter.servicecore.entity.po.thea.TheaJoinMonitorPO;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.thea.TheaQualityMonitorPO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 import static com.juphoon.rtc.datacenter.datacore.api.EventType.THEA_MONITOR_DATA;
+import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_THEA_JOIN;
 import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_THEA_QUALITY;
 
 /**
@@ -66,29 +69,49 @@ public class TheaQualityEventMongoHandler extends AbstractMongoEventHandler impl
     @Override
     public boolean handle(EventContext ec) {
         String collectionName = getCollectionName(this, ec);
-        log.info("TheaQualityMongoHandler collectionName:{}", collectionName);
+        String joinName = COLLECTION_EVENT_THEA_JOIN.getName();
 
         TheaQualityMonitorPO po = TheaQualityMonitorPO.fromEvent(ec);
+        TheaJoinMonitorPO joinPo = TheaJoinMonitorPO.fromEvent(ec);
 
         try {
             //根据po的date字段进行upsert操作，如果存在这条记录，给相同字段添加po对应字段值，否则插入新记录
-            mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate())),
-                    Update.update("date", po.getDate())
-                            //TODO
-                            //如果得到的aMosLowCount值是0，则不进行累加，否则需要累加
-                            .inc("aMosLowCount", po.getAMosLowCount())
-                            .inc("tMosLowCount", po.getTMosLowCount())
-                            .inc("totalAMosCount", po.getTotalAMosCount())
-                            .inc("totalTMosCount", po.getTotalTMosCount())
-                            .inc("unLossCount", po.getUnLossCount())
-                            .inc("lossTotalCount", po.getLossTotalCount())
-                            .inc("suRtt", po.getSuRtt())
-                            .inc("rttTotalCount", po.getRttTotalCount())
-                            .inc("suJitter", po.getSuJitter())
-                            .inc("sdJitter", po.getSdJitter())
-                            .inc("suJitterTotalCount", po.getSuJitterTotalCount())
-                            .inc("sdJitterTotalCount", po.getSdJitterTotalCount()),
-                    collectionName);
+            mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate()).and("domainId").is(po.getDomainId()).and("appId").is(po.getAppId())),
+                      Update.update("date", po.getDate())
+                              //TODO
+                              .setOnInsert("domainId", po.getDomainId())
+                              .setOnInsert("appId", po.getAppId())
+                              .setOnInsert("type", 0)
+                              //如果得到的aMosLowCount值是0，则不进行累加，否则需要累加
+                              .inc("aMosLowCount", po.getAMosLowCount())
+                              .inc("tMosLowCount", po.getTMosLowCount())
+                              .inc("totalAMosCount", po.getTotalAMosCount())
+                              .inc("totalTMosCount", po.getTotalTMosCount())
+                              .inc("unLossCount", po.getUnLossCount())
+                              .inc("lossTotalCount", po.getLossTotalCount())
+                              .inc("suRtt", po.getSuRtt())
+                              .inc("rttTotalCount", po.getRttTotalCount())
+                              .inc("suJitter", po.getSuJitter())
+                              .inc("sdJitter", po.getSdJitter())
+                              .inc("suJitterTotalCount", po.getSuJitterTotalCount())
+                              .inc("sdJitterTotalCount", po.getSdJitterTotalCount()),
+                        collectionName);
+            //筛选出上传设备类型为录制CD的设备
+            if(po.getType() == 1){
+                mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate()).and("domainId").is(po.getDomainId()).and("appId").is(po.getAppId()).and("type").is(po.getType())),
+                        Update.update("date", po.getDate())
+                                //TODO
+                                .setOnInsert("domainId", po.getDomainId())
+                                .setOnInsert("appId", po.getAppId())
+                                .setOnInsert("type", 1)
+                                //如果得到的aMosLowCount值是0，则不进行累加，否则需要累加
+                                .inc("aMosLowCount", po.getAMosLowCount())
+                                .inc("tMosLowCount", po.getTMosLowCount())
+                                .inc("totalAMosCount", po.getTotalAMosCount())
+                                .inc("totalTMosCount", po.getTotalTMosCount()),
+                        collectionName);
+            }
+            mongoTemplate.insert(joinPo, joinName);
 
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);

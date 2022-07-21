@@ -48,6 +48,16 @@ public enum MongoCollectionEnum {
     COLLECTION_CONCURRENT_ITEM_ROOM("jrtc_concurrent_room", "房间并发信息"),
 
     /**
+     * 话单列表
+     */
+    COLLECTION_EVENT_ROOM("jrtc_call_room", "话单列表事件"),
+
+    /**
+     * 用户通话列表
+     */
+    COLLECTION_EVENT_USER("jrtc_call_user", "用户通话列表事件"),
+
+    /**
      * 测试全局一份
      */
     COLLECTION_EVENT_TEST_ONE("test_one", "测试全局一份"),
@@ -63,9 +73,9 @@ public enum MongoCollectionEnum {
     COLLECTION_EVENT_THEA_RECV("jrtc_thea_recv_", "天赛下行通话质量检测"),
 
     /**
-     * 天赛通话质量检测
+     * 天赛加入房间成功率检测
      */
-    COLLECTION_EVENT_THEA("jrtc_thea_", "天赛通话质量检测"),
+    COLLECTION_EVENT_THEA_JOIN("jrtc_thea_room_join", "天赛加房成功率检测"),
 
     /**
      * 天赛音视频质量监测

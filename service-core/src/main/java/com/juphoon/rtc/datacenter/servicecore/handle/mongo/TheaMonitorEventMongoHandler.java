@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.servicecore.handle.mongo;
 
+import Common.Exception;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
@@ -34,7 +35,7 @@ import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.*;
 @Slf4j
 @Component
 @Setter
-public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler implements IMongoCollectionManager {
+public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler {
     @Autowired
     @Qualifier(MONGO_TEMPLATE_EVENT)
     private MongoTemplate mongoTemplate;
@@ -56,7 +57,7 @@ public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler impl
 
     @Override
     public MongoCollectionEnum collectionName() {
-        return COLLECTION_EVENT_THEA;
+        return null;
     }
 
 
@@ -75,9 +76,6 @@ public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler impl
             mongoTemplate().insert(theaSendPo, sendCollection);
         } catch (DataAccessException e) {
             log.error("DataAccessException={}", e.getMessage());
-            return false;
-        } catch (Exception e) {
-            log.error("Exception={}", e.getMessage());
             return false;
         }
         return true;

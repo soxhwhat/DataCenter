@@ -52,6 +52,7 @@ public class TheaEventContextUtils {
                     "                \"rroom_id\": \"\",\n" +
                     "                \"m_id\": \"103451680701174926\",\n" +
                     "                \"join_cost\": 40,\n" +
+                    "                \"event\": 1,\n" +
                     "                \"conf_role\": 292\n" +
                     "            },\n" +
                     "            \"zmf\": {\n" +
@@ -139,8 +140,8 @@ public class TheaEventContextUtils {
         Map<String, Object> params = map;
 
         Event event = Event.builder()
-                .domainId(100645)
-                .appId(0)
+                .domainId(100646)
+                .appId(1)
                 .type(900)
                 .number(0)
                 .timestamp(System.currentTimeMillis())
@@ -148,7 +149,6 @@ public class TheaEventContextUtils {
                 .uuid(UUID.randomUUID().toString())
                 .build();
 
-        EventContext ec = new EventContext(event);
-        return ec;
+        return new EventContext(event);
     }
 }
