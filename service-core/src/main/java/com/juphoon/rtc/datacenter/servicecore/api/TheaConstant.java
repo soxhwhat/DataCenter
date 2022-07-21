@@ -1,7 +1,5 @@
 package com.juphoon.rtc.datacenter.servicecore.api;
 
-import lombok.Getter;
-
 /**
  * @Author: Jiahui.Huang
  * @Date: 2022/7/13 14:17
@@ -162,4 +160,16 @@ public interface TheaConstant {
      * 卡顿率计算标准
      */
     Integer MOS_STANDARD = 250;
+
+    /**
+     * 成员ID
+     */
+    String TKO_ACCOUNT_ID = "tko_account_id";
+
+
+    /**
+     * 加入房间事件码
+     */
+    String EVENT = "event";
+
 }

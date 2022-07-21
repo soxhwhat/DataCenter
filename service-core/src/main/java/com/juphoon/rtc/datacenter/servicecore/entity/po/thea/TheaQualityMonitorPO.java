@@ -116,11 +116,18 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
     private Integer sdJitterTotalCount = 0;
 
     /**
+     * 上传设备类型, 0代表不区分设备,1代表录制CD
+     */
+    private Integer type;
+
+    /**
      * 将EventContext转换为TheaQualityMonitorPO
      *  数据源为天赛全量数据（type=900, number=0)
      *  转换结果为：
      *  {
      *       "_id": "62ce7a97b33c18d6f43d61c2",
+     *       "appId": "0",
+     *       "domainId": "100645",
      *       "date": "20220701",
      *       "aMosLowCount": "2",
      *       "lossTotalCount": "1",
@@ -149,6 +156,10 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
         po.setDate(Integer.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date((Long) event.getParams().get("tkm_collect_time")))));
         po.setAppId(event.getAppId());
         po.setDomainId(event.getDomainId());
+        //筛选出上传设备类型为录制CD的设备
+        if (event.getParams().get(TKO_ACCOUNT_ID).toString().startsWith("username:delivery")) {
+            po.setType(1);
+        }
         //如果sd_loss小于5，则认为是未丢包，给unLossCount加1
         //每统计一次，totalLossCount加1
         if (jsm.get(SD_LOSS) != null) {
