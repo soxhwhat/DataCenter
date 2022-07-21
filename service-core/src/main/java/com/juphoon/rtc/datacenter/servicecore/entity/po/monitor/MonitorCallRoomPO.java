@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -18,6 +20,10 @@ import java.util.Map;
  */
 @Document(collection = "jrtc_call_room")
 @Data
+@CompoundIndexes({
+        @CompoundIndex(name = "domain_app_call_idx",
+                def = "{'domainId':1,'appId':1,'callId':1}")
+})
 public class MonitorCallRoomPO implements Serializable {
 
 

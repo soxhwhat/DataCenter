@@ -7,6 +7,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
@@ -22,6 +25,11 @@ import static com.juphoon.rtc.datacenter.servicecore.api.TheaConstant.*;
 @Setter
 @ToString
 @SuppressFBWarnings("SpellCheckingInspection")
+@Document
+@CompoundIndexes({
+        @CompoundIndex(name = "time_domain_app_actor_idx",
+                def = "{'timestamp':1,'domainId':1,'appId':1,'crRecvActorid':1}")
+})
 public class TheaSendPO extends TheaMonitorPO {
 
     /**
