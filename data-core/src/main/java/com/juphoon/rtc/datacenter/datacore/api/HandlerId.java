@@ -311,7 +311,7 @@ public enum HandlerId {
     /**
      * 并发时间处理handler
      */
-//    MonitorConcurrentStateMongoHandler("monitorConcurrentStateMongoHandler","monitorConcurrentStatetMongo入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
+    MonitorConcurrentStateMongoHandler("monitorConcurrentStateMongoHandler","monitorConcurrentStatetMongo入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
     /**
      * 天赛音视频质量检测,用于统计卡顿率、优质传输率等指标
      */

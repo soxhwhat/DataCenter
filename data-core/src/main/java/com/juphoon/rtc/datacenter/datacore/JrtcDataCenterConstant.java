@@ -36,6 +36,11 @@ public class JrtcDataCenterConstant {
      * 服务水平配置前缀
      */
     public static final String DATA_CENTER_SERVICE_LEVEL_CONFIG_PREFIX = DATA_CENTER_CONFIG_PREFIX + ".servicelevel";
+
+    /**
+     * 时间窗口配置前缀
+     */
+    public static final String DATA_CENTER_WINDOW_LEVEL_CONFIG_PREFIX = DATA_CENTER_CONFIG_PREFIX + ".windowlevel";
     public static final String KAFKA_PREFIX = "kafka";
 
     public static final String DATABASE_TYPE_MYSQL = "mysql";
