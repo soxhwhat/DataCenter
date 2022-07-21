@@ -294,6 +294,12 @@ public enum HandlerId {
      * 内部处理handler
      */
     LAST("innerLastHandler", "内部处理handlerLast", RESOURCE_SCOPE_INNER),
+    //***************************************************************************************************
+    //********************************** 话单通话列表***************************************************
+    //***************************************************************************************************
+    MonitorCallRoomEventMongoHandler("monitorCallRoomEventMongoHandler", "话单通话列表mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    MonitorCallUserEventMongoHandler("monitorCallUserEventMongoHandler", "用户通话详情mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
 
     //***************************************************************************************************
     //********************************** 天赛音视频通话质量检测***************************************************
@@ -302,6 +308,10 @@ public enum HandlerId {
      * 天赛音视频通话质量检测,用于统计上下行通话质量指标
      */
     TheaMonitorEventMongoHandler("theaMonitorEventMongoHandler", "天赛上下行通话质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+    /**
+     * 并发时间处理handler
+     */
+//    MonitorConcurrentStateMongoHandler("monitorConcurrentStateMongoHandler","monitorConcurrentStatetMongo入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
     /**
      * 天赛音视频质量检测,用于统计卡顿率、优质传输率等指标
      */
