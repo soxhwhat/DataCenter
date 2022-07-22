@@ -2,7 +2,7 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.impl;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.reliable.ReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -34,13 +34,13 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 @SpringBootTest(classes = DataCoreTestApplication.class)
 @ActiveProfiles("test")
 @Slf4j
-public class FlashEventLogServiceImplTest {
+public class ReliableEventLogServiceImplTest {
     @Autowired
-    @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
+    @Qualifier(EVENT_BIN_LOG_IMPL_RELIABLE)
     private ILogService<EventContext> eventLogService;
 
     @Autowired
-    private FlashEventLogMapper logMapper;
+    private ReliableEventLogMapper logMapper;
 
     @Before
     public void before() throws Exception {
@@ -68,7 +68,7 @@ public class FlashEventLogServiceImplTest {
 
     @Test
     public void testStart() throws Exception {
-        String fileName = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH + LOCAL_DB_FILE_FLASH;
+        String fileName = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH + LOCAL_DB_FILE_RELIABLE;
         File dir = new File(System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH);
 
         // 破坏表
@@ -88,7 +88,7 @@ public class FlashEventLogServiceImplTest {
             // start
             eventLogService.start();
 
-            String bakFileNamePrefix = LOCAL_DB_FILE_FLASH + ".bak.";
+            String bakFileNamePrefix = LOCAL_DB_FILE_RELIABLE + ".bak.";
 
             String[] files = dir.list((d, name) -> name.startsWith(bakFileNamePrefix));
 

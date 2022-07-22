@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_RELIABLE;
+import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 
 /**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>ReliableEventLogServiceImpl 实现类</p>
  *
  * @author ajian.zheng@juphoon.com
  * @date 5/31/22 5:43 PM
@@ -27,5 +25,10 @@ public class ReliableEventLogServiceImpl extends AbstractEventLogService {
     @Override
     public EventLogMapper getEventLogMapper() {
         return logMapper;
+    }
+
+    @Override
+    public String dbFileName() {
+        return LOCAL_DB_FILE_BASE_PATH + LOCAL_DB_FILE_RELIABLE;
     }
 }

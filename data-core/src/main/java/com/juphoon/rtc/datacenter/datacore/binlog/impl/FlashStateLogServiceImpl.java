@@ -18,13 +18,10 @@ import java.util.stream.Collectors;
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.STATE_BIN_LOG_IMPL_FLASH;
 
 /**
- * <p>快速的</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>FlashStateLogServiceImpl 实现类</p>
  *
  * @author ajian.zheng@juphoon.com
  * @date 5/31/22 5:43 PM
- * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
 @Component(STATE_BIN_LOG_IMPL_FLASH)

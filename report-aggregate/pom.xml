@@ -22,11 +22,6 @@
             <version>2202.5.17</version>
         </dependency>
         <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>test</artifactId>
-            <version>2202.5.17</version>
-        </dependency>
-        <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter-test</artifactId>
             <scope>test</scope>

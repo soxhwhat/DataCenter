@@ -29,6 +29,20 @@ public class JrtcDataCenterConstant {
     public static final String TAGS = "tags";
 
     /**
+     * SQLITE 数据库文件路径
+     */
+    public static final String LOCAL_DB_FILE_BASE_PATH = "/.db/";
+
+    /**
+     * SQLITE 快速数据库文件名
+     */
+    public static final String LOCAL_DB_FILE_FLASH = "flash.db";
+    /**
+     * SQLITE 可靠数据库文件名
+     */
+    public static final String LOCAL_DB_FILE_RELIABLE = "reliable.db";
+
+    /**
      * datacenter配置前缀
      */
     public static final String DATA_CENTER_CONFIG_PREFIX = "iron.datacenter";
@@ -87,8 +101,6 @@ public class JrtcDataCenterConstant {
     public static final String STATE_BIN_LOG_IMPL_NONE = "noneStateBinLogServiceImpl";
 
 
-
-
     /**
      * queue service config 参数
      */
@@ -106,7 +118,7 @@ public class JrtcDataCenterConstant {
 
     /**
      * mongodb template names - 事件
-      */
+     */
     public static final String MONGO_TEMPLATE_EVENT = "eventMongoTemplate";
     /**
      * mongodb template names - 话单

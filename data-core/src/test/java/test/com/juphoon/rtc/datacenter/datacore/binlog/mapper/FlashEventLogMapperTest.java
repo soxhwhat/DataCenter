@@ -1,6 +1,5 @@
 package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 
-import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
@@ -13,11 +12,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.com.juphoon.rtc.datacenter.datacore.DataCoreTestApplication;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static test.com.juphoon.rtc.datacenter.datacore.TestUtils.randomEventContext;
 
 /**
  * AcdStatEventLogServiceSqliteImpl Tester.
@@ -31,29 +30,6 @@ import java.util.stream.Collectors;
 @ActiveProfiles("test")
 @Slf4j
 public class FlashEventLogMapperTest {
-
-
-    public static EventContext randomEventContext() {
-        EventContext ec = new EventContext(randomEvent());
-        String random = UUID.randomUUID().toString();
-
-        ec.setFrom(random);
-        ec.setRequestId(random);
-        ec.setProcessorId("test");
-        ec.setBeginTimestamp(0L);
-        ec.setRetryCount(0);
-
-        return ec;
-    }
-
-    public static Event randomEvent() {
-        return Event.builder().domainId(100645).appId(0).type(1).number(2).timestamp(System.currentTimeMillis())
-                .uuid(UUID.randomUUID().toString()).params(new HashMap<String, Object>() {{
-                    put("a", "b");
-                    put("b", "b");
-                }}).build();
-    }
-
     @Autowired
     private FlashEventLogMapper logMapper;
 

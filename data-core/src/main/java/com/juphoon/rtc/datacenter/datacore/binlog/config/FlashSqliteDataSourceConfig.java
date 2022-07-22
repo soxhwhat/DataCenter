@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.datacore.binlog.config;
 
+import com.juphoon.rtc.datacenter.datacore.utils.FileUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +14,9 @@ import org.sqlite.SQLiteDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+
+import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.LOCAL_DB_FILE_BASE_PATH;
+import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.LOCAL_DB_FILE_FLASH;
 
 /**
  * 客服统计事件
@@ -50,8 +54,12 @@ public class FlashSqliteDataSourceConfig {
      */
     @Bean(name = "flashSqliteDatasource")
     public DataSource strategyDataSource() throws SQLException {
+
+        String dbPath = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH;
+        FileUtils.createDir(dbPath);
+
         SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
-        sqLiteDataSource.setUrl("jdbc:sqlite:flash.db");
+        sqLiteDataSource.setUrl("jdbc:sqlite:" + dbPath + LOCAL_DB_FILE_FLASH);
 
         SQLiteConfig config = new SQLiteConfig();
         // 关日志

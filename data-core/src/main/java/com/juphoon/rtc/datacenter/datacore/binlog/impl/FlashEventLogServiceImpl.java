@@ -7,16 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.EVENT_BIN_LOG_IMPL_FLASH;
+import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 
 /**
- * <p>快速的</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>FlashEventLogServiceImpl 实现类</p>
  *
  * @author ajian.zheng@juphoon.com
  * @date 5/31/22 5:43 PM
- * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
 @Component(EVENT_BIN_LOG_IMPL_FLASH)
@@ -27,5 +24,10 @@ public class FlashEventLogServiceImpl extends AbstractEventLogService {
     @Override
     public EventLogMapper getEventLogMapper() {
         return logMapper;
+    }
+
+    @Override
+    public String dbFileName() {
+        return LOCAL_DB_FILE_BASE_PATH + LOCAL_DB_FILE_FLASH;
     }
 }

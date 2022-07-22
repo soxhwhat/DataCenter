@@ -7,20 +7,21 @@ import com.juphoon.rtc.datacenter.datacore.binlog.mapper.EventLogMapper;
 import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
 import com.juphoon.rtc.datacenter.datacore.utils.JrtcIdGenerator;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.FastDateFormat;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.util.CollectionUtils;
 
+import java.io.File;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>在开始处详细描述该类的作用</p>
- * <p>描述请遵循 javadoc 规范</p>
- * <p>TODO</p>
+ * <p>Event本地日志数据库服务基类</p>
  *
  * @author ajian.zheng@juphoon.com
  * @date 5/31/22 5:43 PM
- * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @Slf4j
 public abstract class AbstractEventLogService implements ILogService<EventContext> {
@@ -30,6 +31,35 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
      */
     public abstract EventLogMapper getEventLogMapper();
 
+    /**
+     * sqlite数据库文件名
+     *
+     * @return
+     */
+    public abstract String dbFileName();
+
+    @Override
+    public void start() {
+        try {
+            // 建表
+            getEventLogMapper().createTable();
+            // 测试DB是否正常
+            getEventLogMapper().find(1);
+        } catch (MyBatisSystemException e) {
+            // TODO 保留历史文件，重命名
+            // 新建文件
+            String fileName = System.getProperty("user.dir") + dbFileName();
+            File file = new File(fileName);
+            if (file.exists()) {
+                /// 备份文件
+                String bakFileName = fileName + ".bak." + FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date());
+                file.renameTo(new File(bakFileName));
+
+                /// 重建文件
+                getEventLogMapper().createTable();
+            }
+        }
+    }
     @Override
     public void save(EventContext context) {
         assert null != context : "参数为空";
@@ -91,10 +121,5 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     @Override
     public void updateRetryCount(EventContext context) {
         getEventLogMapper().updateRetryCount(EventBinLogPO.fromEventContext(context));
-    }
-
-    @Override
-    public void start() {
-        getEventLogMapper().createTable();
     }
 }
