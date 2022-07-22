@@ -48,14 +48,14 @@ public enum MongoCollectionEnum {
     COLLECTION_CONCURRENT_ITEM_ROOM("jrtc_concurrent_room", "房间并发信息"),
 
     /**
-     * 话单列表
+     * 核心平台房间上报话单记录
      */
-    COLLECTION_EVENT_ROOM("jrtc_call_room", "话单列表事件"),
+    COLLECTION_EVENT_ROOM("jrtc_call_room", "核心平台房间话单集合"),
 
     /**
-     * 用户通话列表
+     * 核心平台成员加入离开记录
      */
-    COLLECTION_EVENT_USER("jrtc_call_user", "用户通话列表事件"),
+    COLLECTION_EVENT_USER("jrtc_call_user", "核心平台成员加入离开集合"),
 
     /**
      * 测试全局一份

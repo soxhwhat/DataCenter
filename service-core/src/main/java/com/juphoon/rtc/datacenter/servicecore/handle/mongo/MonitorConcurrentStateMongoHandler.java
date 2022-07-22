@@ -80,7 +80,7 @@ public class MonitorConcurrentStateMongoHandler extends AbstractMongoHandler<Sta
 
     @Override
     public boolean handle(StateContext context) throws Exception {
-        String collectionName = getCollectionName(this, context);
+        String collectionName = mongoTemplate.getCollectionName(MonitorConcurrentPO.class);
         log.debug("context:{}", context);
 
         MonitorConcurrentPO po = MonitorConcurrentPO.fromState(context);

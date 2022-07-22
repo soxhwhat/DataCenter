@@ -118,7 +118,7 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
     /**
      * 上传设备类型, 0代表不区分设备,1代表录制CD
      */
-    private Integer type;
+    private Integer type = 0;
 
     /**
      * 将EventContext转换为TheaQualityMonitorPO
@@ -157,7 +157,7 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
         po.setAppId(event.getAppId());
         po.setDomainId(event.getDomainId());
         //筛选出上传设备类型为录制CD的设备
-        if (event.getParams().get(TKO_ACCOUNT_ID).toString().startsWith("username:delivery")) {
+        if (event.getParams().get(TKO_ACCOUNT_ID).toString().startsWith("[username:delivery")) {
             po.setType(1);
         }
         //如果sd_loss小于5，则认为是未丢包，给unLossCount加1

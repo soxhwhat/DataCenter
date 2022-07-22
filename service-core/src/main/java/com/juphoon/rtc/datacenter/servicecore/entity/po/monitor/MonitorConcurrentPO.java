@@ -31,7 +31,7 @@ import java.util.Map;
  * , domainId=100645, appId=4)
  */
 @Data
-@Document
+@Document("jrtc_concurrent_room_#{new java.text.SimpleDateFormat(\"yyyyMMdd\").format(new java.util.Date())}")
 @CompoundIndexes({
         @CompoundIndex(name = "time_domain_app_idx",
                 def = "{'timestamp':1,'domainId':1,'appId':1}")

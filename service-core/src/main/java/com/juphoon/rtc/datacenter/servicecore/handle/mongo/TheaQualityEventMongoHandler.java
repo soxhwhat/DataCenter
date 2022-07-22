@@ -76,41 +76,28 @@ public class TheaQualityEventMongoHandler extends AbstractMongoEventHandler impl
 
         try {
             //根据po的date字段进行upsert操作，如果存在这条记录，给相同字段添加po对应字段值，否则插入新记录
-            mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate()).and("domainId").is(po.getDomainId()).and("appId").is(po.getAppId())),
-                      Update.update("date", po.getDate())
-                              //TODO
-                              .setOnInsert("domainId", po.getDomainId())
-                              .setOnInsert("appId", po.getAppId())
-                              .setOnInsert("type", 0)
-                              //如果得到的aMosLowCount值是0，则不进行累加，否则需要累加
-                              .inc("aMosLowCount", po.getAMosLowCount())
-                              .inc("tMosLowCount", po.getTMosLowCount())
-                              .inc("totalAMosCount", po.getTotalAMosCount())
-                              .inc("totalTMosCount", po.getTotalTMosCount())
-                              .inc("unLossCount", po.getUnLossCount())
-                              .inc("lossTotalCount", po.getLossTotalCount())
-                              .inc("suRtt", po.getSuRtt())
-                              .inc("rttTotalCount", po.getRttTotalCount())
-                              .inc("suJitter", po.getSuJitter())
-                              .inc("sdJitter", po.getSdJitter())
-                              .inc("suJitterTotalCount", po.getSuJitterTotalCount())
-                              .inc("sdJitterTotalCount", po.getSdJitterTotalCount()),
-                        collectionName);
-            //筛选出上传设备类型为录制CD的设备
-            if(po.getType() == 1){
-                mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate()).and("domainId").is(po.getDomainId()).and("appId").is(po.getAppId()).and("type").is(po.getType())),
-                        Update.update("date", po.getDate())
-                                //TODO
-                                .setOnInsert("domainId", po.getDomainId())
-                                .setOnInsert("appId", po.getAppId())
-                                .setOnInsert("type", 1)
-                                //如果得到的aMosLowCount值是0，则不进行累加，否则需要累加
-                                .inc("aMosLowCount", po.getAMosLowCount())
-                                .inc("tMosLowCount", po.getTMosLowCount())
-                                .inc("totalAMosCount", po.getTotalAMosCount())
-                                .inc("totalTMosCount", po.getTotalTMosCount()),
-                        collectionName);
-            }
+            mongoTemplate.upsert(Query.query(Criteria.where("date").is(po.getDate())
+                            .and("domainId").is(po.getDomainId())
+                            .and("appId").is(po.getAppId())
+                            .and("type").is(po.getType())),
+                    Update.update("date", po.getDate())
+                            .setOnInsert("domainId", po.getDomainId())
+                            .setOnInsert("appId", po.getAppId())
+                            .setOnInsert("type", po.getType())
+                            .inc("aMosLowCount", po.getAMosLowCount())
+                            .inc("tMosLowCount", po.getTMosLowCount())
+                            .inc("totalAMosCount", po.getTotalAMosCount())
+                            .inc("totalTMosCount", po.getTotalTMosCount())
+                            .inc("unLossCount", po.getUnLossCount())
+                            .inc("lossTotalCount", po.getLossTotalCount())
+                            .inc("suRtt", po.getSuRtt())
+                            .inc("rttTotalCount", po.getRttTotalCount())
+                            .inc("suJitter", po.getSuJitter())
+                            .inc("sdJitter", po.getSdJitter())
+                            .inc("suJitterTotalCount", po.getSuJitterTotalCount())
+                            .inc("sdJitterTotalCount", po.getSdJitterTotalCount()),
+                    collectionName);
+
             mongoTemplate.insert(joinPo, joinName);
 
         } catch (DataAccessException e) {
