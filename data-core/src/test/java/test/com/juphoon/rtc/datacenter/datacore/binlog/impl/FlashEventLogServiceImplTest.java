@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.com.juphoon.rtc.datacenter.datacore.DataCoreTestApplication;
-import test.com.juphoon.rtc.datacenter.datacore.TestUtils;
+import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;

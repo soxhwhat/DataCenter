@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static test.com.juphoon.rtc.datacenter.datacore.TestUtils.randomEventContext;
+import static com.juphoon.rtc.datacenter.datacore.utils.TestUtils.randomEventContext;
 
 /**
  * AcdStatEventLogServiceSqliteImpl Tester.

@@ -1,15 +1,14 @@
 server:
-  port: 8887
+  port: 0
 
 iron:
   cube:
     enabled: false
   datacenter:
     event-processors:
-      - name: TEST_FLASH_EVENT_COUNTER
+      - name: TEST_EVENT
         handlers:
           - TestEventRandomSleepAndFailHandler
-          - TestLastCounterHandler
   debug:
     enabled: true
 spring:
@@ -24,3 +23,6 @@ spring:
         uri: mongodb://admin:Juphoon419708!@192.168.12.87:27017/test?authSource=admin&auto-index-creation=true
       log:
         uri: mongodb://admin:Juphoon419708!@192.168.12.87:27017/test?authSource=admin&auto-index-creation=true
+  redis:
+    host: 192.168.12.87
+    password: Juphoon419708!

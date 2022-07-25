@@ -6,10 +6,9 @@ iron:
     enabled: false
   datacenter:
     event-processors:
-      - name: TEST_FLASH_EVENT_COUNTER
+      - name: TEST_EVENT
         handlers:
           - TestEventRandomSleepAndFailHandler
-          - TestLastCounterHandler
   debug:
     enabled: true
 spring:

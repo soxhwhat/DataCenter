@@ -1,4 +1,4 @@
-package test.com.juphoon.rtc.datacenter.datacore;
+package com.juphoon.rtc.datacenter.datacore.utils;
 
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
@@ -27,8 +27,8 @@ public class TestUtils {
     }
 
     public static Event randomEvent() {
-        return Event.builder().domainId(100645).appId(0).type(1).number(2).timestamp(System.currentTimeMillis())
-                .uuid(UUID.randomUUID().toString()).params(new HashMap<String, Object>() {{
+        return Event.builder().domainId(100645).appId(0).type(-1).number(-1).timestamp(System.currentTimeMillis())
+                .uuid(UUID.randomUUID().toString()).params(new HashMap<String, Object>(0) {{
                     put("a", "b");
                     put("b", "b");
                 }}).build();
