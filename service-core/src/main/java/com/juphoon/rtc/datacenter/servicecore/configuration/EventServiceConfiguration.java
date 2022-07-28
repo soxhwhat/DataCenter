@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.servicecore.configuration;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.exception.JrtcInvalidProcessorConfigurationException;
+import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
 import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;
 import com.juphoon.rtc.datacenter.datacore.service.EventService;
 import com.juphoon.rtc.datacenter.servicecore.factory.HandlerFactory;
@@ -67,7 +68,11 @@ public class EventServiceConfiguration {
             processor.buildContextLoader(config.getContextLoader());
             processor.start();
 
-            config.getHandlers().forEach(handlerName -> processor.addHandler(handlerFactory.getEventHandler(handlerName.getId())));
+            config.getHandlers().forEach(handlerName -> {
+                IHandler<EventContext> eventHandler = handlerFactory.getEventHandler(handlerName.getId());
+                processor.addHandler(eventHandler);
+                eventHandler.setProcessor(processor);
+            });
 
             processors.add(processor);
         }

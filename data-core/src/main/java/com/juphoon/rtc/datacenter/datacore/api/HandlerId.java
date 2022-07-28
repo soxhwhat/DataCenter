@@ -199,6 +199,9 @@ public enum HandlerId {
     AcdTicketEventMongoHandler("acdTicketEventMongoHandler",
             "客服话单事件mongodb入库Handler", RESOURCE_SCOPE_GLOBAL_EVENT),
 
+    H20AcdTicketEventMongoHandler("h20AcdTicketEventMongoHandler",
+            "客服话单事件mongodb入库Handler", RESOURCE_SCOPE_H20),
+
     /**
      * 客服事件mongodb入库handler
      */
@@ -257,6 +260,19 @@ public enum HandlerId {
      */
     TicketKafkaHandler("ticketKafkaHandler", "话单kafka事件Handler", RESOURCE_SCOPE_B03),
 
+    /**
+     * 话单kafka处理handler
+     */
+    H20TicketKafkaHandler("h20TicketKafkaHandler", "话单kafka事件Handler", RESOURCE_SCOPE_H20),
+
+    //***************************************************************************************************
+    //********************************** SIP 网络电话和移动催收话单 *************************************
+    //***************************************************************************************************
+    /**
+     * SIP媒体话单
+     */
+    H20SipTicketEventMongoHandler("h20SipTicketEventMongoHandler",
+            "SIP话单事件mongodb入库Handler", RESOURCE_SCOPE_H20),
 
     //***************************************************************************************************
     //********************************** 视频客服 队列状态/心跳 ***************************************************

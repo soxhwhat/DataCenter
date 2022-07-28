@@ -1,15 +1,30 @@
 package com.juphoon.rtc.datacenter.datacore.handler;
 
+import com.juphoon.rtc.datacenter.datacore.api.BaseContext;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
 import com.juphoon.rtc.datacenter.datacore.api.ICare;
 import com.juphoon.rtc.datacenter.datacore.api.INamed;
+import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;
 
 /**
  * @Author: Zhiwei.zhai
  * @Date: 2022/2/16 21:54
  * @Description:
  */
-public interface IHandler<T> extends ICare, INamed {
+public interface IHandler<T extends BaseContext> extends ICare, INamed {
+
+    /**
+     * set processor
+     * @param processor
+     */
+    void setProcessor(IProcessor<T> processor);
+
+    /**
+     * 获取processor
+     * @return
+     */
+    IProcessor<T> getProcessor();
+
     /**
      * 执行入口
      *

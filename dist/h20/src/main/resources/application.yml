@@ -1,0 +1,40 @@
+server:
+  port: 19986
+iron:
+  datacenter:
+    event-processors:
+      - name: MONGO_EVENT_PROCESSOR # mongodb
+        queue-service:
+          type: none
+        handlers:
+          - H20AcdTicketEventMongoHandler
+          - H20SipTicketEventMongoHandler
+          - H20TicketKafkaHandler
+          - AcdRecordEventMongoHandler
+          - AcdEventMongoHandler
+spring:
+  kafka:
+    producer:
+      retries: 0
+      acks: 1
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        #        max.block.ms: 2000
+        sasl.mechanism: PLAIN
+        security.protocol: SASL_PLAINTEXT
+        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username=kafka password=kafkapswd;
+  datasource:
+    dynamic:
+      druid:
+        filters: stat
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      primary: juphoon
+  data:
+    mongodb:
+      auto-index-creation: true
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

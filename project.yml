@@ -4,6 +4,7 @@ packages:
   - dist/b03
   - dist/c09
   - dist/b06
+  - dist/h20
 deploys:
   - data-core
   - service-core

@@ -32,12 +32,12 @@ public class StaffStatusKafkaHandler extends AbstractKafkaHandler {
     }
 
     @Override
-    String getTopic(EventContext ec) {
+    public String getTopic(EventContext ec) {
         return kafkaProperties.getTopic().getStaff();
     }
 
     @Override
-    Object getData(EventContext ec) {
+    public Object getData(EventContext ec) {
         return ec.getEvent();
     }
 }

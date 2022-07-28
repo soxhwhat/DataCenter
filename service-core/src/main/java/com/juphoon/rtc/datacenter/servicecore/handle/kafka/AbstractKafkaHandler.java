@@ -49,13 +49,13 @@ public abstract class AbstractKafkaHandler extends AbstractEventHandler {
      * @param ec
      * @return
      */
-    abstract String getTopic(EventContext ec);
+    public abstract String getTopic(EventContext ec);
 
     /**
      * 获取数据
      * @param ec
      * @return
      */
-    abstract Object getData(EventContext ec);
+    public abstract Object getData(EventContext ec);
 
 }

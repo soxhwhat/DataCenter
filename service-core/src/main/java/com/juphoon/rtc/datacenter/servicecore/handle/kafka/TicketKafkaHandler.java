@@ -36,12 +36,12 @@ public class TicketKafkaHandler extends AbstractKafkaHandler {
     }
 
     @Override
-    String getTopic(EventContext ec) {
+    public String getTopic(EventContext ec) {
         return kafkaProperties.getTopic().getTicket();
     }
 
     @Override
-    Object getData(EventContext ec) {
+    public Object getData(EventContext ec) {
         return ec.getEvent();
     }
 }
