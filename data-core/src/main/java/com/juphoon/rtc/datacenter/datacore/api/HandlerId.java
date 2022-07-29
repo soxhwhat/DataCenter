@@ -313,11 +313,24 @@ public enum HandlerId {
     /**
      * 并发时间处理handler
      */
-    MonitorConcurrentStateMongoHandler("monitorConcurrentStateMongoHandler","monitorConcurrentStatetMongo入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
+    MonitorConcurrentStateMongoHandler("monitorConcurrentStateMongoHandler", "monitorConcurrentStatetMongo入库handler", RESOURCE_SCOPE_GLOBAL_STATE),
     /**
      * 天赛音视频质量检测,用于统计卡顿率、优质传输率等指标
      */
-    TheaQualityEventMongoHandler("theaQualityEventMongoHandler", "天赛音视频质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
+    TheaQualityEventMongoHandler("theaQualityEventMongoHandler", "天赛音视频质量检测mongodb入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+
+    //***************************************************************************************************
+    //********************************** upload数据源处理***************************************************
+    //***************************************************************************************************
+    UploadAddVideoKeyFrameDatabaseHandler("uploadAddVideoKeyFrameDatabaseHandler", "upload打点上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    UploadAddImgDatabaseHandler("uploadAddImgDatabaseHandler", "upload图片上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    UploadAddErrorVideoDatabaseHandler("uploadAddErrorVideoDatabaseHandler", "upload音视频文件上传失败数据入库", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    UploadAddVideoDatabaseHandler("uploadAddVideoDatabaseHandler", "upload音视频文件上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
+
     /**
      * 类型
      */
@@ -358,7 +371,6 @@ public enum HandlerId {
     }
 
     /**
-     *
      * @return 作用域
      */
     public String getScope() {

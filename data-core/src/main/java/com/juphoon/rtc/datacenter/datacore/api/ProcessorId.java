@@ -27,6 +27,11 @@ public enum ProcessorId {
     MONGO_EVENT_PROCESSOR("mongoEventProcessor", "Mongo事件入库", PROCESSOR_TYPE_EVENT),
 
     /**
+     upload事件入库
+     */
+    UPLOAD_DB("uploadDbProcessor", "uploadDB事件入库", PROCESSOR_TYPE_EVENT),
+
+    /**
      * 事件mongo入库
      * TODO 可能不是
      */

@@ -57,6 +57,7 @@ public class MongoMdEventPOTest {
         map.put("content", "content");
         map.put("cdAccount", "50000");
         map.put("filename", "703c2e77-3e78-4b1b-8c12-70ebf5372504");
+        map.put("diffRecordTime",2311);
         map.put("appKey", "acd");
 
         Event event = Event.builder()

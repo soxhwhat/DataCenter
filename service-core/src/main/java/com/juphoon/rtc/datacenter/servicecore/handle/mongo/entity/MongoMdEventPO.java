@@ -100,6 +100,21 @@ public class MongoMdEventPO extends MongoEventPO {
      */
     private String filename;
 
+    /**
+     * 录制时长与通话时长的差值
+     */
+    private Integer diffRecordTime;
+
+    /**
+     * 文件大小
+     */
+    private Integer fileSize;
+
+    /**
+     * 录制时长
+     */
+    private Integer recordTime;
+
     @Override
     public void fromEvent(Event event) {
         super.fromEvent(event);
@@ -121,6 +136,9 @@ public class MongoMdEventPO extends MongoEventPO {
         this.setCdAccount(this.getStringValue(params, "cdAccount"));
         this.setSipCallId(this.getStringValue(params, "sipCallId"));
         this.setFilename(this.getStringValue(params, "filename"));
+        this.setDiffRecordTime(this.getIntegerValue(params, "diffRecordTime"));
+        this.setFileSize(this.getIntegerValue(params, "fileSize"));
+        this.setRecordTime(this.getIntegerValue(params, "recordTime"));
         this.setParams(null);
     }
 
