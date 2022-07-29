@@ -46,14 +46,22 @@ mybatis-plus:
 iron:
   cube:
     enabled: true
-    serverCfg: /Users/ajianzheng/Juphoon/Source/Iron/DataCenter/conf/server-13.138.cfg
+    serverCfg: D:\service\1933\server.cfg
     debugMode: true
-    libraryName: CommonJNI-3.6
+    libraryName: CommonJNI
   datacenter:
     event-processors:
+      - name: UPLOAD_DB
+        queue-service:
+          type: none
+        handlers:
+          - uploadAddVideoDatabaseHandler
+          - uploadAddErrorVideoDatabaseHandler
+          - uploadAddImgDatabaseHandler
+          - uploadAddVideoKeyFrameDatabaseHandler
       - name: ACD_STAT # rdb
         queue-service:
-          type: disruptor
+          type: none
         handlers:
           - acdCallInfoStatPart15MinHandler
           - acdCallInfoStatPart30MinHandler
@@ -71,23 +79,23 @@ iron:
           - acdExtTerminalDailyHandler
       - name: MONGO_EVENT_PROCESSOR # mongodb
         queue-service:
-          type: disruptor
+          type: none
         handlers:
           - acdTicketEventMongoHandler
           - acdEventMongoHandler
           - mdEventMongoHandler
           - acdRecordEventMongoHandler
           - mdEventMongoHandler
-    state-processors:
-      - name: STATE_RDB # redis
-        queue-service:
-          type: none
-        handlers:
-          - staffRedisHandler
-          - StaffRemoveRedisHandler
-          - queueWaitRedisHandler
-          - queueCallRedisHandler
-          - queueRingRedisHandler
+#    state-processors:
+#      - name: STATE_RDB # redis
+#        queue-service:
+#          type: none
+#        handlers:
+#          - staffRedisHandler
+#          - StaffRemoveRedisHandler
+#          - queueWaitRedisHandler
+#          - queueCallRedisHandler
+#          - queueRingRedisHandler
     data-source:
       url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
       username: kiwi
