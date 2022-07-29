@@ -46,6 +46,11 @@ public interface TheaConstant {
     String CB_ACCOUNT_ID = "cb_account_id";
 
     /**
+     * 对端会议成员
+     */
+    String CR_RECV_ACTOR = "cb_account_id";
+
+    /**
      * 对端会议成员ID
      */
     String CR_RECV_ACTOR_ID = "cr_recv_actor_id";
@@ -113,6 +118,26 @@ public interface TheaConstant {
     String CS_V_BR = "cs_v_br";
 
     /**
+     * 视频发送宽
+     */
+    String CS_V_W = "cs_v_w";
+
+    /**
+     * 视频发送高
+     */
+    String CS_V_H = "cs_v_h";
+
+    /**
+     * 发送带宽
+     */
+    String SU_BW = "su_bw";
+
+    /**
+     * 接收带宽
+     */
+    String SD_BW = "sd_bw";
+
+    /**
      * 上行丢包率
      */
     String SU_LOSS = "su_loss";
@@ -171,5 +196,9 @@ public interface TheaConstant {
      * 加入房间事件码
      */
     String EVENT = "event";
+
+    Integer JOIN_SUCCESS = 1;
+
+    Integer JOIN_FAIL = 3;
 
 }

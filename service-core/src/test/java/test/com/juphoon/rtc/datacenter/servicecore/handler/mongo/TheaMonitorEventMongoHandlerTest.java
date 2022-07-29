@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -62,7 +63,7 @@ public class TheaMonitorEventMongoHandlerTest {
         String recvCollection = COLLECTION_EVENT_THEA_RECV.getName() + DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
         String sendCollection = COLLECTION_EVENT_THEA_SEND.getName() + DateFormatUtils.format(new Date(ec.getCreatedTimestamp()), "yyyyMMdd");
         //查询条件为timestamp的记录，并返回pojo类型的结果
-        Query query = new Query(new org.springframework.data.mongodb.core.query.Criteria("timestamp").is(ec.getEvent().getTimestamp()));
+        Query query = new Query(new Criteria("timestamp").is(ec.getEvent().getTimestamp()));
         List<TheaRecvPO> theaRecvPos = mongoTemplate.find(query, TheaRecvPO.class, recvCollection);
         TheaSendPO sendPo = mongoTemplate.findOne(query, TheaSendPO.class, sendCollection);
         Assert.assertNotNull(theaRecvPos);

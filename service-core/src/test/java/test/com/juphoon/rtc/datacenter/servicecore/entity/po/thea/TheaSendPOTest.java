@@ -21,7 +21,7 @@ public class TheaSendPOTest {
         TheaSendPO po = TheaSendPO.fromEvent(ec);
 
         Assert.assertNotNull(po);
-        Assert.assertEquals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]", po.getCbAccountid());
+        Assert.assertEquals("delivery_JMDS.Main0.Main01.Main_0", po.getCbAccountid());
         Assert.assertEquals(100, (int) po.getCsAVol());
         Assert.assertEquals(-1, (int) po.getCsVBr());
         Assert.assertEquals(0, (int) po.getSuLoss());

@@ -9,7 +9,7 @@ iron:
     event-processors:
       - name: ACD_STAT # rdb
         queue-service:
-          type: none
+          type: executor
         handlers:
           - AcdCallInfoStatPart15MinHandler
           - AcdCallInfoStatPart30MinHandler
@@ -25,21 +25,27 @@ iron:
           - AcdExtServiceLevelPart30MinHandler
           - AcdExtServiceLevelPartHourHandler
           - AcdExtTerminalDailyHandler
+
       - name: MONGO_EVENT_PROCESSOR # mongodb
         queue-service:
-          type: none
+          type: executor
         handlers:
           - AcdTicketEventMongoHandler
           - AcdEventMongoHandler
           - MdEventMongoHandler
           - AcdRecordEventMongoHandler
+          - MonitorCallRoomEventMongoHandler
+          - MonitorCallUserEventMongoHandler
+          - TheaMonitorEventMongoHandler
+          - TheaQualityEventMongoHandler
     state-processors:
       - name: STATE_RDB # redis
         queue-service:
-          type: none
+          type: executor
         handlers:
           - MonitorAcdAgentStateHandler
-
+          - MonitorConcurrentStateMongoHandler
+          - MonitorRoomConcurrentHandler
 spring:
   datasource:
     dynamic:

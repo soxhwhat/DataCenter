@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.servicecore.utils;
 
+import com.juphoon.iron.component.utils.response.IronException;
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import lombok.SneakyThrows;
 
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static com.juphoon.iron.common.IronString.isNotEmpty;
 
 /**
  * <p>天赛全量监控数据工具类</p>
@@ -42,6 +45,26 @@ public class TheaUtil {
     public static List getRecvActors(Event event) {
         List recvActors = (List) getJsm(event).get("recv_actor");
         return getJsm(event).get("recv_actor") == null ? Collections.EMPTY_LIST : recvActors;
+    }
+
+    /**
+     * 截取 ACCOUNT
+     *
+     * @param account
+     * @return
+     * @throws IronException
+     */
+    @SuppressWarnings("PMD")
+    public static String absAccountId(String account) throws IronException {
+        //断言判断account是否为空
+//        assert isNotEmpty(account);
+        if (!account.startsWith("[username:")) {
+            return account;
+        }
+
+        int start = account.indexOf(":") + 1;
+        int end = account.indexOf("@", start);
+        return account.substring(start, end);
     }
 
     @SneakyThrows

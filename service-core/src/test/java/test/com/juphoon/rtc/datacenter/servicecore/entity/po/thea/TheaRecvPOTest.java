@@ -27,8 +27,8 @@ public class TheaRecvPOTest {
         Assert.assertNotNull(theaRecvPOS);
         Assert.assertEquals(2, theaRecvPOS.size());
         Assert.assertEquals("103451680701174926", theaRecvPOS.get(0).getCallId());
-        Assert.assertEquals("[username:delivery_JMDS.Main0.Main01.Main_0@100074.cloud.justalk.com]", theaRecvPOS.get(0).getCbAccountid());
-        Assert.assertNotNull(theaRecvPOS.get(0).getCrRecvActorid());
+        Assert.assertEquals("delivery_JMDS.Main0.Main01.Main_0", theaRecvPOS.get(0).getCbAccountid());
+        Assert.assertNotNull(theaRecvPOS.get(0).getCrRecvActor());
 
     }
 }

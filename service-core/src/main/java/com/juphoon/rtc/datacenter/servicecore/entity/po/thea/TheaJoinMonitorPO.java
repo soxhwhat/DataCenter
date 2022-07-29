@@ -7,10 +7,14 @@ import com.juphoon.rtc.datacenter.servicecore.utils.TheaUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 
 import static com.juphoon.rtc.datacenter.servicecore.api.TheaConstant.*;
@@ -36,7 +40,7 @@ public class TheaJoinMonitorPO extends TheaCommonPO {
     /**
      * 更新时间戳
      */
-    private Long timestamp;
+    private Integer date;
 
     /**
      * 会场id
@@ -78,10 +82,10 @@ public class TheaJoinMonitorPO extends TheaCommonPO {
         TheaJoinMonitorPO po = new TheaJoinMonitorPO();
         po.setAppId(event.getAppId());
         po.setDomainId(event.getDomainId());
-        po.setTimestamp(event.getTimestamp());
+        po.setDate(Integer.valueOf(DateFormatUtils.format(new Date((Long) event.getTimestamp()),"yyyyMMdd")));
         po.setCallId((String) general.get(CALL_ID));
-
-        if((int)general.get(EVENT) == 1 || (int)general.get(EVENT) == 3) {
+        int eventNum = (int) general.getOrDefault(EVENT, -1);
+        if(eventNum == JOIN_SUCCESS || eventNum == JOIN_FAIL) {
             po.setJoinRoomCount(po.getJoinRoomCount() + 1);
             if((int) general.get(EVENT) == 1) {
                 po.setJoinSuccessCount(po.getJoinSuccessCount() + 1);

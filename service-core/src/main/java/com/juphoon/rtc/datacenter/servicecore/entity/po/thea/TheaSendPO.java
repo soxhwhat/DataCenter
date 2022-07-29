@@ -38,9 +38,34 @@ public class TheaSendPO extends TheaMonitorPO {
     private Integer csVBr;
 
     /**
-     * 上行丢包率
+     * 视频发送宽
+     */
+    private Integer csVW;
+
+    /**
+     * 视频发送高
+     */
+    private Integer csVH;
+
+    /**
+     * 发送带宽
+     */
+    private Integer suBw;
+
+    /**
+     * 接收带宽
+     */
+    private Integer sdBw;
+
+    /**
+     * 发送网络丢包情况
      */
     private Integer suLoss;
+
+    /**
+     * 接收网络丢包情况
+     */
+    private Integer sdLoss;
 
     /**
      * 发送帧率
@@ -128,13 +153,18 @@ public class TheaSendPO extends TheaMonitorPO {
         Map<String, Object> general = TheaUtil.getGeneral(event);
         Map<String, Object> jsm = TheaUtil.getJsm(event);
         Map<String, Object> zmf = TheaUtil.getZmf(event);
-
+        String cbAccountId = (String) jsm.getOrDefault(CB_ACCOUNT_ID,"null");
         TheaSendPO po = new TheaSendPO();
         po.setTimestamp(event.getTimestamp());
         po.setAppId(event.getAppId());
         po.setDomainId(event.getDomainId());
         po.setCallId((String) general.get(CALL_ID));
-        po.setCbAccountid((String) jsm.get(CB_ACCOUNT_ID));
+        po.setCbAccountid(TheaUtil.absAccountId(cbAccountId));
+        po.setCsVH((Integer) jsm.getOrDefault(CS_V_H, -1));
+        po.setCsVW((Integer) jsm.getOrDefault(CS_V_W, -1));
+        po.setSuBw((Integer) jsm.getOrDefault(SU_BW, -1));
+        po.setSdBw((Integer) jsm.getOrDefault(SD_BW, -1));
+        po.setSdLoss((Integer) jsm.getOrDefault(SD_LOSS, -1));
         po.setCsVBr((Integer) jsm.getOrDefault(CS_V_BR, -1));
         po.setCsAVol((Integer) zmf.getOrDefault(CS_A_VOL, -1));
         po.setCsABr((Integer) jsm.getOrDefault(CS_A_BR, -1));

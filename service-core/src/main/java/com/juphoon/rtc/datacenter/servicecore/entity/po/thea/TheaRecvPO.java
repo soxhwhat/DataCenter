@@ -35,9 +35,9 @@ import static com.juphoon.rtc.datacenter.servicecore.api.TheaConstant.*;
 public class TheaRecvPO extends TheaMonitorPO {
 
     /**
-     * 对端会议成员ID
+     * 对端会议成员
      */
-    private Integer crRecvActorid;
+    private String crRecvActor;
 
     /**
      * 视频接收码率
@@ -98,6 +98,16 @@ public class TheaRecvPO extends TheaMonitorPO {
     private Integer crSW;
 
     /**
+     * 视频接收Mos分
+     */
+    private Integer crTmos;
+
+    /**
+     * 音频接收Mos分
+     */
+    private Integer crAMos;
+
+    /**
      * 将EventContext转换为TheaRecvPO
      *  数据源为天赛全量数据（type=900, number=0)
      *  转换结果为：
@@ -130,19 +140,24 @@ public class TheaRecvPO extends TheaMonitorPO {
 
         Event event = context.getEvent();
         commonCheckParam(event);
+        Map<String, Object> jsm = TheaUtil.getJsm(event);
 
         List recvActors = TheaUtil.getRecvActors(event);
         if (recvActors != null && recvActors.size() > 0) {
             recvActors.forEach(recvActor -> {
                 Map<String, Object> recvActorMap = (Map<String, Object>) recvActor;
+                String cbAccountid = TheaUtil.absAccountId((String) jsm.getOrDefault(CB_ACCOUNT_ID,"null"));
                 if (recvActorMap.get(CR_RECV_ACTOR_ID) != null) {
+                    String crRecvActor = TheaUtil.absAccountId((String) recvActorMap.getOrDefault(CR_RECV_ACTOR, "null"));
                     TheaRecvPO po = new TheaRecvPO();
                     po.setTimestamp(event.getTimestamp());
                     po.setAppId(event.getAppId());
                     po.setDomainId(event.getDomainId());
                     po.setCallId((String) TheaUtil.getGeneral(event).get(CALL_ID));
-                    po.setCbAccountid((String) TheaUtil.getJsm(event).get(CB_ACCOUNT_ID));
-                    po.setCrRecvActorid((Integer) recvActorMap.get(CR_RECV_ACTOR_ID));
+                    po.setCbAccountid(cbAccountid);
+                    po.setCrRecvActor(crRecvActor);
+                    po.setCrAMos((Integer)recvActorMap.getOrDefault(CR_A_MOS, -1));
+                    po.setCrTmos((Integer)recvActorMap.getOrDefault(CR_V_TMOS, -1));
                     po.setCrSBr((Integer) recvActorMap.getOrDefault(CR_S_BR, -1));
                     po.setCrSFps((Integer) recvActorMap.getOrDefault(CR_S_FPS, -1));
                     po.setCrSRendFps((Integer) recvActorMap.getOrDefault(CR_S_REND_FPS, -1));
@@ -153,7 +168,7 @@ public class TheaRecvPO extends TheaMonitorPO {
                     po.setCrVFps((Integer) recvActorMap.getOrDefault(CR_V_FPS, -1));
                     po.setCrVH((Integer) recvActorMap.getOrDefault(CR_V_H, -1));
                     po.setCrVW((Integer) recvActorMap.getOrDefault(CR_V_W, -1));
-                    po.setSdLoss((Integer) recvActorMap.getOrDefault(SD_LOSS, -1));
+                    po.setSdLoss((Integer) jsm.getOrDefault(SD_LOSS, -1));
                     theaRecvPoList.add(po);
                 }
             });

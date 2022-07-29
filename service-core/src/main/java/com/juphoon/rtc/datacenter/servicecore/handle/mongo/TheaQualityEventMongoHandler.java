@@ -97,8 +97,16 @@ public class TheaQualityEventMongoHandler extends AbstractMongoEventHandler impl
                             .inc("suJitterTotalCount", po.getSuJitterTotalCount())
                             .inc("sdJitterTotalCount", po.getSdJitterTotalCount()),
                     collectionName);
-
-            mongoTemplate.insert(joinPo, joinName);
+            if (joinPo.getJoinRoomCount() != 0) {
+                mongoTemplate.upsert(Query.query(Criteria.where("date").is(joinPo.getDate())
+                                .and("domainId").is(joinPo.getDomainId())
+                                .and("appId").is(joinPo.getAppId())
+                                .and("callId").is(joinPo.getCallId())),
+                        Update.update("date", joinPo.getDate())
+                                .inc("joinSuccessCount", joinPo.getJoinSuccessCount())
+                                .inc("joinRoomCount", joinPo.getJoinRoomCount()),
+                        joinName);
+            }
 
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);

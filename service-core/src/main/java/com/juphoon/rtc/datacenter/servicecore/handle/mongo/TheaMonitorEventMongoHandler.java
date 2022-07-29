@@ -70,9 +70,12 @@ public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler {
             List<TheaRecvPO> theaRecvPos = TheaRecvPO.fromEvent(ec);
             TheaSendPO theaSendPo = TheaSendPO.fromEvent(ec);
             //遍历每个对象，插入到对应的集合中
-            BulkOperations operations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, recvCollection);
-            operations.insert(theaRecvPos);
-            BulkWriteResult result = operations.execute();
+
+            if(theaRecvPos != null && theaRecvPos.size() > 0) {
+                BulkOperations operations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, recvCollection);
+                operations.insert(theaRecvPos);
+                operations.execute();
+            }
             mongoTemplate().insert(theaSendPo, sendCollection);
         } catch (DataAccessException e) {
             log.error("DataAccessException={}", e.getMessage());
