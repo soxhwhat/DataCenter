@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.17</version>
+        <version>2202.5.18</version>
         <artifactId>jrtcDataCenter-Parent</artifactId>
     </parent>
 
@@ -14,12 +14,12 @@
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>data-core</artifactId>
-            <version>2202.5.17</version>
+            <version>2202.5.18</version>
         </dependency>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>service-core</artifactId>
-            <version>2202.5.17</version>
+            <version>2202.5.18</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
