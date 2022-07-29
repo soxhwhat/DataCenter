@@ -5,9 +5,9 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2202.5.18</version>
+        <version>2203.5.18</version>
     </parent>
-    <version>2202.5.18</version>
+    <version>2203.5.18</version>
     <artifactId>jrtcDataCollection-b06</artifactId>
 
     <properties>
@@ -18,7 +18,7 @@
         <dependency>
             <artifactId>service-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
-            <version>2202.5.18</version>
+            <version>2203.5.18</version>
         </dependency>
     </dependencies>
 
