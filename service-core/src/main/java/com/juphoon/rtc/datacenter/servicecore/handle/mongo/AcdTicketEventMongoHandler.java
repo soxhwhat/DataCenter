@@ -1,8 +1,10 @@
 package com.juphoon.rtc.datacenter.servicecore.handle.mongo;
 
+import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
 import com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum;
+import com.juphoon.rtc.datacenter.servicecore.handle.mongo.entity.MongoTicketEventPO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +26,7 @@ import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COL
  */
 @Slf4j
 @Component
-public class AcdTicketEventMongoHandler extends AbstractMongoEventHandler {
+public class AcdTicketEventMongoHandler extends AbstractMongoEventHandler<MongoTicketEventPO> {
     @Autowired
     @Qualifier(MONGO_TEMPLATE_RECORD)
     private MongoTemplate mongoTemplate;
@@ -48,5 +50,12 @@ public class AcdTicketEventMongoHandler extends AbstractMongoEventHandler {
     public MongoCollectionEnum collectionName() {
         /// TODO 产品考虑重新规划
         return COLLECTION_B03_TICKETS;
+    }
+
+    @Override
+    public MongoTicketEventPO poFromEvent(Event event) {
+        MongoTicketEventPO record = new MongoTicketEventPO();
+        record.fromEvent(event);
+        return record;
     }
 }

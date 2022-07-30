@@ -12,8 +12,8 @@
 
     <dependencies>
         <dependency>
-            <artifactId>data-core</artifactId>
             <groupId>com.juphoon.rtc.datacenter</groupId>
+            <artifactId>data-core</artifactId>
             <version>2203.5.19</version>
         </dependency>
 
