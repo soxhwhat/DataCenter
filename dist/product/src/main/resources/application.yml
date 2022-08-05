@@ -7,6 +7,15 @@ iron:
           - service_level_20sec
           - service_level_30sec
     event-processors:
+      - name: UPLOAD_DB
+        queue-service:
+          type: executor
+        handlers:
+          - UploadAddVideoDatabaseHandler
+          - UploadAddErrorVideoDatabaseHandler
+          - UploadAddImgDatabaseHandler
+          - UploadAddVideoKeyFrameDatabaseHandler
+
       - name: ACD_STAT # rdb
         queue-service:
           type: executor
@@ -45,7 +54,7 @@ iron:
         handlers:
           - MonitorAcdAgentStateHandler
           - MonitorConcurrentStateMongoHandler
-          - MonitorRoomConcurrentHandler
+
 spring:
   datasource:
     dynamic:
