@@ -86,7 +86,7 @@ public class MonitorConcurrentStateMongoHandler extends AbstractMongoHandler<Sta
         MonitorConcurrentPO po = MonitorConcurrentPO.fromState(context);
 
         long window = getSize().getTime();
-        String time = DateFormatUtils.format(new Date(po.getTimestamp() - po.getTimestamp() % window), "yyyy-MM-dd hh:mm:ss");
+        String time = DateFormatUtils.format(new Date(po.getTimestamp() - po.getTimestamp() % window), "yyyy-MM-dd HH:mm:ss");
         log.debug("po:{}", po);
         mongoTemplate.upsert(Query.query(Criteria.where("time").is(time)
                         .and("domainId").is(po.getDomainId())
