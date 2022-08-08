@@ -1,0 +1,91 @@
+server:
+  port: 19986
+iron:
+  cube:
+    enabled: true
+  datacenter:
+    servicelevel:
+      serviceLevelTypeEnums:
+        - service_level_20sec
+        - service_level_30sec
+    event-processors:
+      - name: UPLOAD_DB
+        queue-service:
+          type: executor
+        handlers:
+          - UploadAddVideoDatabaseHandler
+          - UploadAddErrorVideoDatabaseHandler
+          - UploadAddImgDatabaseHandler
+          - UploadAddVideoKeyFrameDatabaseHandler
+
+      - name: ACD_STAT # rdb
+        queue-service:
+          type: executor
+        handlers:
+          - AcdCallInfoStatPart15MinHandler
+          - AcdCallInfoStatPart30MinHandler
+          - AcdCallInfoStatPartHourHandler
+          - AcdCallInfoStatDailyHandler
+          - AcdAgentOpStatPart15MinHandler
+          - AcdAgentOpStatPart30MinHandler
+          - AcdAgentOpStatPartHourHandler
+          - AcdAgentOpStatDailyHandler
+          - AcdAgentOpCheckinDailyByShiftHandler
+          - AcdExtServiceLevelDailyHandler
+          - AcdExtServiceLevelPart15MinHandler
+          - AcdExtServiceLevelPart30MinHandler
+          - AcdExtServiceLevelPartHourHandler
+          - AcdExtTerminalDailyHandler
+
+      - name: MONGO_EVENT_PROCESSOR # mongodb
+        queue-service:
+          type: executor
+        handlers:
+          - AcdTicketEventMongoHandler
+          - AcdEventMongoHandler
+          - MdEventMongoHandler
+          - AcdRecordEventMongoHandler
+          - MonitorCallRoomEventMongoHandler
+          - MonitorCallUserEventMongoHandler
+          - TheaMonitorEventMongoHandler
+          - TheaQualityEventMongoHandler
+          - ExternalCallPushDailytHandler
+          - ExternalCallPushPart15MinHandler
+          - ExternalCallPushPartHourHandler
+          - ExternalCallTicketDailytHandler
+          - ExternalCallTicketPart15MinHandler
+          - ExternalCallTicketPartHourHandler
+    state-processors:
+      - name: STATE_RDB # redis
+        queue-service:
+          type: executor
+        handlers:
+          - MonitorAcdAgentStateHandler
+          - MonitorConcurrentStateMongoHandler
+
+spring:
+  kafka:
+    producer:
+      retries: 0
+      acks: 1
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        #        max.block.ms: 2000
+        sasl.mechanism: PLAIN
+        security.protocol: SASL_PLAINTEXT
+        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username=kafka password=kafkapswd;
+  datasource:
+    dynamic:
+      druid:
+        filters: stat
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      primary: juphoon
+  data:
+    mongodb:
+      auto-index-creation: true
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

@@ -337,6 +337,41 @@ public enum HandlerId {
 
 
     //***************************************************************************************************
+    //********************************** 宁波银行外呼数据统计************************************************
+    //***************************************************************************************************
+
+    /**
+     * 宁波银行外呼push成功率日汇总handler
+     */
+    ExternalCallPushDailytHandler("externalCallPushDailytHandler", "外呼push成功率日汇总handler", RESOURCE_SCOPE_C09),
+
+    /**
+     * 宁波银行外呼push成功率15min汇总handler
+     */
+    ExternalCallPushPart15MinHandler("externalCallPushPart15MinHandler", "外呼push成功率15min汇总handler", RESOURCE_SCOPE_C09),
+
+    /**
+     * 宁波银行外呼push成功率1h汇总handler
+     */
+    ExternalCallPushPartHourHandler("externalCallPushPartHourHandler", "外呼push成功率1h汇总handler", RESOURCE_SCOPE_C09),
+
+    /**
+     * 宁波银行客服话单日汇总handler
+     */
+    ExternalCallTicketDailytHandler("externalCallTicketDailytHandler", "客服话单日汇总handler", RESOURCE_SCOPE_C09),
+
+    /**
+     * 宁波银行客服话单15min汇总handler
+     */
+    ExternalCallTicketPart15MinHandler("externalCallTicketPart15MinHandler", "客服话单15min汇总handler", RESOURCE_SCOPE_C09),
+
+    /**
+     * 宁波银行客服话单1h汇总handler
+     */
+    ExternalCallTicketPartHourHandler("externalCallTicketPartHourHandler", "客服话单1h汇总handler", RESOURCE_SCOPE_C09),
+
+
+    //***************************************************************************************************
     //********************************** upload数据源处理***************************************************
     //***************************************************************************************************
     UploadAddVideoKeyFrameDatabaseHandler("uploadAddVideoKeyFrameDatabaseHandler", "upload打点上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),

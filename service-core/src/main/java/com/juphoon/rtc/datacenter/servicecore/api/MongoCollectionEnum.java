@@ -63,6 +63,26 @@ public enum MongoCollectionEnum {
     COLLECTION_EVENT_TEST_ONE("test_one", "测试全局一份"),
 
     /**
+     * 宁波银行外呼日统计
+     */
+    COLLECTION_EVENT_EXTERNAL_PUSH_DAILY("jrtc_external_call_daily", "宁波银行外呼统计"),
+
+    /**
+     * 宁波银行外呼分时(15min/1h)统计
+     */
+    COLLECTION_EVENT_EXTERNAL_PUSH_PART("jrtc_external_call_part", "宁波银行外呼分时统计"),
+
+    /**
+     * 宁波银行客服话单日统计
+     */
+    COLLECTION_EVENT_EXTERNAL_TICKET_DAILY("jrtc_external_ticket_daily", "宁波银行客服话单统计"),
+
+    /**
+     * 宁波银行客服话单分时(15min/1h)统计
+     */
+    COLLECTION_EVENT_EXTERNAL_TICKET_PART("jrtc_external_ticket_part", "宁波银行客服话单分时统计"),
+
+    /**
      * 天赛上行通话质量检测
      */
     COLLECTION_EVENT_THEA_SEND("jrtc_thea_send_", "天赛上行通话质量检测"),

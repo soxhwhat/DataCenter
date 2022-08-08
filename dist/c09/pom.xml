@@ -13,14 +13,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>3.6.12</version>
+            <artifactId>service-core</artifactId>
+            <groupId>com.juphoon.rtc.datacenter</groupId>
+            <version>2203.5.20</version>
         </dependency>
     </dependencies>
 
@@ -30,7 +25,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.juphoon.rtc.datacenter.C09DataCenterApplication</mainClass>
+                    <mainClass>com.juphoon.rtc.datacenter.dist.c09.C09DataCenterApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

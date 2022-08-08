@@ -86,6 +86,7 @@ public class JrtcDataCenterConstant {
     public static final String RESOURCE_SCOPE_B03 = "b03";
     public static final String RESOURCE_SCOPE_H20 = "h20";
     public static final String RESOURCE_SCOPE_E01 = "e01";
+    public static final String RESOURCE_SCOPE_C09 = "c09";
     public static final String RESOURCE_SCOPE_AGREE = "agree";
 
     /**
