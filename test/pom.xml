@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2203.5.21</version>
+        <version>2203.5.22</version>
         <artifactId>jrtcDataCenter-Parent</artifactId>
     </parent>
 
@@ -14,22 +14,22 @@
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>data-core</artifactId>
-            <version>2203.5.21</version>
+            <version>2203.5.22</version>
         </dependency>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>service-core</artifactId>
-            <version>2203.5.21</version>
+            <version>2203.5.22</version>
         </dependency>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>jrtcDataCollection-e01</artifactId>
-            <version>2203.5.21</version>
+            <version>2203.5.22</version>
         </dependency>
         <dependency>
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <artifactId>jrtcDataCollection-b03</artifactId>
-            <version>2203.5.21</version>
+            <version>2203.5.22</version>
         </dependency>
     </dependencies>
     <build>

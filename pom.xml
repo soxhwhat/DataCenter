@@ -11,7 +11,7 @@
 
     <groupId>com.juphoon.rtc.datacenter</groupId>
     <artifactId>jrtcDataCenter-Parent</artifactId>
-    <version>2203.5.21</version>
+    <version>2203.5.22</version>
     <packaging>pom</packaging>
     <modules>
         <module>data-core</module>
@@ -40,7 +40,7 @@
         <ojdbc6.version>11.2.0.4</ojdbc6.version>
         <httpclient.version>4.5.7</httpclient.version>
         <guava.version>31.1-jre</guava.version>
-        <logback.version>1.2.10</logback.version>
+        <logback.version>1.2.11</logback.version>
         <sqlite.jdbc.version>3.31.1</sqlite.jdbc.version>
         <cn-hutool.version>5.7.9</cn-hutool.version>
         <jackson.version>2.13.3</jackson.version>
@@ -62,9 +62,36 @@
         <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
 
+        <netty.version>4.1.71.Final</netty.version>
+        <netty.tcnative.version>2.0.46.Final</netty.tcnative.version>
+        <tomcat.version>9.0.63</tomcat.version>
+        <commons-collection.version>3.2.2</commons-collection.version>
+
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collection.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-classes</artifactId>
+            <version>${netty.tcnative.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.juphoon.cube.def</groupId>
             <artifactId>cube-def-35</artifactId>

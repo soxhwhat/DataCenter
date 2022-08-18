@@ -6,10 +6,10 @@
     <parent>
         <artifactId>dist</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2203.5.21</version>
+        <version>2203.5.22</version>
     </parent>
 
-    <version>2203.5.21</version>
+    <version>2203.5.22</version>
     <artifactId>jrtcDataCollection-e01</artifactId>
 
     <properties>
