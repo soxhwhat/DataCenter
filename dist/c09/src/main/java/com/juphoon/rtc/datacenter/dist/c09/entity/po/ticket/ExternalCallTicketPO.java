@@ -28,22 +28,22 @@ public class ExternalCallTicketPO extends C09CommonPO {
      * 通话时长
      * talkTime = 0表示没接通
      */
-    private Long talkTime;
+    private Integer talkTime;
 
     /**
      * 拉起通话成功次数
      */
-    private Integer successCount;
+    private Integer successCount = 0;
 
     /**
      * 拉起通话总次数
      */
-    private Integer totalCount;
+    private Integer totalCount = 1;
 
     /**
      * 等待时长
      */
-    private Long waitTime;
+    private Integer waitTime;
 
 
     /**
@@ -61,18 +61,15 @@ public class ExternalCallTicketPO extends C09CommonPO {
         Map<String, Object> params = event.getParams() == null ? Collections.EMPTY_MAP : event.getParams();
 
         super.fromEvent(event);
-        Long talkTime = (Long) params.getOrDefault("talkTime", -1);
-        Long waitTime = (Long) params.getOrDefault("waitTime", -1);
+        Integer talkTime = (Integer) params.getOrDefault("talkTime", 0);
+        Integer waitTime = (Integer) params.getOrDefault("waitTime", 0);
 
-        if (talkTime != -1) {
-            this.setSuccessCount(talkTime > 0 ? 1 : 0);
-            this.setTotalCount(1);
-            this.setTalkTime(talkTime);
+        if (talkTime != 0) {
+            this.setSuccessCount(1);
         }
 
-        if (waitTime != -1) {
-            this.setWaitTime(waitTime);
-        }
+        this.setTalkTime(talkTime);
+        this.setWaitTime(waitTime);
 
         this.setUniqueKey(getUniqueKey());
     }

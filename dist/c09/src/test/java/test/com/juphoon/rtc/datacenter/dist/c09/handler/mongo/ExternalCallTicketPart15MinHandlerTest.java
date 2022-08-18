@@ -56,10 +56,10 @@ public class ExternalCallTicketPart15MinHandlerTest {
 
     @Before
     public void initEc() {
-        Map<String, Object> map = new HashMap(8);
+        Map<String, Object> map = new HashMap<>(8);
         HashMap<Object, Object> test = new HashMap<>();
-        map.put("talkTime", 1000L);
-        map.put("waitTime", 1000L);
+        map.put("talkTime", 1000);
+//        map.put("waitTime", 1000);
 
 
         event = Event.builder()

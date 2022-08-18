@@ -21,9 +21,9 @@ iron:
           - monitorAcdQueueCountHandler
     data-source:
       driver-class-name: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:@//192.168.2.110:1521/ORCL
-      username: activiti
-      password: activiti
+      url: jdbc:oracle:thin:@//192.168.12.87:1521/ORCL
+      username: JUPHOON
+      password: Juphoon419708!
 spring:
   data:
     mongodb:

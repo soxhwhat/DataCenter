@@ -36,7 +36,7 @@ import static com.juphoon.rtc.datacenter.servicecore.api.WindowLevelEnum.WIN_DAY
 @Slf4j
 @Component
 @Setter
-public class ExternalCallTicketDailytHandler extends C09AbstractMongoEventHandler<ExternalCallTicketDailyPO> {
+public class ExternalCallTicketDailyHandler extends C09AbstractMongoEventHandler<ExternalCallTicketDailyPO> {
 
     @Autowired
     @Qualifier(MONGO_TEMPLATE_EVENT)
@@ -49,7 +49,7 @@ public class ExternalCallTicketDailytHandler extends C09AbstractMongoEventHandle
 
     @Override
     public HandlerId handlerId() {
-        return HandlerId.ExternalCallTicketDailytHandler;
+        return HandlerId.ExternalCallTicketDailyHandler;
     }
 
     @Override
@@ -90,11 +90,10 @@ public class ExternalCallTicketDailytHandler extends C09AbstractMongoEventHandle
         ExternalCallTicketDailyPO po = poFromEvent(event);
         String collectionName = getCollectionName(this, ec);
 
-        String time = DateFormatUtils.format(new Date(po.getTimestamp() - statType().getInterval()), "yyyyMMdd");
-
+        Long timestamp = Long.parseLong(DateFormatUtils.format(new Date(po.getTimestamp() - po.getTimestamp() % statType().getInterval()), "yyyyMMdd"));
         mongoTemplate.upsert(Query.query(Criteria.where("uniqueKey").is(po.getUniqueKey())
-                        .and("time").is(time)),
-                Update.update("time", time)
+                        .and("timestamp").is(timestamp)),
+                Update.update("timestamp", timestamp)
                         .setOnInsert("domainId", po.getDomainId())
                         .setOnInsert("appId", po.getAppId())
                         .inc("waitTime", po.getWaitTime())

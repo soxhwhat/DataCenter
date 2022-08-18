@@ -54,7 +54,7 @@ public class ExternalCallPushPart15MinHandlerTest {
 
     @Before
     public void initEc() {
-        Map<String, Object> map = new HashMap(8);
+        Map<String, Object> map = new HashMap<>(8);
         HashMap<Object, Object> test = new HashMap<>();
         map.put("result", 1);
         map.put("requestAppParams", test);

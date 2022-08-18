@@ -28,9 +28,9 @@ public class ExternalCallTicketPartPOTest {
      */
     @Test
     public void fromEventOk() {
-        HashMap<String, Object> map = new HashMap(8);
-        map.put("talkTime",1000L);
-        map.put("waitTime",1000L);
+        HashMap<String, Object> map = new HashMap<>(8);
+        map.put("talkTime",1000);
+//        map.put("waitTime",1000);
 
         Event event = Event.builder()
                 .domainId(100645)
@@ -46,8 +46,8 @@ public class ExternalCallTicketPartPOTest {
         try {
             po.fromEvent(event);
             Assert.assertNotNull(po.getUniqueKey());
-            Assert.assertEquals(1000, po.getTalkTime().longValue());
-            Assert.assertEquals(1000, po.getWaitTime().longValue());
+            Assert.assertEquals(1000, po.getTalkTime().intValue());
+            Assert.assertEquals(0, po.getWaitTime().intValue());
             Assert.assertEquals(1, po.getSuccessCount().intValue());
             Assert.assertEquals(1, po.getTotalCount().intValue());
         } catch (JsonProcessingException e) {

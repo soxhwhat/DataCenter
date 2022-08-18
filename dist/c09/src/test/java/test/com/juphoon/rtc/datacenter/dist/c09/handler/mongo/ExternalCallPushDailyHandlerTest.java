@@ -5,9 +5,7 @@ import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.dist.c09.entity.po.push.ExternalCallPushDailyPO;
-import com.juphoon.rtc.datacenter.dist.c09.entity.po.push.ExternalCallPushPartPO;
-import com.juphoon.rtc.datacenter.dist.c09.handle.push.ExternalCallPushDailytHandler;
-import com.juphoon.rtc.datacenter.dist.c09.handle.push.ExternalCallPushPart15MinHandler;
+import com.juphoon.rtc.datacenter.dist.c09.handle.push.ExternalCallPushDailyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +28,6 @@ import java.util.UUID;
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 import static com.juphoon.rtc.datacenter.datacore.api.EventType.PUSH_EVENT;
 import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_EXTERNAL_PUSH_DAILY;
-import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_EXTERNAL_PUSH_PART;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
@@ -46,7 +43,7 @@ import static org.mockito.Mockito.times;
 @PrepareForTest({ExternalCallPushDailyPO.class})
 public class ExternalCallPushDailyHandlerTest {
     @InjectMocks
-    private ExternalCallPushDailytHandler externalCallPushDailytHandler;
+    private ExternalCallPushDailyHandler externalCallPushDailyHandler;
 
     @Mock
     @Qualifier(MONGO_TEMPLATE_EVENT)
@@ -57,7 +54,7 @@ public class ExternalCallPushDailyHandlerTest {
 
     @Before
     public void initEc() {
-        Map<String, Object> map = new HashMap(8);
+        Map<String, Object> map = new HashMap<>(8);
         HashMap<Object, Object> test = new HashMap<>();
         map.put("result", 1);
         map.put("requestAppParams", test);
@@ -79,13 +76,13 @@ public class ExternalCallPushDailyHandlerTest {
 
     @Test
     public void collectionNameTest() {
-        String name = externalCallPushDailytHandler.collectionName().getName();
+        String name = externalCallPushDailyHandler.collectionName().getName();
         Assert.assertSame(COLLECTION_EVENT_EXTERNAL_PUSH_DAILY.getName(), name);
     }
 
     @Test
     public void productEventTypeTest() {
-        List<EventType> eventTypes = externalCallPushDailytHandler.careEvents();
+        List<EventType> eventTypes = externalCallPushDailyHandler.careEvents();
         EventType eventType = eventTypes.get(0);
         Assert.assertSame(PUSH_EVENT, eventType);
     }
@@ -95,21 +92,21 @@ public class ExternalCallPushDailyHandlerTest {
         ExternalCallPushDailyPO po = new ExternalCallPushDailyPO();
         po.setSuccessCount(1);
         po.setTotalCount(1);
-        ExternalCallPushDailytHandler mock = Mockito.mock(ExternalCallPushDailytHandler.class);
+        ExternalCallPushDailyHandler mock = Mockito.mock(ExternalCallPushDailyHandler.class);
 
         PowerMockito.when(mock.poFromEvent(event)).thenReturn(po);
-        externalCallPushDailytHandler.handle(ec);
+        externalCallPushDailyHandler.handle(ec);
         Mockito.verify(mongoTemplate, times(1)).upsert(any(), any(), (String) any());
 
     }
 
     @Test
     public void getDataTest() {
-        ExternalCallPushDailyPO po = externalCallPushDailytHandler.poFromEvent(event);
+        ExternalCallPushDailyPO po = externalCallPushDailyHandler.poFromEvent(event);
         Assert.assertNotNull(po);
         Assert.assertEquals(1, po.getSuccessCount().intValue());
         Assert.assertEquals(1, po.getTotalCount().intValue());
-        Assert.assertEquals((byte) 4, externalCallPushDailytHandler.statType().getStatType());
+        Assert.assertEquals((byte) 4, externalCallPushDailyHandler.statType().getStatType());
 
     }
 }

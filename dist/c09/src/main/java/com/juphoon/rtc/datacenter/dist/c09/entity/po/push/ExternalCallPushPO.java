@@ -33,12 +33,12 @@ public class ExternalCallPushPO extends C09CommonPO {
     /**
      * 外呼成功次数
      */
-    private Integer successCount;
+    private Integer successCount = 0;
 
     /**
      * 外呼总次数
      */
-    private Integer totalCount;
+    private Integer totalCount = 1;
 
     /**
      * 请求参数
@@ -67,14 +67,14 @@ public class ExternalCallPushPO extends C09CommonPO {
         Map<String, Object> params = event.getParams() == null ? Collections.EMPTY_MAP : event.getParams();
 
         super.fromEvent(event);
-        Integer result = (Integer) params.getOrDefault("result", -1);
+        Integer result = (Integer) params.getOrDefault("result", 0);
         Map requestAppParams = (Map) params.get("requestAppParams");
         String reason = (String) params.get("reason");
 
-        if (result != -1) {
-            this.setTotalCount(1);
-            this.setSuccessCount(result == 1 ? 1 : 0);
+        if (result != 0) {
+            this.setSuccessCount(1);
         }
+
 
         this.setResult(result);
         this.setRequestAppParams(requestAppParams);

@@ -57,10 +57,10 @@ iron:
         queue-service:
           type: executor
         handlers:
-          - ExternalCallPushDailytHandler
+          - ExternalCallPushDailyHandler
           - ExternalCallPushPart15MinHandler
           - ExternalCallPushPartHourHandler
-          - ExternalCallTicketDailytHandler
+          - ExternalCallTicketDailyHandler
           - ExternalCallTicketPart15MinHandler
           - ExternalCallTicketPartHourHandler
 

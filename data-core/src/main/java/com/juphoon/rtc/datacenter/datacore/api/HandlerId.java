@@ -343,7 +343,7 @@ public enum HandlerId {
     /**
      * 宁波银行外呼push成功率日汇总handler
      */
-    ExternalCallPushDailytHandler("externalCallPushDailytHandler", "外呼push成功率日汇总handler", RESOURCE_SCOPE_C09),
+    ExternalCallPushDailyHandler("externalCallPushDailyHandler", "外呼push成功率日汇总handler", RESOURCE_SCOPE_C09),
 
     /**
      * 宁波银行外呼push成功率15min汇总handler
@@ -358,7 +358,7 @@ public enum HandlerId {
     /**
      * 宁波银行客服话单日汇总handler
      */
-    ExternalCallTicketDailytHandler("externalCallTicketDailytHandler", "客服话单日汇总handler", RESOURCE_SCOPE_C09),
+    ExternalCallTicketDailyHandler("externalCallTicketDailyHandler", "客服话单日汇总handler", RESOURCE_SCOPE_C09),
 
     /**
      * 宁波银行客服话单15min汇总handler
