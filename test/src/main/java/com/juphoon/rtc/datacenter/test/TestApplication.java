@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.iron.cube.starter.annotation.CubeStarterApplication;
+import com.juphoon.rtc.def.domain.DomainCodeEnum;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
 @EnableScheduling
-@CubeStarterApplication
+@CubeStarterApplication(domainCode = DomainCodeEnum.DATA_CENTER)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
 @EnableMongoRepositories(basePackages = "com.juphoon.rtc.datacenter.servicecore.handle.mongo.entity")
 public class TestApplication {

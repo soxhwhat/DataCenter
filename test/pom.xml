@@ -21,16 +21,6 @@
             <artifactId>service-core</artifactId>
             <version>2203.5.22</version>
         </dependency>
-        <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>jrtcDataCollection-e01</artifactId>
-            <version>2203.5.22</version>
-        </dependency>
-        <dependency>
-            <groupId>com.juphoon.rtc.datacenter</groupId>
-            <artifactId>jrtcDataCollection-b03</artifactId>
-            <version>2203.5.22</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

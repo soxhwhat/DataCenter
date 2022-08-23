@@ -24,7 +24,6 @@
             <groupId>com.juphoon.rtc.datacenter</groupId>
             <version>2203.5.22</version>
         </dependency>
-
     </dependencies>
 
     <build>

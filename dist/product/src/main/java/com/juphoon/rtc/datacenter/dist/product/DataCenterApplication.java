@@ -1,6 +1,7 @@
 package com.juphoon.rtc.datacenter.dist.product;
 
 import com.juphoon.iron.cube.starter.annotation.CubeStarterApplication;
+import com.juphoon.rtc.def.domain.DomainCodeEnum;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
  */
 @EnableScheduling
-@CubeStarterApplication(basePackages = "com.juphoon")
+@CubeStarterApplication(basePackages = "com.juphoon", domainCode = DomainCodeEnum.DATA_CENTER)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
 public class DataCenterApplication {

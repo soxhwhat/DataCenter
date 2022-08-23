@@ -1,6 +1,7 @@
 package test.com.juphoon.rtc.datacenter.datacore;
 
 import com.juphoon.iron.cube.starter.annotation.CubeStarterApplication;
+import com.juphoon.rtc.def.domain.DomainCodeEnum;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @date 2/15/22 6:01 PM
  */
 @SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter", exclude = DataSourceAutoConfiguration.class)
-@CubeStarterApplication
+@CubeStarterApplication(domainCode = DomainCodeEnum.DATA_CENTER)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
 public class DataCoreTestApplication {
     public static void main(String[] args) {

@@ -13,6 +13,7 @@
     <artifactId>jrtcDataCenter-Parent</artifactId>
     <version>2203.5.22</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>data-core</module>
         <module>service-core</module>
@@ -29,8 +30,10 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>3.7.17</cube-starter.version>
-        <cube-def.version>2203.0.7</cube-def.version>
+        <cube-starter.version>36.6.5.7</cube-starter.version>
+        <cube-def.version>2203.1.16</cube-def.version>
+        <jrtc-event.version>2203.3.18</jrtc-event.version>
+        <jrtc-domain.version>2203.3.18</jrtc-domain.version>
 
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
@@ -65,16 +68,34 @@
         <netty.version>4.1.71.Final</netty.version>
         <netty.tcnative.version>2.0.46.Final</netty.tcnative.version>
         <tomcat.version>9.0.63</tomcat.version>
-        <commons-collection.version>3.2.2</commons-collection.version>
 
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collection.version}</version>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-spring-boot-starter</artifactId>
+            <version>${cube-starter.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.cube.def</groupId>
+            <artifactId>cube-def-36</artifactId>
+            <version>${cube-def.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.cube.def</groupId>
+            <artifactId>jrtc-domain</artifactId>
+            <version>2203.3.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.cube.def</groupId>
+            <artifactId>jrtc-event</artifactId>
+            <version>2203.3.18</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
@@ -86,17 +107,12 @@
             <version>${tomcat.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-tcnative-classes</artifactId>
-            <version>${netty.tcnative.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-tcnative-classes</artifactId>-->
+<!--            <version>${netty.tcnative.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.juphoon.cube.def</groupId>
-            <artifactId>cube-def-35</artifactId>
-            <version>${cube-def.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -109,11 +125,6 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.juphoon.iron.component</groupId>
-            <artifactId>iron-utils</artifactId>
-            <version>${iron-utils.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -129,17 +140,7 @@
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.juphoon.iron.cube</groupId>
-            <artifactId>cube-spring-boot-starter</artifactId>
-            <version>${cube-starter.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>cube-def-35</artifactId>
-                    <groupId>com.juphoon.cube.def</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -227,8 +228,6 @@
             <artifactId>findbugs</artifactId>
             <version>${findbugs.version}</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -304,8 +303,8 @@
                     <targetJdk>${java.version}</targetJdk>
                     <printFailingErrors>true</printFailingErrors>
                     <!-->失败终止编译开关</-->
-<!--                    <failOnViolation>true</failOnViolation>-->
-<!--                    <failurePriority>1</failurePriority>-->
+                    <!--                    <failOnViolation>true</failOnViolation>-->
+                    <!--                    <failurePriority>1</failurePriority>-->
                     <!-- 代码检查规则 -->
                     <rulesets>
                         <ruleset>rulesets/java/ali-comment.xml</ruleset>

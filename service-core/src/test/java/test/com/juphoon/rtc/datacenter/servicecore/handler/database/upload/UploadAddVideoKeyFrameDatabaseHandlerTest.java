@@ -1,8 +1,6 @@
 package test.com.juphoon.rtc.datacenter.servicecore.handler.database.upload;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
-import com.juphoon.rtc.datacenter.servicecore.handle.database.upload.UploadAddImgDatabaseHandler;
-import com.juphoon.rtc.datacenter.servicecore.handle.database.upload.UploadAddVideoDatabaseHandler;
 import com.juphoon.rtc.datacenter.servicecore.handle.database.upload.UploadAddVideoKeyFrameDatabaseHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -15,7 +13,6 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.datacore.api.EventType.INSERT_SUCCESS_IMAGE_PO;
 import static com.juphoon.rtc.datacenter.datacore.api.EventType.INSERT_VIDEO_KEY_FRAME_PO;
 
 /**
