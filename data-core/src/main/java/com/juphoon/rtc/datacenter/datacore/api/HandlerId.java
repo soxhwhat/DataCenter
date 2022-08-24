@@ -380,7 +380,12 @@ public enum HandlerId {
 
     UploadAddErrorVideoDatabaseHandler("uploadAddErrorVideoDatabaseHandler", "upload音视频文件上传失败数据入库", RESOURCE_SCOPE_GLOBAL_EVENT),
 
-    UploadAddVideoDatabaseHandler("uploadAddVideoDatabaseHandler", "upload音视频文件上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT);
+    UploadAddVideoDatabaseHandler("uploadAddVideoDatabaseHandler", "upload音视频文件上传成功数据入库handler", RESOURCE_SCOPE_GLOBAL_EVENT),
+
+
+    ////////// 通用服务端异常事件处理
+    ServerExceptionEventMongoHandler("serverExceptionEventMongoHandler",
+            "通用服务端异常事件入库Handler", RESOURCE_SCOPE_GLOBAL_EVENT);
 
     /**
      * 类型

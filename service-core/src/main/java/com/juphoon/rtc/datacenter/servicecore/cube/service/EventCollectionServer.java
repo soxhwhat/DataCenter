@@ -91,6 +91,7 @@ public class EventCollectionServer extends EventCollectionServiceServer {
                 .timestamp(from.timestamp)
                 .params(params)
                 .uuid(from.uuid)
+                .stringParams(from.params)
                 .build();
     }
 

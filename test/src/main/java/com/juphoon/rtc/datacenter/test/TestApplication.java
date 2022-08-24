@@ -14,9 +14,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author ajian.zheng@juphoon.com
  * @date 2/15/22 6:01 PM
  */
-@SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
+@SpringBootApplication(scanBasePackages = "com.juphoon")
 @EnableScheduling
-@CubeStarterApplication(domainCode = DomainCodeEnum.DATA_CENTER)
+@CubeStarterApplication(domainCode = DomainCodeEnum.DATA_CENTER, basePackages = "com.juphoon")
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
 @EnableMongoRepositories(basePackages = "com.juphoon.rtc.datacenter.servicecore.handle.mongo.entity")
 public class TestApplication {

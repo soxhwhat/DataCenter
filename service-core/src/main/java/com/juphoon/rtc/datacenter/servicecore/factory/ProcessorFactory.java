@@ -27,9 +27,6 @@ public class ProcessorFactory {
     private Map<String, IProcessor<EventContext>> eventProcessors;
 
     @Autowired
-    private Map<String, IProcessor<LogContext>> logProcessors;
-
-    @Autowired
     private Map<String, IProcessor<StateContext>> stateProcessors;
 
     /**
@@ -39,17 +36,6 @@ public class ProcessorFactory {
      */
     public IProcessor<EventContext> getEventProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
         IProcessor<EventContext> processor = eventProcessors.get(name);
-
-        if (null == processor) {
-            log.warn("** 无效的 processor 名:" + name + " **");
-            throw new JrtcInvalidProcessorConfigurationException("** 无效的 processor 名:" + name + " **");
-        }
-
-        return processor;
-    }
-
-    public IProcessor<LogContext> getLogProcessor(String name) throws JrtcInvalidProcessorConfigurationException {
-        IProcessor<LogContext> processor = logProcessors.get(name);
 
         if (null == processor) {
             log.warn("** 无效的 processor 名:" + name + " **");

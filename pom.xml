@@ -30,10 +30,12 @@
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
 
-        <cube-starter.version>36.6.5.7</cube-starter.version>
+        <cube-starter.version>36.6.5.8</cube-starter.version>
+        <cube-event.version>36.6.5.8</cube-event.version>
         <cube-def.version>2203.1.16</cube-def.version>
-        <jrtc-event.version>2203.3.18</jrtc-event.version>
         <jrtc-domain.version>2203.3.18</jrtc-domain.version>
+        <jrtc-po.version>2203.3.20</jrtc-po.version>
+        <jrtc-event.version>2203.3.20</jrtc-event.version>
 
         <mybatis.version>3.5.10</mybatis.version>
         <iron-utils.version>2.0.1</iron-utils.version>
@@ -87,13 +89,25 @@
         <dependency>
             <groupId>com.juphoon.cube.def</groupId>
             <artifactId>jrtc-domain</artifactId>
-            <version>2203.3.18</version>
+            <version>${jrtc-domain.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.cube.def</groupId>
+            <artifactId>jrtc-po</artifactId>
+            <version>${jrtc-po.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.juphoon.cube.def</groupId>
             <artifactId>jrtc-event</artifactId>
-            <version>2203.3.18</version>
+            <version>${jrtc-event.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.juphoon.iron.cube</groupId>
+            <artifactId>cube-event</artifactId>
+            <version>${cube-event.version}</version>
         </dependency>
 
         <dependency>
@@ -107,11 +121,11 @@
             <version>${tomcat.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>io.netty</groupId>-->
-<!--            <artifactId>netty-tcnative-classes</artifactId>-->
-<!--            <version>${netty.tcnative.version}</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-tcnative-classes</artifactId>-->
+        <!--            <version>${netty.tcnative.version}</version>-->
+        <!--        </dependency>-->
 
 
         <dependency>

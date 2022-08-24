@@ -1,11 +1,11 @@
 package com.juphoon.rtc.datacenter.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.datacore.api.*;
 import com.juphoon.rtc.datacenter.datacore.service.EventService;
-import com.juphoon.rtc.datacenter.datacore.service.LogService;
 import com.juphoon.rtc.datacenter.datacore.service.StateService;
-import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 import com.juphoon.rtc.datacenter.servicecore.handle.mongo.entity.MongoEventPO;
+import com.juphoon.rtc.def.event.entity.alarm.ServerExceptionEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,9 +35,6 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.MONGO_T
 public class TestController {
     @Autowired
     private EventService eventService;
-
-    @Autowired
-    private LogService logService;
 
     @Autowired
     private StateService stateService;
@@ -75,24 +72,45 @@ public class TestController {
         return "event";
     }
 
-    @GetMapping("/log")
-    public String logTest(@RequestParam("msg") String msg) throws InvalidParameterException {
+    @GetMapping("/event/serverException")
+    public String serverExceptionEvent(@RequestParam("msg") String msg) throws Exception {
         log.info("get msg:{}", msg);
 
-        List<String> logs = new ArrayList<>(1);
+        Map<String, String> tags = new HashMap<>(1);
+        tags.put("k", "v");
 
-        String data = "{\"_timestamp\":1653980556507,\"_ver\":1,\"_source\":{\"tags\":[\"f9b9e526-da7d-474c-89d2-857841e225bd\"],\"type\":\"JC\",\"info\":{\"log\":\"20220531T15:02:36.477+0800  MAIN(513738299816)  JCSDK:  INFO:          0 B03_V1.0.37:JCGuest call Number:10086\"}}}\n";
+        ServerExceptionEvent cubeEvent = new ServerExceptionEvent();
 
-        logs.add(data);
+        ServerExceptionEvent.Content content = ServerExceptionEvent.Content.builder()
+                .eventCode(0).domainCode("1").host("2").ignoreCount(3).level(4).location("5").message("6").state(7)
+                .tags(tags).build();
 
-        LogContext context = new LogContext(logs);
-        context.setEventType(EventType.CLIENT_LOG_EVENT);
-        context.setRequestId(msg);
-        context.setFrom(msg);
+        cubeEvent.setParams(content);
 
-        logService.commit(context);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String params = objectMapper.writeValueAsString(content);
 
-        return "log";
+        Event event = Event.builder()
+                .domainId(cubeEvent.getDomainId())
+                .appId(cubeEvent.getAppId())
+                .type(cubeEvent.getEventType().getType())
+                .number(cubeEvent.getEventType().getNumber())
+                .timestamp(cubeEvent.getTimestamp())
+                .uuid(cubeEvent.getUuid())
+                .params(null)
+                .stringParams(params)
+                .build();
+
+        EventContext ec = new EventContext(event);
+        ec.setRequestId(event.getUuid());
+        ec.setFrom(msg);
+
+        List<EventContext> data = new ArrayList<>();
+        data.add(ec);
+
+        eventService.commit(data);
+
+        return event.getUuid();
     }
 
     @GetMapping("/state")

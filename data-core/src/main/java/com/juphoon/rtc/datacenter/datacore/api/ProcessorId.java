@@ -43,11 +43,6 @@ public enum ProcessorId {
 //    MD("mdProcessor", "终端埋点处理器", PROCESSOR_TYPE_EVENT),
 
     /**
-     * 日志mongo入库
-     */
-    MONGO_LOG_PROCESSOR("mongoLogProcessor", "兼容旧版本日志收集处理器", PROCESSOR_TYPE_LOG),
-
-    /**
      * 实时状态Redis处理器
      */
     STATE_RDB("stateRdbProcessor", "实时状态Rdb处理器", PROCESSOR_TYPE_STATE),

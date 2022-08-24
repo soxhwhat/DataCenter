@@ -101,6 +101,12 @@ public enum MongoCollectionEnum {
      * 天赛音视频质量监测
      */
     COLLECTION_EVENT_THEA_QUALITY("jrtc_thea_quality", "天赛音视频质量监测"),
+
+
+    /**
+     * 服务端异常事件
+     */
+    COLLECTION_SERVER_EXCEPTION_EVENT("jrtc_event_exception", "服务端异常事件"),
     ;
 
     private final String name;

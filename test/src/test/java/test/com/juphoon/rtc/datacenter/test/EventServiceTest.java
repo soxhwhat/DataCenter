@@ -3,6 +3,7 @@ package test.com.juphoon.rtc.datacenter.test;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.service.EventService;
 import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
+import com.juphoon.rtc.datacenter.test.TestApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = TestApplication.class)
 @ActiveProfiles("random")
 public class EventServiceTest {
     @Autowired

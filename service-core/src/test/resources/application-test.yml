@@ -17,7 +17,6 @@ iron:
           type: none
         handlers:
           - TestLogHandler
-          - LogMongoHandler
     state-processors:
       - name: TEST_STATE
         queue-service:

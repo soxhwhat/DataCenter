@@ -53,6 +53,8 @@ public class Event {
      */
     private final Map<String, Object> params;
 
+    private String stringParams;
+
     @Override
     public String toString() {
         String params = CollectionUtils.isEmpty(getParams()) ? "" : StringUtils.join(getParams());
@@ -102,6 +104,8 @@ public class Event {
 
         private Map<String, Object> params;
 
+        private String stringParams;
+
         Builder() {
             domainId = -1;
             appId = -1;
@@ -147,13 +151,21 @@ public class Event {
             return this;
         }
 
+        public Builder stringParams(final String stringParams) {
+            this.stringParams = stringParams;
+            return this;
+        }
+
         public Event build() {
 //            assert null != domainId : "domainId 不能为空";
 //            assert null != appId : "appId 不能为空";
             assert null != type : "eventType 不能为空";
             assert null != number : "eventNumber 不能为空";
 
-            return new Event(domainId, appId, uuid, type, number, timestamp, params);
+            Event ret = new Event(domainId, appId, uuid, type, number, timestamp, params);
+            ret.setStringParams(stringParams);
+
+            return ret;
         }
     }
 

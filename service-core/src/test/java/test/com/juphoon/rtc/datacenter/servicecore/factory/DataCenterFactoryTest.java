@@ -109,10 +109,6 @@ public class DataCenterFactoryTest {
                     Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
                             processorFactory.getEventProcessor(ProcessorId.values()[i].getId()));
                     break;
-                case PROCESSOR_TYPE_LOG:
-                    Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
-                            processorFactory.getLogProcessor(ProcessorId.values()[i].getId()));
-                    break;
                 case PROCESSOR_TYPE_STATE:
                     Assert.assertNotNull(ProcessorId.values()[i].getId() + ":" + ProcessorId.values()[i].getName() + " 未加载到",
                             processorFactory.getStateProcessor(ProcessorId.values()[i].getId()));

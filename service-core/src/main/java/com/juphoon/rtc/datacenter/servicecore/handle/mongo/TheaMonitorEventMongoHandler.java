@@ -1,13 +1,11 @@
 package com.juphoon.rtc.datacenter.servicecore.handle.mongo;
 
-import Common.Exception;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
 import com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.thea.TheaRecvPO;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.thea.TheaSendPO;
-import com.mongodb.bulk.BulkWriteResult;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -24,7 +22,8 @@ import java.util.List;
 
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
 import static com.juphoon.rtc.datacenter.datacore.api.EventType.THEA_MONITOR_DATA;
-import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.*;
+import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_THEA_RECV;
+import static com.juphoon.rtc.datacenter.servicecore.api.MongoCollectionEnum.COLLECTION_EVENT_THEA_SEND;
 
 /**
  * <p>天赛音视频上下行通话质量handler</p>
@@ -71,7 +70,7 @@ public class TheaMonitorEventMongoHandler extends AbstractMongoEventHandler {
             TheaSendPO theaSendPo = TheaSendPO.fromEvent(ec);
             //遍历每个对象，插入到对应的集合中
 
-            if(theaRecvPos != null && theaRecvPos.size() > 0) {
+            if (theaRecvPos != null && theaRecvPos.size() > 0) {
                 BulkOperations operations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, recvCollection);
                 operations.insert(theaRecvPos);
                 operations.execute();
