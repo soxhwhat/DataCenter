@@ -11,7 +11,7 @@
 
     <groupId>com.juphoon.rtc.datacenter</groupId>
     <artifactId>jrtcDataCenter-Parent</artifactId>
-    <version>2203.5.22</version>
+    <version>2203.5.23</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -57,7 +57,6 @@
         <powermock.version>2.0.9</powermock.version>
         <jasypt.version>3.0.2</jasypt.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
-
         <findbugs.version>3.0.1</findbugs.version>
         <maven-source-plugin.versoin>3.0.1</maven-source-plugin.versoin>
         <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
