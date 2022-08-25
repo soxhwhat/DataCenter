@@ -149,6 +149,7 @@ public class EventBinLogPO {
                 .number(po.getNumber())
                 .timestamp(po.getTimestamp())
                 .params(params)
+                .stringParams(po.getParams())
                 .uuid(po.getUuid())
                 .build();
 

@@ -98,6 +98,7 @@ public class ServerExceptionEventMongoHandler extends AbstractMongoHandler<Event
         po.setIgnoreCount(event.getParams().getIgnoreCount());
         po.setLevel(event.getParams().getLevel());
         po.setLocation(event.getParams().getLocation());
+        po.setState(event.getParams().getState());
         po.setMessage(event.getParams().getMessage());
         po.setTags(event.getParams().getTags());
         po.setUuid(event.getUuid());

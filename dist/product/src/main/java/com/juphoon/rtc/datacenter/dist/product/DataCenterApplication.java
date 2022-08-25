@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @CubeStarterApplication(basePackages = "com.juphoon", domainCode = DomainCodeEnum.DATA_CENTER)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
-@SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter")
+@SpringBootApplication(scanBasePackages = "com.juphoon")
 public class DataCenterApplication {
     public static void main(String[] args) {
         SpringApplication.run(DataCenterApplication.class, args);
