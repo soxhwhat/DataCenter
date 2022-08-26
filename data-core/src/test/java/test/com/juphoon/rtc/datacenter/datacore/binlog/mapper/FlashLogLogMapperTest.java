@@ -2,9 +2,12 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 
 import com.juphoon.rtc.datacenter.datacore.api.LogContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.LogBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashLogLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashLogLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.com.juphoon.rtc.datacenter.datacore.DataCoreTestApplication;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,12 +56,16 @@ public class FlashLogLogMapperTest {
 
 
     @Autowired
-    private FlashLogLogMapper logMapper;
+    private SqliteFlashLogLogMapper logMapper;
 
     @Before
     public void before() {
         logMapper.dropTable();
-        logMapper.createTable();
+        try {
+            logMapper.createTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @After
@@ -74,7 +82,7 @@ public class FlashLogLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void testInsertBatch() {
         int max = 100;
@@ -154,6 +162,29 @@ public class FlashLogLogMapperTest {
         ret = logMapper.find(10);
         Assert.assertEquals(5, ret.size());
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
+    }
+
+    @Test
+    public void testFindById() {
+        before();
+
+        LogBinLogPO p1 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p2 = LogBinLogPO.fromContext(randomContext());
+        LogBinLogPO p3 = LogBinLogPO.fromContext(randomContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+
+        LogBinLogPO ret1 = logMapper.findById(p1.getId());
+        Assert.assertEquals(p1.getReceivedTimestamp(),ret1.getReceivedTimestamp());
+
+        LogBinLogPO ret2 = logMapper.findById(p2.getId());
+        Assert.assertEquals(p2.getReceivedTimestamp(),ret2.getReceivedTimestamp());
+
+        LogBinLogPO ret3 = logMapper.findById(p3.getId());
+        Assert.assertEquals(p3.getReceivedTimestamp(),ret3.getReceivedTimestamp());
+
     }
 
     @Test

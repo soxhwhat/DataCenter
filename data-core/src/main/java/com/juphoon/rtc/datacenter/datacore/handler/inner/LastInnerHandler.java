@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * <p>通用最后处理句柄</p>
  * // 最后一个句柄需要处理
@@ -48,8 +49,13 @@ public class LastInnerHandler<T extends BaseContext> extends AbstractHandler<T> 
 
     @Override
     public boolean handle(T t) {
+        /*
+         * 过滤
+         * 防止出现情况：
+         * 一个线程将事件load进list中，另一个事件才进行remove/success后导致事件重复消费
+         */
+        getProcessor().queueService().addFilter(t);
         log.debug("t:{}", t);
-
         /*
          * 若处理成功，则删除事件
          * 重做事件独立处理

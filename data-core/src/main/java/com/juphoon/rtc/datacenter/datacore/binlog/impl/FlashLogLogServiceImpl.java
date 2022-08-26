@@ -3,7 +3,7 @@ package com.juphoon.rtc.datacenter.datacore.binlog.impl;
 import com.juphoon.rtc.datacenter.datacore.api.LogContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.LogBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashLogLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashLogLogMapper;
 import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
 import com.juphoon.rtc.datacenter.datacore.utils.JrtcIdGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +28,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.LOG_BIN
 @Component(LOG_BIN_LOG_IMPL_FLASH)
 public class FlashLogLogServiceImpl implements ILogService<LogContext> {
     @Autowired
-    private FlashLogLogMapper logMapper;
-
+    private SqliteFlashLogLogMapper logMapper;
     @Override
     public void save(LogContext context) {
         assert null != context : "参数为空";
@@ -94,6 +94,10 @@ public class FlashLogLogServiceImpl implements ILogService<LogContext> {
 
     @Override
     public void start() {
-        logMapper.createTable();
+        try {
+            logMapper.createTable();
+        } catch (SQLException e) {
+            log.warn("创建表失败");
+        }
     }
 }

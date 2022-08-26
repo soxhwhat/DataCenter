@@ -11,7 +11,7 @@
 
     <version>2203.5.23</version>
     <artifactId>jrtcDataCollection-product</artifactId>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

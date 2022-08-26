@@ -24,9 +24,9 @@ iron:
           - monitorRoomConcurrentHandler
           - monitorAcdQueueCountHandler
     data-source:
-      url: jdbc:mysql://192.168.2.110:3306/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-      username: kiwi
-      password: juphoon419708
+      url: jdbc:mysql://192.168.12.87:3357/juphoon?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: Juphoon419708!
 spring:
   data:
     mongodb:

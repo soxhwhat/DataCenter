@@ -3,9 +3,12 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 import com.juphoon.rtc.datacenter.datacore.api.State;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashStateLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.com.juphoon.rtc.datacenter.datacore.DataCoreTestApplication;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -49,12 +53,16 @@ public class FlashStateLogMapperTest {
     }
 
     @Autowired
-    private FlashStateLogMapper logMapper;
+    private SqliteFlashStateLogMapper logMapper;
 
     @Before
     public void before() {
         logMapper.dropTable();
-        logMapper.createTable();
+        try {
+            logMapper.createTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @After
@@ -71,7 +79,7 @@ public class FlashStateLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void testInsertBatch() {
         int max = 100;
@@ -153,6 +161,31 @@ public class FlashStateLogMapperTest {
         Assert.assertEquals(p5.getId(), ret.get(4).getId());
     }
 
+    @Test
+    public void testFindById() {
+        before();
+
+        StateBinLogPO p1 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p2 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p3 = StateBinLogPO.fromContext(randomContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+
+        StateBinLogPO ret1 = logMapper.findById(p1.getId());
+        Assert.assertNotNull(ret1.getUuid());
+        Assert.assertEquals(p1.getUuid(),ret1.getUuid());
+
+        StateBinLogPO ret2 = logMapper.findById(p2.getId());
+        Assert.assertNotNull(ret2.getUuid());
+        Assert.assertEquals(p2.getUuid(),ret2.getUuid());
+
+        StateBinLogPO ret3 = logMapper.findById(p3.getId());
+        Assert.assertNotNull(ret3.getUuid());
+        Assert.assertEquals(p3.getUuid(),ret3.getUuid());
+
+    }
     @Test
     public void testUpdateRetryCount() {
         StateBinLogPO po = StateBinLogPO.fromContext(randomContext());

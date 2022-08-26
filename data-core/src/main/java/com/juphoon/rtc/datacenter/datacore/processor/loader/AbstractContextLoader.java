@@ -14,6 +14,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.juphoon.rtc.datacenter.datacore.processor.queue.AbstractQueueService.eventFilter;
+
 /**
  * <p>记录加载器</p>
  * 1. 定时从sqlite中加载为成功消费的事件，投递到queue中
@@ -48,6 +50,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
      * 线程池
      */
     private ScheduledExecutorService executor;
+
 
     @Override
     public void start() {
@@ -86,6 +89,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
             } catch (Exception ignored) {
             }
         }
+        eventFilter.clear();
     }
 
     @Override

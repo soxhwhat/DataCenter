@@ -25,7 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
 public class TestLastCounterHandler extends AbstractEventHandler {
-    private static AtomicInteger counter = new AtomicInteger(0);
+    public final static AtomicInteger COUNTER = new AtomicInteger(0);
+
 
     @Override
     public HandlerId handlerId() {
@@ -39,7 +40,7 @@ public class TestLastCounterHandler extends AbstractEventHandler {
 
     @Override
     public boolean handle(EventContext eventContext) {
-        log.info("index:" + counter.incrementAndGet());
+        log.info("index:" + COUNTER.incrementAndGet());
         return true;
     }
 }

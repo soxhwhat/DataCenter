@@ -12,6 +12,7 @@ import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
             getEventLogMapper().createTable();
             // 测试DB是否正常
             getEventLogMapper().find(1);
-        } catch (MyBatisSystemException e) {
+        } catch (MyBatisSystemException | SQLException e) {
             // TODO 保留历史文件，重命名
             // 新建文件
             String fileName = System.getProperty("user.dir") + dbFileName();
@@ -56,7 +57,11 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
                 file.renameTo(new File(bakFileName));
 
                 /// 重建文件
-                getEventLogMapper().createTable();
+                try {
+                    getEventLogMapper().createTable();
+                } catch (SQLException ex) {
+                    log.warn("建表失败");
+                }
             }
         }
     }
@@ -89,7 +94,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public synchronized void save(List<EventContext> list) {
+    public void save(List<EventContext> list) {
         assert !CollectionUtils.isEmpty(list) : "参数为空";
 
         log.debug("context:{}", list.size());
@@ -100,7 +105,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public synchronized void remove(EventContext context) {
+    public void remove(EventContext context) {
         assert null != context : "参数为空";
 
         log.debug("context:{}", context);
@@ -109,7 +114,7 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
-    public synchronized List<EventContext> find(int size) {
+    public List<EventContext> find(int size) {
         List<EventBinLogPO> list = getEventLogMapper().find(size);
         if (CollectionUtils.isEmpty(list)) {
             return new LinkedList<>();
@@ -122,4 +127,10 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     public void updateRetryCount(EventContext context) {
         getEventLogMapper().updateRetryCount(EventBinLogPO.fromEventContext(context));
     }
+
+    @Override
+    public void stop() {
+        getEventLogMapper().stop();
+    }
+
 }

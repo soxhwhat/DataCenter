@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Slf4j
 public class AbstractExecutorQueueService<T extends BaseContext> extends AbstractQueueService<T> {
-    private final static AtomicInteger threadNumber = new AtomicInteger(1);
+    private final static AtomicInteger THREAD_NUMBER = new AtomicInteger(1);
 
     private ThreadPoolExecutor threadPoolExecutor;
 
@@ -52,7 +52,7 @@ public class AbstractExecutorQueueService<T extends BaseContext> extends Abstrac
                 config.getKeepAliveTime(),
                 TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>(config.getQueueSize()),
-                r -> new Thread(r, getProcessor().getId() + "-queue-pool-" + threadNumber.getAndIncrement()),
+                r -> new Thread(r, getProcessor().getId() + "-queue-pool-" + THREAD_NUMBER.getAndIncrement()),
                 new ThreadPoolExecutor.AbortPolicy()
         );
 

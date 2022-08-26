@@ -7,6 +7,8 @@ package com.juphoon.rtc.datacenter.datacore;
  * @date 2022/3/2 16:38
  */
 public class JrtcDataCenterConstant {
+
+    public static final String CONNECTION_CLOSED = "database connection closed";
     public final static String DOMAIN_CODE = "J61";
 
     public final static String URL_PARAMS = "?name=Juphoon";

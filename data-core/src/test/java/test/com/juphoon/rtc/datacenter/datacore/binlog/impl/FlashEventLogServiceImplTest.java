@@ -2,7 +2,8 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.impl;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import test.com.juphoon.rtc.datacenter.datacore.DataCoreTestApplication;
-import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,7 +40,7 @@ public class FlashEventLogServiceImplTest {
     private ILogService<EventContext> eventLogService;
 
     @Autowired
-    private FlashEventLogMapper logMapper;
+    private SqliteFlashEventLogMapper logMapper;
 
     @Before
     public void before() throws Exception {
@@ -58,7 +58,7 @@ public class FlashEventLogServiceImplTest {
      *
      */
     @Test
-    public void testSave() throws Exception {
+    public void testSave() {
         EventContext context = TestUtils.randomEventContext();
 
         log.info("context:{}", context.getId());
@@ -68,6 +68,7 @@ public class FlashEventLogServiceImplTest {
 
     @Test
     public void testStart() throws Exception {
+        eventLogService.stop();
         String fileName = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH + LOCAL_DB_FILE_FLASH;
         File dir = new File(System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH);
 

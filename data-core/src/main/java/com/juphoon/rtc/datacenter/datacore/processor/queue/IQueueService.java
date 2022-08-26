@@ -43,7 +43,12 @@ public interface IQueueService<T> extends IService {
     default void init(QueueServiceConfig config){
     }
 
-
+    /**
+     * 添加到过滤set中
+     * TODO 放在这里感觉不是很好
+     * @param ec
+     */
+    void addFilter(T ec);
     // todo 增加延迟消费的submit
     // 重做事件最好加下延迟
 }

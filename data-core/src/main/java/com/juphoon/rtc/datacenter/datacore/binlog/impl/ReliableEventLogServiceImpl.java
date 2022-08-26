@@ -1,10 +1,9 @@
 package com.juphoon.rtc.datacenter.datacore.binlog.impl;
 
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.EventLogMapper;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.reliable.ReliableEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.reliable.SqliteReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
@@ -20,8 +19,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 @Component(EVENT_BIN_LOG_IMPL_RELIABLE)
 public class ReliableEventLogServiceImpl extends AbstractEventLogService {
     @Autowired
-    private ReliableEventLogMapper logMapper;
-
+    private SqliteReliableEventLogMapper logMapper;
     @Override
     public EventLogMapper getEventLogMapper() {
         return logMapper;

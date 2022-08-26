@@ -1,9 +1,7 @@
 package test.com.juphoon.rtc.datacenter.servicecore.mapper;
 
 import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.UploadRecordErrorInfoPO;
-import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.UploadRecordInfoPO;
 import com.juphoon.rtc.datacenter.servicecore.mapper.UploadRecordErrorInfoMapper;
-import com.juphoon.rtc.datacenter.servicecore.mapper.UploadRecordInfoMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

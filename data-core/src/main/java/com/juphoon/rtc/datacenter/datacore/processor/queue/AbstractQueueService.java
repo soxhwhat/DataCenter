@@ -17,7 +17,12 @@ import java.util.Set;
 public abstract class AbstractQueueService<T extends BaseContext> implements IQueueService<T> {
     private AbstractProcessor<T> processor;
 
-    private Set<Long> eventIndex = Sets.newConcurrentHashSet();
+    private final Set<Long> eventIndex = Sets.newConcurrentHashSet();
+
+    /**
+     * 过滤重复事件
+     */
+    public static Set<Long> eventFilter = Sets.newConcurrentHashSet();
 
     public AbstractQueueService(AbstractProcessor<T> processor, QueueServiceConfig config) {
         this.processor = processor;
@@ -53,15 +58,22 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
     @Override
     public synchronized void submit(T ec) throws Exception {
         log.debug("ec:{}", ec);
-
+        if (eventFilter.contains(ec.getId())) {
+//            eventFilter.remove(ec.getId());
+            throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
+        }
         // 去重
         if (eventIndex.contains(ec.getId())) {
             throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
         }
 
-        eventIndex.add(ec.getId());
-
+        /*
+         * 先提交再写入hashSet中
+         * 如果先放入set中再提交，线程池满执行拒绝策略会导致set中的数据无法清除
+         */
         onSubmit(ec);
+
+        eventIndex.add(ec.getId());
     }
 
     /**
@@ -71,7 +83,7 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
      * 4. 线程2 submit到queue
      *
      * 这时候数据有可能被重复消费，因此这里加锁，锁住队列
-     * 
+     *
      * @param ec
      */
     @Override
@@ -79,5 +91,9 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
         log.debug("ec:{},{}", ec, eventIndex.size());
 
         eventIndex.remove(ec.getId());
+    }
+    @Override
+    public synchronized void addFilter(T ec) {
+        eventFilter.add(ec.getId());
     }
 }

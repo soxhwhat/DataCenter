@@ -2,6 +2,7 @@ package com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,8 +12,9 @@ import java.util.List;
 public interface EventLogMapper {
     /**
      * 初始化表
+     * @throws SQLException
      */
-    void createTable();
+    void createTable() throws SQLException;
 
     /**
      * 删除表
@@ -62,4 +64,9 @@ public interface EventLogMapper {
      * @return
      */
     List<EventBinLogPO> find(int size);
+
+    /**
+     * 关闭连接
+     */
+    void stop();
 }

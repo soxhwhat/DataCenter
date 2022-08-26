@@ -8,7 +8,8 @@ iron:
     event-processors:
       - name: TEST_EVENT
         handlers:
-          - TestEventRandomSleepAndFailHandler
+          #          - TestEventRandomSleepAndFailHandler
+          - TestLastCounterHandler
   debug:
     enabled: true
 spring:
