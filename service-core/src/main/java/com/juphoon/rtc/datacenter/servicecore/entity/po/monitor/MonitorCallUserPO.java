@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.Map;
 
+import static com.juphoon.rtc.datacenter.servicecore.api.TheaConstant.ACCOUNT_ID_PREFIX;
+
 /**
  * <p>成员加入、离开房间监控</p>
  *
@@ -97,7 +99,7 @@ public class MonitorCallUserPO implements Serializable {
         String reason = (String) params.get("reason");
         String userId;
         //用户名提取操作
-        if (user.startsWith("[username:")) {
+        if (user.startsWith(ACCOUNT_ID_PREFIX)) {
             int start = user.indexOf(":") + 1;
             int end = user.indexOf("@", start);
             userId = user.substring(start, end);

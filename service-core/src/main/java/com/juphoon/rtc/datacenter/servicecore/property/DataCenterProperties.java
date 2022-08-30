@@ -53,6 +53,36 @@ public class DataCenterProperties {
     private DataSource dataSource = new DataSource();
 
     /**
+     * MongoDB过期数据清理配置
+     */
+    private Clear clear = new Clear();
+
+    @Data
+    public static class Clear {
+        /**
+         * 默认事件集合过期时间为365天
+         */
+        private int expireEvent = 365;
+
+        /**
+         * 默认埋点集合过期时间为90天
+         */
+        private int expireMd = 90;
+
+        /**
+         * 事件集合清理定时
+         */
+        private String cronEvent = "0 0 0 * * ?";
+
+        /**
+         * 埋点集合清理定时
+         */
+        private String cronMd = "0 0 12 * * ?";
+
+
+    }
+
+    /**
      * 赞同
      */
     @Data

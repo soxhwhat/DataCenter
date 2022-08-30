@@ -5,6 +5,10 @@ iron:
   cube:
     enabled: false
   datacenter:
+    clear:
+      expire-event: 7
+      expire-md: 7
+      cronMd: 0 0/1 * 1/1 * ?
     servicelevel:
       serviceLevelTypeEnums:
         - service_level_20sec

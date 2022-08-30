@@ -201,4 +201,10 @@ public interface TheaConstant {
 
     Integer JOIN_FAIL = 3;
 
+    String ACCOUNT_ID_PREFIX = "[username:";
+
+    String CD_ACCOUNT_ID_PREFIX = "[username:delivery";
+
+    String DATA_DELIMITER = "_";
+
 }
