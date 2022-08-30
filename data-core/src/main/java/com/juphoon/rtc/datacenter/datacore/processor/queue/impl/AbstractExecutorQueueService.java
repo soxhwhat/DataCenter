@@ -29,11 +29,11 @@ public class AbstractExecutorQueueService<T extends BaseContext> extends Abstrac
 
     @Override
     public void onSubmit(T ec) throws Exception {
-        log.info("submit ec:{}", ec);
+        log.debug("submit ec:{}", ec);
         //提交任务到线程池,并返回执行结果
         threadPoolExecutor.submit(
                 () -> {
-                    log.info("ec:{} onSubmit {}", ec, Thread.currentThread().getName());
+                    log.debug("ec:{} onSubmit {}", ec, Thread.currentThread().getName());
                     getProcessor().process(ec);
                 }
         );

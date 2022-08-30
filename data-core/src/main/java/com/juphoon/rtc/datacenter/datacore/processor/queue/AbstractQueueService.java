@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import com.juphoon.rtc.datacenter.datacore.api.BaseContext;
 import com.juphoon.rtc.datacenter.datacore.exception.JrtcRepeatedSubmitEventException;
 import com.juphoon.rtc.datacenter.datacore.processor.AbstractProcessor;
+import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
+import io.micrometer.core.instrument.Timer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
@@ -58,22 +60,32 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
     @Override
     public synchronized void submit(T ec) throws Exception {
         log.debug("ec:{}", ec);
+
+        Timer.Sample sample = Timer.start();
+
         if (eventFilter.contains(ec.getId())) {
-//            eventFilter.remove(ec.getId());
             throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
         }
+        sample.stop(MetricUtils.get("queueService.eventFilter"));
+
+        Timer.Sample sample2 = Timer.start();
         // 去重
         if (eventIndex.contains(ec.getId())) {
             throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
         }
+        sample2.stop(MetricUtils.get("queueService.eventIndex"));
 
+        Timer.Sample sample3 = Timer.start();
         /*
          * 先提交再写入hashSet中
          * 如果先放入set中再提交，线程池满执行拒绝策略会导致set中的数据无法清除
          */
         onSubmit(ec);
+        sample3.stop(MetricUtils.get("queueService.onSubmit"));
 
+        Timer.Sample sample4 = Timer.start();
         eventIndex.add(ec.getId());
+        sample4.stop(MetricUtils.get("queueService.eventIndex.add"));
     }
 
     /**

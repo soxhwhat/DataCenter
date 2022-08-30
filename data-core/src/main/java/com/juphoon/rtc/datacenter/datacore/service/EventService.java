@@ -2,6 +2,8 @@ package com.juphoon.rtc.datacenter.datacore.service;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;
+import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
+import io.micrometer.core.instrument.Timer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +47,10 @@ public class EventService {
      */
     public void commit(List<EventContext> contexts) {
         log.debug("contexts:{}", contexts.size());
+
+        Timer.Sample sample = Timer.start();
         contexts.forEach(this::commit);
+        sample.stop(MetricUtils.get("EventService.commit"));
     }
 
 }

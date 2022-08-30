@@ -9,6 +9,8 @@ import com.juphoon.rtc.datacenter.datacore.handler.inner.FirstInnerHandler;
 import com.juphoon.rtc.datacenter.datacore.handler.inner.LastInnerHandler;
 import com.juphoon.rtc.datacenter.datacore.processor.loader.AbstractContextLoader;
 import com.juphoon.rtc.datacenter.datacore.processor.queue.IQueueService;
+import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
+import io.micrometer.core.instrument.Timer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -157,6 +159,7 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
 
         /// 先入库
         /// TODO 若其中一个processor save失败，咋办啊
+        Timer.Sample sample = Timer.start();
         try {
             logService().save(t);
         } catch (Exception ex) {
@@ -164,9 +167,12 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
             //感觉没啥用，暂时先这样
             throw new IronException();
         }
+        sample.stop(MetricUtils.get("logService.save()"));
 
         /// todo 异步提交
+        Timer.Sample sample2 = Timer.start();
         submit(t);
+        sample2.stop(MetricUtils.get("queueService.submit()"));
     }
 
     /**
@@ -201,9 +207,12 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
 
         // first
         if (null != getFirstInnerEventHandler()) {
+            Timer.Sample sample = Timer.start();
             getFirstInnerEventHandler().handle(t);
+            sample.stop(MetricUtils.get("process.firstHandler"));
         }
 
+        Timer.Sample sample2 = Timer.start();
         for (IHandler<T> handler : getHandlers()) {
 
             // 不关心
@@ -222,10 +231,13 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
                 onFreshEvent(t, handler);
             }
         }
+        sample2.stop(MetricUtils.get("process.handlers"));
 
         /// last todo 异常处理（可能死循环）
         if (!t.isRedoEvent()) {
+            Timer.Sample sample3 = Timer.start();
             getLastInnerEventHandler().handle(t);
+            sample3.stop(MetricUtils.get("process.lastHandler"));
         }
     }
 

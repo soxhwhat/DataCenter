@@ -5,6 +5,8 @@ import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.HandlerId;
 import com.juphoon.rtc.datacenter.datacore.handler.AbstractHandler;
 import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;
+import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
+import io.micrometer.core.instrument.Timer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -54,17 +56,24 @@ public class LastInnerHandler<T extends BaseContext> extends AbstractHandler<T> 
          * 防止出现情况：
          * 一个线程将事件load进list中，另一个事件才进行remove/success后导致事件重复消费
          */
+        Timer.Sample sample = Timer.start();
         getProcessor().queueService().addFilter(t);
+        sample.stop(MetricUtils.get("LastInnerHandler.addFilter"));
+
         log.debug("t:{}", t);
         /*
          * 若处理成功，则删除事件
          * 重做事件独立处理
          */
         // 顺序保证，先删库
+        Timer.Sample sample2 = Timer.start();
         getProcessor().logService().remove(t);
+        sample2.stop(MetricUtils.get("LastInnerHandler.remove"));
 
+        Timer.Sample sample3 = Timer.start();
         // 再清理set
         getProcessor().queueService().success(t);
+        sample3.stop(MetricUtils.get("LastInnerHandler.success"));
 
         log.debug("{} process t:{},{} cost:{}",
                 t.getProcessorId(),

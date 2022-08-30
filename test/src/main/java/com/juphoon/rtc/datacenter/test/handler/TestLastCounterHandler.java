@@ -40,7 +40,7 @@ public class TestLastCounterHandler extends AbstractEventHandler {
 
     @Override
     public boolean handle(EventContext eventContext) {
-        log.info("index:" + COUNTER.incrementAndGet());
+        log.debug("index:" + COUNTER.incrementAndGet());
         return true;
     }
 }

@@ -56,6 +56,7 @@ public enum ProcessorId {
      * 测试
      */
     TEST_EVENT("testEventProcessor", "事件测试处理器", PROCESSOR_TYPE_TEST),
+    TEST_EVENT_WITH_EMPTY_LAST_HANDLER("testEventProcessorWithEmptyLastHandler", "事件测试处理器", PROCESSOR_TYPE_TEST),
 
     /**
      * 测试
