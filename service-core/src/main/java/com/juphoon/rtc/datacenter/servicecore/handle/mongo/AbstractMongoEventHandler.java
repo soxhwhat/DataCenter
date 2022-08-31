@@ -26,7 +26,6 @@ public abstract class AbstractMongoEventHandler<T extends MongoEventPO> extends 
 
         try {
             T po = poFromEvent(ec.getEvent());
-//            mongoTemplate().insert(po, collectionName);
             mongoTemplate().insert(po);
         } catch (DataAccessException e) {
             log.error("DataAccessException:{}", e);

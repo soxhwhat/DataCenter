@@ -105,21 +105,21 @@ public class SqliteFlashStateLogMapper extends AbstractSqliteFlashMapper {
                 "        `redoHandler`,\n" +
                 "        `retryCount`, `domainId`, `appId`, `uuid`, `type`,`state`, `params`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
             for (int i = 0; i < list.size(); i++) {
-                StateBinLogPO StateBinLogPO = list.get(i);
-                preparedStatement.setLong(1, StateBinLogPO.getId());
-                preparedStatement.setString(2, StateBinLogPO.getRequestId());
-                preparedStatement.setString(3, StateBinLogPO.getFrom());
-                preparedStatement.setString(4, StateBinLogPO.getProcessorId());
-                preparedStatement.setLong(5, StateBinLogPO.getReceivedTimestamp());
-                preparedStatement.setLong(6, StateBinLogPO.getLastUpdateTimestamp());
-                preparedStatement.setString(7, StateBinLogPO.getRedoHandler());
-                preparedStatement.setInt(8, StateBinLogPO.getRetryCount());
-                preparedStatement.setInt(9, StateBinLogPO.getDomainId());
-                preparedStatement.setInt(10, StateBinLogPO.getAppId());
-                preparedStatement.setString(11, StateBinLogPO.getUuid());
-                preparedStatement.setInt(12, StateBinLogPO.getType());
-                preparedStatement.setInt(13, StateBinLogPO.getState());
-                preparedStatement.setString(14, StateBinLogPO.getParams());
+                StateBinLogPO po = list.get(i);
+                preparedStatement.setLong(1, po.getId());
+                preparedStatement.setString(2, po.getRequestId());
+                preparedStatement.setString(3, po.getFrom());
+                preparedStatement.setString(4, po.getProcessorId());
+                preparedStatement.setLong(5, po.getReceivedTimestamp());
+                preparedStatement.setLong(6, po.getLastUpdateTimestamp());
+                preparedStatement.setString(7, po.getRedoHandler());
+                preparedStatement.setInt(8, po.getRetryCount());
+                preparedStatement.setInt(9, po.getDomainId());
+                preparedStatement.setInt(10, po.getAppId());
+                preparedStatement.setString(11, po.getUuid());
+                preparedStatement.setInt(12, po.getType());
+                preparedStatement.setInt(13, po.getState());
+                preparedStatement.setString(14, po.getParams());
                 preparedStatement.addBatch();
                 if (i % 500 == 0) {
                     preparedStatement.executeBatch();
@@ -193,8 +193,8 @@ public class SqliteFlashStateLogMapper extends AbstractSqliteFlashMapper {
                 stateBinLogPO.setType(resultSet.getInt("type"));
                 stateBinLogPO.setState(resultSet.getInt("state"));
                 stateBinLogPO.setParams(resultSet.getString("params"));
-
             }
+            resultSet.close();
             return stateBinLogPO;
         } catch (SQLiteException e) {
             log.warn("根据id查找失败,id:{}", contentId);
@@ -236,6 +236,7 @@ public class SqliteFlashStateLogMapper extends AbstractSqliteFlashMapper {
                 stateBinLogPO.setParams(resultSet.getString("params"));
                 list.add(stateBinLogPO);
             }
+            resultSet.close();
             return list;
         } catch (SQLiteException e) {
             log.warn("查找失败");

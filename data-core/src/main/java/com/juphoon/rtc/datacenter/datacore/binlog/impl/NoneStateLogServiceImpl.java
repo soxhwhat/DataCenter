@@ -40,6 +40,11 @@ public class NoneStateLogServiceImpl implements ILogService<StateContext> {
     }
 
     @Override
+    public void remove(Long id) {
+        log.info("id:{}", id);
+    }
+
+    @Override
     public List<StateContext> find(int size) {
         log.info("size:{}", size);
         return null;

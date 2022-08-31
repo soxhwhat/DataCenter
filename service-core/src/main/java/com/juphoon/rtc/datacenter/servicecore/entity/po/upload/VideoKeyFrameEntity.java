@@ -3,6 +3,12 @@ package com.juphoon.rtc.datacenter.servicecore.entity.po.upload;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.keyframe.KeyFrameData;
 import lombok.Data;
 
+/**
+ * <p打点数据实体</p>
+ *
+ * @author  ke.wang@juphoon.com
+ * @date   2022/7/28
+ */
 @Data
 public class VideoKeyFrameEntity<T extends KeyFrameData> {
 

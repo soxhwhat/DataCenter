@@ -24,7 +24,7 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
     /**
      * 过滤重复事件
      */
-    public static Set<Long> eventFilter = Sets.newConcurrentHashSet();
+    public final Set<Long> eventFilter = Sets.newConcurrentHashSet();
 
     public AbstractQueueService(AbstractProcessor<T> processor, QueueServiceConfig config) {
         this.processor = processor;
@@ -104,6 +104,7 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
 
         eventIndex.remove(ec.getId());
     }
+
     @Override
     public synchronized void addFilter(T ec) {
         eventFilter.add(ec.getId());

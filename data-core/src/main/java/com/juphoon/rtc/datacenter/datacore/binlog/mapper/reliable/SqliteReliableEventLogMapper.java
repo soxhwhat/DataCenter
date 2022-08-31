@@ -32,7 +32,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 @Slf4j
 public class SqliteReliableEventLogMapper implements EventLogMapper {
 
-    public static Connection CONNECTION = getConnection();
+    static Connection CONNECTION = getConnection();
 
     public static Connection getConnection() {
         try {
@@ -46,7 +46,7 @@ public class SqliteReliableEventLogMapper implements EventLogMapper {
         return CONNECTION;
     }
 
-    public static void openConnection() throws SQLException {
+    private static void openConnection() throws SQLException {
         String dbPath = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH;
         FileUtils.createDir(dbPath);
 
@@ -67,7 +67,7 @@ public class SqliteReliableEventLogMapper implements EventLogMapper {
         CONNECTION = sqLiteDataSource.getConnection();
     }
 
-    public void closeConnection() {
+    private void closeConnection() {
         try {
             if (!CONNECTION.isClosed()) {
                 CONNECTION.close();
@@ -257,8 +257,8 @@ public class SqliteReliableEventLogMapper implements EventLogMapper {
                 eventBinLogPO.setNumber(resultSet.getInt("number"));
                 eventBinLogPO.setTimestamp(resultSet.getLong("timestamp"));
                 eventBinLogPO.setParams(resultSet.getString("params"));
-
             }
+            resultSet.close();
             return eventBinLogPO;
         } catch (SQLiteException e) {
             log.warn("根据id查找失败,id:{}", contentId);
@@ -302,6 +302,7 @@ public class SqliteReliableEventLogMapper implements EventLogMapper {
                 eventBinLogPO.setParams(resultSet.getString("params"));
                 list.add(eventBinLogPO);
             }
+            resultSet.close();
             return list;
         } catch (SQLiteException e) {
             log.warn("查找失败");
@@ -321,7 +322,6 @@ public class SqliteReliableEventLogMapper implements EventLogMapper {
 
     @SneakyThrows
     void restart() {
-//        Assert.notNull(getProperties(), "初始化异常");
         openConnection();
     }
 }

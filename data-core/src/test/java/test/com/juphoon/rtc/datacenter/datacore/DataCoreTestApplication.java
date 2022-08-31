@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author ajian.zheng@juphoon.com
  * @date 2/15/22 6:01 PM
  */
-@SpringBootApplication(scanBasePackages = "com.juphoon.rtc.datacenter", exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(scanBasePackages = "com.juphoon", exclude = DataSourceAutoConfiguration.class)
 @CubeStarterApplication(domainCode = DomainCodeEnum.DATA_CENTER)
 @MapperScan(basePackages = "com.juphoon.rtc.datacenter")
 public class DataCoreTestApplication {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.datacore.api.EventType.*;
+import static com.juphoon.rtc.datacenter.datacore.api.EventType.QUEUE_WAIT_BEAT;
 
 /**
  * 队列状态上报处理器
@@ -36,7 +36,9 @@ public class QueueStatusKafkaHandler extends AbstractKafkaHandler {
         return kafkaProperties.getTopic().getQueue();
     }
 
-    /// TODO TODO TODO 临时修改
+    /**
+     *     TODO TODO TODO 临时修改
+     */
     @Override
     public Object getData(EventContext ec) {
         return ec.getEvent();

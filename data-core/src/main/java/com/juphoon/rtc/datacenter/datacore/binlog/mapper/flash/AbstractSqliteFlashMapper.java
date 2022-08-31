@@ -26,7 +26,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.LOCAL_D
 @Slf4j
 public abstract class AbstractSqliteFlashMapper {
 
-    public static Connection CONNECTION = getConnection();
+    static Connection CONNECTION = getConnection();
 
     public static Connection getConnection() {
         try {
@@ -39,7 +39,7 @@ public abstract class AbstractSqliteFlashMapper {
         return CONNECTION;
     }
 
-    public static void openConnection() throws SQLException {
+    private static void openConnection() throws SQLException {
         String dbPath = System.getProperty("user.dir") + LOCAL_DB_FILE_BASE_PATH;
         FileUtils.createDir(dbPath);
 
@@ -61,7 +61,7 @@ public abstract class AbstractSqliteFlashMapper {
 
     }
 
-    public void closeConnection() {
+    void closeConnection() {
         try {
             if (!CONNECTION.isClosed()) {
                 CONNECTION.close();
@@ -74,7 +74,6 @@ public abstract class AbstractSqliteFlashMapper {
 
     @SneakyThrows
     void restart() {
-//        Assert.notNull(getProperties(), "初始化异常");
         openConnection();
     }
 }

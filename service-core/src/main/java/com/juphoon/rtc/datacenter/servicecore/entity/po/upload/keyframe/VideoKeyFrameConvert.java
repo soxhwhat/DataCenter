@@ -17,6 +17,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <p>打点转换类</p>
+ *
+ * @author  ke.wang@juphoon.com
+ * @date   2022/7/28
+ */
 @Slf4j
 @Component
 public class VideoKeyFrameConvert {
@@ -108,16 +114,5 @@ public class VideoKeyFrameConvert {
             log.warn("视频打点数据解析错误:{} type:{},data:{}", e, type, data);
         }
         return vkf;
-    }
-
-    public VideoKeyFrameEntity<?> convert(VideoKeyFrameDTO videoKeyFrameDTO) {
-        VideoKeyFrameEntity<KeyFrameData> videoKeyFrameEntity = new VideoKeyFrameEntity<>();
-        videoKeyFrameEntity.setTimeOffset(videoKeyFrameDTO.getTimeOffset());
-        videoKeyFrameEntity.setType(videoKeyFrameDTO.getType());
-        videoKeyFrameEntity.setVideoId(videoKeyFrameDTO.getVideoId());
-        KeyFrameData v = getKeyEntity(videoKeyFrameDTO.getType(), IronJsonUtils.mapToJson(videoKeyFrameDTO.getData()));
-        videoKeyFrameEntity.setData(v);
-        return videoKeyFrameEntity;
-
     }
 }

@@ -1,5 +1,6 @@
 package com.juphoon.rtc.datacenter.datacore.processor.loader;
 
+import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.juphoon.rtc.datacenter.datacore.api.BaseContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
@@ -9,12 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import static com.juphoon.rtc.datacenter.datacore.processor.queue.AbstractQueueService.eventFilter;
 
 /**
  * <p>记录加载器</p>
@@ -51,6 +51,19 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
      */
     private ScheduledExecutorService executor;
 
+    /**
+     * 待删除事件列表
+     */
+    private volatile Set<Long> deleteList = Sets.newConcurrentHashSet();
+
+    /**
+     * 添加待删除内容到待删除列表中
+     *
+     * @param t
+     */
+    public void deleteContext(T t) {
+        deleteList.add(t.getId());
+    }
 
     @Override
     public void start() {
@@ -58,13 +71,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
                 new ThreadFactoryBuilder().setNameFormat("ctx-loader-%d").build(),
                 new ThreadPoolExecutor.DiscardOldestPolicy());
 
-        executor.scheduleWithFixedDelay(new Runnable() {
-
-            @Override
-            public void run() {
-                loadAndSubmit();
-            }
-        }, config.getInitialDelaySeconds(), config.getDelaySeconds(), TimeUnit.SECONDS);
+        executor.scheduleWithFixedDelay(this::loadAndSubmit, config.getInitialDelaySeconds(), config.getDelaySeconds(), TimeUnit.SECONDS);
     }
 
     /**
@@ -72,7 +79,19 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
      * 1. 设置队列高低水位，处于高水位时，说明队列消费阻塞，可以不用执行load，节约资源
      * 2. 智能规避提交等
      */
-    public void loadAndSubmit() {
+    private void loadAndSubmit() {
+        /// 避免交叉影响，搞个新队列继续接收
+        Set<Long> set = deleteList;
+        deleteList = Sets.newConcurrentHashSet();
+
+        /// 先删除，再加载，避免加载出来的东西
+        /// TODO 改为批量删除，提高删除效率
+        for (Long t : set) {
+            logService.remove(t);
+        }
+        set.clear();
+
+        /// 此时再加载，不会加载到已经删除的事件了
         List<T> list = loadContexts(logService);
 
         log.debug("{} load {} records", processor.getId(), list.size());
@@ -83,17 +102,19 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
 
         for (T t : list) {
             try {
-                processor.queueService().submit(t);
+                /// 提交前再去重判断一下
+                if (!deleteList.contains(t.getId())) {
+                    processor.queueService().submit(t);
+                }
             } catch (JrtcRepeatedSubmitEventException e) {
                 log.debug("repeat load:{}", e.getMessage());
             } catch (Exception ignored) {
             }
         }
-        eventFilter.clear();
     }
 
     @Override
-    public synchronized void stop() {
+    public void stop() {
         if (null != executor) {
             executor.shutdown();
 

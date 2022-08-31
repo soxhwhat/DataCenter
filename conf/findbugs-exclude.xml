@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Package name="Account"/>
+        <Package name="com.juphoon.rtc.datacenter.datacore.processor"/>
+        <Bug pattern="IS2_INCONSISTENT_SYNC"/>
     </Match>
+
     <Match>
-        <Package name="AuthServer"/>
-    </Match>
-    <Match>
-        <Package name="PortalPlatform"/>
-    </Match>
-    <Match>
-        <Package name="DataCollection"/>
-    </Match>
-    <Match>
-        <Package name="Event"/>
-    </Match>
-    <Match>
-        <Package name="Config"/>
+        <Package name="~test\.com\.juphoon\..*"/>
     </Match>
 </FindBugsFilter>

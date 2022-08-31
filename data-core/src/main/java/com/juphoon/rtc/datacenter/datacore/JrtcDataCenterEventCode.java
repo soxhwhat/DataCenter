@@ -18,6 +18,9 @@ public class JrtcDataCenterEventCode {
     public final static ServiceEvent E_REDO_HANDLER_EXCEPTION = new ServiceEvent(Level.WARN, 720013, "handle重做异常");
     public final static ServiceEvent E_PUSH_QUEUE_ERROR = new ServiceEvent(Level.WARN, 720014, "push内存队列失败");
 
+    public final static ServiceEvent E_BAD_LOCAL_DB_FILE = new ServiceEvent(Level.ERROR, 720090, "本地缓存数据库文件损坏");
+    public final static ServiceEvent E_RENAME_LOCAL_DB_FILE_FAIL = new ServiceEvent(Level.ERROR, 720091, "重命名本地损坏数据库文件失败");
+
     /**
      * 业务日志
      */

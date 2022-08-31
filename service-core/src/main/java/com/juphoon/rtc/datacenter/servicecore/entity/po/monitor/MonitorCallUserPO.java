@@ -82,7 +82,7 @@ public class MonitorCallUserPO implements Serializable {
      * @return
      * @throws JsonProcessingException
      */
-
+    @SuppressWarnings("PMD")
     public static MonitorCallUserPO fromEvent(EventContext context) throws JsonProcessingException {
         Map<String, Object> params = context.getEvent().getParams();
         Event event = context.getEvent();

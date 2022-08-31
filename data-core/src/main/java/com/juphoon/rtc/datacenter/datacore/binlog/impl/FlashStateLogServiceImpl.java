@@ -78,6 +78,11 @@ public class FlashStateLogServiceImpl implements ILogService<StateContext> {
     }
 
     @Override
+    public void remove(Long id) {
+        logMapper.remove(id);
+    }
+
+    @Override
     public List<StateContext> find(int size) {
         List<StateBinLogPO> list = logMapper.find(size);
         if (CollectionUtils.isEmpty(list)) {

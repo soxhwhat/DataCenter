@@ -204,6 +204,7 @@ public class SqliteFlashEventLogMapper extends AbstractSqliteFlashMapper impleme
                 eventBinLogPO.setTimestamp(resultSet.getLong("timestamp"));
                 eventBinLogPO.setParams(resultSet.getString("params"));
             }
+            resultSet.close();
             return eventBinLogPO;
         } catch (SQLiteException e) {
             log.warn("根据id查找失败,id:{}", contentId);
@@ -246,6 +247,7 @@ public class SqliteFlashEventLogMapper extends AbstractSqliteFlashMapper impleme
                 eventBinLogPO.setParams(resultSet.getString("params"));
                 list.add(eventBinLogPO);
             }
+            resultSet.close();
             return list;
         } catch (SQLiteException e) {
             log.warn("查找失败");

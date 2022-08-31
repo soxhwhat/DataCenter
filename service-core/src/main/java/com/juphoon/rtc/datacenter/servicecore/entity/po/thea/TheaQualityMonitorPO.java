@@ -120,6 +120,8 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
      */
     private Integer type = 0;
 
+    private static final String CD_ACCOUNT_ID_PREFIX = "[username:delivery";
+
     /**
      * 将EventContext转换为TheaQualityMonitorPO
      *  数据源为天赛全量数据（type=900, number=0)
@@ -157,7 +159,7 @@ public class TheaQualityMonitorPO extends TheaCommonPO {
         po.setAppId(event.getAppId());
         po.setDomainId(event.getDomainId());
         //筛选出上传设备类型为录制CD的设备
-        if (jsm.get(CB_ACCOUNT_ID).toString().startsWith("[username:delivery")) {
+        if (jsm.get(CB_ACCOUNT_ID).toString().startsWith(CD_ACCOUNT_ID_PREFIX)) {
             po.setType(1);
         }
         //如果sd_loss小于5，则认为是未丢包，给unLossCount加1
