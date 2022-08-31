@@ -1,0 +1,28 @@
+server:
+  port: 0
+
+iron:
+  cube:
+    enabled: false
+  datacenter:
+    event-processors:
+      - name: TEST_EVENT
+        handlers:
+          - TestEventRandomSleepAndFailHandler
+          - TestLastCounterHandler
+  debug:
+    enabled: true
+spring:
+  data:
+    mongodb:
+      event:
+        uri: mongodb://admin:Juphoon419708!@192.168.12.87:27017/test?authSource=admin&auto-index-creation=true
+      record:
+        uri: mongodb://admin:Juphoon419708!@192.168.12.87:27017/test?authSource=admin&auto-index-creation=true
+      md:
+        uri: mongodb://admin:Juphoon419708!@192.168.12.87:27017/test?authSource=admin&auto-index-creation=true
+  redis:
+    host: 192.168.12.87
+    password: Juphoon419708!
+logging:
+  config: classpath:logback-spring.xml
