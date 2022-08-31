@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.servicecore.factory;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
-import com.juphoon.rtc.datacenter.datacore.api.LogContext;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.exception.JrtcInvalidProcessorConfigurationException;
 import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
@@ -27,9 +26,6 @@ public class HandlerFactory {
     @Autowired
     private Map<String, IHandler<EventContext>> eventHandlers;
 
-    @Autowired(required = false)
-    private Map<String, IHandler<LogContext>> logHandlers;
-
     @Autowired
     private Map<String, IHandler<StateContext>> stateHandlers;
 
@@ -40,17 +36,6 @@ public class HandlerFactory {
      */
     public IHandler<EventContext> getEventHandler(String name) throws JrtcInvalidProcessorConfigurationException {
         IHandler<EventContext> handler = eventHandlers.get(name);
-
-        if (null == handler) {
-            log.warn("** 无效的 eventHandler 名:" + name + " **");
-            throw new JrtcInvalidProcessorConfigurationException("** 无效的 handler 名:" + name + " **");
-        }
-
-        return handler;
-    }
-
-    public IHandler<LogContext> getLogHandler(String name) throws JrtcInvalidProcessorConfigurationException {
-        IHandler<LogContext> handler = logHandlers.get(name);
 
         if (null == handler) {
             log.warn("** 无效的 eventHandler 名:" + name + " **");

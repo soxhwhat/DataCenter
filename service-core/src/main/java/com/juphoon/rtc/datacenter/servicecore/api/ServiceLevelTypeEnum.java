@@ -1,4 +1,4 @@
-package com.juphoon.rtc.datacenter.servicecore.entity;
+package com.juphoon.rtc.datacenter.servicecore.api;
 
 /**
  * <p>服务水平枚举类</p>

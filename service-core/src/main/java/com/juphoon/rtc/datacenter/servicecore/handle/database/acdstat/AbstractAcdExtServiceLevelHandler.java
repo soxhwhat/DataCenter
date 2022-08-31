@@ -4,7 +4,7 @@ import com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.api.EventType;
 import com.juphoon.rtc.datacenter.datacore.api.StatType;
-import com.juphoon.rtc.datacenter.servicecore.entity.ServiceLevelTypeEnum;
+import com.juphoon.rtc.datacenter.servicecore.api.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.acdstat.AcdExtServiceLevelPO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;

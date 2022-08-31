@@ -8,54 +8,53 @@
        使用springProperty才可使用application.yml中的值 可以设置默认值
 -->
 
-<configuration scan="true" scanPeriod="60 seconds">
-
+<configuration scan="false" scanPeriod="60 seconds">
     <!-- log base path -->
-    <springProperty scope="context" name="logPath" source="logging.path" defaultValue="./log"/>
+    <!--    <springProperty scope="context" name="iron.log.path" source="iron.cube.logPath" defaultValue="./log"/>-->
+    <!--    <springProperty scope="context" name="iron.log.level" source="iron.cube.logLevel" defaultValue="info"/>-->
     <!-- log name -->
-    <property name="LOG_HOME" value="${logPath}"/>
+    <property name="LOG_HOME" value="./log"/>
     <!-- back log base path -->
-    <property name="LOG_BACK_HOME" value="${logPath}/backup"/>
+    <property name="LOG_BACK_HOME" value="${LOG_HOME}/backup"/>
     <!-- 文件切割大小 -->
     <property name="maxFileSize" value="100MB" />
     <!-- 文档保留天数 -->
     <property name="maxHistory" value="30" />
     <!-- 文档保留总大小 -->
-    <property name="totalSizeCap" value="10GB" />
+    <property name="totalSizeCap" value="1GB" />
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-       
         <encoder>
-            <pattern>%boldCyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) - %yellow(%5p) %blue([%10.10t]) %magenta(%logger{36}):%yellow(%M):%green(%L) - %msg%n</pattern>
+            <pattern>%boldCyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %yellow(%5p) %blue([%10.10t]) %magenta(%file):%yellow(%M):%green(%L) > %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <appender name="spring" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/spring.log</file>
+    <appender name="console" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/console.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${BASE_PATH}/spring.log.%i</fileNamePattern>
+            <fileNamePattern>${BASE_PATH}/console.log.%i</fileNamePattern>
             <minIndex>0</minIndex>
             <maxIndex>4</maxIndex>
         </rollingPolicy>
 
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>100MB</maxFileSize>
+            <maxFileSize>10MB</maxFileSize>
         </triggeringPolicy>
 
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %file:%method:%line - %msg%n</pattern>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %file:%method:%line > %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <appender name="cube" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/cube.log</file>
+    <appender name="sample" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/sample.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${LOG_BACK_HOME}/%d{yyyy-MM-dd}/cube.log.%i.gz</fileNamePattern>
+            <fileNamePattern>${LOG_BACK_HOME}/%d{yyyy-MM-dd}/sample.log.%i.gz</fileNamePattern>
             <!-- 单个日志文件最多 100MB, 60天的日志周期，最大不能超过10GB -->
             <maxFileSize>${maxFileSize}</maxFileSize>
             <maxHistory>${maxHistory}</maxHistory>
@@ -63,35 +62,35 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %file:%method:%line - %msg%n</pattern>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %-5level %file:%method:%line > %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
-    <springProfile name="mysql,oracle,default,dev,test">
-        <root level="INFO">
-            <appender-ref ref="stdout"/>
-        </root>
+    <!--    <springProfile name="dev,test">-->
+    <!--        <root logSourceLevel="INFO">-->
+    <!--            <appender-ref ref="stdout"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
 
-        <logger name="com.juphoon" level="debug"/>
-    </springProfile>
+    <!--    <springProfile name="default,prod">-->
+    <!--        <root logSourceLevel="DEBUG">-->
+    <!--            <appender-ref ref="console"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
 
-    <springProfile name="pro">
-        <root level="INFO">
-            <appender-ref ref="cube"/>
-        </root>
+    <!--    <logger name="com.juphoon.iron.cube.demo.sample" logSourceLevel="INFO" additivity="false">-->
+    <!--        <appender-ref ref="sample" />-->
+    <!--        <appender-ref ref="stdout"/>-->
+    <!--    </logger>-->
 
-        <logger name="com.juphoon" level="debug"/>
-    </springProfile>
+    <!-->将日志发到data-collection<-->
+    <appender name="iron-log" class="com.juphoon.iron.cube.starter.log.IronLogAppender"/>
 
-    <logger name="org.springframework.*" level="INFO" additivity="false">
-        <appender-ref ref="spring" />
-    </logger>
-
-
-
-
-
-
+    <!-->指定日志全体的基本</-->
+    <root level="info">
+        <appender-ref ref="stdout"/>
+        <!--        <appender-ref ref="console"/>-->
+    </root>
 
 </configuration>

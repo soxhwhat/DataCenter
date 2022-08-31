@@ -1,7 +1,6 @@
 package com.juphoon.rtc.datacenter.servicecore.factory;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
-import com.juphoon.rtc.datacenter.datacore.api.LogContext;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.exception.JrtcInvalidProcessorConfigurationException;
 import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;

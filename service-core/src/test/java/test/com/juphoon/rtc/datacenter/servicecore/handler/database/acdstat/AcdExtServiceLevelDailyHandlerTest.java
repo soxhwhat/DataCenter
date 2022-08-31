@@ -1,6 +1,6 @@
 package test.com.juphoon.rtc.datacenter.servicecore.handler.database.acdstat;
 
-import com.juphoon.rtc.datacenter.servicecore.entity.ServiceLevelTypeEnum;
+import com.juphoon.rtc.datacenter.servicecore.api.ServiceLevelTypeEnum;
 import com.juphoon.rtc.datacenter.servicecore.handle.database.acdstat.AcdExtServiceLevelDailyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

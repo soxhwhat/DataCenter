@@ -32,14 +32,6 @@ public abstract class AbstractAgreeNoticeHandler extends AbstractHttpEventHandle
      */
     public abstract String endpoint();
 
-//    /**
-//     * 处理请求
-//     *
-//     * @param ec
-//     * @return
-//     */
-//    public abstract Map<String, String> handleRequest(EventContext ec);
-
     @SuppressFBWarnings(value = {"NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"}, justification = "fixed")
     @Override
     public boolean exchange(String url, RestTemplate restTemplate, EventContext ec) {

@@ -43,7 +43,7 @@ public class TestEventRandomSleepAndFailHandler extends AbstractEventHandler {
         log.info("{} handle {}", getId(), context);
 
         /// 随机sleep 0~1000 毫秒
-        int random = new Random().nextInt(1000);
+        int random = new Random().nextInt(100);
 
         log.info("random:{}", random);
 
