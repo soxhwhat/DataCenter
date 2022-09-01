@@ -9,6 +9,7 @@ import com.juphoon.rtc.datacenter.datacore.processor.IProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
@@ -86,7 +87,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
         deleteList = Sets.newConcurrentHashSet();
 
         /// 先删除，再加载，避免加载出来的东西
-        /// TODO 改为批量删除，提高删除效率
+        logService.remove(new ArrayList<>(set));
         for (Long t : set) {
             logService.remove(t);
         }

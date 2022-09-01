@@ -51,6 +51,10 @@ public class NoneStateLogServiceImpl implements ILogService<StateContext> {
     }
 
     @Override
+    public void remove(List<Long> ids) {
+    }
+
+    @Override
     public void updateRetryCount(StateContext context) {
         log.info("context:{}", context);
     }

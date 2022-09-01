@@ -57,6 +57,13 @@ public interface ILogService<T extends BaseContext> extends IService {
     void remove(Long id);
 
     /**
+     * 批量删除记录
+     *
+     * @param ids
+     */
+    void remove(List<Long> ids);
+
+    /**
      * 查询指定条目记录
      *
      * @param size

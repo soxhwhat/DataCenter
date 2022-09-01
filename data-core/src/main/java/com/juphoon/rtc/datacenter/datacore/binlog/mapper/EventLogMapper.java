@@ -45,6 +45,12 @@ public interface EventLogMapper {
     void remove(long id);
 
     /**
+     * 批量删除
+     * @param list
+     */
+    void remove(List<Long> list);
+
+    /**
      * 更新失败计数
      * @param po
      */

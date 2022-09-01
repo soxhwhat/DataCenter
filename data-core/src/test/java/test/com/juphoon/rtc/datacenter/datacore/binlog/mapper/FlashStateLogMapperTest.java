@@ -2,13 +2,11 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 
 import com.juphoon.rtc.datacenter.datacore.api.State;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
+import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -79,7 +77,7 @@ public class FlashStateLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-//    @Ignore
+    @Ignore
     @Test
     public void testInsertBatch() {
         int max = 100;
@@ -114,6 +112,39 @@ public class FlashStateLogMapperTest {
         log.info("get:{}", po.dump());
 
         logMapper.remove(po.getId());
+
+        po = logMapper.findById(po.getId());
+        Assert.assertNull(po);
+    }
+
+    @Test
+    public void testBatchRemove() {
+        StateBinLogPO p1 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p2 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p3 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p4 = StateBinLogPO.fromContext(randomContext());
+        StateBinLogPO p5 = StateBinLogPO.fromContext(randomContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+        logMapper.save(p4);
+        logMapper.save(p5);
+
+        List<Long> ids = new LinkedList<>();
+        ids.add(p1.getId());
+        ids.add(p2.getId());
+        ids.add(p3.getId());
+        ids.add(p4.getId());
+        ids.add(p5.getId());
+
+        List<StateBinLogPO> ret = logMapper.find(10);
+        Assert.assertEquals(5, ret.size());
+
+        logMapper.remove(ids);
+
+        ret = logMapper.find(10);
+        Assert.assertTrue(ret.isEmpty());
     }
 
     @Test

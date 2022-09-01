@@ -149,6 +149,11 @@ public abstract class AbstractEventLogService implements ILogService<EventContex
     }
 
     @Override
+    public void remove(List<Long> ids) {
+        getEventLogMapper().remove(ids);
+    }
+
+    @Override
     public List<EventContext> find(int size) {
         List<EventBinLogPO> list = getEventLogMapper().find(size);
         if (CollectionUtils.isEmpty(list)) {

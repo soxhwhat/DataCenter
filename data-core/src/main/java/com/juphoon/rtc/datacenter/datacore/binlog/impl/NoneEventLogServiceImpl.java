@@ -45,6 +45,10 @@ public class NoneEventLogServiceImpl implements ILogService<EventContext> {
     }
 
     @Override
+    public void remove(List<Long> ids) {
+    }
+
+    @Override
     public List<EventContext> find(int size) {
         log.info("size:{}", size);
         return null;

@@ -4,10 +4,7 @@ import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,7 +58,7 @@ public class FlashEventLogMapperTest {
         log.info("id:{}", po.getId());
     }
 
-//    @Ignore
+    @Ignore
     @Test
     public void testInsertEventBatch() {
         int max = 100;
@@ -96,6 +93,39 @@ public class FlashEventLogMapperTest {
         log.info("get:{}", po.dump());
 
         logMapper.remove(po.getId());
+
+        po = logMapper.findById(po.getId());
+        Assert.assertNull(po);
+    }
+
+    @Test
+    public void testBatchRemove() {
+        EventBinLogPO p1 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p2 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p3 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p4 = EventBinLogPO.fromEventContext(randomEventContext());
+        EventBinLogPO p5 = EventBinLogPO.fromEventContext(randomEventContext());
+
+        logMapper.save(p1);
+        logMapper.save(p2);
+        logMapper.save(p3);
+        logMapper.save(p4);
+        logMapper.save(p5);
+
+        List<Long> ids = new LinkedList<>();
+        ids.add(p1.getId());
+        ids.add(p2.getId());
+        ids.add(p3.getId());
+        ids.add(p4.getId());
+        ids.add(p5.getId());
+
+        List<EventBinLogPO> ret = logMapper.find(10);
+        Assert.assertEquals(5, ret.size());
+
+        logMapper.remove(ids);
+
+        ret = logMapper.find(10);
+        Assert.assertTrue(ret.isEmpty());
     }
 
     @Test
@@ -112,8 +142,6 @@ public class FlashEventLogMapperTest {
 
     @Test
     public void testFind() {
-        before();
-
         EventBinLogPO p1 = EventBinLogPO.fromEventContext(randomEventContext());
         EventBinLogPO p2 = EventBinLogPO.fromEventContext(randomEventContext());
         EventBinLogPO p3 = EventBinLogPO.fromEventContext(randomEventContext());
@@ -157,15 +185,15 @@ public class FlashEventLogMapperTest {
 
         EventBinLogPO ret1 = logMapper.findById(p1.getId());
         Assert.assertNotNull(ret1.getUuid());
-        Assert.assertEquals(p1.getUuid(),ret1.getUuid());
+        Assert.assertEquals(p1.getUuid(), ret1.getUuid());
 
         EventBinLogPO ret2 = logMapper.findById(p2.getId());
         Assert.assertNotNull(ret2.getUuid());
-        Assert.assertEquals(p2.getUuid(),ret2.getUuid());
+        Assert.assertEquals(p2.getUuid(), ret2.getUuid());
 
         EventBinLogPO ret3 = logMapper.findById(p3.getId());
         Assert.assertNotNull(ret3.getUuid());
-        Assert.assertEquals(p3.getUuid(),ret3.getUuid());
+        Assert.assertEquals(p3.getUuid(), ret3.getUuid());
 
     }
 

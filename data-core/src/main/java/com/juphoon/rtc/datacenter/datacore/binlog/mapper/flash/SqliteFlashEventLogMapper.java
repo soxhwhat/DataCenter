@@ -161,6 +161,36 @@ public class SqliteFlashEventLogMapper extends AbstractSqliteFlashMapper impleme
         }
     }
 
+    /**
+     * 批量删除
+     *
+     * @param list
+     */
+    @Override
+    public synchronized void remove(List<Long> list) {
+        try (PreparedStatement stmt = CONNECTION.prepareStatement(" DELETE FROM `event_binlog` WHERE `id`=?;")) {
+
+            for (int i = 0; i < list.size(); i++) {
+                stmt.setLong(1, list.get(i));
+                stmt.addBatch();
+                if (i % 100 == 0) {
+                    stmt.executeBatch();
+                    stmt.clearBatch();
+                }
+            }
+
+            stmt.executeBatch();
+            stmt.clearBatch();
+        } catch (SQLiteException e) {
+            log.warn("删除事件失败,list:{}", list.size());
+        } catch (SQLException e) {
+            if (CONNECTION_CLOSED.equals(e.getMessage())) {
+                restart();
+                remove(list);
+            }
+        }
+    }
+
     @Override
     public synchronized void updateRetryCount(EventBinLogPO po) {
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement("UPDATE `event_binlog` set `retryCount` = `retryCount` + 1,\n" +
@@ -180,32 +210,33 @@ public class SqliteFlashEventLogMapper extends AbstractSqliteFlashMapper impleme
 
     @Override
     public synchronized EventBinLogPO findById(long contentId) {
+        EventBinLogPO po = null;
+
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(" SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,\n" +
                 "        `redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`\n" +
                 "        FROM `event_binlog`\n" +
                 "        WHERE `id`= ?;")) {
             preparedStatement.setLong(1, contentId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            EventBinLogPO eventBinLogPO = new EventBinLogPO();
-            while (resultSet.next()) {
-                eventBinLogPO.setId(resultSet.getLong("id"));
-                eventBinLogPO.setRequestId(resultSet.getString("requestId"));
-                eventBinLogPO.setFrom(resultSet.getString("from"));
-                eventBinLogPO.setProcessorId(resultSet.getString("processorId"));
-                eventBinLogPO.setReceivedTimestamp(resultSet.getLong("receivedTimestamp"));
-                eventBinLogPO.setLastUpdateTimestamp(resultSet.getLong("lastUpdateTimestamp"));
-                eventBinLogPO.setRedoHandler(resultSet.getString("redoHandler"));
-                eventBinLogPO.setRetryCount(resultSet.getInt("retryCount"));
-                eventBinLogPO.setDomainId(resultSet.getInt("domainId"));
-                eventBinLogPO.setAppId(resultSet.getInt("appId"));
-                eventBinLogPO.setUuid(resultSet.getString("uuid"));
-                eventBinLogPO.setType(resultSet.getInt("type"));
-                eventBinLogPO.setNumber(resultSet.getInt("number"));
-                eventBinLogPO.setTimestamp(resultSet.getLong("timestamp"));
-                eventBinLogPO.setParams(resultSet.getString("params"));
+            if (resultSet.next()) {
+                po = new EventBinLogPO();
+                po.setId(resultSet.getLong("id"));
+                po.setRequestId(resultSet.getString("requestId"));
+                po.setFrom(resultSet.getString("from"));
+                po.setProcessorId(resultSet.getString("processorId"));
+                po.setReceivedTimestamp(resultSet.getLong("receivedTimestamp"));
+                po.setLastUpdateTimestamp(resultSet.getLong("lastUpdateTimestamp"));
+                po.setRedoHandler(resultSet.getString("redoHandler"));
+                po.setRetryCount(resultSet.getInt("retryCount"));
+                po.setDomainId(resultSet.getInt("domainId"));
+                po.setAppId(resultSet.getInt("appId"));
+                po.setUuid(resultSet.getString("uuid"));
+                po.setType(resultSet.getInt("type"));
+                po.setNumber(resultSet.getInt("number"));
+                po.setTimestamp(resultSet.getLong("timestamp"));
+                po.setParams(resultSet.getString("params"));
             }
             resultSet.close();
-            return eventBinLogPO;
         } catch (SQLiteException e) {
             log.warn("根据id查找失败,id:{}", contentId);
         } catch (SQLException e) {
@@ -214,7 +245,7 @@ public class SqliteFlashEventLogMapper extends AbstractSqliteFlashMapper impleme
                 findById(contentId);
             }
         }
-        return null;
+        return po;
     }
 
     @Override
