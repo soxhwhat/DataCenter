@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.datacore.api.IService;
 import com.juphoon.rtc.datacenter.datacore.api.ProcessorId;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
 import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
+import com.juphoon.rtc.datacenter.datacore.processor.loader.AbstractContextLoader;
 import com.juphoon.rtc.datacenter.datacore.processor.loader.ContextLoaderConfig;
 import com.juphoon.rtc.datacenter.datacore.processor.queue.IQueueService;
 import com.juphoon.rtc.datacenter.datacore.processor.queue.QueueServiceConfig;
@@ -37,6 +38,13 @@ public interface IProcessor<T extends BaseContext> extends INamed, IService {
      * @return
      */
     IQueueService<T> queueService();
+
+    /**
+     * 获取内容加载器
+     *
+     * @return
+     */
+    AbstractContextLoader<T> getContextLoader();
 
     /**
      * 构造队列实例

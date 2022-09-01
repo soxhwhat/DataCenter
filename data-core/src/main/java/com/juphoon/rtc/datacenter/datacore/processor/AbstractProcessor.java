@@ -62,6 +62,11 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
         return queueService;
     }
 
+    @Override
+    public AbstractContextLoader<T> getContextLoader() {
+        return contextLoader;
+    }
+
     private FirstInnerHandler<T> firstInnerEventHandler;
 
     /**

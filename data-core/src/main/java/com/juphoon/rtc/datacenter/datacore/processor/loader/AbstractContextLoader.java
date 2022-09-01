@@ -62,6 +62,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
      * @param t
      */
     public void deleteContext(T t) {
+        log.trace("deleteContext:{}", t.getId());
         deleteList.add(t.getId());
     }
 
@@ -104,6 +105,7 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
             try {
                 /// 提交前再去重判断一下
                 if (!deleteList.contains(t.getId())) {
+                    log.debug("loadAndSubmit:{}", t.getId());
                     processor.queueService().submit(t);
                 }
             } catch (JrtcRepeatedSubmitEventException e) {

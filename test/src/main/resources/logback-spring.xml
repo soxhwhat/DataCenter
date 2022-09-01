@@ -34,7 +34,7 @@
         <file>${LOG_HOME}/console.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${BASE_PATH}/console.log.%i</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/console.log.%i</fileNamePattern>
             <minIndex>0</minIndex>
             <maxIndex>4</maxIndex>
         </rollingPolicy>

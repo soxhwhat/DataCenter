@@ -32,7 +32,6 @@ public class TestEventHandler extends AbstractEventHandler {
     @Override
     public boolean handle(EventContext context) {
         log.info("{} handle {}", getId(), context);
-//        return true;
         return true;
     }
 }

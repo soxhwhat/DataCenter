@@ -51,15 +51,6 @@ public class LastInnerHandler<T extends BaseContext> extends AbstractHandler<T> 
 
     @Override
     public boolean handle(T t) {
-        /*
-         * 过滤
-         * 防止出现情况：
-         * 一个线程将事件load进list中，另一个事件才进行remove/success后导致事件重复消费
-         */
-        Timer.Sample sample = Timer.start();
-        getProcessor().queueService().addFilter(t);
-        sample.stop(MetricUtils.get("LastInnerHandler.addFilter"));
-
         log.debug("t:{}", t);
         /*
          * 若处理成功，则删除事件
@@ -67,7 +58,7 @@ public class LastInnerHandler<T extends BaseContext> extends AbstractHandler<T> 
          */
         // 顺序保证，先删库
         Timer.Sample sample2 = Timer.start();
-        getProcessor().logService().remove(t);
+        getProcessor().getContextLoader().deleteContext(t);
         sample2.stop(MetricUtils.get("LastInnerHandler.remove"));
 
         Timer.Sample sample3 = Timer.start();

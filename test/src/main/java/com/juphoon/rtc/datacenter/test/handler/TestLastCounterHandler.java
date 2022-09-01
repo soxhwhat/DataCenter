@@ -27,7 +27,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TestLastCounterHandler extends AbstractEventHandler {
     public final static AtomicInteger COUNTER = new AtomicInteger(0);
 
-
     @Override
     public HandlerId handlerId() {
         return HandlerId.TestLastCounterHandler;
@@ -40,7 +39,7 @@ public class TestLastCounterHandler extends AbstractEventHandler {
 
     @Override
     public boolean handle(EventContext eventContext) {
-        log.debug("index:" + COUNTER.incrementAndGet());
+        log.debug("id:{}, cnt:{}", eventContext.getId(), COUNTER.incrementAndGet());
         return true;
     }
 }

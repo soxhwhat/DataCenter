@@ -21,11 +21,6 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
 
     private final Set<Long> eventIndex = Sets.newConcurrentHashSet();
 
-    /**
-     * 过滤重复事件
-     */
-    public final Set<Long> eventFilter = Sets.newConcurrentHashSet();
-
     public AbstractQueueService(AbstractProcessor<T> processor, QueueServiceConfig config) {
         this.processor = processor;
         init(config);
@@ -60,13 +55,6 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
     @Override
     public synchronized void submit(T ec) throws Exception {
         log.debug("ec:{}", ec);
-
-        Timer.Sample sample = Timer.start();
-
-        if (eventFilter.contains(ec.getId())) {
-            throw new JrtcRepeatedSubmitEventException(ec.getId() + " 重复提交");
-        }
-        sample.stop(MetricUtils.get("queueService.eventFilter"));
 
         Timer.Sample sample2 = Timer.start();
         // 去重
@@ -103,10 +91,5 @@ public abstract class AbstractQueueService<T extends BaseContext> implements IQu
         log.debug("ec:{},{}", ec, eventIndex.size());
 
         eventIndex.remove(ec.getId());
-    }
-
-    @Override
-    public synchronized void addFilter(T ec) {
-        eventFilter.add(ec.getId());
     }
 }
