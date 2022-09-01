@@ -239,11 +239,11 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
         sample2.stop(MetricUtils.get("process.handlers"));
 
         /// last todo 异常处理（可能死循环）
-        if (!t.isRedoEvent()) {
-            Timer.Sample sample3 = Timer.start();
-            getLastInnerEventHandler().handle(t);
-            sample3.stop(MetricUtils.get("process.lastHandler"));
-        }
+//        if (!t.isRedoEvent()) {
+        Timer.Sample sample3 = Timer.start();
+        getLastInnerEventHandler().handle(t);
+        sample3.stop(MetricUtils.get("process.lastHandler"));
+//        }
     }
 
     /**
@@ -262,7 +262,7 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
             }
             /// 处理失败
             else {
-                log.info("{} handle ec:{} 失败", handler.getName(), t.getId());
+                log.debug("{} handle ec:{} 失败", handler.getName(), t.getId());
 
                 logService().saveRedo(t, handler);
             }
@@ -285,37 +285,22 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
         try {
             /// 重做成功
             if (handler.handle(t)) {
-                log.info("{} reHandle ec:{} 成功", handler.getName(), t);
-
-                /*
-                 * 若处理成功，则删除事件
-                 * 重做事件独立处理
-                 */
-                // 顺序保证，先删库
-                logService().remove(t);
-
-                // 再清理set
-                queueService().success(t);
-            }
-            /// 重做失败
-            else {
-                // 清理set 否则下次会被去重提交
-                logService().updateRetryCount(t);
-                queueService().redoFail(t);
-
-                /// 打印日志，啥也不做
-                log.warn("{} redo ec:{} 失败", handler.getName(), t.getId());
+                log.debug("{} reHandle ec:{} 成功", handler.getName(), t);
+                t.redoOK();
+                return;
             }
         } catch (Exception e) {
-            // 清理set 否则下次会被去重提交
-            logService().updateRetryCount(t);
-            queueService().redoFail(t);
-
-            log.debug("handler {} reHandle ec:{} 异常:", handler.getName(), t.getId(), e);
             if (log.isDebugEnabled()) {
                 e.printStackTrace();
             }
         }
+
+        // 重做失败
+        // 更新失败次数(可选逻辑)
+        logService().updateRetryCount(t);
+
+        /// 打印日志，啥也不做
+        log.debug("{} redo ec:{} 失败", handler.getName(), t.getId());
     }
 
     @Override

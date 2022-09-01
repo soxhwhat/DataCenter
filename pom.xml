@@ -347,6 +347,7 @@
                         <exclude>**/DataCollection/*.java</exclude>
                         <exclude>**/Event/*.java</exclude>
                         <exclude>**/Config/*.java</exclude>
+                        <exclude>**/com/juphoon/rtc/datacenter/test/*/*.java</exclude>
                     </excludes>
                 </configuration>
                 <dependencies>
@@ -461,6 +462,7 @@
                         <exclude>**/DataCollection/*.java</exclude>
                         <exclude>**/Event/*.java</exclude>
                         <exclude>**/Config/*.java</exclude>
+                        <exclude>**/com/juphoon/rtc/datacenter/test/*/*.java</exclude>
                     </excludes>
                     <rulesets>
                         <ruleset>rulesets/java/ali-comment.xml</ruleset>

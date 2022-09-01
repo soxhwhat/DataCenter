@@ -21,7 +21,9 @@ public enum HandlerId {
     TestEventHandler("testEventHandler", "testEventHandler", RESOURCE_SCOPE_TEST),
     TestEventOneHandler("testEventOneHandler", "testEventOneHandler", RESOURCE_SCOPE_TEST),
     TestEventTwoHandler("testEventTwoHandler", "testEventTwoHandler", RESOURCE_SCOPE_TEST),
-    TestEventRandomSleepAndFailHandler("testEventRandomSleepAndFailHandler", "testEventRandomSleepAndFailHandler", RESOURCE_SCOPE_TEST),
+    TestEventRandomSleepHandler("testEventRandomSleepHandler", "testEventRandomSleepHandler", RESOURCE_SCOPE_TEST),
+    TestEventRandomFailHandler("testEventRandomFailHandler", "testEventRandomFailHandler", RESOURCE_SCOPE_TEST),
+//    TestEventRandomSleepHandler("testEventRandomSleepAndFailHandler", "testEventRandomSleepAndFailHandler", RESOURCE_SCOPE_TEST),
     TestLastCounterHandler("testLastCounterHandler", "testLastCounterHandler", RESOURCE_SCOPE_TEST),
 
     /**

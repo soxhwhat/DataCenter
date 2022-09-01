@@ -27,10 +27,10 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.EVENT_B
 @Slf4j
 @Component
 @ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
-public class TestEventRandomSleepAndFailHandler extends AbstractEventHandler {
+public class TestEventRandomSleepHandler extends AbstractEventHandler {
     @Override
     public HandlerId handlerId() {
-        return HandlerId.TestEventRandomSleepAndFailHandler;
+        return HandlerId.TestEventRandomSleepHandler;
     }
 
     @Override
@@ -52,40 +52,6 @@ public class TestEventRandomSleepAndFailHandler extends AbstractEventHandler {
         } catch (Exception ignored) {
         }
 
-//        // 5% 失败
-//        if (random > 950) {
-//            return false;
-//        }
-
         return true;
-    }
-
-    /**
-     * @author ajian.zheng@juphoon.com
-     * @date 2/18/22 10:39 AM
-     * @update [序号][日期YYYY-MM-DD] [更改人姓名][变更描述]
-     */
-    @Slf4j
-    @Component
-    @ConditionalOnProperty(prefix = "iron.debug", name = "enabled", havingValue = "true")
-    public static class TestFlashEventCounterProcessor extends AbstractEventProcessor {
-        @Autowired
-        @Qualifier(EVENT_BIN_LOG_IMPL_FLASH)
-        private ILogService<EventContext> eventLogService;
-
-        @Override
-        public ILogService<EventContext> logService() {
-            return eventLogService;
-        }
-
-        @Override
-        public ProcessorId processorId() {
-            return ProcessorId.TEST_FLASH_EVENT_COUNTER;
-        }
-
-        @Override
-        public FirstInnerHandler<EventContext> firstInnerEventHandler() {
-            return new FirstInnerHandler<>(this);
-        }
     }
 }

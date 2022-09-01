@@ -79,6 +79,14 @@ public abstract class BaseContext {
     }
 
     /**
+     * 重做成功
+     */
+    public void redoOK() {
+        redoHandler = null;
+        retryCount = 0;
+    }
+
+    /**
      * 获取事件类型枚举值
      *
      * @return

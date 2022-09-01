@@ -8,7 +8,7 @@ iron:
     event-processors:
       - name: TEST_EVENT
         handlers:
-          #          - TestEventRandomSleepAndFailHandler
+          #          - TestEventRandomSleepHandler
           - TestLastCounterHandler
   debug:
     enabled: true

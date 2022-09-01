@@ -7,8 +7,12 @@ iron:
   datacenter:
     event-processors:
       - name: TEST_EVENT
+        contextLoader:
+          initialDelaySeconds: 5
+          delaySeconds: 1
+          loadSize: 1000
         handlers:
-          - TestEventRandomSleepHandler
+          - TestEventRandomFailHandler
           - TestLastCounterHandler
   debug:
     enabled: true

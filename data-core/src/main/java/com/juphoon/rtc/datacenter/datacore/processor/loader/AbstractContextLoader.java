@@ -63,6 +63,9 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
      * @param t
      */
     public void deleteContext(T t) {
+        if (t.isRedoEvent()) {
+            return;
+        }
         log.trace("deleteContext:{}", t.getId());
         deleteList.add(t.getId());
     }

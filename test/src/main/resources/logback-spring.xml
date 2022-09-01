@@ -90,7 +90,7 @@
     <!-->指定日志全体的基本</-->
     <root level="info">
         <appender-ref ref="stdout"/>
-        <!--        <appender-ref ref="console"/>-->
+<!--                <appender-ref ref="console"/>-->
     </root>
 
 </configuration>

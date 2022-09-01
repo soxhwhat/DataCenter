@@ -61,7 +61,7 @@ public enum ProcessorId {
     /**
      * 测试
      */
-    TEST_FLASH_EVENT_COUNTER("testFlashEventCounterProcessor", "flash事件带计数测试处理器", PROCESSOR_TYPE_TEST),
+//    TEST_FLASH_EVENT_COUNTER("testFlashEventCounterProcessor", "flash事件带计数测试处理器", PROCESSOR_TYPE_TEST),
 
     /**
      * 测试
