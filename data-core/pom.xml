@@ -6,7 +6,7 @@
     <parent>
         <artifactId>jrtcDataCenter-Parent</artifactId>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2203.5.23</version>
+        <version>2203.5.24</version>
     </parent>
 
     <artifactId>data-core</artifactId>
