@@ -85,6 +85,40 @@ public class FlashEventLogMapperTest {
     }
 
     @Test
+    public void testCountInsertBatch() {
+        int max = 500;
+
+        List<EventContext> eventContexts = new LinkedList<>();
+        for (int i = 0; i < max; i++) {
+            eventContexts.add(randomEventContext());
+        }
+
+        List<EventBinLogPO> events = eventContexts.stream().map(EventBinLogPO::fromEventContext).collect(Collectors.toList());
+
+        int lines = logMapper.saveList(events);
+        Assert.assertEquals(max, lines);
+
+        List<EventBinLogPO> eventBinLogPOList = logMapper.find(max);
+        Assert.assertEquals(max, eventBinLogPOList.size());
+
+
+        int min = 10;
+
+        eventContexts = new LinkedList<>();
+        for (int i = 0; i < min; i++) {
+            eventContexts.add(randomEventContext());
+        }
+
+        events = eventContexts.stream().map(EventBinLogPO::fromEventContext).collect(Collectors.toList());
+
+        lines = logMapper.saveList(events);
+        Assert.assertEquals(min, lines);
+
+        eventBinLogPOList = logMapper.find(min);
+        Assert.assertEquals(min, eventBinLogPOList.size());
+    }
+
+    @Test
     public void testRemove() {
         EventContext before = randomEventContext();
         EventBinLogPO po = EventBinLogPO.fromEventContext(before);

@@ -2,7 +2,6 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 
 import com.juphoon.rtc.datacenter.datacore.api.State;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
-import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
 import lombok.SneakyThrows;
@@ -101,6 +100,40 @@ public class FlashStateLogMapperTest {
         log.info("{} per second", max / cost * 1000);
 
         pos.forEach(po -> log.info("{}", po.dump()));
+    }
+
+    @Test
+    public void testLessCountInsertBatch() {
+        int max = 500;
+
+        List<StateContext> list = new LinkedList<>();
+        for (int i = 0; i < max; i++) {
+            list.add(randomContext());
+        }
+
+        List<StateBinLogPO> pos = list.stream().map(StateBinLogPO::fromContext).collect(Collectors.toList());
+
+        int lines = logMapper.saveList(pos);
+        Assert.assertEquals(max, lines);
+
+        List<StateBinLogPO> eventBinLogPOList = logMapper.find(max);
+        Assert.assertEquals(max, eventBinLogPOList.size());
+
+
+        int min = 10;
+
+        list = new LinkedList<>();
+        for (int i = 0; i < min; i++) {
+            list.add(randomContext());
+        }
+
+        pos = list.stream().map(StateBinLogPO::fromContext).collect(Collectors.toList());
+
+        lines = logMapper.saveList(pos);
+        Assert.assertEquals(min, lines);
+
+        eventBinLogPOList = logMapper.find(min);
+        Assert.assertEquals(min, eventBinLogPOList.size());
     }
 
     @Test
@@ -209,17 +242,18 @@ public class FlashStateLogMapperTest {
 
         StateBinLogPO ret1 = logMapper.findById(p1.getId());
         Assert.assertNotNull(ret1.getUuid());
-        Assert.assertEquals(p1.getUuid(),ret1.getUuid());
+        Assert.assertEquals(p1.getUuid(), ret1.getUuid());
 
         StateBinLogPO ret2 = logMapper.findById(p2.getId());
         Assert.assertNotNull(ret2.getUuid());
-        Assert.assertEquals(p2.getUuid(),ret2.getUuid());
+        Assert.assertEquals(p2.getUuid(), ret2.getUuid());
 
         StateBinLogPO ret3 = logMapper.findById(p3.getId());
         Assert.assertNotNull(ret3.getUuid());
-        Assert.assertEquals(p3.getUuid(),ret3.getUuid());
+        Assert.assertEquals(p3.getUuid(), ret3.getUuid());
 
     }
+
     @Test
     public void testUpdateRetryCount() {
         StateBinLogPO po = StateBinLogPO.fromContext(randomContext());

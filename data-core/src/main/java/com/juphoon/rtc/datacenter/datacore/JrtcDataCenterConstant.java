@@ -11,6 +11,8 @@ public class JrtcDataCenterConstant {
     public static final String CONNECTION_CLOSED = "database connection closed";
     public final static String DOMAIN_CODE = "J61";
 
+    public final static int CACHE_NUMBER = 100;
+
     public final static String URL_PARAMS = "?name=Juphoon";
     public final static String KEY_AGREE = "AGREE";
 
