@@ -1,5 +1,20 @@
 ```
-2203.5.23
+#     版本分支 release/2203.5.24
+###    发布人 黄佳辉
+【新增特性】
+[特性1：修改事件入库流程与逻辑]
+● 去除事件入库时Mybatis依赖，依靠原生api操作sqlite
+● 修复并发读写时死锁导致的事件丢失
+[特性2：添加定时清除mongoDB数据功能]
+● 支持可配置定时清除mongoDB数据，防止数据增速过快导致磁盘空间不足
+
+【修改】
+1.删除日志相关的接口和逻辑
+2.调整redo逻辑
+3.增加接口上传行为埋点
+
+#     版本分支 release/2203.5.23
+###    发布人 黄佳辉
 【新增特性】
 [特性1：增加服务端异常事件处理逻辑]
 ● 收集服务端异常上报以及呈现
@@ -10,11 +25,13 @@
 ● [修改配置，增加异常事件上报]
 ● [修改扫描路径]
 
-2203.5.22
+#     版本分支 release/2203.5.22
+###    发布人 黄佳辉
 【修改】
 1.修改C09外呼数据统计相关代码
 
-2203.5.21
+#     版本分支 release/2203.5.21
+###    发布人 黄佳辉
 【新增特性】
 [特性1：话单相关数据推送到kafka]
 ● 收到排队机与SIP上报的话单数据后，根据话单推送接口约定拼接形成最终话单（话单信息中包含话单ID，主被叫号，通话开始/结束时间，通话时长，音频或视频各分辨率通话时长，呼入呼出类型），并推送到kafka
@@ -29,12 +46,14 @@
 【修改】
 1.修改音视频质量观测平台部分数据处理逻辑
 
-2203.5.20
+#     版本分支 release/2203.5.20
+###    发布人 袁文军
 【修复】
 [缺陷1: 访客与坐席通话后，portal上无话单信息，诊断mongo入库集合名称问题。]
 ● [话单信息写入之前的集合]
 
-2203.5.19
+#     版本分支 release/2203.5.19
+###    发布人 王珂
 【修改】
 1.埋点handler增加扫描 上传 移动文件以及清理的event
 2.添加upload图片 音视频 打点的PO和mapper
@@ -43,8 +62,7 @@
 5.埋点增加fileSize，recordTime，diffRecordTime字段
 
 【待优化】
-1.sqlite并发读写死锁的问题
-2.统计并发总房间数不准确的问题
+1.统计并发总房间数不准确的问题
 
 【配置】
 
@@ -61,7 +79,6 @@ iron.datacenter.date-source.driver-class-name=oracle.jdbc.OracleDriver
 mybatis-plus.mapper-locations=classpath*:oracle/*Mapper.xml
 server.port=19986
 spring.data.mongodb.event.uri=mongodb://juphoon:ENC(xISFbYRL8BMDkyH91VOkHOXnOlvUjpMp)@192.168.11.34:27017/jrtc_event?authSource=admin
-spring.data.mongodb.log.uri=mongodb://juphoon:ENC(xISFbYRL8BMDkyH91VOkHOXnOlvUjpMp)@192.168.11.34:27017/jrtc_event?authSource=admin
 spring.data.mongodb.md.uri=mongodb://juphoon:ENC(xISFbYRL8BMDkyH91VOkHOXnOlvUjpMp)@192.168.11.34:27017/jrtc_md_event?authSource=admin
 spring.data.mongodb.record.uri=mongodb://juphoon:ENC(xISFbYRL8BMDkyH91VOkHOXnOlvUjpMp)@192.168.11.34:27017/jrtc_record?authSource=admin
 spring.redis.host=192.168.11.34

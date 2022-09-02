@@ -447,6 +447,11 @@ public enum EventType {
     MD_FILE_CLEAR_EVENT(1300, 3),
 
     /**
+     * 接口上传行为
+     */
+    MD_API_UPLOAD_EVENT(1300, 4),
+
+    /**
      * 测试事件
      */
 

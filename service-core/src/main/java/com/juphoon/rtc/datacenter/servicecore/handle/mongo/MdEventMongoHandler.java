@@ -47,6 +47,7 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler<MongoMdEventP
     @Override
     public List<EventType> careEvents() {
         return Arrays.asList(
+                MD_API_UPLOAD_EVENT,
                 MD_SCAN_EVENT,
                 MD_UPLOAD_EVENT,
                 MD_FILE_MOVE_EVENT,
