@@ -10,12 +10,14 @@ import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 import com.juphoon.rtc.datacenter.test.TestApplication;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
@@ -131,7 +133,7 @@ public class EventServiceWithRandomSleepTest {
         while ((COUNTER.get() < MAX) && (System.currentTimeMillis() - begin < 1000000)) {
             Thread.yield();
         }
-
+        Thread.sleep(2000);
         long end = System.currentTimeMillis();
 
         log.info("publish:{}, process:{}", MAX, COUNTER.get());
