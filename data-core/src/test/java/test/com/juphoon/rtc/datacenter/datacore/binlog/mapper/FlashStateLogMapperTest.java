@@ -5,6 +5,7 @@ import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -63,8 +64,10 @@ public class FlashStateLogMapperTest {
         }
     }
 
+    @SneakyThrows
     @After
-    public void after() throws Exception {
+    public void after() {
+        logMapper.dropTable();
     }
 
     @Test

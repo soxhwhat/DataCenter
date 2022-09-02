@@ -50,6 +50,11 @@ public class EventServiceWithoutLastHandlerTest {
         sqliteFlashEventLogMapper.createTable();
     }
 
+    @After
+    public void after() {
+        sqliteFlashEventLogMapper.dropTable();
+    }
+
     private static final int MAX = 100000;
 
     @Test

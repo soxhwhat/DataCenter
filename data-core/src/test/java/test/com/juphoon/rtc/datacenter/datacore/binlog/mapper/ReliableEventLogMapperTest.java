@@ -70,6 +70,7 @@ public class ReliableEventLogMapperTest {
 
     @After
     public void after() throws Exception {
+        logMapper.dropTable();
     }
 
     @Test

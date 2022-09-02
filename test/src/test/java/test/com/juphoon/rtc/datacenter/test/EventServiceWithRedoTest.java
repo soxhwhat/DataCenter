@@ -11,10 +11,7 @@ import com.juphoon.rtc.datacenter.test.handler.TestEventRandomFailHandler;
 import com.juphoon.rtc.datacenter.test.handler.TestLastCounterHandler;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +43,11 @@ public class EventServiceWithRedoTest {
     public void init() {
         sqliteFlashEventLogMapper.dropTable();
         sqliteFlashEventLogMapper.createTable();
+    }
+
+    @After
+    public void after() {
+        sqliteFlashEventLogMapper.dropTable();
     }
 
     private static final int MAX = 10000;

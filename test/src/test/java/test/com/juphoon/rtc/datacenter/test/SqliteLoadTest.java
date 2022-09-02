@@ -6,6 +6,7 @@ import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventL
 import com.juphoon.rtc.datacenter.test.TestApplication;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,6 +39,11 @@ public class SqliteLoadTest {
     public void init() {
         sqliteFlashEventLogMapper.dropTable();
         sqliteFlashEventLogMapper.createTable();
+    }
+
+    @After
+    public void after() {
+        sqliteFlashEventLogMapper.dropTable();
     }
 
     private static final int MAX = 100000;

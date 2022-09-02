@@ -3,6 +3,7 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -44,8 +45,10 @@ public class FlashEventLogMapperTest {
         }
     }
 
+    @SneakyThrows
     @After
     public void after() {
+        logMapper.dropTable();
     }
 
     @Test
