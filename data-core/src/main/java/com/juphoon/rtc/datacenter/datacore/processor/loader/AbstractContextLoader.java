@@ -91,9 +91,6 @@ public abstract class AbstractContextLoader<T extends BaseContext> implements IC
 
         /// 先删除，再加载，避免加载出来的东西
         logService.remove(new ArrayList<>(set));
-        for (Long t : set) {
-            logService.remove(t);
-        }
         set.clear();
 
         /// 此时再加载，不会加载到已经删除的事件了
