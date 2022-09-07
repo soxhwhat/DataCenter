@@ -25,7 +25,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.CONNECT
  * @update [1][2022-09-07] [ajian.zheng][重写]
  */
 @Slf4j
-public abstract class AbstractEventLogMapper extends AbstractLogMapper implements EventLogMapper {
+public abstract class AbstractEventLogMapper extends AbstractLogMapper<EventBinLogPO> implements EventLogMapper {
     @Override
     public synchronized void createTable() throws SQLException {
         String sql = "create table IF NOT EXISTS `event_binlog`\n" +
@@ -47,37 +47,88 @@ public abstract class AbstractEventLogMapper extends AbstractLogMapper implement
                 "            `params`    text\n" +
                 "        );";
 
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLiteException e) {
-            log.warn("创建表失败");
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                createTable();
-            } else {
-                throw e;
-            }
-        }
+        createTable(sql);
     }
 
     @Override
     public synchronized void dropTable() {
         String sql = "DROP TABLE IF EXISTS `event_binlog`;";
 
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLiteException e) {
-            log.warn("删除表失败");
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                dropTable();
-            }
-        }
+        dropTable(sql);
     }
 
-    private void preparedStatement(PreparedStatement preparedStatement, EventBinLogPO event) throws SQLException {
+    @Override
+    public synchronized int save(EventBinLogPO event) {
+        String sql = " INSERT INTO `event_binlog`" +
+                "(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
+                "`redoHandler`,`retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)" +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        return save(sql, event, preparedStatement);
+    }
+
+    @Override
+    public synchronized int saveList(List<EventBinLogPO> list) {
+        String sql = "INSERT INTO `event_binlog`"
+                + "(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
+                "`redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)" +
+                " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        return saveList(sql, list, preparedStatement);
+    }
+
+    @Override
+    public synchronized void remove(long id) {
+        String sql = " DELETE FROM `event_binlog` WHERE `id`=?;";
+
+        remove(sql, id);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param list
+     */
+    @Override
+    public synchronized void remove(List<Long> list) {
+        String sql = " DELETE FROM `event_binlog` WHERE `id`=?;";
+
+        remove(sql, list);
+    }
+
+    @Override
+    public synchronized void updateRetryCount(EventBinLogPO po) {
+        String sql = "UPDATE `event_binlog` set `retryCount` = `retryCount` + 1,\n" +
+                "`lastUpdateTimestamp` = ?  WHERE `id`= ?;";
+
+        updateRetryCount(sql, po.getLastUpdateTimestamp(), po.getId());
+    }
+
+
+
+    @Override
+    public synchronized EventBinLogPO findById(long contentId) {
+        EventBinLogPO po = null;
+        String sql = " SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
+                "`redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`" +
+                "FROM `event_binlog` WHERE `id`= ?;";
+
+        return findById(sql, contentId, fromDatabase);
+    }
+
+    @Override
+    public synchronized List<EventBinLogPO> find(int size) {
+        String sql = "SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,\n" +
+                "        `redoHandler`, `retryCount`, `domainId`,\n" +
+                "        `appId`, `uuid`, `type`, `number`, `timestamp`, `params`\n" +
+                "        FROM `event_binlog`\n" +
+                "        ORDER BY `lastUpdateTimestamp`\n" +
+                "        LIMIT ?;";
+
+        return find(sql, size, fromDatabase);
+    }
+
+    BiConsumerWithSqlException<PreparedStatement, EventBinLogPO> preparedStatement = (preparedStatement, event) -> {
         preparedStatement.setLong(1, event.getId());
         preparedStatement.setString(2, event.getRequestId());
         preparedStatement.setString(3, event.getFrom());
@@ -93,131 +144,9 @@ public abstract class AbstractEventLogMapper extends AbstractLogMapper implement
         preparedStatement.setInt(13, event.getNumber());
         preparedStatement.setLong(14, event.getTimestamp());
         preparedStatement.setString(15, event.getParams());
-    }
+    };
 
-    @Override
-    public synchronized int save(EventBinLogPO event) {
-        String sql = " INSERT INTO `event_binlog`" +
-                "(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
-                "`redoHandler`,`retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)" +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement(preparedStatement, event);
-            return preparedStatement.executeUpdate();
-        } catch (SQLiteException e) {
-            log.warn("保存事件失败,ec:{}", event.getId());
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                save(event);
-            }
-        }
-        return 0;
-    }
-
-    @Override
-    public synchronized int saveList(List<EventBinLogPO> list) {
-        String sql = "INSERT INTO `event_binlog`"
-                + "(`id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
-                "`redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`)" +
-                " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        int count = 0;
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            for (int i = 0; i < list.size(); i++) {
-                preparedStatement(preparedStatement, list.get(i));
-                preparedStatement.addBatch();
-                if (i % CACHE_NUMBER == 0) {
-                    count = Arrays.stream(preparedStatement.executeBatch()).reduce(count, Integer::sum);
-                    preparedStatement.clearBatch();
-                }
-            }
-            count = Arrays.stream(preparedStatement.executeBatch()).reduce(count, Integer::sum);
-            preparedStatement.clearBatch();
-            return count;
-        } catch (SQLiteException e) {
-            log.warn("批量保存事件失败");
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                saveList(list);
-            }
-        }
-
-        return 0;
-    }
-
-    @Override
-    public synchronized void remove(long id) {
-        String sql = " DELETE FROM `event_binlog` WHERE `id`=?;";
-
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLiteException e) {
-            log.warn("删除事件失败,id:{}", id);
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                remove(id);
-            }
-        }
-    }
-
-    /**
-     * 批量删除
-     *
-     * @param list
-     */
-    @Override
-    public synchronized void remove(List<Long> list) {
-        String sql = " DELETE FROM `event_binlog` WHERE `id`=?;";
-
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            for (int i = 0; i < list.size(); i++) {
-                stmt.setLong(1, list.get(i));
-                stmt.addBatch();
-                if (i % CACHE_NUMBER == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
-            }
-
-            stmt.executeBatch();
-            stmt.clearBatch();
-        } catch (SQLiteException e) {
-            log.warn("删除事件失败,list:{}", list.size());
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                remove(list);
-            }
-        }
-    }
-
-    @Override
-    public synchronized void updateRetryCount(EventBinLogPO po) {
-        String sql = "UPDATE `event_binlog` set `retryCount` = `retryCount` + 1,\n" +
-                "`lastUpdateTimestamp` = ?  WHERE `id`= ?;";
-
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.setLong(1, po.getLastUpdateTimestamp());
-            preparedStatement.setLong(2, po.getId());
-            preparedStatement.executeUpdate();
-        } catch (
-                SQLiteException e) {
-            log.warn("更新重试次数失败,ec:{}", po.getId());
-        } catch (
-                SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                updateRetryCount(po);
-            }
-        }
-    }
-
-    private EventBinLogPO fromDatabase(ResultSet resultSet) throws SQLException {
+    FunctionWithSqlException<ResultSet, EventBinLogPO> fromDatabase = resultSet -> {
         EventBinLogPO po = new EventBinLogPO();
         po.setId(resultSet.getLong("id"));
         po.setRequestId(resultSet.getString("requestId"));
@@ -236,66 +165,5 @@ public abstract class AbstractEventLogMapper extends AbstractLogMapper implement
         po.setParams(resultSet.getString("params"));
 
         return po;
-    }
-
-    @Override
-    public synchronized EventBinLogPO findById(long contentId) {
-        EventBinLogPO po = null;
-        String sql = " SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`," +
-                "`redoHandler`, `retryCount`, `domainId`, `appId`, `uuid`, `type`, `number`, `timestamp`, `params`" +
-                "FROM `event_binlog` WHERE `id`= ?;";
-
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.setLong(1, contentId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                po = fromDatabase(resultSet);
-            }
-            resultSet.close();
-            return po;
-        } catch (SQLiteException e) {
-            log.warn("根据id查找失败,id:{}", contentId);
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                findById(contentId);
-            }
-        }
-        return po;
-    }
-
-    @Override
-    public synchronized List<EventBinLogPO> find(int size) {
-        String sql = "SELECT `id`, `requestId`, `from`, `processorId`, `receivedTimestamp`, `lastUpdateTimestamp`,\n" +
-                "        `redoHandler`, `retryCount`, `domainId`,\n" +
-                "        `appId`, `uuid`, `type`, `number`, `timestamp`, `params`\n" +
-                "        FROM `event_binlog`\n" +
-                "        ORDER BY `lastUpdateTimestamp`\n" +
-                "        LIMIT ?;";
-
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
-            preparedStatement.setInt(1, size);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            List<EventBinLogPO> list = new ArrayList<>();
-            while (resultSet.next()) {
-                EventBinLogPO po = fromDatabase(resultSet);
-                list.add(po);
-            }
-            resultSet.close();
-            return list;
-        } catch (SQLiteException e) {
-            log.warn("查找失败");
-        } catch (SQLException e) {
-            if (CONNECTION_CLOSED.equals(e.getMessage())) {
-                restart();
-                find(size);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void stop() {
-        closeConnection();
-    }
+    };
 }

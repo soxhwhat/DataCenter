@@ -27,7 +27,7 @@ public class MonitorCallUserPOTest {
     @SneakyThrows
     @Test
     public void fromEvent() {
-        Map<String, Object> map = new HashMap(8);
+        Map<String, Object> map = new HashMap<>(8);
         map.put("beginTimestamp", 1658200811719L);
         map.put("callId", "108486620719112011");
         map.put("domainId", 100645);

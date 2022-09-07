@@ -3,7 +3,7 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 import com.juphoon.rtc.datacenter.datacore.api.State;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashStateLogMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
@@ -51,7 +51,7 @@ public class FlashStateLogMapperTest {
     }
 
     @Autowired
-    private SqliteFlashStateLogMapper logMapper;
+    private FlashStateLogMapper logMapper;
 
     @Before
     public void before() {

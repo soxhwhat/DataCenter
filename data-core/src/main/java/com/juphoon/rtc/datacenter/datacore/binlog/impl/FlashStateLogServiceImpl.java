@@ -3,7 +3,7 @@ package com.juphoon.rtc.datacenter.datacore.binlog.impl;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.StateBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashStateLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashStateLogMapper;
 import com.juphoon.rtc.datacenter.datacore.handler.IHandler;
 import com.juphoon.rtc.datacenter.datacore.utils.JrtcIdGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.STATE_B
 @Component(STATE_BIN_LOG_IMPL_FLASH)
 public class FlashStateLogServiceImpl implements ILogService<StateContext> {
     @Autowired
-    private SqliteFlashStateLogMapper logMapper;
+    private FlashStateLogMapper logMapper;
     @Override
     public void save(StateContext context) {
         assert null != context : "参数为空";

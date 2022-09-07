@@ -186,4 +186,9 @@ public class EventBinLogPO {
                 .add("params='" + params + "'")
                 .toString();
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
 }
