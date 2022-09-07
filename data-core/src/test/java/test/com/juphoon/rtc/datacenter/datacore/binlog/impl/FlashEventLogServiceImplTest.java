@@ -2,7 +2,7 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.impl;
 
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.ILogService;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
@@ -40,7 +40,7 @@ public class FlashEventLogServiceImplTest {
     private ILogService<EventContext> eventLogService;
 
     @Autowired
-    private SqliteFlashEventLogMapper logMapper;
+    private FlashEventLogMapper logMapper;
 
     @Before
     public void before() throws Exception {

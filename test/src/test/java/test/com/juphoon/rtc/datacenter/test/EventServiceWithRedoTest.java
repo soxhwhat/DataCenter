@@ -3,7 +3,7 @@ package test.com.juphoon.rtc.datacenter.test;
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.datacore.service.EventService;
 import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
 import com.juphoon.rtc.datacenter.test.TestApplication;
@@ -36,18 +36,18 @@ public class EventServiceWithRedoTest {
     private EventService eventService;
 
     @Autowired
-    private SqliteFlashEventLogMapper sqliteFlashEventLogMapper;
+    private FlashEventLogMapper flashEventLogMapper;
 
     @SneakyThrows
     @Before
     public void init() {
-        sqliteFlashEventLogMapper.dropTable();
-        sqliteFlashEventLogMapper.createTable();
+        flashEventLogMapper.dropTable();
+        flashEventLogMapper.createTable();
     }
 
     @After
     public void after() {
-        sqliteFlashEventLogMapper.dropTable();
+        flashEventLogMapper.dropTable();
     }
 
     private static final int MAX = 10000;
@@ -62,7 +62,7 @@ public class EventServiceWithRedoTest {
     public void testConcurrentEventServiceCommitLoad() throws InterruptedException {
         Assume.assumeTrue("临时版本跳过压测", "RELEASE".equalsIgnoreCase(System.getProperty("VERSION_TYPE")));
 
-        List<EventBinLogPO> ret = sqliteFlashEventLogMapper.find(10);
+        List<EventBinLogPO> ret = flashEventLogMapper.find(10);
         Assert.assertTrue(ret.isEmpty());
 
         long begin = System.currentTimeMillis();
@@ -115,7 +115,7 @@ public class EventServiceWithRedoTest {
 
         do {
             Thread.sleep(1000);
-            ret = sqliteFlashEventLogMapper.find(10);
+            ret = flashEventLogMapper.find(10);
         } while (!ret.isEmpty() && ((System.currentTimeMillis() - end) < 10000));
 
         Assert.assertTrue(ret.isEmpty());

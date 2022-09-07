@@ -1,7 +1,7 @@
 package com.juphoon.rtc.datacenter.datacore.binlog.impl;
 
 import com.juphoon.rtc.datacenter.datacore.binlog.mapper.EventLogMapper;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,8 @@ import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.*;
 @Component(EVENT_BIN_LOG_IMPL_FLASH)
 public class FlashEventLogServiceImpl extends AbstractEventLogService {
     @Autowired
-    private SqliteFlashEventLogMapper logMapper;
+    private FlashEventLogMapper logMapper;
+
     @Override
     public EventLogMapper getEventLogMapper() {
         return logMapper;

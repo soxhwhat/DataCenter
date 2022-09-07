@@ -3,7 +3,7 @@ package test.com.juphoon.rtc.datacenter.datacore.binlog.mapper;
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.reliable.SqliteReliableEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.reliable.ReliableEventLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -54,7 +54,7 @@ public class ReliableEventLogMapperTest {
     }
 
     @Autowired
-    private SqliteReliableEventLogMapper logMapper;
+    private ReliableEventLogMapper logMapper;
 
     @Before
     public void before() {
@@ -243,17 +243,18 @@ public class ReliableEventLogMapperTest {
 
         EventBinLogPO ret1 = logMapper.findById(p1.getId());
         Assert.assertNotNull(ret1.getUuid());
-        Assert.assertEquals(p1.getUuid(),ret1.getUuid());
+        Assert.assertEquals(p1.getUuid(), ret1.getUuid());
 
         EventBinLogPO ret2 = logMapper.findById(p2.getId());
         Assert.assertNotNull(ret2.getUuid());
-        Assert.assertEquals(p2.getUuid(),ret2.getUuid());
+        Assert.assertEquals(p2.getUuid(), ret2.getUuid());
 
         EventBinLogPO ret3 = logMapper.findById(p3.getId());
         Assert.assertNotNull(ret3.getUuid());
-        Assert.assertEquals(p3.getUuid(),ret3.getUuid());
+        Assert.assertEquals(p3.getUuid(), ret3.getUuid());
 
     }
+
     @Test
     public void testUpdateRetryCount() {
         EventBinLogPO po = EventBinLogPO.fromEventContext(randomEventContext());

@@ -46,7 +46,7 @@ public class MongoTicketEventPOTest {
      */
     @Test
     public void fromEventOk() {
-        Map<String, Object> map = new HashMap(8);
+        Map<String, Object> map = new HashMap<>(8);
         map.put("traceId", "traceId");
         map.put("domainId", 100645);
         map.put("appId", 4);

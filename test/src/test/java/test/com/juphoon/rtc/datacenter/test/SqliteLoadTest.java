@@ -2,7 +2,7 @@ package test.com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.iron.cube.starter.CubeIdGenerator;
 import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.test.TestApplication;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -32,18 +32,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Ignore
 public class SqliteLoadTest {
     @Autowired
-    private SqliteFlashEventLogMapper sqliteFlashEventLogMapper;
+    private FlashEventLogMapper flashEventLogMapper;
 
     @Before
     @SneakyThrows
     public void init() {
-        sqliteFlashEventLogMapper.dropTable();
-        sqliteFlashEventLogMapper.createTable();
+        flashEventLogMapper.dropTable();
+        flashEventLogMapper.createTable();
     }
 
     @After
     public void after() {
-        sqliteFlashEventLogMapper.dropTable();
+        flashEventLogMapper.dropTable();
     }
 
     private static final int MAX = 100000;
@@ -73,7 +73,7 @@ public class SqliteLoadTest {
             po.setUuid(CubeIdGenerator.newStringId());
             po.setId(CubeIdGenerator.newId());
 
-            sqliteFlashEventLogMapper.save(po);
+            flashEventLogMapper.save(po);
         }
 
         long end = System.currentTimeMillis();

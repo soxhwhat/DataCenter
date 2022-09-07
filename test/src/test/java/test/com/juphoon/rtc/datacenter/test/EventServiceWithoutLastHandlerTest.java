@@ -2,16 +2,13 @@ package test.com.juphoon.rtc.datacenter.test;
 
 import com.juphoon.rtc.datacenter.datacore.api.Event;
 import com.juphoon.rtc.datacenter.datacore.api.EventContext;
-import com.juphoon.rtc.datacenter.datacore.binlog.entity.EventBinLogPO;
-import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.SqliteFlashEventLogMapper;
+import com.juphoon.rtc.datacenter.datacore.binlog.mapper.flash.FlashEventLogMapper;
 import com.juphoon.rtc.datacenter.datacore.service.EventService;
 import com.juphoon.rtc.datacenter.datacore.utils.MetricUtils;
 import com.juphoon.rtc.datacenter.datacore.utils.TestUtils;
-import com.juphoon.rtc.datacenter.servicecore.property.DataCenterProperties;
 import com.juphoon.rtc.datacenter.test.TestApplication;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,18 +38,18 @@ public class EventServiceWithoutLastHandlerTest {
     private EventService eventService;
 
     @Autowired
-    private SqliteFlashEventLogMapper sqliteFlashEventLogMapper;
+    private FlashEventLogMapper flashEventLogMapper;
 
     @SneakyThrows
     @Before
     public void init() {
-        sqliteFlashEventLogMapper.dropTable();
-        sqliteFlashEventLogMapper.createTable();
+        flashEventLogMapper.dropTable();
+        flashEventLogMapper.createTable();
     }
 
     @After
     public void after() {
-        sqliteFlashEventLogMapper.dropTable();
+        flashEventLogMapper.dropTable();
     }
 
     private static final int MAX = 100000;
