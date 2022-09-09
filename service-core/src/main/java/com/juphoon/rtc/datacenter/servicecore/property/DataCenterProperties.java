@@ -57,6 +57,24 @@ public class DataCenterProperties {
      */
     private Clear clear = new Clear();
 
+    /**
+     * MongoDB添加索引配置
+     */
+    private MongoIndex mongoIndex = new MongoIndex();
+
+    @Data
+    public static class MongoIndex {
+        /**
+         * 添加索引的天数配置
+         */
+        private int indexDay = 7;
+
+        /**
+         * 添加索引定期时间配置
+         */
+        private String cronIndex = "0 0 0 1/1 * ?";
+    }
+
     @Data
     public static class Clear {
         /**

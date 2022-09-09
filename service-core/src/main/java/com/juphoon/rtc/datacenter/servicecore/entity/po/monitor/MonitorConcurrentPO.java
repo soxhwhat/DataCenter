@@ -5,9 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,11 +28,6 @@ import java.util.Map;
  * , domainId=100645, appId=4)
  */
 @Data
-@Document("jrtc_concurrent_room_#{new java.text.SimpleDateFormat(\"yyyyMMdd\").format(new java.util.Date())}")
-@CompoundIndexes({
-        @CompoundIndex(name = "time_domain_app_idx",
-                def = "{'timestamp':1,'domainId':1,'appId':1}")
-})
 public class MonitorConcurrentPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
