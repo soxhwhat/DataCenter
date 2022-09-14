@@ -45,7 +45,7 @@ public enum MongoCollectionEnum {
     /**
      * 并发记录
      */
-    COLLECTION_CONCURRENT_ITEM_ROOM("jrtc_concurrent_room", "房间并发信息"),
+    COLLECTION_CONCURRENT_ITEM_ROOM("jrtc_concurrent_room_", "房间并发信息"),
 
     /**
      * 核心平台房间上报话单记录
@@ -107,6 +107,16 @@ public enum MongoCollectionEnum {
      * 服务端异常事件
      */
     COLLECTION_SERVER_EXCEPTION_EVENT("jrtc_event_exception", "服务端异常事件"),
+//
+//    /**
+//     * 记录坐席状态事件数据集合
+//     */
+//    COLLECTION_ACD_AGENT_STATE("jrtc_acd_agent_state_", "坐席状态事件集合"),
+//
+//    /**
+//     * 记录队列排队状态事件数据集合
+//     */
+//    COLLECTION_ACD_QUEUE_COUNT("jrtc_acd_queue_count_", "队列排队状态事件集合"),
     ;
 
     private final String name;

@@ -9,7 +9,6 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,6 +17,7 @@ import javax.annotation.PostConstruct;
 import java.util.Set;
 
 import static com.juphoon.rtc.datacenter.datacore.JrtcDataCenterConstant.MONGO_TEMPLATE_EVENT;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 /**
  * <p>定时添加MongoDB索引</p>
@@ -51,10 +51,10 @@ public class CreateIndexJob {
     }
 
     Index index = new Index()
-            .on("timestamp", Sort.Direction.ASC)
-            .on("domainId", Sort.Direction.ASC)
-            .on("appId", Sort.Direction.ASC)
-            .on("from", Sort.Direction.ASC)
+            .on("time", ASC)
+            .on("domainId", ASC)
+            .on("appId", ASC)
+            .on("from", ASC)
             .unique().named(TIME_DOMAIN_APP_FROM_IDX);
 
     @Autowired
@@ -99,9 +99,10 @@ public class CreateIndexJob {
 //    @Scheduled(cron = "0 0 0 1/1 * ?")
 //    @PostConstruct
 //    public void createAgentStateIndex() {
-//        Index index = new Index().on("timestamp", Sort.Direction.ASC).on("from", Sort.Direction.ASC).on("queue", Sort.Direction.ASC)
+//        Index index = new Index().on("timestamp", ASC).on("from", ASC).on("queue", ASC)
 //                .unique().named(TIME_FROM_QUEUE_IDX);
 //
 //        createIndex(monitorAcdAgentStateMongoHandler, index);
 //    }
+
 }

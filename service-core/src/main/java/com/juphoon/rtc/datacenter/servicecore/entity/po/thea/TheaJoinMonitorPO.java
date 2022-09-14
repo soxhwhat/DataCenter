@@ -22,7 +22,6 @@ import static com.juphoon.rtc.datacenter.servicecore.api.TheaConstant.*;
 
 /**
  * <p>天赛音视频加房成功率检测</p>
- * <p>TODO</p>
  *
  * @author Jiahui.Huang
  * @date 2022/7/18 13:42
