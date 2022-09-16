@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,7 @@ import static com.juphoon.rtc.datacenter.servicecore.handle.mongo.MonitorConcurr
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test-mysql")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MonitorConcurrentStateMongoHandlerTest{
 
     @Autowired
@@ -87,7 +89,7 @@ public class MonitorConcurrentStateMongoHandlerTest{
      */
     @SneakyThrows
     @Test
-    public void handleUnderStress() {
+    public void testFirstHandleUnderStress() {
         Assume.assumeTrue("临时版本跳过压测", "RELEASE".equalsIgnoreCase(System.getProperty("VERSION_TYPE")));
         Assert.assertEquals(0, mongoTemplate.getCollection(collectionName).countDocuments());
         ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -130,7 +132,7 @@ public class MonitorConcurrentStateMongoHandlerTest{
 
     }
     @Test
-    public void handleNormal() throws JsonProcessingException {
+    public void testSecondHandleNormal() throws JsonProcessingException {
         String json = new ObjectMapper().writeValueAsString(params);
 
         State state = State.builder()
