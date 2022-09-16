@@ -7,6 +7,7 @@ import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.UploadRecordInfoP
 import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.VideoKeyFrameEntity;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.keyframe.LinkKeyFrameData;
 import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.keyframe.TextKeyFrameData;
+import com.juphoon.rtc.datacenter.servicecore.entity.po.upload.keyframe.VideoKeyFrameBO;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -146,6 +147,24 @@ public class UploadPOTest {
         TextKeyFrameData videoKeyFrameEntity1 = IronJsonUtils.jsonToPojo(s, TextKeyFrameData.class);
         Assert.assertNotNull(videoKeyFrameEntity1);
         Assert.assertEquals(linkKeyFrameData.getContent(), linkKeyFrameData.getContent());
+    }
+
+    @Test
+    public void testVideoKeyFrameBO() {
+
+        VideoKeyFrameBO videoKeyFrameBO = new VideoKeyFrameBO();
+        videoKeyFrameBO.setId("1");
+        videoKeyFrameBO.setKeyFrameData("123");
+        videoKeyFrameBO.setKeyFrameType("text");
+        videoKeyFrameBO.setTimeOffset(111L);
+        String s = IronJsonUtils.objectToJson(videoKeyFrameBO);
+
+        VideoKeyFrameBO videoKeyFrameEntity1 = IronJsonUtils.jsonToPojo(s, VideoKeyFrameBO.class);
+        Assert.assertNotNull(videoKeyFrameEntity1);
+        Assert.assertEquals(videoKeyFrameEntity1.getId(), videoKeyFrameBO.getId());
+        Assert.assertEquals(videoKeyFrameEntity1.getKeyFrameData(), videoKeyFrameBO.getKeyFrameData());
+        Assert.assertEquals(videoKeyFrameEntity1.getKeyFrameType(), videoKeyFrameBO.getKeyFrameType());
+        Assert.assertEquals(videoKeyFrameEntity1.getTimeOffset(), videoKeyFrameBO.getTimeOffset());
     }
 
 }
