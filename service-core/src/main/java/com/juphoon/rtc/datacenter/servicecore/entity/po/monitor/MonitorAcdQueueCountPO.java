@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juphoon.rtc.datacenter.datacore.api.StateContext;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.StringJoiner;
  * @date 6/21/22 11:10 AM
  */
 @Data
+@Slf4j
 public class MonitorAcdQueueCountPO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -107,11 +109,28 @@ public class MonitorAcdQueueCountPO implements Serializable {
 
         String from = (String) params.get("from");
         Long timestamp = Long.valueOf((String.valueOf(params.get("timestamp"))));
-        Integer waitCount = (Integer) params.get("waitCount");
+        Integer state = context.getState().getState();
+        Integer count = null;
+
+        switch (state) {
+            case 0:
+                assert params.get("waitCount") != null : "waitCount is null";
+                count = (Integer) params.get("waitCount");
+                break;
+            case 1:
+                assert params.get("ringCount") != null : "ringCount is null";
+                count = (Integer) params.get("ringCount");
+                break;
+            case 2:
+                assert params.get("callCount") != null : "callCount is null";
+                count = (Integer) params.get("callCount");
+                break;
+            default:
+                break;
+        }
 
         assert null != from : "坐席队列参数 from 为空";
         assert timestamp > 0 : "坐席队列参数 timestamp 为空";
-        assert null != waitCount : "坐席队列参数 waitCount 为空";
 
         MonitorAcdQueueCountPO po = new MonitorAcdQueueCountPO();
 
@@ -119,10 +138,10 @@ public class MonitorAcdQueueCountPO implements Serializable {
         po.setAppId(context.getState().getAppId());
         po.setQueue(context.getState().getUniqueId());
         po.setType(context.getState().getType());
-        po.setNumber(context.getState().getState());
+        po.setNumber(state);
         po.setFrom(from);
         po.setTimestamp(timestamp);
-        po.setCount(waitCount);
+        po.setCount(count);
 
         return po;
     }

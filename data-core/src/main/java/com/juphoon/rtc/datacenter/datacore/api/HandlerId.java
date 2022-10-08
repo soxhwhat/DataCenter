@@ -281,6 +281,8 @@ public enum HandlerId {
     //***************************************************************************************************
     MonitorAcdQueueCountHandler("monitorAcdQueueCountHandler", "客服排队机队列监控Handler", RESOURCE_SCOPE_GLOBAL_STATE),
 
+    MonitorAcdQueueCountMongoHandler("monitorAcdQueueCountMongoHandler", "客服排队机队列监控MongoHandler", RESOURCE_SCOPE_GLOBAL_STATE),
+
 
     //***************************************************************************************************
     //********************************** 视频客服 坐席状态/心跳 ***************************************************
@@ -290,6 +292,10 @@ public enum HandlerId {
 
     MonitorAcdAgentCheckoutHandler("monitorAcdAgentCheckoutHandler", "客服坐席状态签出监控 Handler",
             RESOURCE_SCOPE_GLOBAL_EVENT),
+
+    MonitorAcdAgentStateMongoHandler("monitorAcdAgentStateMongoHandler", "客服坐席状态监控 MongoHandler",
+            RESOURCE_SCOPE_GLOBAL_STATE),
+
 
     //***************************************************************************************************
     //********************************** 能力平台 房间并发统计***************************************************

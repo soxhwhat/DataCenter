@@ -55,6 +55,8 @@ iron:
         handlers:
           - MonitorAcdAgentStateHandler
           - MonitorConcurrentStateMongoHandler
+          - MonitorAcdQueueCountMongoHandler
+          - MonitorAcdAgentStateMongoHandler
 
 spring:
   datasource:
