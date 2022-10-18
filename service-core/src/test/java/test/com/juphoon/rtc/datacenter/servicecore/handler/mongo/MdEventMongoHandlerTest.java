@@ -13,8 +13,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
-import static com.juphoon.rtc.datacenter.datacore.api.EventType.CD_END_EVENT;
-import static com.juphoon.rtc.datacenter.datacore.api.EventType.CD_LEAVE_ROOM_EVENT;
+import static com.juphoon.rtc.datacenter.datacore.api.EventType.*;
 
 
 /**
@@ -38,5 +37,9 @@ public class MdEventMongoHandlerTest {
         Assert.notEmpty(events, "careEvent为空");
         Assert.isTrue(events.contains(CD_END_EVENT), CD_END_EVENT.name());
         Assert.isTrue(events.contains(CD_LEAVE_ROOM_EVENT), CD_LEAVE_ROOM_EVENT.name());
+        Assert.isTrue(events.contains(ROOM_CREATE), ROOM_CREATE.name());
+        Assert.isTrue(events.contains(ROOM_DESTROY), ROOM_DESTROY.name());
+        Assert.isTrue(events.contains(ROOM_JOIN), ROOM_JOIN.name());
+        Assert.isTrue(events.contains(ROOM_LEAVE), ROOM_LEAVE.name());
     }
 }

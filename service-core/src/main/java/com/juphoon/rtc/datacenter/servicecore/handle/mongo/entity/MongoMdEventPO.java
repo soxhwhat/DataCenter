@@ -115,6 +115,44 @@ public class MongoMdEventPO extends MongoEventPO {
      */
     private Integer recordTime;
 
+    /**
+     * RoomId
+     */
+    private String roomId;
+
+    /**
+     * 创建者
+     */
+    private String actor;
+
+    /**
+     * 销毁原因
+     */
+    private String reason;
+
+    /**
+     * 用户id
+     */
+    private String userId;
+
+    /**
+     * 随路数据
+     */
+    private String moreInfo;
+
+    /**
+     * 是否支持赞同
+     */
+    private String agreeEnabled;
+
+    /**
+     * 设备类型
+     */
+    private Integer deviceType;
+
+
+
+
     @Override
     public void fromEvent(Event event) {
         super.fromEvent(event);
@@ -140,6 +178,13 @@ public class MongoMdEventPO extends MongoEventPO {
         this.setFileSize(this.getIntegerValue(params, "fileSize"));
         this.setRecordTime(this.getIntegerValue(params, "recordTime"));
         this.setParams(null);
+        this.setRoomId(this.getStringValue(params, "roomId"));
+        this.setActor(this.getStringValue(params, "actor"));
+        this.setReason(this.getStringValue(params, "reason"));
+        this.setUserId(this.getStringValue(params, "userId"));
+        this.setMoreInfo(this.getStringValue(params, "moreInfo"));
+        this.setAgreeEnabled(this.getStringValue(params, "agreeEnabled"));
+        this.setDeviceType(this.getIntegerValue(params, "type"));
     }
 
     private String getStringValue(Map<String, Object> params, String key) {

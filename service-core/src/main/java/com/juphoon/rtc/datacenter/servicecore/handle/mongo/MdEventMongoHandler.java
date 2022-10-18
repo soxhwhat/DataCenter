@@ -89,7 +89,11 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler<MongoMdEventP
                 CD_ABNORMAL_EVENT,
                 CD_HEARTBEAT_EVENT,
                 CD_RECEIVE_FIRST_FRAME_OF_MEDIA_DATA_EVENT,
-                CD_LEAVE_ROOM_EVENT
+                CD_LEAVE_ROOM_EVENT,
+                ROOM_CREATE,
+                ROOM_DESTROY,
+                ROOM_JOIN,
+                ROOM_LEAVE
         );
     }
 
