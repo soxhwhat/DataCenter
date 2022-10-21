@@ -42,4 +42,15 @@ public class MdEventMongoHandlerTest {
         Assert.isTrue(events.contains(ROOM_JOIN), ROOM_JOIN.name());
         Assert.isTrue(events.contains(ROOM_LEAVE), ROOM_LEAVE.name());
     }
+
+    @Test
+    public void testCollectionName() {
+        String collectionName = String.valueOf(mdEventMongoHandler.collectionName());
+        Assert.hasText(collectionName, "collectionName为空");
+    }
+
+    @Test
+    public void testHandlerId() {
+        Assert.notNull(mdEventMongoHandler.handlerId(), "handlerId为空");
+    }
 }
