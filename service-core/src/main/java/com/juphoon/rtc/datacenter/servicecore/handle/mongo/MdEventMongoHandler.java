@@ -93,7 +93,27 @@ public class MdEventMongoHandler extends AbstractMongoEventHandler<MongoMdEventP
                 ROOM_CREATE,
                 ROOM_DESTROY,
                 ROOM_JOIN,
-                ROOM_LEAVE
+                ROOM_LEAVE,
+                ACD_MD_WAIT,
+                ACD_MD_HANGUP,
+                ACD_MD_TRANSFER,
+                ACD_MD_URGENT,
+                ACD_MD_CHECK_IN,
+                ACD_MD_CHECK_OUT,
+                ACD_MD_STATUS_CHANGE,
+                ACD_MD_START_CALL,
+                ACD_MD_END_CALL,
+                ACD_MD_ANSWER_CALL,
+                ACD_MD_CREATE_MEETING,
+                ACD_MD_END_MEETING,
+                ACD_MD_INVITE_MEMBER,
+                ACD_MD_KICK_MEMBER,
+                ACD_MD_MEMBER_JOIN,
+                ACD_MD_MEMBER_LEAVE,
+                ACD_MD_START_RECORD,
+                ACD_MD_STOP_RECORD,
+                ACD_MD_START_RECORD_BY_CLIENT,
+                ACD_MD_STOP_RECORD_BY_CLIENT
         );
     }
 
