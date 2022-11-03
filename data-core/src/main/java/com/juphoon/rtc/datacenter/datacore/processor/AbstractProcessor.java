@@ -159,16 +159,16 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
         if (!care(t.getEventType())) {
             return;
         }
-
-        t.setProcessorId(this.processorId().getId());
+        T clone = (T) t.clone();
+        clone.setProcessorId(this.processorId().getId());
 
         /// 先入库
         /// TODO 若其中一个processor save失败，咋办啊
         Timer.Sample sample = Timer.start();
         try {
-            logService().save(t);
+            logService().save(clone);
         } catch (Exception ex) {
-            log.warn("processor:{} 持久化 lc:{} 异常:", getName(), t.getRequestId(), ex);
+            log.warn("processor:{} 持久化 lc:{} 异常:", getName(), clone.getRequestId(), ex);
             //感觉没啥用，暂时先这样
             throw new IronException();
         }
@@ -176,7 +176,7 @@ public abstract class AbstractProcessor<T extends BaseContext> implements IProce
 
         /// todo 异步提交
         Timer.Sample sample2 = Timer.start();
-        submit(t);
+        submit(clone);
         sample2.stop(MetricUtils.get("queueService.submit()"));
     }
 

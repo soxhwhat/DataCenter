@@ -4,6 +4,7 @@ package com.juphoon.rtc.datacenter.datacore.api;
 import com.juphoon.rtc.datacenter.datacore.utils.JrtcIdGenerator;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
@@ -16,7 +17,8 @@ import java.util.StringJoiner;
  */
 @Getter
 @Setter
-public abstract class BaseContext {
+@Slf4j
+public abstract class BaseContext implements Cloneable{
 
     /**
      * context唯一id
@@ -109,5 +111,15 @@ public abstract class BaseContext {
                 .add("redoHandler='" + redoHandler + "'")
                 .add("retryCount=" + retryCount)
                 .toString();
+    }
+
+    @Override
+    public Object clone()  {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            log.error("clone error", e);
+            throw new RuntimeException(e);
+        }
     }
 }
