@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.juphoon.rtc.datacenter</groupId>
-        <version>2203.6.2</version>
+        <version>2301.0.1</version>
         <artifactId>jrtcDataCenter-Parent</artifactId>
     </parent>
     <packaging>pom</packaging>
